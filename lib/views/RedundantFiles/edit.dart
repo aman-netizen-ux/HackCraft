@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:major_project__widget_testing/views/Redundant%20files/launch.dart';
+import 'package:major_project__widget_testing/views/RedundantFiles/launch.dart';
 
 class EditPlatform extends StatefulWidget {
   const EditPlatform({super.key});
