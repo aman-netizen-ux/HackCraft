@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/views/RedundantFiles/Navigation.dart';
 import 'package:major_project__widget_testing/views/RedundantFiles/widget.dart';
 import 'package:major_project__widget_testing/views/RedundantFiles/edit.dart';
-
+import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/default_template.dart';
 
 class AppRoutes{
 static const String start = '/';
@@ -11,7 +11,7 @@ static const String start = '/';
 
 static Map<String, Widget Function(BuildContext)> routes = {
 // start: (context) =>  Navigation(),
-start: (context) => const EditPlatform(),
+start: (context) => const DefaultTemplate(),
 
 
 };

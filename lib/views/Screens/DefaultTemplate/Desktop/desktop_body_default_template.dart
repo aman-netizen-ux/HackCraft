@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/landing_section.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/rounds_section.dart';
+
 
 class DefaultTemplateDesktopBody extends StatefulWidget {
   const DefaultTemplateDesktopBody({super.key});
@@ -12,7 +15,8 @@ class _DefaultTemplateDesktopBodyState extends State<DefaultTemplateDesktopBody>
   Widget build(BuildContext context) {
     return const Column(
       children: [
-        
+        LandingSection(),
+        RoundsAndRules()
       ],
     );
   }
