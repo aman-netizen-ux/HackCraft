@@ -18,11 +18,12 @@ class RoundCard extends StatelessWidget {
     
     return InkWell(
       hoverColor: Colors.white,
+      
       onTap: onTap,
       child: Container(
           height: scaleHeight(context, 67),
           width: double.infinity,
-          margin : EdgeInsets.only(bottom : scaleHeight(context, 36), left : scaleWidth(context, 47), right : scaleWidth(context, 52), top : scaleHeight(context, 10)),
+          margin : EdgeInsets.only(bottom : scaleHeight(context, 23), left : scaleWidth(context, 47), right : scaleWidth(context, 52), top : scaleHeight(context, 23)),
           decoration: BoxDecoration(
             color : Colors.white,
               borderRadius: BorderRadius.circular(rad5_3),
