@@ -33,7 +33,7 @@ class LandingSection extends StatelessWidget {
                   Text(
                     'Your Hackathon',
                     style: GoogleFonts.getFont(
-                      fontFamily2,fontSize: scaleWidth(context, 20),
+                      fontFamily2,fontSize: scaleHeight(context, 20),
                       color: black1,
                       fontWeight: FontWeight.w400,
                       height: lineHeight(22.4, 20)
@@ -50,7 +50,7 @@ class LandingSection extends StatelessWidget {
                     child: Text(
                       'Home',
                       style: GoogleFonts.getFont(
-                        fontFamily2,fontSize: scaleWidth(context, 14),
+                        fontFamily2,fontSize: scaleHeight(context, 14),
                         color: black1,
                         fontWeight: FontWeight.w400,
                         height: lineHeight(22.4, 14)
@@ -63,7 +63,7 @@ class LandingSection extends StatelessWidget {
                     child: Text(
                       'Home',
                       style: GoogleFonts.getFont(
-                        fontFamily2,fontSize: scaleWidth(context, 14),
+                        fontFamily2,fontSize: scaleHeight(context, 14),
                         color: black1,
                         fontWeight: FontWeight.w400,
                         height: lineHeight(22.4, 14)
@@ -76,7 +76,7 @@ class LandingSection extends StatelessWidget {
                     child: Text(
                       'Home',
                       style: GoogleFonts.getFont(
-                        fontFamily2,fontSize: scaleWidth(context, 14),
+                        fontFamily2,fontSize: scaleHeight(context, 14),
                         color: black1,
                         fontWeight: FontWeight.w400,
                         height: lineHeight(22.4, 14)
@@ -89,7 +89,7 @@ class LandingSection extends StatelessWidget {
                     child: Text(
                       'Home',
                       style: GoogleFonts.getFont(
-                        fontFamily2,fontSize: scaleWidth(context, 14),
+                        fontFamily2,fontSize: scaleHeight(context, 14),
                         color: black1,
                         fontWeight: FontWeight.w400,
                         height: lineHeight(22.4, 14)
@@ -102,7 +102,7 @@ class LandingSection extends StatelessWidget {
                     child: Text(
                       'Home',
                       style: GoogleFonts.getFont(
-                        fontFamily2,fontSize: scaleWidth(context, 14),
+                        fontFamily2,fontSize: scaleHeight(context, 14),
                         color: black1,
                         fontWeight: FontWeight.w400,
                         height: lineHeight(22.4, 14)
@@ -127,7 +127,7 @@ class LandingSection extends StatelessWidget {
               width: scaleWidth(context, 1108),  
               alignment: Alignment.center,            
               decoration: const BoxDecoration(
-                color: lightBlue,
+                color: lavender,
                 borderRadius: BorderRadius.all(
                   Radius.circular(rad5_6)
                 )
@@ -141,7 +141,7 @@ class LandingSection extends StatelessWidget {
                         'Organisation name presents',
                         style: GoogleFonts.getFont(
                           fontFamily2,
-                          fontSize: scaleWidth(context, 20),
+                          fontSize: scaleHeight(context, 20),
                           color: greyish1,
                           fontWeight: FontWeight.w500,
                           height: lineHeight(22.4, 20)
@@ -154,7 +154,7 @@ class LandingSection extends StatelessWidget {
                         'Your Hackathon Name',
                         style: GoogleFonts.getFont(
                           fontFamily2,
-                          fontSize: scaleWidth(context, 54),
+                          fontSize: scaleHeight(context, 54),
                           color: black2,
                           fontWeight: FontWeight.w600,
                           height: lineHeight(22.4, 54)
@@ -167,7 +167,7 @@ class LandingSection extends StatelessWidget {
                         'Give us brief about your hackathon (60 words)',
                         style: GoogleFonts.getFont(
                           fontFamily2,
-                          fontSize: scaleWidth(context, 18),
+                          fontSize: scaleHeight(context, 18),
                           color: greyish1,
                           fontWeight: FontWeight.w400,
                           height: lineHeight(22.4, 18)
@@ -232,7 +232,7 @@ class hackathonDetailContainer extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: GoogleFonts.getFont(
                           fontFamily2,
-                          fontSize: scaleWidth(context, 20),
+                          fontSize: scaleHeight(context, 20),
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
                           height: lineHeight(22.4, 20)
