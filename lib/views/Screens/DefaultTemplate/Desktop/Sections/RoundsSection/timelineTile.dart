@@ -34,7 +34,7 @@ class CustomTimelineTile extends StatelessWidget {
       ),
       indicatorStyle: IndicatorStyle(
         width: scaleWidth(context, 35),
-        color: timelinesColor,
+        color: lavender ,
         padding: EdgeInsets.all(6),
       ),
 
