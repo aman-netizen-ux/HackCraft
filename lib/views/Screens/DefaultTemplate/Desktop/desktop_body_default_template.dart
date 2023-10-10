@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/contactUsAndFooter_section.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/aboutUs_section.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/gallerySection.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/landing_section.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/RoundsSection/rounds_section.dart';
 
@@ -18,7 +20,9 @@ class _DefaultTemplateDesktopBodyState extends State<DefaultTemplateDesktopBody>
       children: [
         LandingSection(),
         RoundsAndRules(),
-        Aboutus()
+        Aboutus(),
+        GallerySection(),
+        ContactUsAndFooterSection()
       ],
     );
   }

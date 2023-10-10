@@ -6,6 +6,7 @@ import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 
+// This file was created in order to create the card for the rounds section.
 class RoundCard extends StatelessWidget {
   final String title;
   final void Function()? onTap;
@@ -42,6 +43,7 @@ class RoundCard extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(
                     left: scaleWidth(context, 25), top: scaleHeight(context, 15)),
+                  //Title of the round
                 child: Text(title,
                     style: GoogleFonts.getFont(fontFamily2,
                         fontSize: scaleHeight(context, 20),
@@ -49,6 +51,7 @@ class RoundCard extends StatelessWidget {
                         height: lineHeight(22.4, 20),
                         fontWeight: FontWeight.w400)),
               ),
+              //Timeline i.e Start date and End date of the round
               Padding(
                 padding: EdgeInsets.only(
                     left: scaleWidth(context, 25),

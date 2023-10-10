@@ -21,25 +21,28 @@ class CustomTimelineTile extends StatelessWidget {
       required this.roundTitle,
       required this.roundDescription,
       required this.endDate,
-      required this.startDate, this.onTap});
+      required this.startDate,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return TimelineTile(
       isFirst: isFirst,
       isLast: isLast,
-      beforeLineStyle:  const LineStyle(
-        color:  black1,
+      beforeLineStyle: const LineStyle(
+        color: black1,
         thickness: 2,
       ),
       indicatorStyle: IndicatorStyle(
         width: scaleWidth(context, 35),
-        color: lavender ,
-        padding: EdgeInsets.all(6),
+        color: lavender,
+        padding: const EdgeInsets.all(6),
       ),
-
-      endChild: RoundCard(title: roundTitle, enddate: endDate, startDate: startDate, onTap: onTap),
-      
+      endChild: RoundCard(
+          title: roundTitle,
+          enddate: endDate,
+          startDate: startDate,
+          onTap: onTap),
     );
   }
 }

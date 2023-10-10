@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 
 class Aboutus extends StatelessWidget {
@@ -11,10 +12,13 @@ class Aboutus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
+      key: aboutUs,
       padding: EdgeInsets.only(top: scaleHeight(context, 96)),
       child: Column(
         children: [
           Stack(clipBehavior: Clip.none, children: [
+            //This container will show the complete description of the hackathon, including rounds, rules, and many other things.
+            //The height of the container will automatically increase based on the size of the text being entered.
             Container(
                 width: double.infinity,
                 margin:
@@ -40,14 +44,15 @@ class Aboutus extends StatelessWidget {
                     ),
                   ),
                 )),
+            //The register button is positioned accordingly so that it starts before the container and goes until the container starts.
+            //When you run the code, you'll understand what's written here.
             Positioned(
                 top: -scaleWidth(context, 29),
-                // left: scaleWidth(context, 480),
-                // right: 
                 child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: scaleWidth(context, 512)),
+                  margin: EdgeInsets.symmetric(
+                      horizontal: scaleWidth(context, 512)),
                   height: scaleHeight(context, 58),
-                  width : scaleWidth(context, 256),
+                  width: scaleWidth(context, 256),
                   decoration: BoxDecoration(
                     color: black4,
                     borderRadius: BorderRadius.circular(55),
@@ -55,10 +60,9 @@ class Aboutus extends StatelessWidget {
                   child: ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(55)),
-                    
-            
-                            backgroundColor : Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(55)),
+                        backgroundColor: Colors.white,
                       ),
                       child: Text("Get Registered",
                           style: GoogleFonts.getFont(fontFamily2,
@@ -67,10 +71,13 @@ class Aboutus extends StatelessWidget {
                               height: lineHeight(22.4, 21),
                               color: black1))),
                 )),
+            //This container is used to show the prize section. It's also positioned like the above container,
+            //but the difference is that the above one was positioned from the top and this one was positioned from the bottom.
+            //Run the code once, and you'll understand.
             Positioned(
               bottom: -scaleWidth(context, 120),
               child: Container(
-                color: Colors.amberAccent,
+                color: lavender,
                 height: scaleHeight(context, 240),
                 width: scaleWidth(context, 1118),
                 margin:
@@ -79,7 +86,7 @@ class Aboutus extends StatelessWidget {
             ),
           ]),
           SizedBox(
-            height: scaleHeight(context, 90),
+            height: scaleHeight(context, 153),
           )
         ],
       ),
