@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
@@ -12,6 +13,7 @@ class ContactUsAndFooterSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      key: contactUs,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
@@ -69,7 +71,7 @@ class ContactUsAndFooterSection extends StatelessWidget {
                               Text('Contact Number',
                                   style: GoogleFonts.getFont(fontFamily2,
                                       fontSize: scaleHeight(context, 16),
-                                      color: black3,
+                                      color: black5,
                                       fontWeight: FontWeight.w400,
                                       height: lineHeight(5, 16))),
                             ],
@@ -106,7 +108,7 @@ class ContactUsAndFooterSection extends StatelessWidget {
                               Text('Contact Number',
                                   style: GoogleFonts.getFont(fontFamily2,
                                       fontSize: scaleHeight(context, 16),
-                                      color: black3,
+                                      color: black5,
                                       fontWeight: FontWeight.w400,
                                       height: lineHeight(5, 16))),
                             ],
@@ -134,7 +136,7 @@ class ContactUsAndFooterSection extends StatelessWidget {
       height: scaleHeight(context, 355),
       width: double.infinity,
       padding: EdgeInsets.only(top: scaleHeight(context, 82), left: scaleHeight(context, 81), right: scaleHeight(context, 81), bottom: scaleHeight(context, 41)),
-      color: black4,
+      color: black6,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
