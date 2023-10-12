@@ -74,9 +74,9 @@ class Aboutus extends StatelessWidget {
             //This container is used to show the prize section. It's also positioned like the above container,
             //but the difference is that the above one was positioned from the top and this one was positioned from the bottom.
             //Run the code once, and you'll understand.
-            Positioned(
+            Positioned(              
               bottom: -scaleWidth(context, 120),
-              child: Container(
+              child: Container(                
                 color: lavender,
                 height: scaleHeight(context, 240),
                 width: scaleWidth(context, 1118),

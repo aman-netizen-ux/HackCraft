@@ -193,7 +193,10 @@ class ContactUsAndFooterSection extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
+          
               const Spacer(),
+
+
               Text('Lorem ipsum dolor sit amet,',           
             style: GoogleFonts.getFont(
               fontFamily2,
