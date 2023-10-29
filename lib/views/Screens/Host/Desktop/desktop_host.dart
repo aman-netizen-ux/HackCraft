@@ -19,15 +19,17 @@ class HostDesktopBody extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit.',
+                Text(
+                    'Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit.',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.getFont(fontFamily2,
                         fontSize: scaleHeight(context, 54),
                         color: black1,
                         fontWeight: FontWeight.w500,
                         height: lineHeight(70, 54))),
-                SizedBox(height: scaleHeight(context, 39),),
-                  
+                SizedBox(
+                  height: scaleHeight(context, 39),
+                ),
                 Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.getFont(fontFamily2,
@@ -35,56 +37,56 @@ class HostDesktopBody extends StatelessWidget {
                         color: black1,
                         fontWeight: FontWeight.w400,
                         height: lineHeight(22, 18))),
-
-                  SizedBox(height: scaleHeight(context, 44),),
-
+                SizedBox(
+                  height: scaleHeight(context, 44),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.pushNamed(context, '/templateSelection');
-                      }, 
+                      },
                       style: ElevatedButton.styleFrom(
-                        padding:  EdgeInsets.symmetric(vertical: scaleHeight(context, 5), horizontal: scaleWidth(context, 39)),
-                        backgroundColor: red,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(rad5_10),
-                        )
-                      ),
+                          padding: EdgeInsets.symmetric(
+                              vertical: scaleHeight(context, 5),
+                              horizontal: scaleWidth(context, 39)),
+                          backgroundColor: red,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(rad5_10),
+                          )),
                       child: Text('Continue Hosting',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.getFont(fontFamily2,
-                        fontSize: scaleHeight(context, 14),
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        height: lineHeight(22, 14))),),
-
-
-                        SizedBox(width: scaleWidth(context, 28),),
-
-                        ElevatedButton(
-                      onPressed: (){}, 
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.getFont(fontFamily2,
+                              fontSize: scaleHeight(context, 14),
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              height: lineHeight(22, 14))),
+                    ),
+                    SizedBox(
+                      width: scaleWidth(context, 28),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                        padding:  EdgeInsets.symmetric(vertical: scaleHeight(context, 5), horizontal: scaleWidth(context, 39)),
-                        backgroundColor: Colors.white,
-                        elevation: 0,
-                        side: BorderSide(
-                          color: red,
-                          width: 1
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(rad5_10),
-                        )
-                      ),
+                          padding: EdgeInsets.symmetric(
+                              vertical: scaleHeight(context, 5),
+                              horizontal: scaleWidth(context, 39)),
+                          backgroundColor: Colors.white,
+                          elevation: 0,
+                          side: BorderSide(color: red, width: 1),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(rad5_10),
+                          )),
                       child: Text('Contact Sponsors',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.getFont(fontFamily2,
-                        fontSize: scaleHeight(context, 14),
-                        color: red,
-                        fontWeight: FontWeight.w600,
-                        height: lineHeight(22, 14))),)
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.getFont(fontFamily2,
+                              fontSize: scaleHeight(context, 14),
+                              color: red,
+                              fontWeight: FontWeight.w600,
+                              height: lineHeight(22, 14))),
+                    )
                   ],
                 )
               ],
@@ -114,14 +116,18 @@ class MainNavBar extends StatelessWidget {
             children: [
               //container to be updated with image logic
               Container(
-                  height: scaleHeight(context, 44),
-                  width: scaleHeight(context, 44),
-                  color: Colors.black.withOpacity(0.3)),
+                height: scaleHeight(context, 44),
+                width: scaleHeight(context, 44),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.black.withOpacity(0.3),
+                ),
+              ),
               SizedBox(
                 width: scaleWidth(context, 6),
               ),
-              Text('Your Hackathon',
-                  style: GoogleFonts.getFont(fontFamily2,
+              Text('HackCraft',
+                  style: GoogleFonts.getFont(fontFamily1,
                       fontSize: scaleHeight(context, 20),
                       color: black1,
                       fontWeight: FontWeight.w400,
@@ -166,23 +172,31 @@ class MainNavBar extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {},
-                child: Container(
-                  margin: EdgeInsets.only(
-                    left: scaleWidth(context, 40),
-                    right: scaleWidth(context, 16),
-                  ),
-                  child: Text('Profile',
-                      style: GoogleFonts.getFont(fontFamily2,
-                          fontSize: scaleHeight(context, 14),
-                          color: black1,
-                          fontWeight: FontWeight.w400,
-                          height: lineHeight(23, 14))),
+                child: Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(
+                        left: scaleWidth(context, 40),
+                        right: scaleWidth(context, 16),
+                      ),
+                      child: Text('Profile',
+                          style: GoogleFonts.getFont(fontFamily2,
+                              fontSize: scaleHeight(context, 14),
+                              color: black1,
+                              fontWeight: FontWeight.w400,
+                              height: lineHeight(23, 14))),
+                    ),
+                    Container(
+                      height: scaleHeight(context, 44),
+                      width: scaleHeight(context, 44),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.black.withOpacity(0.3),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Container(
-                  height: scaleHeight(context, 44),
-                  width: scaleHeight(context, 44),
-                  color: Colors.black.withOpacity(0.3)),
             ],
           )
         ],
