@@ -7,6 +7,7 @@ import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:provider/provider.dart';
+import 'package:major_project__widget_testing/views/Screens/TempelateSelection/Desktop/terms_and_conditions_popup.dart';
 
 class TemplateSelectionBody extends StatefulWidget {
   const TemplateSelectionBody({super.key});
@@ -129,23 +130,37 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
                       children: [
                         Checkbox(
                           value: templateSelectionProvider.isTnCChecked, 
-                          activeColor: Color.fromARGB(75, 26, 32, 44),
-                          side: BorderSide(
-                            color: Color.fromARGB(100, 26, 32, 44),
+                          activeColor: black1_75,
+                          side: const BorderSide(
+                            color: black1_100,
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(rad5_1)
                           ),
                           onChanged: (value){
-                            templateSelectionProvider.setTnC(value);
+                            
+                             if(value!){
+                              showTermsAndConditions(context);
+                             } else{
+                              templateSelectionProvider.setTnC(value);
+                             }
 
                           }),
-                        Text('I agree with Terms and conditions',
-                            style: GoogleFonts.getFont(fontFamily2,
-                                fontSize: scaleHeight(context, 18),
-                                color: black1,
-                                fontWeight: FontWeight.w300,
-                                height: lineHeight(22, 18))),
+                        InkWell(
+                          onTap: (){
+                            showTermsAndConditions(context);
+                          },
+                          child: Text('I agree with Terms and conditions',                        
+                              style: GoogleFonts.getFont(
+                                fontFamily2,
+                                  fontSize: scaleHeight(context, 18),
+                                  color: black1,
+                                  fontWeight: FontWeight.w300,
+                                  height: lineHeight(22, 18),
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: black1_100),
+                                  ),
+                        ),
                       ],
                     ),
                 
