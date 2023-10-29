@@ -161,12 +161,9 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
                       onPressed: () {
                         if (templateSelectionProvider.isTnCChecked!) {
                           if (templateSelectionProvider.selectedTemplate == 1) {
-                            Navigator.pushNamed(context, '/defaultTemplate');
-                          } else if (templateSelectionProvider
-                                  .selectedTemplate ==
-                              2) {
-                            // TODO Create second Screen
-                            //  Navigator.pushNamed(context, '/defaultTemplate');
+                            Navigator.pushNamed(context, '/defaultEditPortal');
+                          } else if (templateSelectionProvider.selectedTemplate ==2) {
+                             Navigator.pushNamed(context, '/customEditPortal');
                           } else {
                             // TODO Create something to tell user to select card and check terms and conditions
                           }
