@@ -7,14 +7,15 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return  Scaffold(
+      body: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: InkWell(
             onTap: (){
-              context.read<MainNavigationProvider>().currentIndex = 0;
+             Navigator.pop(context);
             },
             child: const Icon(Icons.arrow_back)),
         ),
@@ -27,6 +28,7 @@ class Profile extends StatelessWidget {
           ),
         ),
       ],
+    ),
     );
   }
 }

@@ -28,7 +28,6 @@ class _DesktopHostNavigationState extends State<DesktopHostNavigation> {
     _widgetOptions = <Widget>[
       const Home(),
       const HostDesktopBody(),
-      const Profile(),
     ];
   }
 
@@ -39,13 +38,9 @@ class _DesktopHostNavigationState extends State<DesktopHostNavigation> {
 
     return Stack(
       children: [
-        Visibility(
-          visible: hostNavigationProvider.currentIndex == 1 ,
-          child: Center(child: Image.asset('assets/images/host/hostbg.png',
-          width: double.infinity,
-           fit: BoxFit.cover,)),
-          
-        ),
+        Center(child: Image.asset('assets/images/host/hostbg.png',
+        width: double.infinity,
+         fit: BoxFit.cover,)),
         Column(
           children: [
             Visibility(
@@ -85,7 +80,7 @@ class _DesktopHostNavigationState extends State<DesktopHostNavigation> {
                       HostNavTab(
                         hostNavigationProvider: hostNavigationProvider,
                         tabIndex: 0,
-                        title: 'Home',
+                        title: 'Hackathons',
                         onTap: () {
                           mainNavigationProvider.currentIndex=0;
                           Navigator.pop(context);
@@ -99,7 +94,7 @@ class _DesktopHostNavigationState extends State<DesktopHostNavigation> {
                       ),
                       InkWell(
                         onTap: () {
-                          hostNavigationProvider.currentIndex = 2;
+                          Navigator.pushNamed(context, '/profile');
                         },
                         child: Row(
                           children: [

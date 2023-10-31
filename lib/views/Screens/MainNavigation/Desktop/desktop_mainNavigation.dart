@@ -28,7 +28,6 @@ class _DesktopMainNavigationState extends State<DesktopMainNavigation> {
     _widgetOptions = <Widget>[
       const Home(),
       const Sponsors(),
-      const Profile(),
     ];
   }
 
@@ -86,7 +85,7 @@ class _DesktopMainNavigationState extends State<DesktopMainNavigation> {
                     MainNavTab(
                         mainNavigationProvider: mainNavigationProvider,
                         tabIndex: 0,
-                        title: 'Home',
+                        title: 'Hackathons',
                         onTap: () => mainNavigationProvider.currentIndex = 0),
                     MainNavTab(
                         mainNavigationProvider: mainNavigationProvider,
@@ -100,7 +99,7 @@ class _DesktopMainNavigationState extends State<DesktopMainNavigation> {
                         onTap: () => Navigator.pushNamed(context, '/hostNavigation')),
                     InkWell(
                       onTap: () {
-                        mainNavigationProvider.currentIndex = 2;
+                        Navigator.pushNamed(context, '/profile');
                       },
                       child: Row(
                         children: [

@@ -7,6 +7,7 @@ import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/de
 // import 'package:major_project__widget_testing/views/RedundantFiles/edit.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/default_template.dart';
 import 'package:major_project__widget_testing/views/Screens/HostNavigation/hostNavigation.dart';
+import 'package:major_project__widget_testing/views/Screens/MainNavigation/Desktop/Sections/Profile/profile.dart';
 import 'package:major_project__widget_testing/views/Screens/MainNavigation/mainNavigation.dart';
 import 'package:major_project__widget_testing/views/Screens/TempelateSelection/tempelate_selection.dart';
 
@@ -18,6 +19,7 @@ static const String contactSponsors = '/contactSponsors';
 static const String defaultTemplate = '/defaultTemplate';
 static const String customEditPortal = '/customEditPortal';
 static const String defaultEditPortal = '/defaultEditPortal';
+static const String profile = '/profile';
 
 
 
@@ -32,6 +34,7 @@ contactSponsors: (context) => const ContactSponsors(),
 defaultTemplate: (context) => const DefaultTemplate(),
 customEditPortal: (context) => const CustomEditPortal(),
 defaultEditPortal: (context) => const DefaultEditPortal(),
+profile: (context) => const Profile(),
 
 
 
