@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/responsive/responsive_layout.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/desktop_default_editPortal.dart';
 
@@ -14,13 +15,11 @@ class _DefaultEditPortalState extends State<DefaultEditPortal> {
   Widget build(BuildContext context) {
     return  SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: ResponsiveLayout(
-            mobileBody: const DefaultEditPortalDesktopBody(), //TODO: Add mobile body
-            desktopBody: const DefaultEditPortalDesktopBody(),
-            tabletBody: const DefaultEditPortalDesktopBody(),  //TODO: Add tablet body
-          ),
+        backgroundColor: grey3,
+        body: ResponsiveLayout(
+          mobileBody: const DefaultEditPortalDesktopBody(), //TODO: Add mobile body
+          desktopBody: const DefaultEditPortalDesktopBody(),
+          tabletBody: const DefaultEditPortalDesktopBody(),  //TODO: Add tablet body
         ),
       ),
     );

@@ -1,44 +1,29 @@
 import 'package:flutter/material.dart';
-
+import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/right_panel.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/side_panel.dart';
 
 class DefaultEditPortalDesktopBody extends StatefulWidget {
   const DefaultEditPortalDesktopBody({super.key});
 
   @override
-  State<DefaultEditPortalDesktopBody> createState() => _DefaultEditPortalDesktopBodyState();
+  State<DefaultEditPortalDesktopBody> createState() =>
+      _DefaultEditPortalDesktopBodyState();
 }
 
-class _DefaultEditPortalDesktopBodyState extends State<DefaultEditPortalDesktopBody> {
+class _DefaultEditPortalDesktopBodyState
+    extends State<DefaultEditPortalDesktopBody> {
   @override
   Widget build(BuildContext context) {
-    return   Column(
+    return const Row(
       children: [
-         Align(
-          alignment: Alignment.topLeft,
-           child: InkWell(
-            onTap: () => Navigator.pop(context),
-            child: const Icon(Icons.arrow_back)
-                 ),
-         ),
-         const Text(
-           'Default Edit Portal',
-           style: TextStyle(
-             fontSize: 24
-           ),
-         ),
-          const SizedBox(height: 25,),
-
-          ElevatedButton(
-            onPressed: (){
-              Navigator.pushNamed(context, '/defaultTemplate');
-            }, 
-            child: const Text(
-           'Preview',
-           style: TextStyle(
-             fontSize: 21
-           ),
-         ))
-        
+         Expanded(
+            flex: 73,
+            child: SidePanel()
+          ),
+        Expanded(
+            flex: 927,
+            child: RightPanel() 
+            )
       ],
     );
   }
