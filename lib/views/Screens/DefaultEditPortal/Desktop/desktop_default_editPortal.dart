@@ -12,17 +12,26 @@ class DefaultEditPortalDesktopBody extends StatefulWidget {
 
 class _DefaultEditPortalDesktopBodyState
     extends State<DefaultEditPortalDesktopBody> {
+       final _formKey = GlobalKey<FormState>();
+          String? textinput = '';
+
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return  Row(
       children: [
          Expanded(
             flex: 73,
-            child: SidePanel()
+            child: SidePanel(
+              formKey: _formKey,
+              textinput: textinput,
+            )
           ),
         Expanded(
             flex: 927,
-            child: RightPanel() 
+            child: RightPanel(
+               formKey: _formKey,
+               textinput: textinput,
+            ) 
             )
       ],
     );

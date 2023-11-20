@@ -7,7 +7,12 @@ import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/De
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/toolbar.dart';
 
 class RightPanel extends StatefulWidget {
-  const RightPanel({super.key});
+   RightPanel({super.key, required this.formKey, this.textinput});
+
+    final GlobalKey<FormState> formKey;
+         String? textinput;
+
+
 
   @override
   State<RightPanel> createState() => _RightPanelState();
@@ -34,7 +39,11 @@ class _RightPanelState extends State<RightPanel> {
             children: [
               const ToolBar(),
               Expanded(flex: 0528, child: Container()),
-              const DefaultCanvas()
+               DefaultCanvas(
+                formKey: widget.formKey,
+                textinput: widget.textinput,
+                
+              )
             ],
           ),
           Align(

@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
+import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:provider/provider.dart';
 
 class SidePanel extends StatefulWidget {
-  const SidePanel({super.key});
+   SidePanel({super.key, required this.formKey, this.textinput});
+
+    final GlobalKey<FormState> formKey;
+     String? textinput;
+
 
   @override
   State<SidePanel> createState() => _SidePanelState();
@@ -14,6 +20,8 @@ class SidePanel extends StatefulWidget {
 class _SidePanelState extends State<SidePanel> {
   @override
   Widget build(BuildContext context) {
+        final hackathonDetailsProvider = Provider.of<HackathonDetailsProvider>(context);
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: scaleHeight(context, 45)),
       child: Column(
@@ -23,7 +31,14 @@ class _SidePanelState extends State<SidePanel> {
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
               onTap: () {
-                Navigator.pushNamed(context, '/defaultTemplate');
+                if(widget.formKey.currentState!.validate()){
+                  widget.formKey.currentState!.save();
+
+                  // hackathonDetailsProvider.hackathonName=widget.textinput.toString();
+                  Navigator.pushNamed(context, '/defaultTemplate');
+
+                }
+                
               },
               child: const Icon(
                 Icons.menu,
