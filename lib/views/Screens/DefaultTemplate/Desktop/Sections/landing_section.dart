@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
-
-
+import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/RoundsSection/rounds_section.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/aboutUs_section.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/contactUsAndFooter_section.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/gallerySection.dart';
 
 class LandingSection extends StatelessWidget {
   const LandingSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  Padding(
-      padding:  EdgeInsets.symmetric(horizontal: scaleWidth(context, 81),vertical: scaleHeight(context, 39)),
+    return Padding(
+      key: home,
+      padding: EdgeInsets.symmetric(
+          horizontal: scaleWidth(context, 81),
+          vertical: scaleHeight(context, 39)),
       child: Column(
         children: [
           //NavBar
@@ -33,7 +40,7 @@ class LandingSection extends StatelessWidget {
                   Text(
                     'Your Hackathon',
                     style: GoogleFonts.getFont(
-                      fontFamily2,fontSize: scaleWidth(context, 20),
+                      fontFamily2,fontSize: scaleHeight(context, 20),
                       color: black1,
                       fontWeight: FontWeight.w400,
                       height: lineHeight(22.4, 20)
@@ -42,79 +49,85 @@ class LandingSection extends StatelessWidget {
                  
                 ],
               ),
-
               Row(
                 children: [
                   TextButton(
-                    onPressed: (){},
+                    onPressed: () {
+                      scrollToItem(home);
+                    },
                     child: Text(
                       'Home',
                       style: GoogleFonts.getFont(
-                        fontFamily2,fontSize: scaleWidth(context, 14),
+                        fontFamily2,fontSize: scaleHeight(context, 14),
                         color: black1,
                         fontWeight: FontWeight.w400,
                         height: lineHeight(22.4, 14)
                       )
                     ),
                   ),
-                  SizedBox(width: scaleWidth(context, 15),),
                   TextButton(
-                    onPressed: (){},
+                    onPressed: () {
+                      scrollToItem(rulesAndRounds);
+                    },
                     child: Text(
-                      'Home',
+                      'Rounds',
                       style: GoogleFonts.getFont(
-                        fontFamily2,fontSize: scaleWidth(context, 14),
+                        fontFamily2,fontSize: scaleHeight(context, 14),
                         color: black1,
                         fontWeight: FontWeight.w400,
                         height: lineHeight(22.4, 14)
                       )
                     ),
                   ),
-                  SizedBox(width: scaleWidth(context, 15),),
                   TextButton(
-                    onPressed: (){},
+                    onPressed: () {
+                      scrollToItem(aboutUs);
+                    },
                     child: Text(
-                      'Home',
+                      'About Us',
                       style: GoogleFonts.getFont(
-                        fontFamily2,fontSize: scaleWidth(context, 14),
+                        fontFamily2,fontSize: scaleHeight(context, 14),
                         color: black1,
                         fontWeight: FontWeight.w400,
                         height: lineHeight(22.4, 14)
                       )
                     ),
                   ),
-                  SizedBox(width: scaleWidth(context, 15),),
                   TextButton(
-                    onPressed: (){},
+                    onPressed: () {
+                      scrollToItem(gallery);
+                    },
                     child: Text(
-                      'Home',
+                      'Gallery',
                       style: GoogleFonts.getFont(
-                        fontFamily2,fontSize: scaleWidth(context, 14),
+                        fontFamily2,fontSize: scaleHeight(context, 14),
                         color: black1,
                         fontWeight: FontWeight.w400,
                         height: lineHeight(22.4, 14)
                       )
                     ),
                   ),
-                  SizedBox(width: scaleWidth(context, 15),),
                   TextButton(
-                    onPressed: (){},
+                    onPressed: () {
+                     scrollToItem(contactUs);
+                    },
                     child: Text(
-                      'Home',
+                      'Contact Us',
                       style: GoogleFonts.getFont(
-                        fontFamily2,fontSize: scaleWidth(context, 14),
+                        fontFamily2,fontSize: scaleHeight(context, 14),
                         color: black1,
                         fontWeight: FontWeight.w400,
                         height: lineHeight(22.4, 14)
                       )
                     ),
                   ),
-                 
                 ],
               )
             ],
           ),
-          SizedBox(height: scaleHeight(context, 70),),
+          SizedBox(
+            height: scaleHeight(context, 70),
+          ),
 
         //Landing Section
         Stack(
@@ -127,7 +140,7 @@ class LandingSection extends StatelessWidget {
               width: scaleWidth(context, 1108),  
               alignment: Alignment.center,            
               decoration: const BoxDecoration(
-                color: lightBlue,
+                color: lavender,
                 borderRadius: BorderRadius.all(
                   Radius.circular(rad5_6)
                 )
@@ -141,7 +154,7 @@ class LandingSection extends StatelessWidget {
                         'Organisation name presents',
                         style: GoogleFonts.getFont(
                           fontFamily2,
-                          fontSize: scaleWidth(context, 20),
+                          fontSize: scaleHeight(context, 20),
                           color: greyish1,
                           fontWeight: FontWeight.w500,
                           height: lineHeight(22.4, 20)
@@ -154,7 +167,7 @@ class LandingSection extends StatelessWidget {
                         'Your Hackathon Name',
                         style: GoogleFonts.getFont(
                           fontFamily2,
-                          fontSize: scaleWidth(context, 54),
+                          fontSize: scaleHeight(context, 54),
                           color: black2,
                           fontWeight: FontWeight.w600,
                           height: lineHeight(22.4, 54)
@@ -167,7 +180,7 @@ class LandingSection extends StatelessWidget {
                         'Give us brief about your hackathon (60 words)',
                         style: GoogleFonts.getFont(
                           fontFamily2,
-                          fontSize: scaleWidth(context, 18),
+                          fontSize: scaleHeight(context, 18),
                           color: greyish1,
                           fontWeight: FontWeight.w400,
                           height: lineHeight(22.4, 18)
@@ -207,10 +220,9 @@ class LandingSection extends StatelessWidget {
 
 class hackathonDetailContainer extends StatelessWidget {
   const hackathonDetailContainer({
-    super.key, required this.detail,
-    
-  } 
-  );
+    super.key,
+    required this.detail,
+  });
 
   final String detail;
 
@@ -232,7 +244,7 @@ class hackathonDetailContainer extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: GoogleFonts.getFont(
                           fontFamily2,
-                          fontSize: scaleWidth(context, 20),
+                          fontSize: scaleHeight(context, 20),
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
                           height: lineHeight(22.4, 20)

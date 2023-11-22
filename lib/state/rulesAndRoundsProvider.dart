@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class RulesProvider with ChangeNotifier{
-  Widget _descriptionWidget = SvgPicture.asset('assets/images/defaultTemplate/clickme.svg');
+class RulesProvider with ChangeNotifier {
+  //Initially image will be shown to the user
+  Widget _descriptionWidget =
+      SvgPicture.asset('assets/images/defaultTemplate/clickme.svg');
 
+      int _selectedIndex = -1;
+
+   int get selectedIndex => _selectedIndex;
+
+   void setSelectedIndex(int index){
+    _selectedIndex = index;
+    notifyListeners();
+   }
+
+//Demo list to show the rounds and their description
   final List<Map<String, String>> _roundsList = [
     {
       'roundTitle': 'Round 1',
@@ -37,22 +49,24 @@ class RulesProvider with ChangeNotifier{
       'roundTitle': 'Round 5',
       'startDate': '3 nov 2023',
       'endDate': '10 nov 2023',
-      'roundDescription': '67, West Avenue, Westville, Sunset, State, India Pin - 567890'
+      'roundDescription':
+          '67, West Avenue, Westville, Sunset, State, India Pin - 567890'
     },
     {
       'roundTitle': 'Round 5',
       'startDate': '3 nov 2023',
       'endDate': '10 nov 2023',
-      'roundDescription': '67, West Avenue, Westville, Sunset, State, India Pin - 567890'
+      'roundDescription':
+          '67, West Avenue, Westville, Sunset, State, India Pin - 567890'
     },
-    
   ];
 
   List<Map<String, String>> get roundsList => _roundsList;
 
   Widget get descriptionWidget => _descriptionWidget;
 
-  void setDescriptionWidget(Widget value){
+//When the user clicks on any card, the _description widget will get updated with the description of that round, and instead of an image, text will now be shown.
+  void setDescriptionWidget(Widget value) {
     _descriptionWidget = value;
     notifyListeners();
   }
