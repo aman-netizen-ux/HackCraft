@@ -6,6 +6,15 @@ class RulesProvider with ChangeNotifier {
   Widget _descriptionWidget =
       SvgPicture.asset('assets/images/defaultTemplate/clickme.svg');
 
+      int _selectedIndex = -1;
+
+   int get selectedIndex => _selectedIndex;
+
+   void setSelectedIndex(int index){
+    _selectedIndex = index;
+    notifyListeners();
+   }
+
 //Demo list to show the rounds and their description
   final List<Map<String, String>> _roundsList = [
     {

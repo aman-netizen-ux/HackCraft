@@ -11,7 +11,7 @@ const black4 = Color.fromARGB(255, 158, 147, 147);
 
 const greyish1= Color.fromARGB(255, 86, 74, 74);
 const greyish2= Color.fromARGB(255, 190, 181, 181);
-const lavender  = Color.fromARGB(255, 226, 204, 255);
+const lavender  = Color.fromARGB(255, 242, 232, 255);
 
 
 const lightBlue= Color.fromARGB(255, 181, 201, 255);

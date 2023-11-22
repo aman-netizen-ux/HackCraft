@@ -9,6 +9,7 @@ class CustomTimelineTile extends StatelessWidget {
   final bool isLast;
   //final bool isPast;
   final String roundTitle;
+  final int cardIndex;
   final String roundDescription;
   final String endDate;
   final String startDate;
@@ -22,7 +23,7 @@ class CustomTimelineTile extends StatelessWidget {
       required this.roundDescription,
       required this.endDate,
       required this.startDate,
-      this.onTap});
+      this.onTap, required this.cardIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +40,7 @@ class CustomTimelineTile extends StatelessWidget {
         padding: const EdgeInsets.all(6),
       ),
       endChild: RoundCard(
+        index: cardIndex,
           title: roundTitle,
           enddate: endDate,
           startDate: startDate,
