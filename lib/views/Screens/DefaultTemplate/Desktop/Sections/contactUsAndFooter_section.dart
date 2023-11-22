@@ -211,6 +211,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
+          
               Container(
                   width: scaleWidth(context, 230),
                   margin: EdgeInsets.only(top : scaleHeight(context, 49)),
@@ -219,14 +220,14 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                       columnCount: 2,
                       menuList: footerLinks)),
               const Spacer(),
-              Text(
-                'Lorem ipsum dolor sit amet,',
-                style: GoogleFonts.getFont(fontFamily2,
-                    fontSize: scaleHeight(context, 16),
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white,
-                    height: lineHeight(25, 16)),
-              ),
+              Text('Lorem ipsum dolor sit amet,',           
+            style: GoogleFonts.getFont(
+              fontFamily2,
+              fontSize: scaleHeight(context, 16),
+              fontWeight: FontWeight.w400,
+              color: Colors.white,
+              height: lineHeight(25, 16)
+            ),),
             ],
           ),
         ],

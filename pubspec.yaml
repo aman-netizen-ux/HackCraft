@@ -35,7 +35,6 @@ dependencies:
   provider: ^6.0.5 
   timeline_tile: ^2.0.0
   flutter_svg: ^2.0.7
-  get: ^4.6.6
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -69,7 +68,10 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/icons/
     - assets/images/defaultTemplate/
+    - assets/images/host/
+    - assets/icons/defaultEditPortal/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -4,6 +4,7 @@ import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desk
 import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/gallerySection.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/landing_section.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/RoundsSection/rounds_section.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/navbar.dart';
 
 
 class DefaultTemplateDesktopBody extends StatefulWidget {
@@ -18,6 +19,7 @@ class _DefaultTemplateDesktopBodyState extends State<DefaultTemplateDesktopBody>
   Widget build(BuildContext context) {
     return const Column(
       children: [
+        NavBar(),
         LandingSection(),
         RoundsAndRules(),
         Aboutus(),
