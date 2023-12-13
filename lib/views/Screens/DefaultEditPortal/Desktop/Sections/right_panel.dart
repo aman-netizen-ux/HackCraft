@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Components/separator.dart';
-import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/canvas.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/canvas.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/stackedToolBar.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/toolbar.dart';
 
