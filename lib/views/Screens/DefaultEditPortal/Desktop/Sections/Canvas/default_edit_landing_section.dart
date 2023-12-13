@@ -96,8 +96,7 @@ class DefaultEditLandingSection extends StatelessWidget {
                       SizedBox(
                         height: defaultEditScaleHeight(containerHeight, 42),
                       ),
-                      Container(
-                        color: Colors.green[100],
+                      SizedBox(
                         width: defaultEditScaleWidth(containerWidth, 700),
                         height: defaultEditScaleHeight(containerHeight, 54),
                         child: TextFormField(
