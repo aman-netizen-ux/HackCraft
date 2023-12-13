@@ -6,10 +6,25 @@ import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
+import 'package:major_project__widget_testing/views/Components/customGrid.dart';
 
-class ContactUsAndFooterSection extends StatelessWidget {
+class ContactUsAndFooterSection extends StatefulWidget {
   const ContactUsAndFooterSection({super.key});
 
+  @override
+  State<ContactUsAndFooterSection> createState() =>
+      _ContactUsAndFooterSectionState();
+}
+
+class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
+  List<String> footerLinks = [
+    "Terms",
+    "FAQ",
+    "Privacy",
+    "Careers",
+    "How To",
+    "Give Feedback"
+  ];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -118,7 +133,7 @@ class ContactUsAndFooterSection extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Expanded(flex: 7, child: Placeholder())
+              Expanded(flex: 7, child: Container())
               ],
             ),
           ),
@@ -135,7 +150,11 @@ class ContactUsAndFooterSection extends StatelessWidget {
     return Container(
       height: scaleHeight(context, 355),
       width: double.infinity,
-      padding: EdgeInsets.only(top: scaleHeight(context, 82), left: scaleHeight(context, 81), right: scaleHeight(context, 81), bottom: scaleHeight(context, 41)),
+      padding: EdgeInsets.only(
+          top: scaleHeight(context, 82),
+          left: scaleHeight(context, 81),
+          right: scaleHeight(context, 81),
+          bottom: scaleHeight(context, 41)),
       color: black6,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -157,56 +176,59 @@ class ContactUsAndFooterSection extends StatelessWidget {
                     width: scaleWidth(context, 21),
                   ),
                   Text('Major\nProject',
-                  textAlign: TextAlign.left,
-                      style: GoogleFonts.getFont(fontFamily2,
-                          fontSize: scaleHeight(context, 32),
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,                          
-                          )),
+                      textAlign: TextAlign.left,
+                      style: GoogleFonts.getFont(
+                        fontFamily2,
+                        fontSize: scaleHeight(context, 32),
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                      )),
                 ],
               ),
-            SizedBox(height: scaleHeight(context, 38),),
-            Text('Lorem ipsum dolor sit amet,\nLorem ipsum dolor sit amet,',
-            textAlign: TextAlign.left,
-            style: GoogleFonts.getFont(
-              fontFamily2,
-              fontSize: scaleHeight(context, 16),
-              fontWeight: FontWeight.w400,
-              color: Colors.white,
-              height: lineHeight(25, 16)
-            ),),
-
-            const Spacer(),
-
-            Text('Lorem ipsum dolor sit amet,',           
-            style: GoogleFonts.getFont(
-              fontFamily2,
-              fontSize: scaleHeight(context, 16),
-              fontWeight: FontWeight.w400,
-              color: Colors.white,
-              height: lineHeight(25, 16)
-            ),),
-
-            
+              SizedBox(
+                height: scaleHeight(context, 38),
+              ),
+              Text(
+                'Lorem ipsum dolor sit amet,\nLorem ipsum dolor sit amet,',
+                textAlign: TextAlign.left,
+                style: GoogleFonts.getFont(fontFamily2,
+                    fontSize: scaleHeight(context, 16),
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white,
+                    height: lineHeight(25, 16)),
+              ),
+              const Spacer(),
+              Text(
+                'Lorem ipsum dolor sit amet,',
+                style: GoogleFonts.getFont(fontFamily2,
+                    fontSize: scaleHeight(context, 16),
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white,
+                    height: lineHeight(25, 16)),
+              ),
             ],
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-          
+              Container(
+                  width: scaleWidth(context, 230),
+                  margin: EdgeInsets.only(top : scaleHeight(context, 49)),
+                  child: CustomGrid(
+                      itemCount: footerLinks.length,
+                      columnCount: 2,
+                      menuList: footerLinks)),
               const Spacer(),
-
-
-              Text('Lorem ipsum dolor sit amet,',           
-            style: GoogleFonts.getFont(
-              fontFamily2,
-              fontSize: scaleHeight(context, 16),
-              fontWeight: FontWeight.w400,
-              color: Colors.white,
-              height: lineHeight(25, 16)
-            ),),
+              Text(
+                'Lorem ipsum dolor sit amet,',
+                style: GoogleFonts.getFont(fontFamily2,
+                    fontSize: scaleHeight(context, 16),
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white,
+                    height: lineHeight(25, 16)),
+              ),
             ],
-          )
+          ),
         ],
       ),
     );

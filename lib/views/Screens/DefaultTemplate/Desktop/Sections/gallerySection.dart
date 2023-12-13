@@ -128,7 +128,7 @@ class GallerySection extends StatelessWidget {
                   }
                 }
 
-                return
+                return 
                     // Container(
                     //   // width: cardWidth,
                     //   // height : cardHeight,
@@ -140,11 +140,16 @@ class GallerySection extends StatelessWidget {
                     //   ),
                     //child:
                     Center(
-                  child: Image.asset(
-                    galleryProvider.galleryImages[index],
-                    fit: BoxFit.cover,
-                    height: cardHeight,
-                    width: cardWidth,
+                  child: Wrap(
+                    spacing: 20,
+                    runSpacing: 20,
+                    children:[ Image.asset(
+                      galleryProvider.galleryImages[index],
+                      fit: BoxFit.cover,
+                      height: cardHeight,
+                      width: cardWidth,
+                    ),
+                    ]
                   ),
                 );
                 //);

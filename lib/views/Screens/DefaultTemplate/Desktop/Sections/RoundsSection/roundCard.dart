@@ -3,19 +3,23 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
+import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
+import 'package:provider/provider.dart';
 
 // This file was created in order to create the card for the rounds section.
 class RoundCard extends StatelessWidget {
   final String title;
+  final int index;
   final void Function()? onTap;
   final String enddate;
   final String startDate;
-  const RoundCard({super.key, required this.title, required this.enddate, required this.startDate, this.onTap});
+  const RoundCard({super.key, required this.title, required this.enddate, required this.startDate, this.onTap, required this.index});
 
   @override
   Widget build(BuildContext context) {
+    final rulesProvider = Provider.of<RulesProvider>(context);
     
     return InkWell(
       hoverColor: Colors.white,
@@ -24,10 +28,11 @@ class RoundCard extends StatelessWidget {
       child: Container(
           height: scaleHeight(context, 67),
           width: double.infinity,
-          margin : EdgeInsets.only(bottom : scaleHeight(context, 23), left : scaleWidth(context, 47), right : scaleWidth(context, 52), top : scaleHeight(context, 23)),
+          margin : EdgeInsets.only(bottom : scaleHeight(context, 23), left : scaleWidth(context, 47), right : scaleWidth(context, 26), top : scaleHeight(context, 23)),
           decoration: BoxDecoration(
             color : Colors.white,
               borderRadius: BorderRadius.circular(rad5_3),
+              border: Border.all(color: rulesProvider.selectedIndex == index ? black1 : Colors.transparent),
               boxShadow: const [
                 BoxShadow(
                   color: Color(0x3F000000),
