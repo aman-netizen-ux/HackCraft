@@ -26,7 +26,7 @@ const grey4= Color.fromARGB(255, 30, 30, 30);
 
 
 
-const lavender  = Color.fromARGB(255, 226, 204, 255);
+const lavender  = Color.fromARGB(255, 242, 232, 255);
 
 const defaultTemplateCardTitle= Color.fromARGB(255, 150, 102, 197);
 const defaultTemplateCardBorder= Color.fromARGB(255, 217, 179, 255);
