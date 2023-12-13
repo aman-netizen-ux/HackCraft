@@ -79,8 +79,8 @@ class DefaultRoundsAndRules extends StatelessWidget {
                             startDate: rulesProvider.roundsList[index]
                                 ['startDate']!,
                             onTap: () {
-                              rulesProvider.setSelectedIndex(index);
-                              rulesProvider.setDescriptionWidget(defaultRoundDetails(
+                              rulesProvider.setEditSelectedIndex(index);
+                              rulesProvider.setEditDescriptionWidget(defaultRoundDetails(
                                   rulesProvider.roundsList[index]
                                       ['roundDescription']!,
                                   context,
@@ -89,7 +89,7 @@ class DefaultRoundsAndRules extends StatelessWidget {
                           );
                         }))),
                         Expanded(flex: 03, child: Container()),
-                Expanded(flex: 50, child: rulesProvider.descriptionWidget),
+                Expanded(flex: 50, child: rulesProvider.editDescriptionWidget),
               ],
             ),
           ),
