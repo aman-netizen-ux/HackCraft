@@ -42,20 +42,20 @@ class DefaultRoundCard extends StatelessWidget {
       hoverColor: Colors.white,
       onTap: onTap,
       child: Container(
-          height: defaultEditScaleHeight(containerHeight, 67),
+          height: defaultEditScaleHeight(containerHeight, 85),
           width: double.infinity,
           alignment: Alignment.topLeft,
           margin: EdgeInsets.only(
-            //bottom: defaultEditScaleHeight(containerHeight, 23),
+            bottom: defaultEditScaleHeight(containerHeight, 23),
             left: defaultEditScaleWidth(containerWidth, 47),
             right: defaultEditScaleWidth(containerWidth, 26),
-            //top: defaultEditScaleHeight(containerHeight, 23)
+            top: defaultEditScaleHeight(containerHeight, 23)
           ),
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(rad5_3),
               border: Border.all(
-                  color: rulesProvider.selectedIndex == index
+                  color: rulesProvider.editSelectedIndex == index
                       ? black1
                       : Colors.transparent),
               boxShadow: const [
@@ -76,9 +76,9 @@ class DefaultRoundCard extends StatelessWidget {
                   ),
                   //Title of the round
                   child: Container(
-                   height: defaultEditScaleHeight(containerHeight, 30),
+                    height: defaultEditScaleHeight(containerHeight, 30),
                     alignment: Alignment.topLeft,
-                   // color: Colors.amberAccent,
+                    // color: Colors.amberAccent[100],
                     child: TextFormField(
                       //textAlignVertical: TextAlignVertical.top,
                       controller: roundNameController,
@@ -118,58 +118,164 @@ class DefaultRoundCard extends StatelessWidget {
                   )
                   ),
               //Timeline i.e Start date and End date of the round
-              Padding(
-                  padding: EdgeInsets.only(
-                    left: defaultEditScaleWidth(containerWidth, 25),
-                    // bottom: defaultEditScaleHeight(containerHeight, 6)
-                  ),
-                  child:
-                      // Text('$startDate - $enddate',
-                      //     style: GoogleFonts.getFont(fontFamily2,
-                      //         fontSize: defaultEditScaleHeight(containerHeight, 18),
-                      //         color: black1,
-                      //         height: lineHeight(2.4, 20),
-                      //         fontWeight: FontWeight.w400)),
-                      Container(
-                    height: defaultEditScaleHeight(containerHeight, 30),
-                    //color: Colors.deepPurple,
-                    alignment: Alignment.center,
-                    child: TextFormField(
-                      controller: roundTimelineController,
-                      cursorColor: Colors.black,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(0),
-                        hintText: 'Timeline',
-                        hintStyle: GoogleFonts.getFont(fontFamily2,
-                            fontSize:
-                                defaultEditScaleHeight(containerHeight, 20),
-                            color: black1,
-                            fontWeight: FontWeight.w400,
-                            height: lineHeight(22.4, 20)),
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        focusedErrorBorder: InputBorder.none,
-                        counterText: "",
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                      padding: EdgeInsets.only(
+                        left: defaultEditScaleWidth(containerWidth, 25), right: defaultEditScaleWidth(containerWidth, 15)
+                        // bottom: defaultEditScaleHeight(containerHeight, 6)
                       ),
-                      maxLength: 10,
-                      keyboardType: TextInputType.text,
-                      style: GoogleFonts.getFont(fontFamily2,
-                          fontSize: defaultEditScaleHeight(containerHeight, 20),
+                      child:
+                          // Text('$startDate - $enddate',
+                          //     style: GoogleFonts.getFont(fontFamily2,
+                          //         fontSize: defaultEditScaleHeight(containerHeight, 18),
+                          //         color: black1,
+                          //         height: lineHeight(2.4, 20),
+                          //         fontWeight: FontWeight.w400)),
+                          Container(
+                        height: defaultEditScaleHeight(containerHeight, 30),
+                         width: defaultEditScaleWidth(containerWidth, 110),
+                        // color: Colors.deepPurple[100],
+                        alignment: Alignment.center,
+                        child: TextFormField(
+                          controller: roundTimelineController,
+                          cursorColor: Colors.black,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(0),
+                            hintText: 'DD/MMM/YYYY',
+                            hintStyle: GoogleFonts.getFont(fontFamily2,
+                                fontSize:
+                                    defaultEditScaleHeight(containerHeight, 20),
+                                color: black1,
+                                fontWeight: FontWeight.w400,
+                                height: lineHeight(22.4, 20)),
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            focusedErrorBorder: InputBorder.none,
+                            counterText: "",
+                          ),
+                          maxLength: 10,
+                          keyboardType: TextInputType.text,
+                          style: GoogleFonts.getFont(fontFamily2,
+                              fontSize:
+                                  defaultEditScaleHeight(containerHeight, 20),
+                              color: black1,
+                              fontWeight: FontWeight.w400,
+                              height: lineHeight(22.4, 20)),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return '';
+                            }
+                            return null;
+                          },
+                          // onSaved: (value) {
+                          //   hackathonDetailsProvider.hackathonName = value.toString();
+                          // },
+                        ),
+                      )),
+                  Container(
+                  height: defaultEditScaleHeight(containerHeight, 30),
+                  width: defaultEditScaleWidth(containerWidth, 10),
+                  alignment: Alignment.topLeft,
+                  // color: Colors.amberAccent[100],
+                  child: TextFormField(
+                    enabled:false,
+                    textAlign: TextAlign.center,
+                    //textAlignVertical: TextAlignVertical.top,
+                    // controller: roundNameController,
+                    cursorColor: Colors.black,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(0),
+                      hintText: '-',
+                      hintStyle: GoogleFonts.getFont(fontFamily2,
+                          fontSize:
+                              defaultEditScaleHeight(containerHeight, 20),
                           color: black1,
                           fontWeight: FontWeight.w400,
                           height: lineHeight(22.4, 20)),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return '';
-                        }
-                        return null;
-                      },
-                      // onSaved: (value) {
-                      //   hackathonDetailsProvider.hackathonName = value.toString();
-                      // },
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      focusedErrorBorder: InputBorder.none,
+                      counterText: "",
                     ),
-                  ))
+                    maxLength: 1,
+                    keyboardType: TextInputType.text,
+                    style: GoogleFonts.getFont(fontFamily2,
+                        fontSize: defaultEditScaleHeight(containerHeight, 20),
+                        color: black1,
+                        fontWeight: FontWeight.w400,
+                        height: lineHeight(22.4, 20)),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return '';
+                      }
+                      return null;
+                    },
+                    // onSaved: (value) {
+                    //   hackathonDetailsProvider.hackathonName = value.toString();
+                    // },
+                  ),
+                  ),
+                  Padding(
+                      padding: EdgeInsets.only(
+                        left: defaultEditScaleWidth(containerWidth, 15),
+                        // bottom: defaultEditScaleHeight(containerHeight, 6)
+                      ),
+                      child:
+                          // Text('$startDate - $enddate',
+                          //     style: GoogleFonts.getFont(fontFamily2,
+                          //         fontSize: defaultEditScaleHeight(containerHeight, 18),
+                          //         color: black1,
+                          //         height: lineHeight(2.4, 20),
+                          //         fontWeight: FontWeight.w400)),
+                          Container(
+                        height: defaultEditScaleHeight(containerHeight, 30),
+                        width: defaultEditScaleWidth(containerWidth, 110),
+                        // color: Colors.deepPurple[100],
+                        alignment: Alignment.center,
+                        child: TextFormField(
+                          controller: roundTimelineController,
+                          cursorColor: Colors.black,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(0),
+                            hintText: 'DD/MMM/YYYY',
+                            hintStyle: GoogleFonts.getFont(fontFamily2,
+                                fontSize:
+                                    defaultEditScaleHeight(containerHeight, 20),
+                                color: black1,
+                                fontWeight: FontWeight.w400,
+                                height: lineHeight(22.4, 20)),
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            focusedErrorBorder: InputBorder.none,
+                            counterText: "",
+                          ),
+                          maxLength: 10,
+                          keyboardType: TextInputType.text,
+                          style: GoogleFonts.getFont(fontFamily2,
+                              fontSize:
+                                  defaultEditScaleHeight(containerHeight, 20),
+                              color: black1,
+                              fontWeight: FontWeight.w400,
+                              height: lineHeight(22.4, 20)),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return '';
+                            }
+                            return null;
+                          },
+                          // onSaved: (value) {
+                          //   hackathonDetailsProvider.hackathonName = value.toString();
+                          // },
+                        ),
+                      )),
+                ],
+              )
             ],
           )),
     );
