@@ -31,7 +31,8 @@ class DefaultRoundCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final rulesProvider = Provider.of<RulesProvider>(context);
     final roundNameController = TextEditingController();
-    final roundTimelineController = TextEditingController();
+    final roundStartDateController = TextEditingController();
+    final roundEndDateController = TextEditingController();
 
     return InkWell(
       hoverColor: Colors.white,
@@ -140,7 +141,7 @@ class DefaultRoundCard extends StatelessWidget {
                         // color: Colors.deepPurple[100],
                         alignment: Alignment.center,
                         child: TextFormField(
-                          controller: roundTimelineController,
+                          controller: roundStartDateController,
                           cursorColor: Colors.black,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.all(0),
@@ -239,7 +240,7 @@ class DefaultRoundCard extends StatelessWidget {
                         // color: Colors.deepPurple[100],
                         alignment: Alignment.center,
                         child: TextFormField(
-                          controller: roundTimelineController,
+                          controller: roundEndDateController,
                           cursorColor: Colors.black,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.all(0),
