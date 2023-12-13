@@ -96,6 +96,38 @@ Widget _editDescriptionWidget =
     notifyListeners();
   }
 
+  // Function to update round description
+  void updateRoundDescription(int index, String newDescription) {
+    if (index >= 0 && index < _roundsList.length) {
+      _roundsList[index]['roundDescription'] = newDescription;
+      notifyListeners();
+    } else {
+      print("Invalid index");
+    }
+  }
+
+  // Function to get the description of a round at a given index
+  String getRoundDescription(int index) {
+    if (index >= 0 && index < _roundsList.length) {
+      return _roundsList[index]['roundDescription'] ?? 'No description available';
+    } else {
+      return 'Invalid index';
+    }
+  }
+
+  // Function to update round description
+  void updateRoundTitle(int index, String newTitle) {
+    if (index >= 0 && index < _roundsList.length) {
+      _roundsList[index]['roundTitle'] = newTitle;
+      notifyListeners();
+    } else {
+      print("Invalid index");
+    }
+  }
+
+  
+
+
    void setEditDescriptionWidget(Widget value) {
     _editDescriptionWidget = value;
     notifyListeners();

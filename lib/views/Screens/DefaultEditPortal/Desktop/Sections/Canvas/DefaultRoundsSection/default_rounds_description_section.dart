@@ -2,17 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
+import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
+import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
+import 'package:provider/provider.dart';
 
 class DefaultRoundsDescription extends StatelessWidget {
   final double containerHeight;
   final double containerWidth;
+  final int index;
   final String description;
-  const DefaultRoundsDescription({super.key, required this.description, required this.containerHeight, required this.containerWidth});
+  const DefaultRoundsDescription({super.key, required this.description, required this.containerHeight, required this.containerWidth, required this.index});
 
   @override
   Widget build(BuildContext context) {
+    final roundDescriptionController = TextEditingController();
+     final rulesProvider = Provider.of<RulesProvider>(context);
+
+
+     if(rulesProvider.roundsList[index]["roundDescription"]!.isNotEmpty){
+      roundDescriptionController.text = rulesProvider.roundsList[index]["roundDescription"]!;
+    }
     return Container(
         width: defaultEditScaleWidth(containerWidth, 550),
         height: defaultEditScaleHeight(containerHeight, 453),
@@ -49,13 +60,55 @@ class DefaultRoundsDescription extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15)),
                       ),
-                  child: Text('Welcome to the electrifying first round of Velocity Vista - the "UX Face-Off!" Here, we separate design champions from budding creators as they embark on a quest to showcase their UI/UX design skills. Your mission: craft a dazzling UI/UX design for a website or app, and this is your moment to shine. The submission window is open from October 21st, 2023, at 12:00 AM to October 23rd, 2023, at midnight. Brace yourself; it''s an elimination round, so bring your absolute best! The submission form awaits, with the label "Submit Your Design" and PDF as the only accepted format',
-                  textAlign: TextAlign.center,
-                   style: GoogleFonts.getFont(fontFamily2,
-                  fontSize: defaultEditScaleWidth(containerWidth, 15),
-                  color: greyish1,
-                  fontWeight: FontWeight.w400,
-                  height: lineHeight(27, 18))))),
+                  child: TextFormField(
+                      controller: roundDescriptionController,
+                      cursorColor: Colors.black,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(0),
+                        hintText: 'Type your Description here...',
+                        hintStyle: GoogleFonts.getFont(fontFamily2,
+                            fontSize:
+                                defaultEditScaleWidth(containerWidth, 16), //size is +1 in comparison to normal text whose fontsize was 15
+                            color: greyish1,
+                            fontWeight: FontWeight.w400,
+                            height: lineHeight(27, 18)),
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        focusedErrorBorder: InputBorder.none,
+                        counterText: "",
+                      ),
+                      maxLength: 580,
+                      maxLines: 9,
+                      keyboardType: TextInputType.text,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.getFont(fontFamily2,
+                      
+                          fontSize: defaultEditScaleWidth(containerWidth, 16),
+                          color: greyish1,
+                          fontWeight: FontWeight.w400,
+                          height: lineHeight(27, 18)),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return '';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        rulesProvider.updateRoundDescription(index, value.toString()) ;
+                      },
+                    ),
+              )
+          ),
+                  
+                  
+                  // Text('Welcome to the electrifying first round of Velocity Vista - the "UX Face-Off!" Here, we separate design champions from budding creators as they embark on a quest to showcase their UI/UX design skills. Your mission: craft a dazzling UI/UX design for a website or app, and this is your moment to shine. The submission window is open from October 21st, 2023, at 12:00 AM to October 23rd, 2023, at midnight. Brace yourself; it''s an elimination round, so bring your absolute best! The submission form awaits, with the label "Submit Your Design" and PDF as the only accepted format',
+                  // textAlign: TextAlign.center,
+                  //  style: GoogleFonts.getFont(fontFamily2,
+                  // fontSize: defaultEditScaleWidth(containerWidth, 15),
+                  // color: greyish1,
+                  // fontWeight: FontWeight.w400,
+                  // height: lineHeight(27, 18))))),
           Positioned(
               left: defaultEditScaleWidth(containerWidth, 229),
               top: defaultEditScaleHeight(containerHeight, 339),

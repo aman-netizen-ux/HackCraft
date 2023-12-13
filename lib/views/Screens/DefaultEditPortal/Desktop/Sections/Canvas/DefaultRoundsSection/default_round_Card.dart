@@ -34,6 +34,11 @@ class DefaultRoundCard extends StatelessWidget {
     final roundStartDateController = TextEditingController();
     final roundEndDateController = TextEditingController();
 
+
+    if(rulesProvider.roundsList[index]["roundTitle"]!.isNotEmpty){
+      roundNameController.text = rulesProvider.roundsList[index]["roundTitle"]!;
+    }
+    
     return InkWell(
       hoverColor: Colors.white,
       onTap: onTap,
@@ -107,17 +112,11 @@ class DefaultRoundCard extends StatelessWidget {
                         }
                         return null;
                       },
-                      // onSaved: (value) {
-                      //   hackathonDetailsProvider.hackathonName = value.toString();
-                      // },
+                      onSaved: (value) {
+                        rulesProvider.updateRoundTitle(index, value.toString());
+                      },
                     ),
                   )
-                  // Text(title,
-                  //     style: GoogleFonts.getFont(fontFamily2,
-                  //         fontSize: defaultEditScaleHeight(containerHeight, 20),
-                  //         color: black1,
-                  //         height: lineHeight(22.4, 20),
-                  //         fontWeight: FontWeight.w400)),
                   ),
               //Timeline i.e Start date and End date of the round
               Row(
