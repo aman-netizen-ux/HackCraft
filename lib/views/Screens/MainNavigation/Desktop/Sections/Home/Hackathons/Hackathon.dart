@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/state/getAllHackathons/getAllHackathonsProvider.dart';
+import 'package:major_project__widget_testing/state/getHackathon/getSingleHackathonProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:provider/provider.dart';
@@ -237,7 +238,16 @@ class _HomeHackathonState extends State<HomeHackathon> {
                                   onEnter: (event) => _setHovering(index, true),
                                   onExit: (event) => _setHovering(index, false),
                                   child: InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      final singleHackathonProvider =
+                                          Provider.of<SingleHackathonProvider>(
+                                              context,
+                                              listen: false);
+                                        
+                                        singleHackathonProvider.getSingleHackathonsList(hackathon['_id']);
+                                      Navigator.pushNamed(
+                                          context, '/singleHackathon');
+                                    },
                                     child: Center(
                                       child: Container(
                                         width: double.infinity,
