@@ -9,6 +9,11 @@ class HackathonDetailsProvider with ChangeNotifier {
   String _hackathonFee = "";
   int _hackathonTeamSize = 0;
   String _hackathonVenue = "";
+  String _hackathonAbout="";
+  String _contactMemberName1="";
+  String _contactMemberName2="";
+  String _contactMeberNumber1="";
+  String _contactMeberNumber2="";
 
 //Hackathon Name
   String get hackathonName => _hackathonName;
@@ -63,6 +68,47 @@ class HackathonDetailsProvider with ChangeNotifier {
 
   set hackathonVenue(String venue) {
     _hackathonVenue = venue;
+    notifyListeners();
+  }
+
+  //Hackathon About
+  String get hackathonAbout => _hackathonAbout;
+
+  set hackathonAbout(String about) {
+    _hackathonAbout = about;
+    notifyListeners();
+  }
+
+
+  //Hackathon ContactName 1
+  String get hackathonContactName1 => _contactMemberName1;
+
+  set hackathonContactName1(String value) {
+    _contactMemberName1 = value;
+    notifyListeners();
+  }
+
+    //Hackathon ContactName 1
+  String get hackathonContactName2 => _contactMemberName2;
+
+  set hackathonContactName2(String value) {
+    _contactMemberName2 = value;
+    notifyListeners();
+  }
+
+    //Hackathon ContactName 1
+  String get hackathonContactNumber1 => _contactMeberNumber1;
+
+  set hackathonContactNumber1(String value) {
+    _contactMeberNumber1 = value;
+    notifyListeners();
+  }
+
+    //Hackathon ContactName 1
+  String get hackathonContactNumber2 => _contactMeberNumber2;
+
+  set hackathonContactNumber2(String value) {
+    _contactMeberNumber2 = value;
     notifyListeners();
   }
 }

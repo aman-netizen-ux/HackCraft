@@ -72,6 +72,7 @@ class LandingSection extends StatelessWidget {
                         width: scaleWidth(context, 700),
                         child: Text(
                             hackathonDetailsProvider.hackathonDescription,
+                            textAlign:TextAlign.center,
                             maxLines: 4,
                             style: GoogleFonts.getFont(fontFamily2,
                                 fontSize: scaleHeight(context, 18),

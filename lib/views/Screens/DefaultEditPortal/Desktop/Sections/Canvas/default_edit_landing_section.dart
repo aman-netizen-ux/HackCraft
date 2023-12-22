@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
-import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
@@ -96,8 +95,7 @@ class DefaultEditLandingSection extends StatelessWidget {
                       SizedBox(
                         height: defaultEditScaleHeight(containerHeight, 42),
                       ),
-                      Container(
-                        color: Colors.green[100],
+                      SizedBox(
                         width: defaultEditScaleWidth(containerWidth, 700),
                         height: defaultEditScaleHeight(containerHeight, 54),
                         child: TextFormField(

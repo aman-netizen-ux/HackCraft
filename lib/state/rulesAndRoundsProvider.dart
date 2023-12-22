@@ -86,6 +86,15 @@ Widget _editDescriptionWidget =
     notifyListeners();
   }
 
+  void deleteRound(int index) {
+    if (index >= 0 && index < _roundsList.length) {
+      _roundsList.removeAt(index);
+      notifyListeners();
+    } else {
+      print("Invalid index");
+    }
+  }
+
   Widget get descriptionWidget => _descriptionWidget;
     Widget get editDescriptionWidget => _editDescriptionWidget;
 
@@ -106,14 +115,7 @@ Widget _editDescriptionWidget =
     }
   }
 
-  // Function to get the description of a round at a given index
-  String getRoundDescription(int index) {
-    if (index >= 0 && index < _roundsList.length) {
-      return _roundsList[index]['roundDescription'] ?? 'No description available';
-    } else {
-      return 'Invalid index';
-    }
-  }
+  
 
   // Function to update round description
   void updateRoundTitle(int index, String newTitle) {
