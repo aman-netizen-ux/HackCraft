@@ -133,7 +133,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                     ],
                   ),
                 ),
-              Expanded(flex: 7, child: Container())
+                Expanded(flex: 7, child: Container())
               ],
             ),
           ),
@@ -213,7 +213,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
             children: [
               Container(
                   width: scaleWidth(context, 230),
-                  margin: EdgeInsets.only(top : scaleHeight(context, 49)),
+                  margin: EdgeInsets.only(top: scaleHeight(context, 49)),
                   child: CustomGrid(
                       itemCount: footerLinks.length,
                       columnCount: 2,
