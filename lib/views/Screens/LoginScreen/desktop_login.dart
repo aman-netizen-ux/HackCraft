@@ -199,22 +199,24 @@ class _LoginPageDesktopState extends State<LoginPageDesktop> {
                                         color: darkBlue2,
                                         child: ElevatedButton(
                                             onPressed: () {
-                                              FirebaseAuth.instance
-                                                  .signInWithEmailAndPassword(
-                                                      email: email,
-                                                      password: password)
-                                                  .then((value) {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          Home()),
-                                                );
-                                                // navigate to home screen
-                                              }).onError((error, stackTrace) {
-                                                print(
-                                                    "Error ${error.toString()}");
-                                              });
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Home()),
+                                              );
+                                              // FirebaseAuth.instance
+                                              //     .signInWithEmailAndPassword(
+                                              //         email: email,
+                                              //         password: password)
+                                              //     .then((value) {
+
+                                              //   // navigate to home screen
+
+                                              // }).onError((error, stackTrace) {
+                                              //   print(
+                                              //       "Error ${error.toString()}");
+                                              // });
                                             },
                                             style: ButtonStyle(
                                               backgroundColor:

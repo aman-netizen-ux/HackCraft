@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:major_project__widget_testing/views/Screens/MainNavigation/Desktop/Sections/Home/Hackathons/Hackathon.dart';
 import 'package:major_project__widget_testing/views/Screens/MainNavigation/Desktop/Sections/Home/home_landing.dart';
 
 class Home extends StatelessWidget {
@@ -11,10 +12,9 @@ class Home extends StatelessWidget {
       children: const  [
         SizedBox(height: 50,),
         HomeLanding(),
-         SizedBox(height: 50,),
-       Placeholder()
+        SizedBox(height: 150),
+        HomeHackathon()
       ],
     );
   }
 }
-

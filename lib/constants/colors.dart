@@ -39,6 +39,9 @@ const customTemplateCardBorder = Color.fromARGB(255, 108, 209, 219);
 const sectionSelection =
     Color.fromARGB(255, 136, 161, 199); // softblue in edit portal (default)
 
+const blue = Color.fromARGB(255, 103, 74, 226);
+const darkBlue = Color.fromARGB(255, 21, 41, 104);
+const mustard = Color.fromARGB(255, 250, 186, 69);
 const lightBlue = Color.fromARGB(255, 181, 201, 255);
 const green = Color.fromARGB(255, 134, 221, 153);
 const green2 = Color.fromARGB(255, 81, 199, 122);
