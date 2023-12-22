@@ -59,12 +59,12 @@ class _DefaultCanvasState extends State<DefaultCanvas> {
                             containerWidth: whiteContainerWidth),
                       ],
                     )),
-                Container(
-                  color: Colors.white,
-                  child: DefaultRoundsAndRules(
-                      containerHeight: whiteContainerHeight,
-                      containerWidth: whiteContainerWidth),
-                ),
+                // Container(
+                //   color: Colors.white,
+                //   child: DefaultRoundsAndRules(
+                //       containerHeight: whiteContainerHeight,
+                //       containerWidth: whiteContainerWidth),
+                // ),
                 Container(
                   color: Colors.white,
                   child: DefaultEditAboutus(

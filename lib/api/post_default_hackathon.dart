@@ -6,21 +6,25 @@ import 'package:http/http.dart' as http;
 
 class CreateHackathon {
   //Get All the Hackathons
-  getSingleHackathon(String uid) async {
+  postSingleHackathon(Map<String, dynamic> params) async {
     try {
       final String baseUrl = dotenv.get('postHackathon');
-      final String url = '$baseUrl$uid';
 
       final response = await http.post(
-        Uri.parse(url),
+        Uri.parse(baseUrl),
+        headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+        body: jsonEncode(params),
       );
 
       print("1");
-      if (response.statusCode == 200) {
-        print("2");
-        final Map<String, dynamic> jsonResponse = json.decode(response.body);
-        debugPrint('API Response: $jsonResponse');
-        return jsonResponse;
+      print(response.statusCode);
+      if (response.statusCode == 201) {
+        
+        debugPrint('Hackathon created successfully');
+        return true;
       } else {
         return [];
       }

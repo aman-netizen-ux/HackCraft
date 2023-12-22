@@ -19,7 +19,7 @@ class hackathon {
       if (response.statusCode == 200) {
         print("2");
         final Map<String, dynamic> jsonResponse = json.decode(response.body);
-        debugPrint('API Response: $jsonResponse');
+        // debugPrint('API Response: $jsonResponse');
         return jsonResponse;
       } else {
         return [];

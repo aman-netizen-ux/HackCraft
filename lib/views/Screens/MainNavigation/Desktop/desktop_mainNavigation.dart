@@ -132,6 +132,7 @@ class _DesktopMainNavigationState extends State<DesktopMainNavigation> {
             ),
           ),
         ),
+        const SizedBox(height: 25,),
         Expanded(
           child: _widgetOptions.elementAt(mainNavigationProvider.currentIndex),
         )

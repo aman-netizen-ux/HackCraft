@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
@@ -81,18 +82,19 @@ class Aboutus extends StatelessWidget {
             //but the difference is that the above one was positioned from the top and this one was positioned from the bottom.
             //Run the code once, and you'll understand.
             Positioned(              
-              bottom: -scaleWidth(context, 120),
+              bottom: -scaleWidth(context, 200),//120
               child: Container(                
-                color: lavender,
-                height: scaleHeight(context, 240),
+                // color: lavender,
+                height: scaleHeight(context, 400),//240
                 width: scaleWidth(context, 1118),
                 margin:
                     EdgeInsets.symmetric(horizontal: scaleWidth(context, 81)),
+                    child: SvgPicture.asset('assets/icons/defaultEditPortal/about.svg', fit: BoxFit.fill)
               ),
             ),
           ]),
           SizedBox(
-            height: scaleHeight(context, 153),
+            height: scaleHeight(context, 233),//153
           )
         ],
       ),

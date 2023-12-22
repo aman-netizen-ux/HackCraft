@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:major_project__widget_testing/state/getHackathon/getSingleHackathonProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
@@ -18,6 +19,8 @@ class RoundsAndRules extends StatelessWidget {
     // Retrieve the RulesProvider instance from the nearest ancestor
     // in the widget tree, using the Provider package.
     final rulesProvider = Provider.of<RulesProvider>(context);
+    final singleHackathonProvider =
+        Provider.of<SingleHackathonProvider>(context);
     return Padding(
       key: rulesAndRounds,
       padding: EdgeInsets.symmetric(
@@ -56,27 +59,23 @@ class RoundsAndRules extends StatelessWidget {
                     //just the list that will be used will come from the API.
                     child: ListView(
                         shrinkWrap: true,
-                        children: List.generate(rulesProvider.roundsList.length,
+                        children: List.generate(
+                          singleHackathonProvider.singleHackathon['round'].length,
                             (index) {
                               //Generates the round card along with the timeline
                           return CustomTimelineTile(
                             cardIndex: index,
                             isFirst: index == 0,
                             isLast:
-                                rulesProvider.roundsList.length - 1 == index,
-                            roundTitle: rulesProvider.roundsList[index]
-                                ['roundTitle']!,
-                            roundDescription: rulesProvider.roundsList[index]
-                                ['roundDescription']!,
-                            endDate: rulesProvider.roundsList[index]
-                                ['endDate']!,
-                            startDate: rulesProvider.roundsList[index]
-                                ['startDate']!,
+                                singleHackathonProvider.singleHackathon['round'].length - 1 == index,
+                            roundTitle: singleHackathonProvider.singleHackathon['round'][index]['name']?? 'No name available',
+                            roundDescription: singleHackathonProvider.singleHackathon['round'][index]['description']?? 'No name available',
+                            endDate: extractDate(singleHackathonProvider.singleHackathon['round'][index]['end_timeline']),
+                            startDate:  extractDate(singleHackathonProvider.singleHackathon['round'][index]['start_timeline']),
                             onTap: () {
                               rulesProvider.setSelectedIndex(index);
                               rulesProvider.setDescriptionWidget(roundDetails(
-                                  rulesProvider.roundsList[index]
-                                      ['roundDescription']!,
+                                  singleHackathonProvider.singleHackathon['round'][index]['description']?? 'No name available',
                                   context));
                             },
                           );
@@ -90,7 +89,12 @@ class RoundsAndRules extends StatelessWidget {
       ),
     );
   }
-
+String extractDate(String dateTimeString) {
+  DateTime dateTime = DateTime.parse(dateTimeString);
+  // Construct the date string
+  String date = "${dateTime.year.toString().padLeft(4, '0')}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}";
+  return date;
+}
 
 //This widget was created in order to show the description of the round after clicking on any round card.
   Widget roundDetails(String roundDetails, BuildContext context) {

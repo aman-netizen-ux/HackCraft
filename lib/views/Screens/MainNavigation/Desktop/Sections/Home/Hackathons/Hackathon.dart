@@ -28,7 +28,10 @@ class _HomeHackathonState extends State<HomeHackathon> {
     final hackathonsProvider =
         Provider.of<AllHackathonProvider>(context, listen: false);
     hackathonsProvider.getAllHackathonsList();
+
+   
   }
+
 
   final List<Color> pastelColors = [
     const Color(0xFFD4A5A5),
@@ -66,7 +69,7 @@ class _HomeHackathonState extends State<HomeHackathon> {
               height: lineHeight(25, 45),
               fontWeight: FontWeight.w500)),
       SizedBox(
-        height: 1000,
+        height: 3000,
         child: GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -78,10 +81,11 @@ class _HomeHackathonState extends State<HomeHackathon> {
               crossAxisCount: 2,
               crossAxisSpacing: 20,
               mainAxisExtent: 230,
+              mainAxisSpacing: 20
             ),
             itemBuilder: (BuildContext context, int index) {
               final hackathon = hackathonsProvider.allHackathons[index];
-              Color cardColor = getRandomPastelColor();
+              Color? cardColor = getRandomPastelColor(); 
               return Container(
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -93,8 +97,8 @@ class _HomeHackathonState extends State<HomeHackathon> {
                       Expanded(
                           flex: 20,
                           child: Container(
-                              decoration: BoxDecoration(
-                                  color: cardColor,
+                              decoration: const BoxDecoration(
+                                  color: Color(0xFFC3C0DF),
                                   borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(10),
                                       bottomLeft: Radius.circular(10))))),
@@ -243,6 +247,9 @@ class _HomeHackathonState extends State<HomeHackathon> {
                                           Provider.of<SingleHackathonProvider>(
                                               context,
                                               listen: false);
+                                              print('_id: ${hackathon['_id']}');
+
+                                              singleHackathonProvider.setIsLoading= true;
                                         
                                         singleHackathonProvider.getSingleHackathonsList(hackathon['_id']);
                                       Navigator.pushNamed(

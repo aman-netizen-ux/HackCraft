@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:major_project__widget_testing/state/getHackathon/getSingleHackathonProvider.dart';
 import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
@@ -14,8 +15,8 @@ class NavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hackathonDetailsProvider =
-        Provider.of<HackathonDetailsProvider>(context);
+        final singleHackathonProvider =
+        Provider.of<SingleHackathonProvider>(context);
     return Padding(
       padding:  EdgeInsets.only(right: scaleWidth(context, 81),left:scaleWidth(context, 81), top:  scaleHeight(context, 39)),
       child: Row(
@@ -31,7 +32,7 @@ class NavBar extends StatelessWidget {
                     ),
                     SizedBox(width: scaleWidth(context, 6),),
                     Text(
-                      hackathonDetailsProvider.hackathonName,
+                     singleHackathonProvider.singleHackathon['hackathon']['name']?? 'No name available',
                       style: GoogleFonts.getFont(
                         fontFamily2,fontSize: scaleHeight(context, 20),
                         color: black1,
