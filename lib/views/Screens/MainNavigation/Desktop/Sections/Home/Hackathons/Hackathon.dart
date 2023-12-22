@@ -17,6 +17,7 @@ class HomeHackathon extends StatefulWidget {
 
 class _HomeHackathonState extends State<HomeHackathon> {
   bool _isHovering = false;
+  late int _index;
 
   final List<Color> pastelColors = [
     const Color(0xFFD4A5A5),
@@ -30,9 +31,10 @@ class _HomeHackathonState extends State<HomeHackathon> {
     const Color(0xFFC0E3E3),
   ];
 
-  void _setHovering(bool isHovering) {
+  void _setHovering(int index , bool isHovering) {
     setState(() {
       _isHovering = isHovering;
+      _index = index;
     });
   }
 
@@ -188,8 +190,8 @@ class _HomeHackathonState extends State<HomeHackathon> {
                                 ),
                                 const SizedBox(height : 15),
                                 MouseRegion(
-                                  onEnter: (event) => _setHovering(true),
-                                  onExit: (event) => _setHovering(false),
+                                  onEnter: (event) => _setHovering(index, true),
+                                  onExit: (event) => _setHovering(index, false),
                                   child: InkWell(
                                     onTap: () {},
                                     child: Center(
@@ -200,14 +202,14 @@ class _HomeHackathonState extends State<HomeHackathon> {
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 const BorderRadius.all(Radius.circular(25)),
-                                            color: _isHovering ? darkBlue : Colors.white,
+                                            color: _isHovering && (index == _index) ? darkBlue : Colors.white,
                                             border: Border.all(color: darkBlue),
                                             ),
                                     
                                         child: Text('See more details',
                                             style: GoogleFonts.getFont(fontFamily2,
                                                 fontSize: scaleHeight(context, 20),
-                                                color: _isHovering ? Colors.white : darkBlue,
+                                                color: _isHovering && (index == _index) ? Colors.white : darkBlue,
                                                 height: lineHeight(22.4, 20),
                                                 fontWeight: FontWeight.w500)),
                                       ),
