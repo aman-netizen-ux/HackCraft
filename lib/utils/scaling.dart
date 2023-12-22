@@ -10,3 +10,12 @@ double scaleWidth(BuildContext context, double value) {
 double scaleHeight(BuildContext context, double value) {
   return MediaQuery.of(context).size.height  * (value/820);
 }
+
+//These two functions are made in order to resolve the issue of sizing of default edit template
+double defaultEditScaleHeight(double containerHeight, double value) {
+  return  containerHeight * (value/820);
+}
+
+double defaultEditScaleWidth( double containerWidth, double value){
+  return  containerWidth * (value/1280);
+}
