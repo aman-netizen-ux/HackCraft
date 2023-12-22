@@ -9,11 +9,13 @@ import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/De
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/DefaultRoundsSection/default_timeline_tile.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/RoundsSection/roundsDescriptionSection.dart';
 import 'package:provider/provider.dart';
+import 'package:dotted_border/dotted_border.dart';
 
 class DefaultRoundsAndRules extends StatelessWidget {
   final double containerHeight;
   final double containerWidth;
-  const DefaultRoundsAndRules({super.key, required this.containerHeight, required this.containerWidth});
+  const DefaultRoundsAndRules(
+      {super.key, required this.containerHeight, required this.containerWidth});
 
   @override
   Widget build(BuildContext context) {
@@ -27,17 +29,12 @@ class DefaultRoundsAndRules extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Text('Rules And Rounds',
-                  style: GoogleFonts.getFont(fontFamily2,
-                      fontSize: defaultEditScaleWidth(containerWidth, 48),
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                      height: lineHeight(22.4, 48))),
-                      TextButton(onPressed: (){rulesProvider.increaseRoundsCount();}, style :TextButton.styleFrom(backgroundColor: Colors.amberAccent) ,child: const Text('Add Rounds'))
-            ],
-          ),
+          Text('Rules And Rounds',
+              style: GoogleFonts.getFont(fontFamily2,
+                  fontSize: defaultEditScaleWidth(containerWidth, 48),
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                  height: lineHeight(22.4, 48))),
           SizedBox(
             height: defaultEditScaleHeight(containerHeight, 27),
           ),
@@ -57,14 +54,14 @@ class DefaultRoundsAndRules extends StatelessWidget {
               children: [
                 Expanded(
                     flex: 47,
-                    //This list generates all the rounds coming from the list made in the provider file. 
-                    //Later on, integration with APIs will remain the same; 
+                    //This list generates all the rounds coming from the list made in the provider file.
+                    //Later on, integration with APIs will remain the same;
                     //just the list that will be used will come from the API.
                     child: ListView(
                         shrinkWrap: true,
                         children: List.generate(rulesProvider.roundsList.length,
                             (index) {
-                              //Generates the round card along with the timeline
+                          //Generates the round card along with the timeline
                           return DefaultCustomTimelineTile(
                             cardIndex: index,
                             isFirst: index == 0,
@@ -80,15 +77,36 @@ class DefaultRoundsAndRules extends StatelessWidget {
                                 ['startDate']!,
                             onTap: () {
                               rulesProvider.setEditSelectedIndex(index);
-                              rulesProvider.setEditDescriptionWidget(defaultRoundDetails(
-                                  rulesProvider.roundsList[index]
-                                      ['roundDescription']!,
-                                  context,
-                                  containerHeight, containerWidth, index));
-                            }, containerHeight: containerHeight, containerWidth: containerWidth,
+                              rulesProvider.setEditDescriptionWidget(
+                                  defaultRoundDetails(
+                                      rulesProvider.roundsList[index]
+                                          ['roundDescription']!,
+                                      context,
+                                      containerHeight,
+                                      containerWidth,
+                                      index));
+                            },
+                            containerHeight: containerHeight,
+                            containerWidth: containerWidth,
                           );
                         }))),
-                        Expanded(flex: 03, child: Container()),
+                Expanded(flex: 03, child: 
+                 InkWell(
+                onTap: (){
+                  rulesProvider.increaseRoundsCount();
+                },
+                child: DottedBorder(
+                    borderType: BorderType.Circle,
+                    dashPattern: const [3, 7],
+                    color: yellow2,
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 20,
+                      width: 20,
+                      decoration: const BoxDecoration(shape: BoxShape.circle),
+                      child: const Center(child:  Icon(Icons.add, size: 12,color: yellow2,)),
+                    )),
+              )),
                 Expanded(flex: 50, child: rulesProvider.editDescriptionWidget),
               ],
             ),
@@ -98,9 +116,13 @@ class DefaultRoundsAndRules extends StatelessWidget {
     );
   }
 
-
 //This widget was created in order to show the description of the round after clicking on any round card.
-  Widget defaultRoundDetails(String roundDetails, BuildContext context, double containerHeight, double containerWidth, int index) {
-    return DefaultRoundsDescription(description : roundDetails, containerHeight: containerHeight, containerWidth: containerWidth, index: index);
+  Widget defaultRoundDetails(String roundDetails, BuildContext context,
+      double containerHeight, double containerWidth, int index) {
+    return DefaultRoundsDescription(
+        description: roundDetails,
+        containerHeight: containerHeight,
+        containerWidth: containerWidth,
+        index: index);
   }
 }

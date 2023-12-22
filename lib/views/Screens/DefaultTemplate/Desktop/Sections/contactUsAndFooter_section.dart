@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
-import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:major_project__widget_testing/views/Components/customGrid.dart';
+import 'package:provider/provider.dart';
 
 class ContactUsAndFooterSection extends StatefulWidget {
   const ContactUsAndFooterSection({super.key});
@@ -27,6 +28,8 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
   ];
   @override
   Widget build(BuildContext context) {
+    final hackathonDetailsProvider =
+        Provider.of<HackathonDetailsProvider>(context);
     return Column(
       key: contactUs,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +77,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Contact Member Name ',
+                              Text(hackathonDetailsProvider.hackathonContactName1,
                                   style: GoogleFonts.getFont(fontFamily2,
                                       fontSize: scaleHeight(context, 18),
                                       color: black1,
@@ -83,7 +86,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                               SizedBox(
                                 height: scaleHeight(context, 5),
                               ),
-                              Text('Contact Number',
+                              Text(hackathonDetailsProvider.hackathonContactNumber1,
                                   style: GoogleFonts.getFont(fontFamily2,
                                       fontSize: scaleHeight(context, 16),
                                       color: black5,
@@ -111,7 +114,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Contact Member Name ',
+                              Text(hackathonDetailsProvider.hackathonContactName2,
                                   style: GoogleFonts.getFont(fontFamily2,
                                       fontSize: scaleHeight(context, 18),
                                       color: black1,
@@ -120,7 +123,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                               SizedBox(
                                 height: scaleHeight(context, 5),
                               ),
-                              Text('Contact Number',
+                              Text(hackathonDetailsProvider.hackathonContactNumber2,
                                   style: GoogleFonts.getFont(fontFamily2,
                                       fontSize: scaleHeight(context, 16),
                                       color: black5,

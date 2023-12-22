@@ -121,33 +121,41 @@ class DefaultRoundCard extends StatelessWidget {
                           },
                         ),
                       )),
-                  Container(
-                    width: defaultEditScaleWidth(containerWidth, 130),
-                    height: defaultEditScaleHeight(containerHeight, 30),
-                    padding: EdgeInsets.symmetric(horizontal: defaultEditScaleWidth(containerWidth, 10), ),
-                    decoration: const BoxDecoration(
-                        color: yellow,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(15),
-                            bottomLeft: Radius.circular(15))),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(Icons.delete_rounded,
-                            color: Colors.white,
-                            
-                            size: defaultEditScaleHeight(containerHeight, 18)),
-                        SizedBox(
-                            width: defaultEditScaleWidth(containerWidth, 5)),
-                        Text("Remove Round",
-                        
-                            style: GoogleFonts.getFont(fontFamily2,
-                                fontSize:
-                                    defaultEditScaleHeight(containerHeight, 16),
-                                color: Colors.white,
-                                height: lineHeight(12.4, 12),
-                                fontWeight: FontWeight.w600)),
-                      ],
+                  InkWell(
+                    onTap: () {
+                      if (rulesProvider.roundsList.length != 1) {
+                        rulesProvider.deleteRound(index);
+                      }
+                    },
+                    child: Container(
+                      width: defaultEditScaleWidth(containerWidth, 130),
+                      height: defaultEditScaleHeight(containerHeight, 30),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: defaultEditScaleWidth(containerWidth, 10),
+                      ),
+                      decoration: const BoxDecoration(
+                          color: yellow,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(15),
+                              bottomLeft: Radius.circular(15))),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(Icons.delete_rounded,
+                              color: Colors.white,
+                              size:
+                                  defaultEditScaleHeight(containerHeight, 18)),
+                          SizedBox(
+                              width: defaultEditScaleWidth(containerWidth, 5)),
+                          Text("Remove Round",
+                              style: GoogleFonts.getFont(fontFamily2,
+                                  fontSize: defaultEditScaleHeight(
+                                      containerHeight, 16),
+                                  color: Colors.white,
+                                  height: lineHeight(12.4, 12),
+                                  fontWeight: FontWeight.w600)),
+                        ],
+                      ),
                     ),
                   )
                 ],

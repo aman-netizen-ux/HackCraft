@@ -86,6 +86,15 @@ Widget _editDescriptionWidget =
     notifyListeners();
   }
 
+  void deleteRound(int index) {
+    if (index >= 0 && index < _roundsList.length) {
+      _roundsList.removeAt(index);
+      notifyListeners();
+    } else {
+      print("Invalid index");
+    }
+  }
+
   Widget get descriptionWidget => _descriptionWidget;
     Widget get editDescriptionWidget => _editDescriptionWidget;
 
