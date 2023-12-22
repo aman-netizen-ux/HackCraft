@@ -11,10 +11,20 @@ const black6 = Color.fromARGB(255, 27, 25, 33);
 const black7 = Color.fromARGB(255, 117, 116, 136);
 const black8 = Color.fromARGB(255, 112, 111, 125);
 
+const Color white = Colors.white;
+const offWhite = Color(0xffF3FAEE);
+const redishBrown = Color(0xff1a202c);
+const deepNavy = Color(0xff1a202c);
+const vibrantGreen = Color(0xFF86DD99);
+const lightSilver = Color.fromARGB(255, 217, 217, 217);
+
+const Color darkBlue2 = Color.fromARGB(255, 6, 22, 73);
 const greyish1 = Color.fromARGB(255, 86, 74, 74);
 const greyish2 = Color.fromARGB(255, 190, 181, 181);
 const greyish3 = Color.fromARGB(255, 90, 89, 89);
-
+const Color greyish4 = Color.fromARGB(255, 197, 195, 195);
+const Color greyish5 = Color.fromARGB(255, 211, 202, 202);
+const Color greyish6 = Color.fromARGB(255, 160, 160, 160);
 const grey1 = Color.fromARGB(255, 243, 243, 243);
 const grey2 = Color.fromARGB(255, 227, 227, 227);
 const grey3 = Color.fromARGB(255, 44, 44, 44);
