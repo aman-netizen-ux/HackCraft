@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
+import 'package:major_project__widget_testing/state/getHackathon/getSingleHackathonProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
@@ -14,8 +14,8 @@ class LandingSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hackathonDetailsProvider =
-        Provider.of<HackathonDetailsProvider>(context);
+    final singleHackathonProvider =
+        Provider.of<SingleHackathonProvider>(context);
 
     return Padding(
       key: home,
@@ -47,7 +47,7 @@ class LandingSection extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Organisation name presents',
+                      Text('${singleHackathonProvider.singleHackathon['hackathon']['organisation_name']?? 'No name available'} name presents',
                           style: GoogleFonts.getFont(fontFamily2,
                               fontSize: scaleHeight(context, 20),
                               color: greyish1,
@@ -58,7 +58,7 @@ class LandingSection extends StatelessWidget {
                       ),
                       Text(
                           // 'Your Hackathon Name',
-                          hackathonDetailsProvider.hackathonName,
+                          singleHackathonProvider.singleHackathon['hackathon']['name']?? 'No name available',
                           style: GoogleFonts.getFont(fontFamily2,
                               fontSize: scaleHeight(context, 54),
                               color: black2,
@@ -71,7 +71,7 @@ class LandingSection extends StatelessWidget {
                         height: scaleHeight(context, 95),
                         width: scaleWidth(context, 700),
                         child: Text(
-                            hackathonDetailsProvider.hackathonDescription,
+                           singleHackathonProvider.singleHackathon['hackathon']['brief']?? 'No name available',
                             textAlign:TextAlign.center,
                             maxLines: 4,
                             style: GoogleFonts.getFont(fontFamily2,
@@ -93,16 +93,16 @@ class LandingSection extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       hackathonDetailContainer(
-                          detail: hackathonDetailsProvider.hackathonDate),
+                          detail: extractDate(singleHackathonProvider.singleHackathon['hackathon']['start_date_time']?? 'No name available')),
                       hackathonDetailContainer(
-                          detail: hackathonDetailsProvider.hackathonMode),
+                          detail:singleHackathonProvider.singleHackathon['hackathon']['mode_of_conduct']?? 'No name available'),
                       hackathonDetailContainer(
-                          detail: hackathonDetailsProvider.hackathonfee),
+                          detail: singleHackathonProvider.singleHackathon['hackathon']['fee'].toString()),
                       hackathonDetailContainer(
-                          detail: hackathonDetailsProvider.hackathonTeamSize
+                          detail: singleHackathonProvider.singleHackathon['hackathon']['team_size']
                               .toString()),
                       hackathonDetailContainer(
-                          detail: hackathonDetailsProvider.hackathonVenue),
+                          detail: singleHackathonProvider.singleHackathon['hackathon']['venue']?? 'No name available'),
                     ],
                   ),
                 ),
@@ -118,6 +118,20 @@ class LandingSection extends StatelessWidget {
       ),
     );
   }
+  String extractDate(String dateTimeString) {
+  DateTime dateTime = DateTime.parse(dateTimeString);
+  // Construct the date string
+  String date = "${dateTime.year.toString().padLeft(4, '0')}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}";
+  return date;
+}
+
+String extractTime(String dateTimeString) {
+  DateTime dateTime = DateTime.parse(dateTimeString);
+  // Construct the time string
+  String time = "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}:${dateTime.second.toString().padLeft(2, '0')}";
+  return time;
+}
+
 }
 
 class hackathonDetailContainer extends StatelessWidget {

@@ -3,7 +3,10 @@ import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/DefaultRoundsSection/default_rounds_section.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/default_aboutus.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/default_contactUs.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/default_edit_landing_section.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/default_gallerySection.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/navbar.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +40,7 @@ class _DefaultCanvasState extends State<DefaultCanvas> {
       flex: 8698,
       child: Container(
         //TODO: will change this color afterwards
-        color: Color.fromARGB(255, 223, 47, 193),
+        color: Colors.white,
         height: double.infinity,
         width: double.infinity,
         child: Form(
@@ -54,10 +57,36 @@ class _DefaultCanvasState extends State<DefaultCanvas> {
                         DefaultEditLandingSection(
                             containerHeight: whiteContainerHeight,
                             containerWidth: whiteContainerWidth),
-                        DefaultRoundsAndRules(containerHeight: whiteContainerHeight, containerWidth: whiteContainerWidth)
                       ],
                     )),
-                    
+                // Container(
+                //   color: Colors.white,
+                //   child: DefaultRoundsAndRules(
+                //       containerHeight: whiteContainerHeight,
+                //       containerWidth: whiteContainerWidth),
+                // ),
+                Container(
+                  color: Colors.white,
+                  child: DefaultEditAboutus(
+                      containerHeight: whiteContainerHeight,
+                      containerWidth: whiteContainerWidth),
+                ),
+                Container(
+                  color: Colors.white,
+                  child: DefaultEditGallerySection(
+                      containerHeight: whiteContainerHeight,
+                      containerWidth: whiteContainerWidth),
+                ),
+                Container(
+                  color: Colors.white,
+                  child: DefaultEditContactUsAndFooterSection(
+                      containerHeight: whiteContainerHeight,
+                      containerWidth: whiteContainerWidth),
+                ),
+                Container(
+                  color: grey4,
+                  height: scaleHeight(context, 60),
+                )
               ]),
             )),
       ),

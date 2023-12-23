@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/models/questionModel.dart';
+import 'package:major_project__widget_testing/state/Registration.dart/getRegistration.dart';
+import 'package:major_project__widget_testing/state/getAllHackathons/getAllHackathonsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Screens/RegistrationForm/addQuestion.dart';
 import 'package:major_project__widget_testing/views/Screens/RegistrationForm/formQuestion.dart';
+import 'package:provider/provider.dart';
 
 //  scaleHeight(context, 640),
 
@@ -21,8 +24,13 @@ class _RegistrationFormDesktopBodyState
   TextEditingController _countryCodeController =
       TextEditingController(text: '+91');
   TextEditingController _collegeController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final registrationProvider =
+        Provider.of<GetRegistrationForm>(context, listen: false);
+    print("length");
+    print(registrationProvider.getForm['custom_fields'].length);
     return Stack(
       children: [
         Container(
@@ -323,6 +331,11 @@ class _RegistrationFormDesktopBodyState
                               ),
                               const SizedBox(height: 16.0),
                               for (int i = 0; i < questions.length; i++)
+                                //   for (int i = 0;
+                                // i <
+                                //     registrationProvider
+                                //         .getForm['custom_fields'].length;
+                                // i++)
                                 FormBuilderQuestion(
                                   question: questions[i],
                                   questionIndex: i,

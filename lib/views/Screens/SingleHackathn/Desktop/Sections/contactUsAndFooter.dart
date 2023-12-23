@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:major_project__widget_testing/state/getHackathon/getSingleHackathonProvider.dart';
 import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
@@ -28,8 +29,8 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
   ];
   @override
   Widget build(BuildContext context) {
-    final hackathonDetailsProvider =
-        Provider.of<HackathonDetailsProvider>(context);
+     final singleHackathonProvider =
+        Provider.of<SingleHackathonProvider>(context);
     return Column(
       key: contactUs,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +78,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(hackathonDetailsProvider.hackathonContactName1,
+                              Text(singleHackathonProvider.singleHackathon['hackathon']['contact1_name']?? 'No name available',
                                   style: GoogleFonts.getFont(fontFamily2,
                                       fontSize: scaleHeight(context, 18),
                                       color: black1,
@@ -86,7 +87,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                               SizedBox(
                                 height: scaleHeight(context, 5),
                               ),
-                              Text(hackathonDetailsProvider.hackathonContactNumber1,
+                              Text(singleHackathonProvider.singleHackathon['hackathon']['contact1_number'].toString(),
                                   style: GoogleFonts.getFont(fontFamily2,
                                       fontSize: scaleHeight(context, 16),
                                       color: black5,
@@ -114,7 +115,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(hackathonDetailsProvider.hackathonContactName2,
+                              Text(singleHackathonProvider.singleHackathon['hackathon']['contact2_name']?? 'No name available',
                                   style: GoogleFonts.getFont(fontFamily2,
                                       fontSize: scaleHeight(context, 18),
                                       color: black1,
@@ -123,7 +124,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                               SizedBox(
                                 height: scaleHeight(context, 5),
                               ),
-                              Text(hackathonDetailsProvider.hackathonContactNumber2,
+                              Text(singleHackathonProvider.singleHackathon['hackathon']['contact2_number'].toString(),
                                   style: GoogleFonts.getFont(fontFamily2,
                                       fontSize: scaleHeight(context, 16),
                                       color: black5,
@@ -136,7 +137,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                     ],
                   ),
                 ),
-                Expanded(flex: 7, child: Container())
+              Expanded(flex: 7, child: Container())
               ],
             ),
           ),
@@ -214,22 +215,23 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
+          
               Container(
                   width: scaleWidth(context, 230),
-                  margin: EdgeInsets.only(top: scaleHeight(context, 49)),
+                  margin: EdgeInsets.only(top : scaleHeight(context, 49)),
                   child: CustomGrid(
                       itemCount: footerLinks.length,
                       columnCount: 2,
                       menuList: footerLinks)),
               const Spacer(),
-              Text(
-                'Lorem ipsum dolor sit amet,',
-                style: GoogleFonts.getFont(fontFamily2,
-                    fontSize: scaleHeight(context, 16),
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white,
-                    height: lineHeight(25, 16)),
-              ),
+              Text('Lorem ipsum dolor sit amet,',           
+            style: GoogleFonts.getFont(
+              fontFamily2,
+              fontSize: scaleHeight(context, 16),
+              fontWeight: FontWeight.w400,
+              color: Colors.white,
+              height: lineHeight(25, 16)
+            ),),
             ],
           ),
         ],
