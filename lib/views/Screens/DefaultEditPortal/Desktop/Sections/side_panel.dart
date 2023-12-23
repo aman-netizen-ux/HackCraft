@@ -59,68 +59,56 @@ class _SidePanelState extends State<SidePanel> {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-
-
-
                 if (widget.formKey.currentState!.validate()) {
                   widget.formKey.currentState!.save();
 
                   List<Map<String, dynamic>> rounds =
-                    rulesProvider.roundsList.map((round) {
-                  return {
-                    "serial_number":
-                        rulesProvider.roundsList.indexOf(round) + 1,
-                    "name": round['roundTitle'],
-                    "description": round['roundDescription'],
-                    "start_timeline": "${round['startDate']}T00:00:00Z",
-                    "end_timeline": "${round['endDate']}T18:00:00Z"
-                  };
-                }).toList();
-                print(hackathonDetailsProvider.hackathonContactNumber1);
+                      rulesProvider.roundsList.map((round) {
+                        print(round['startDate']);
+                        print("${round['startDate']}T00:00:00Z");
+                    return {
+                      
+                      "serial_number":
+                          rulesProvider.roundsList.indexOf(round) + 1,
+                      "name": round['roundTitle'],
+                      "description": round['roundDescription'],
+                      "start_timeline": "${round['startDate']}T00:00:00Z",
+                      "end_timeline": "${round['endDate']}T18:00:00Z"
 
-                await CreateHackathon().postSingleHackathon({
-                  "hackathon": {
-                    "name": hackathonDetailsProvider.hackathonName,
-                    "organisation_name": "Gov of India",
-                    "mode_of_conduct": hackathonDetailsProvider.hackathonMode,
-                    "deadline": hackathonDetailsProvider.hackathonDate,
-                    "team_size": 4,
-                    "visible": "Public",
-                    "start_date_time":
-                        "${hackathonDetailsProvider.hackathonDate}T00:00:00Z",
-                    "about": hackathonDetailsProvider.hackathonAbout,
-                    "brief": hackathonDetailsProvider.hackathonDescription,
-                    "website": "https://req",
-                    "fee": 100.00,
-                    "venue": hackathonDetailsProvider.hackathonVenue,
-                    "contact1_name":
-                        hackathonDetailsProvider.hackathonContactName1,
-                    "contact1_number":
-                        hackathonDetailsProvider.hackathonContactNumber1,
-                    // "contact2_name":
-                    //     hackathonDetailsProvider.hackathonContactName2,
-                    // "contact2_number":
-                    //     hackathonDetailsProvider.hackathonContactNumber2
 
-                    "contact2_name": "Amrit",
-                    "contact2_number": 8765498765
-                  },
-                  "round": [],
-                  "fields": [],
-                  "containers": []
-                });
+                    };
+                  }).toList();
+                  print(hackathonDetailsProvider.hackathonContactNumber1);
+
+                  await CreateHackathon().postSingleHackathon({
+                    "hackathon": {
+                      "name": hackathonDetailsProvider.hackathonName,
+                      "organisation_name": "Gov of India",
+                      "mode_of_conduct": hackathonDetailsProvider.hackathonMode,
+                      "deadline": hackathonDetailsProvider.hackathonDate,
+                      "team_size": 4,
+                      "visible": "Public",
+                      "start_date_time":
+                          "${hackathonDetailsProvider.hackathonDate}T00:00:00Z",
+                      "about": hackathonDetailsProvider.hackathonAbout,
+                      "brief": hackathonDetailsProvider.hackathonDescription,
+                      "website": "https://req",
+                      "fee": 100.00,
+                      "venue": hackathonDetailsProvider.hackathonVenue,
+                      "contact1_name":
+                          hackathonDetailsProvider.hackathonContactName1,
+                      "contact1_number":
+                          hackathonDetailsProvider.hackathonContactNumber1,
+                      "contact2_name":
+                          hackathonDetailsProvider.hackathonContactName2,
+                      "contact2_number":
+                          hackathonDetailsProvider.hackathonContactNumber2
+                    },
+                    "round": rounds,
+                    "fields": [],
+                    "containers": []
+                  });
                 }
-
-
-
-
-
-
-
-
-
-
-                
               },
               child: SvgPicture.asset(
                   'assets/icons/defaultEditPortal/settings.svg'))

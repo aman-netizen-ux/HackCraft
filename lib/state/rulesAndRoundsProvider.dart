@@ -127,7 +127,23 @@ Widget _editDescriptionWidget =
     }
   }
 
-  
+  void updateRoundStartDate(int index, String startDate) {
+    if (index >= 0 && index < _roundsList.length) {
+      _roundsList[index]['startDate'] = startDate;
+      notifyListeners();
+    } else {
+      print("Invalid index");
+    }
+  }
+
+  void updateRoundEndDate(int index, String endDate) {
+    if (index >= 0 && index < _roundsList.length) {
+      _roundsList[index]['endDate'] = endDate;
+      notifyListeners();
+    } else {
+      print("Invalid index");
+    }
+  }
 
 
    void setEditDescriptionWidget(Widget value) {
