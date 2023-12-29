@@ -15,9 +15,7 @@ class hackathon {
         Uri.parse(url),
       );
 
-      print("1");
       if (response.statusCode == 200) {
-        print("2");
         final Map<String, dynamic> jsonResponse = json.decode(response.body);
         debugPrint('API Response: $jsonResponse');
         return jsonResponse;
@@ -30,3 +28,4 @@ class hackathon {
     }
   }
 }
+
