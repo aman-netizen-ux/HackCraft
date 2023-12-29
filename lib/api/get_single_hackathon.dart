@@ -3,10 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
 
-class hackathon {
+class GetSingleHackathon {
   //Get All the Hackathons
-  getSingleHackathon(String uid) async {
+  Future<DefaultTemplateApiResponse?> getSingleHackathon(String uid) async {
     try {
       final String baseUrl = dotenv.get('getHackathon');
       final String url = '$baseUrl$uid';
@@ -20,13 +21,13 @@ class hackathon {
         print("2");
         final Map<String, dynamic> jsonResponse = json.decode(response.body);
         // debugPrint('API Response: $jsonResponse');
-        return jsonResponse;
+        return DefaultTemplateApiResponse.fromJson(jsonResponse);
       } else {
-        return [];
+        return null;
       }
     } catch (e) {
       print("Error message : $e");
-      return [];
+      return null;
     }
   }
 }

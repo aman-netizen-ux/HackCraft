@@ -60,22 +60,22 @@ class RoundsAndRules extends StatelessWidget {
                     child: ListView(
                         shrinkWrap: true,
                         children: List.generate(
-                          singleHackathonProvider.singleHackathon['round'].length,
+                          singleHackathonProvider.singleHackathon!.rounds.length,
                             (index) {
                               //Generates the round card along with the timeline
                           return CustomTimelineTile(
                             cardIndex: index,
                             isFirst: index == 0,
                             isLast:
-                                singleHackathonProvider.singleHackathon['round'].length - 1 == index,
-                            roundTitle: singleHackathonProvider.singleHackathon['round'][index]['name']?? 'No name available',
-                            roundDescription: singleHackathonProvider.singleHackathon['round'][index]['description']?? 'No name available',
-                            endDate: extractDate(singleHackathonProvider.singleHackathon['round'][index]['end_timeline']),
-                            startDate:  extractDate(singleHackathonProvider.singleHackathon['round'][index]['start_timeline']),
+                                singleHackathonProvider.singleHackathon!.rounds.length - 1 == index,
+                            roundTitle: singleHackathonProvider.singleHackathon!.rounds[index].name,
+                            roundDescription: singleHackathonProvider.singleHackathon!.rounds[index].description,
+                            endDate: extractDate(singleHackathonProvider.singleHackathon!.rounds[index].endTimeline),
+                            startDate:  extractDate(singleHackathonProvider.singleHackathon!.rounds[index].startTimeline),
                             onTap: () {
                               rulesProvider.setSelectedIndex(index);
                               rulesProvider.setDescriptionWidget(roundDetails(
-                                  singleHackathonProvider.singleHackathon['round'][index]['description']?? 'No name available',
+                                  singleHackathonProvider.singleHackathon!.rounds[index].description,
                                   context));
                             },
                           );

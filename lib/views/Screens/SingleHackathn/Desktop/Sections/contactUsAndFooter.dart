@@ -78,7 +78,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(singleHackathonProvider.singleHackathon['hackathon']['contact1_name']?? 'No name available',
+                              Text(singleHackathonProvider.singleHackathon!.hackathons.contact1Name,
                                   style: GoogleFonts.getFont(fontFamily2,
                                       fontSize: scaleHeight(context, 18),
                                       color: black1,
@@ -87,7 +87,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                               SizedBox(
                                 height: scaleHeight(context, 5),
                               ),
-                              Text(singleHackathonProvider.singleHackathon['hackathon']['contact1_number'].toString(),
+                              Text(singleHackathonProvider.singleHackathon!.hackathons.contact1Number.toString(),
                                   style: GoogleFonts.getFont(fontFamily2,
                                       fontSize: scaleHeight(context, 16),
                                       color: black5,
@@ -115,7 +115,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(singleHackathonProvider.singleHackathon['hackathon']['contact2_name']?? 'No name available',
+                              Text(singleHackathonProvider.singleHackathon!.hackathons.contact2Name,
                                   style: GoogleFonts.getFont(fontFamily2,
                                       fontSize: scaleHeight(context, 18),
                                       color: black1,
@@ -124,7 +124,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                               SizedBox(
                                 height: scaleHeight(context, 5),
                               ),
-                              Text(singleHackathonProvider.singleHackathon['hackathon']['contact2_number'].toString(),
+                              Text(singleHackathonProvider.singleHackathon!.hackathons.contact2Number.toString(),
                                   style: GoogleFonts.getFont(fontFamily2,
                                       fontSize: scaleHeight(context, 16),
                                       color: black5,

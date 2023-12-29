@@ -47,7 +47,7 @@ class LandingSection extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('${singleHackathonProvider.singleHackathon['hackathon']['organisation_name']?? 'No name available'} name presents',
+                      Text('${singleHackathonProvider.singleHackathon!.hackathons.organisationName} name presents',
                           style: GoogleFonts.getFont(fontFamily2,
                               fontSize: scaleHeight(context, 20),
                               color: greyish1,
@@ -58,7 +58,7 @@ class LandingSection extends StatelessWidget {
                       ),
                       Text(
                           // 'Your Hackathon Name',
-                          singleHackathonProvider.singleHackathon['hackathon']['name']?? 'No name available',
+                          singleHackathonProvider.singleHackathon!.hackathons.name,
                           style: GoogleFonts.getFont(fontFamily2,
                               fontSize: scaleHeight(context, 54),
                               color: black2,
@@ -71,7 +71,7 @@ class LandingSection extends StatelessWidget {
                         height: scaleHeight(context, 95),
                         width: scaleWidth(context, 700),
                         child: Text(
-                           singleHackathonProvider.singleHackathon['hackathon']['brief']?? 'No name available',
+                           singleHackathonProvider.singleHackathon!.hackathons.brief,
                             textAlign:TextAlign.center,
                             maxLines: 4,
                             style: GoogleFonts.getFont(fontFamily2,
@@ -93,16 +93,16 @@ class LandingSection extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       hackathonDetailContainer(
-                          detail: extractDate(singleHackathonProvider.singleHackathon['hackathon']['start_date_time']?? 'No name available')),
+                          detail: extractDate(singleHackathonProvider.singleHackathon!.hackathons.startDateTime)),
                       hackathonDetailContainer(
-                          detail:singleHackathonProvider.singleHackathon['hackathon']['mode_of_conduct']?? 'No name available'),
+                          detail:singleHackathonProvider.singleHackathon!.hackathons.modeOfConduct),
                       hackathonDetailContainer(
-                          detail: singleHackathonProvider.singleHackathon['hackathon']['fee'].toString()),
+                          detail: singleHackathonProvider.singleHackathon!.hackathons.fee),
                       hackathonDetailContainer(
-                          detail: singleHackathonProvider.singleHackathon['hackathon']['team_size']
+                          detail: singleHackathonProvider.singleHackathon!.hackathons.teamSize
                               .toString()),
                       hackathonDetailContainer(
-                          detail: singleHackathonProvider.singleHackathon['hackathon']['venue']?? 'No name available'),
+                          detail: singleHackathonProvider.singleHackathon!.hackathons.venue),
                     ],
                   ),
                 ),

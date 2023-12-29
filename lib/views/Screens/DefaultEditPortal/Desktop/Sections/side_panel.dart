@@ -107,7 +107,7 @@ class _SidePanelState extends State<SidePanel> {
                     "round": rounds,
                     "fields": [],
                     "containers": []
-                  });
+                  }, context);
                 }
               },
               child: SvgPicture.asset(
