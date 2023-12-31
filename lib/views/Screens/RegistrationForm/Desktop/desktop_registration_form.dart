@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:major_project__widget_testing/api/Registartion/postRegistration.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
-import 'package:major_project__widget_testing/models/questionModel.dart';
+import 'package:major_project__widget_testing/models/Registration/questionModel.dart';
 import 'package:major_project__widget_testing/state/Registration.dart/getRegistration.dart';
 import 'package:major_project__widget_testing/state/getAllHackathons/getAllHackathonsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
@@ -27,10 +28,6 @@ class _RegistrationFormDesktopBodyState
 
   @override
   Widget build(BuildContext context) {
-    final registrationProvider =
-        Provider.of<GetRegistrationForm>(context, listen: false);
-    print("length");
-    print(registrationProvider.getForm['custom_fields'].length);
     return Stack(
       children: [
         Container(
@@ -331,11 +328,11 @@ class _RegistrationFormDesktopBodyState
                               ),
                               const SizedBox(height: 16.0),
                               for (int i = 0; i < questions.length; i++)
-                                //   for (int i = 0;
-                                // i <
-                                //     registrationProvider
-                                //         .getForm['custom_fields'].length;
-                                // i++)
+                                // for (int i = 0;
+                                //     i <
+                                //         registrationProvider
+                                //             .getForm['custom_fields'].length;
+                                //     i++)
                                 FormBuilderQuestion(
                                   question: questions[i],
                                   questionIndex: i,
@@ -392,6 +389,7 @@ class _RegistrationFormDesktopBodyState
                                         final formData =
                                             _formKey.currentState!.value;
                                         // Process and save the form data as needed
+                                        // PostApiService().postRegistration();
                                         print(formData);
                                       }
                                     },

@@ -101,8 +101,7 @@ class _DefaultEditContactUsAndFooterSectionState
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                color: Colors.purple[100],
+                              SizedBox(
                                 height: 30,
                                 width:
                                     defaultEditScaleWidth(widget.containerWidth, 300),
@@ -157,9 +156,8 @@ class _DefaultEditContactUsAndFooterSectionState
 
 
 
-                              Container(
+                              SizedBox(
                                 height: 30,
-                                color: Colors.blue[100],
                                 width:
                                     defaultEditScaleWidth(widget.containerWidth, 300),
                                 child: TextFormField(
@@ -232,24 +230,107 @@ class _DefaultEditContactUsAndFooterSectionState
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Contact Member Name ',
+                              SizedBox(
+                                height: 30,
+                                width:
+                                    defaultEditScaleWidth(widget.containerWidth, 300),
+                                child: TextFormField(
+                                  controller: contactMemberName2Controller,
+                                  cursorColor: Colors.black,
+                                  decoration: InputDecoration(
+                                    hintText: 'Contact Member Name',
+                                    hintStyle: GoogleFonts.getFont(fontFamily2,
+                                        fontSize: defaultEditScaleHeight(
+                                            widget.containerHeight, 18),
+                                        color: black1,
+                                        fontWeight: FontWeight.w400,
+                                        height: lineHeight(29, 18)),//22.4
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    focusedErrorBorder: InputBorder.none,
+                                    counterText: "",
+                                  ),
+                                  maxLength: 30,
+                                  keyboardType: TextInputType.text,
                                   style: GoogleFonts.getFont(fontFamily2,
                                       fontSize: defaultEditScaleHeight(
                                           widget.containerHeight, 18),
                                       color: black1,
                                       fontWeight: FontWeight.w400,
-                                      height: lineHeight(29, 18))),
+                                      height: lineHeight(29, 18)),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return '';
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (value) {
+                                    hackathonDetailsProvider.hackathonContactName2 =
+                                        value.toString();
+                                  },
+                                ),
+                              ),
+                              // Text('Contact Member Name ',
+                              //     style: GoogleFonts.getFont(fontFamily2,
+                              //         fontSize: defaultEditScaleHeight(
+                              //             widget.containerHeight, 18),
+                              //         color: black1,
+                              //         fontWeight: FontWeight.w400,
+                              //         height: lineHeight(29, 18))),
                               SizedBox(
                                 height: defaultEditScaleHeight(
                                     widget.containerHeight, 5),
                               ),
-                              Text('Contact Number',
+
+                              SizedBox(
+                                height: 30,
+                                width:
+                                    defaultEditScaleWidth(widget.containerWidth, 300),
+                                child: TextFormField(
+                                  controller: contactMemberNumber2Controller,
+                                  cursorColor: Colors.black,
+                                  decoration: InputDecoration(
+                                    hintText: 'Contact Number',
+                                    hintStyle: GoogleFonts.getFont(fontFamily2,
+                                        fontSize: defaultEditScaleHeight(
+                                            widget.containerHeight, 16),
+                                        color: black1,
+                                        fontWeight: FontWeight.w400,
+                                        height: lineHeight(10, 16)),//22.4
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    focusedErrorBorder: InputBorder.none,
+                                    counterText: "",
+                                  ),
+                                  maxLength: 30,
+                                  keyboardType: TextInputType.text,
                                   style: GoogleFonts.getFont(fontFamily2,
                                       fontSize: defaultEditScaleHeight(
                                           widget.containerHeight, 16),
-                                      color: black5,
+                                      color: black1,
                                       fontWeight: FontWeight.w400,
-                                      height: lineHeight(5, 16))),
+                                      height: lineHeight(10, 16)),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return '';
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (value) {
+                                    hackathonDetailsProvider.hackathonContactNumber2 =
+                                        value.toString();
+                                  },
+                                ),
+                              ),
+                              // Text('Contact Number',
+                              //     style: GoogleFonts.getFont(fontFamily2,
+                              //         fontSize: defaultEditScaleHeight(
+                              //             widget.containerHeight, 16),
+                              //         color: black5,
+                              //         fontWeight: FontWeight.w400,
+                              //         height: lineHeight(5, 16))),
                             ],
                           ),
                         ],

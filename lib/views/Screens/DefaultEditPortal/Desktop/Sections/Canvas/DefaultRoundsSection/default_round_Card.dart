@@ -214,9 +214,10 @@ class DefaultRoundCard extends StatelessWidget {
                             }
                             return null;
                           },
-                          // onSaved: (value) {
-                          //   hackathonDetailsProvider.hackathonName = value.toString();
-                          // },
+                          onSaved: (value) {
+                           rulesProvider.updateRoundStartDate(
+                                index, value.toString());
+                          },
                         ),
                       )),
                   // Container(
@@ -313,9 +314,10 @@ class DefaultRoundCard extends StatelessWidget {
                             }
                             return null;
                           },
-                          // onSaved: (value) {
-                          //   hackathonDetailsProvider.hackathonName = value.toString();
-                          // },
+                          onSaved: (value) {
+                            rulesProvider.updateRoundEndDate(
+                                index, value.toString());
+                          },
                         ),
                       )),
                 ],

@@ -95,15 +95,12 @@ class _SidePanelState extends State<SidePanel> {
                           hackathonDetailsProvider.hackathonContactName1,
                       "contact1_number":
                           hackathonDetailsProvider.hackathonContactNumber1,
-                      // "contact2_name":
-                      //     hackathonDetailsProvider.hackathonContactName2,
-                      // "contact2_number":
-                      //     hackathonDetailsProvider.hackathonContactNumber2
-
-                      "contact2_name": "Amrit",
-                      "contact2_number": 8765498765
+                      "contact2_name":
+                          hackathonDetailsProvider.hackathonContactName2,
+                      "contact2_number":
+                          hackathonDetailsProvider.hackathonContactNumber2
                     },
-                    "round": [],
+                    "round": rounds,
                     "fields": [],
                     "containers": []
                   });

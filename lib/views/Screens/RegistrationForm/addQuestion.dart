@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:major_project__widget_testing/models/questionModel.dart';
+import 'package:major_project__widget_testing/models/Registration/questionModel.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 
 class AddQuestionDialog extends StatefulWidget {

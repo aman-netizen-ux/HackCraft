@@ -70,9 +70,13 @@ class Aboutus extends StatelessWidget {
                   ),
                   child: ElevatedButton(
                       onPressed: () {
-                        GetRegistrationForm().getRegForm(singleHackathonProvider
+                        final formProvider = Provider.of<GetRegistrationForm>(
+                            context,
+                            listen: false);
+                        formProvider.getRegForm(singleHackathonProvider
                             .singleHackathon['hackathon']['_id']);
-
+                        print(singleHackathonProvider
+                            .singleHackathon['hackathon']['_id']);
                         Navigator.pushNamed(context, '/registrationForm');
                       },
                       style: ElevatedButton.styleFrom(

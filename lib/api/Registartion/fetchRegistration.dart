@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 class ApiService {
   getRegistration(String uId) async {
-    final String baseUrl = dotenv.get("registration");
+    final String baseUrl = dotenv.get("getRegistration");
     final String url = '$baseUrl$uId';
     final response = await http.get(
       Uri.parse(url),
@@ -15,7 +15,7 @@ class ApiService {
     try {
       if (response.statusCode == 200) {
         final Map<String, dynamic> jsonResponse = json.decode(response.body);
-        debugPrint('API Response: $jsonResponse');
+        //   debugPrint('API Response: $jsonResponse');
         return jsonResponse;
       } else {
         return {};
