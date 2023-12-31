@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
@@ -11,7 +12,9 @@ import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desk
 import 'package:provider/provider.dart';
 
 class RoundsAndRules extends StatelessWidget {
-  const RoundsAndRules({super.key});
+  const RoundsAndRules({super.key, this.defaultTemplateModel});
+   final DefaultTemplateApiResponse? defaultTemplateModel;
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,27 +59,22 @@ class RoundsAndRules extends StatelessWidget {
                     //just the list that will be used will come from the API.
                     child: ListView(
                         shrinkWrap: true,
-                        children: List.generate(rulesProvider.roundsList.length,
+                        children: List.generate(defaultTemplateModel!.rounds.length,
                             (index) {
                               //Generates the round card along with the timeline
                           return CustomTimelineTile(
                             cardIndex: index,
                             isFirst: index == 0,
                             isLast:
-                                rulesProvider.roundsList.length - 1 == index,
-                            roundTitle: rulesProvider.roundsList[index]
-                                ['roundTitle']!,
-                            roundDescription: rulesProvider.roundsList[index]
-                                ['roundDescription']!,
-                            endDate: rulesProvider.roundsList[index]
-                                ['endDate']!,
-                            startDate: rulesProvider.roundsList[index]
-                                ['startDate']!,
+                               defaultTemplateModel!.rounds.length - 1 == index,
+                            roundTitle:  defaultTemplateModel!.rounds[index].name,
+                            roundDescription: defaultTemplateModel!.rounds[index].description,
+                            endDate: defaultTemplateModel!.rounds[index].endTimeline,
+                            startDate: defaultTemplateModel!.rounds[index].startTimeline,                             
                             onTap: () {
                               rulesProvider.setSelectedIndex(index);
                               rulesProvider.setDescriptionWidget(roundDetails(
-                                  rulesProvider.roundsList[index]
-                                      ['roundDescription']!,
+                                  defaultTemplateModel!.rounds[index].description,
                                   context));
                             },
                           );

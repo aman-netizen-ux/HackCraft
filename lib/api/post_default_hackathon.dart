@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 class CreateHackathon {
   //Get All the Hackathons
-  postSingleHackathon(Map<String, dynamic> params) async {
+  postSingleHackathon(Map<String, dynamic> params, BuildContext context) async {
     try {
       final String baseUrl = dotenv.get('postHackathon');
 
@@ -24,8 +24,35 @@ class CreateHackathon {
       if (response.statusCode == 201) {
         
         debugPrint('Hackathon created successfully');
+
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Success'),
+              content: Text('Hackathon created successfully!'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+
         return true;
       } else {
+        // Parse the error response
+        final errorResponse = jsonDecode(response.body);
+        String errorMessage = '';
+        errorResponse['error'].forEach((k, v) {
+          errorMessage += '$k: ${v.join(', ')}\n';
+        });
+
+        print(errorMessage);
         return [];
       }
     } catch (e) {

@@ -8,6 +8,7 @@ import 'package:major_project__widget_testing/state/getAllHackathons/getAllHacka
 import 'package:major_project__widget_testing/state/getHackathon/getSingleHackathonProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/default_template.dart';
 import 'package:provider/provider.dart';
 
 class HomeHackathon extends StatefulWidget {
@@ -238,7 +239,7 @@ class _HomeHackathonState extends State<HomeHackathon> {
                                   onEnter: (event) => _setHovering(index, true),
                                   onExit: (event) => _setHovering(index, false),
                                   child: InkWell(
-                                    onTap: () {
+                                    onTap: () async {
                                       final singleHackathonProvider =
                                           Provider.of<SingleHackathonProvider>(
                                               context,
@@ -248,11 +249,29 @@ class _HomeHackathonState extends State<HomeHackathon> {
                                       singleHackathonProvider.setIsLoading =
                                           true;
 
-                                      singleHackathonProvider
+                                      await singleHackathonProvider
                                           .getSingleHackathonsList(
                                               hackathon['_id']);
-                                      Navigator.pushNamed(
-                                          context, '/singleHackathon');
+                                      print('Hi');
+
+                                      print(singleHackathonProvider
+                                          .singleHackathon
+                                          .hackathons
+                                          .startDateTime);
+
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                DefaultTemplate(
+                                                  defaultTemplateModel:
+                                                      singleHackathonProvider
+                                                          .singleHackathon,
+                                                )),
+                                      );
+
+                                      // Navigator.pushNamed(
+                                      // context, '/singleHackathon');
                                     },
                                     child: Center(
                                       child: Container(

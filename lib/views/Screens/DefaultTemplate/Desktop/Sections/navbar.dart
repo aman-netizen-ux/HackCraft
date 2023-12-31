@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
 import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
@@ -10,8 +11,9 @@ import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:provider/provider.dart';
 
 class NavBar extends StatelessWidget {
-  
-  const NavBar({super.key});
+    final DefaultTemplateApiResponse? defaultTemplateModel;
+
+  const NavBar({super.key, required this.defaultTemplateModel});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class NavBar extends StatelessWidget {
                     ),
                     SizedBox(width: scaleWidth(context, 6),),
                     Text(
-                      hackathonDetailsProvider.hackathonName,
+                     defaultTemplateModel!.hackathons.name,
                       style: GoogleFonts.getFont(
                         fontFamily2,fontSize: scaleHeight(context, 20),
                         color: black1,

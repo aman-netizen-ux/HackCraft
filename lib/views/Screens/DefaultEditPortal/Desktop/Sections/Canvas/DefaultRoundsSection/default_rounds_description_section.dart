@@ -19,10 +19,11 @@ class DefaultRoundsDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     final roundDescriptionController = TextEditingController();
      final rulesProvider = Provider.of<RulesProvider>(context);
+final hackathonDetailsProvider =
+        Provider.of<HackathonDetailsProvider>(context);
 
-
-     if(rulesProvider.roundsList[index]["roundDescription"]!.isNotEmpty){
-      roundDescriptionController.text = rulesProvider.roundsList[index]["roundDescription"]!;
+     if(hackathonDetailsProvider.roundsList[index].description!.isNotEmpty){
+      roundDescriptionController.text = hackathonDetailsProvider.roundsList[index].description;
     }
     return Container(
         width: defaultEditScaleWidth(containerWidth, 550),
@@ -95,7 +96,7 @@ class DefaultRoundsDescription extends StatelessWidget {
                         return null;
                       },
                       onSaved: (value) {
-                        rulesProvider.updateRoundDescription(index, value.toString()) ;
+                        hackathonDetailsProvider.updateRoundDescription(index, value.toString()) ;
                       },
                     ),
               )

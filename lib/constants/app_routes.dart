@@ -22,11 +22,10 @@ class AppRoutes {
   static const String singleHackathon = '/singleHackathon';
   static const String templateSelection = '/templateSelection';
   static const String contactSponsors = '/contactSponsors';
-  static const String defaultTemplate = '/defaultTemplate';
+// static const String defaultTemplate = '/defaultTemplate';
   static const String customEditPortal = '/customEditPortal';
   static const String defaultEditPortal = '/defaultEditPortal';
   static const String profile = '/profile';
-  static const String registration = '/registrationForm';
 
   static Map<String, Widget Function(BuildContext)> routes = {
 // start: (context) =>  Navigation(),
@@ -35,11 +34,10 @@ class AppRoutes {
     singleHackathon: (context) => const SingleHackathon(),
     templateSelection: (context) => const TemplateSelection(),
     contactSponsors: (context) => const ContactSponsors(),
-    defaultTemplate: (context) => const DefaultTemplate(),
+// defaultTemplate: (context) => const DefaultTemplate(),
     customEditPortal: (context) => const CustomEditPortal(),
     defaultEditPortal: (context) => const DefaultEditPortal(),
     profile: (context) => const Profile(),
-    registration: (context) => const RegistrationForm(),
   };
 }
 

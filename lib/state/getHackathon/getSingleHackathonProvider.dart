@@ -1,14 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/api/all_hackathons.dart';
 import 'package:major_project__widget_testing/api/get_single_hackathon.dart';
+import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
+import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
 
 //This provider is for the gallery section.
 class SingleHackathonProvider with ChangeNotifier{
 
-  Map<String, dynamic> _singleHackathon = {};
+  DefaultTemplateApiResponse _singleHackathon= DefaultTemplateApiResponse(
+    hackathons: Hackathon(
+      // Provide default or initial values here
+      name: '',
+      organisationName: '',
+      modeOfConduct: '',
+      deadline: '',
+      teamSize: 0,
+      visible: '',
+      startDateTime: '',
+      about: '',
+      brief: '',
+      website: '',
+      fee: '',
+      venue: '',
+      contact1Name: '',
+      contact1Number: '',
+      contact2Name: '',
+      contact2Number: '',
+    ),
+    rounds: [],
+    fields: [],
+    containers: [],
+  ) ;
   bool _isLoading=false;
 
-  Map<String, dynamic>  get singleHackathon => _singleHackathon;
+  DefaultTemplateApiResponse get singleHackathon => _singleHackathon;
   bool get isLoading=> _isLoading;
 
   set setIsLoading(bool value) {
@@ -17,7 +42,42 @@ class SingleHackathonProvider with ChangeNotifier{
   }
 
   Future<void> getSingleHackathonsList(String id) async{
-    _singleHackathon = await hackathon().getSingleHackathon(id);
+
+        final response = await GetSingleHackathon().getSingleHackathon(id);
+if (response != null && response is DefaultTemplateApiResponse) {
+      _singleHackathon = response; // Directly assign the response
+      print('Im in if');
+    } else {
+      _singleHackathon =  DefaultTemplateApiResponse(
+    hackathons: Hackathon(
+      // Provide default or initial values here
+      name: '',
+      organisationName: '',
+      modeOfConduct: '',
+      deadline: '',
+      teamSize: 0,
+      visible: '',
+      startDateTime: '',
+      about: '',
+      brief: '',
+      website: '',
+      fee: '',
+      venue: '',
+      contact1Name: '',
+      contact1Number: '',
+      contact2Name: '',
+      contact2Number: '',
+    ),
+    rounds: [],
+    fields: [],
+    containers: [],
+  );
+  print('Im in else');
+    }
+
+
+
+
     print('************_singleHackathon: $_singleHackathon**************');
     _isLoading=false;
     notifyListeners();

@@ -32,7 +32,7 @@ class NavBar extends StatelessWidget {
                     ),
                     SizedBox(width: scaleWidth(context, 6),),
                     Text(
-                     singleHackathonProvider.singleHackathon['hackathon']['name']?? 'No name available',
+                     singleHackathonProvider.singleHackathon!.hackathons.name,
                       style: GoogleFonts.getFont(
                         fontFamily2,fontSize: scaleHeight(context, 20),
                         color: black1,
