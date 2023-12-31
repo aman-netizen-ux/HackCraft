@@ -8,6 +8,7 @@ import 'package:major_project__widget_testing/state/getAllHackathons/getAllHacka
 import 'package:major_project__widget_testing/state/getHackathon/getSingleHackathonProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/default_template.dart';
 import 'package:provider/provider.dart';
 
 class HomeHackathon extends StatefulWidget {
@@ -28,10 +29,7 @@ class _HomeHackathonState extends State<HomeHackathon> {
     final hackathonsProvider =
         Provider.of<AllHackathonProvider>(context, listen: false);
     hackathonsProvider.getAllHackathonsList();
-
-   
   }
-
 
   final List<Color> pastelColors = [
     const Color(0xFFD4A5A5),
@@ -78,14 +76,13 @@ class _HomeHackathonState extends State<HomeHackathon> {
                 vertical: scaleHeight(context, 25)),
             itemCount: hackathonsProvider.allHackathons.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 20,
-              mainAxisExtent: 230,
-              mainAxisSpacing: 20
-            ),
+                crossAxisCount: 2,
+                crossAxisSpacing: 20,
+                mainAxisExtent: 230,
+                mainAxisSpacing: 20),
             itemBuilder: (BuildContext context, int index) {
               final hackathon = hackathonsProvider.allHackathons[index];
-              Color? cardColor = getRandomPastelColor(); 
+              Color? cardColor = getRandomPastelColor();
               return Container(
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -242,18 +239,36 @@ class _HomeHackathonState extends State<HomeHackathon> {
                                   onEnter: (event) => _setHovering(index, true),
                                   onExit: (event) => _setHovering(index, false),
                                   child: InkWell(
-                                    onTap: () {
+                                    onTap: () async{
                                       final singleHackathonProvider =
                                           Provider.of<SingleHackathonProvider>(
                                               context,
                                               listen: false);
-                                              print('_id: ${hackathon['_id']}');
+                                      print('_id: ${hackathon['_id']}');
 
-                                              singleHackathonProvider.setIsLoading= true;
-                                        
-                                        singleHackathonProvider.getSingleHackathonsList(hackathon['_id']);
-                                      Navigator.pushNamed(
-                                          context, '/singleHackathon');
+                                      singleHackathonProvider.setIsLoading =
+                                          true;
+
+                                      await singleHackathonProvider
+                                          .getSingleHackathonsList(
+                                              hackathon['_id']);
+                                              print('Hi');
+
+                                              print(singleHackathonProvider.singleHackathon.hackathons.startDateTime);
+
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                DefaultTemplate(
+                                                  defaultTemplateModel:
+                                                      singleHackathonProvider
+                                                          .singleHackathon,
+                                                )),
+                                      );
+                                      
+                                      // Navigator.pushNamed(
+                                      // context, '/singleHackathon');
                                     },
                                     child: Center(
                                       child: Container(

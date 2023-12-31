@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
 import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
@@ -10,7 +11,9 @@ import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:provider/provider.dart';
 
 class LandingSection extends StatelessWidget {
-  const LandingSection({super.key});
+  const LandingSection({super.key, required this.defaultTemplateModel});
+      final DefaultTemplateApiResponse? defaultTemplateModel;
+
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +61,8 @@ class LandingSection extends StatelessWidget {
                       ),
                       Text(
                           // 'Your Hackathon Name',
-                          hackathonDetailsProvider.hackathonName,
+                          defaultTemplateModel!.hackathons.name,
+                          // hackathonDetailsProvider.hackathonName,
                           style: GoogleFonts.getFont(fontFamily2,
                               fontSize: scaleHeight(context, 54),
                               color: black2,
@@ -71,7 +75,8 @@ class LandingSection extends StatelessWidget {
                         height: scaleHeight(context, 95),
                         width: scaleWidth(context, 700),
                         child: Text(
-                            hackathonDetailsProvider.hackathonDescription,
+                          defaultTemplateModel!.hackathons.brief,
+                            // hackathonDetailsProvider.hackathonDescription,
                             textAlign:TextAlign.center,
                             maxLines: 4,
                             style: GoogleFonts.getFont(fontFamily2,
@@ -93,16 +98,16 @@ class LandingSection extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       hackathonDetailContainer(
-                          detail: hackathonDetailsProvider.hackathonDate),
+                          detail:extractDate(defaultTemplateModel!.hackathons.startDateTime)),
                       hackathonDetailContainer(
-                          detail: hackathonDetailsProvider.hackathonMode),
+                          detail: defaultTemplateModel!.hackathons.modeOfConduct),
                       hackathonDetailContainer(
-                          detail: hackathonDetailsProvider.hackathonfee),
+                          detail: defaultTemplateModel!.hackathons.fee),
                       hackathonDetailContainer(
-                          detail: hackathonDetailsProvider.hackathonTeamSize
+                          detail: defaultTemplateModel!.hackathons.teamSize
                               .toString()),
                       hackathonDetailContainer(
-                          detail: hackathonDetailsProvider.hackathonVenue),
+                          detail: defaultTemplateModel!.hackathons.venue),
                     ],
                   ),
                 ),
@@ -117,7 +122,16 @@ class LandingSection extends StatelessWidget {
         ],
       ),
     );
+
+
   }
+
+  String extractDate(String dateTimeString) {
+  DateTime dateTime = DateTime.parse(dateTimeString);
+  // Construct the date string
+  String date = "${dateTime.year.toString().padLeft(4, '0')}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}";
+  return date;
+}
 }
 
 class hackathonDetailContainer extends StatelessWidget {

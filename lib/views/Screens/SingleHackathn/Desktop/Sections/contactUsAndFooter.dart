@@ -87,7 +87,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                               SizedBox(
                                 height: scaleHeight(context, 5),
                               ),
-                              Text(singleHackathonProvider.singleHackathon!.hackathons.contact1Number.toString(),
+                              Text(singleHackathonProvider.singleHackathon!.hackathons.contact1Number,
                                   style: GoogleFonts.getFont(fontFamily2,
                                       fontSize: scaleHeight(context, 16),
                                       color: black5,
@@ -124,7 +124,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                               SizedBox(
                                 height: scaleHeight(context, 5),
                               ),
-                              Text(singleHackathonProvider.singleHackathon!.hackathons.contact2Number.toString(),
+                              Text(singleHackathonProvider.singleHackathon!.hackathons.contact2Number,
                                   style: GoogleFonts.getFont(fontFamily2,
                                       fontSize: scaleHeight(context, 16),
                                       color: black5,

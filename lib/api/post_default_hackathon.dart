@@ -45,6 +45,14 @@ class CreateHackathon {
 
         return true;
       } else {
+        // Parse the error response
+        final errorResponse = jsonDecode(response.body);
+        String errorMessage = '';
+        errorResponse['error'].forEach((k, v) {
+          errorMessage += '$k: ${v.join(', ')}\n';
+        });
+
+        print(errorMessage);
         return [];
       }
     } catch (e) {

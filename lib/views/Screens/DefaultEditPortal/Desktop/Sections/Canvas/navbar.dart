@@ -71,7 +71,7 @@ class DefaultEditNavBar extends StatelessWidget {
                     return null;
                   },
                   onSaved: (value) {
-                    hackathonDetailsProvider.hackathonName = value.toString();
+                    hackathonDetailsProvider.hackathonName= value.toString();
                   },
                 ),
               ),

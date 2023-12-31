@@ -1,26 +1,26 @@
 class Hackathon {
-  final String? logo;
-  final String name;
-  final String organisationName;
-  final String modeOfConduct;
-  final String deadline;
-  final int teamSize;
-  final String visible;
-  final String startDateTime;
-  final String about;
-  final String brief;
-  final String? image1;
-  final String? image2;
-  final String? image3;
-  final String? image4;
-  final String? image5;
-  final String website;
-  final String fee;
-  final String venue;
-  final String contact1Name;
-  final int contact1Number;
-  final String contact2Name;
-  final int contact2Number;
+    String? logo;
+    String name;
+    String organisationName;
+    String modeOfConduct;
+    String deadline;
+    int teamSize;
+    String visible;
+    String startDateTime;
+    String about;
+    String brief;
+    String? image1;
+    String? image2;
+    String? image3;
+    String? image4;
+    String? image5;
+    String website;
+    String fee;
+    String venue;
+    String contact1Name;
+    String contact1Number;
+    String contact2Name;
+    String contact2Number;
 
   Hackathon({
     this.logo,
@@ -67,9 +67,9 @@ class Hackathon {
         fee: json['fee'],
         venue: json['venue'],
         contact1Name: json['contact1_name'],
-        contact1Number: json['contact1_number'],
+        contact1Number: json['contact1_number'].toString(),
         contact2Name: json['contact2_name'],
-        contact2Number: json['contact2_number'],
+        contact2Number: json['contact2_number'].toString(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -99,11 +99,11 @@ class Hackathon {
 }
 
 class Round {
-  final int serialNumber;
-  final String name;
-  final String description;
-  final String startTimeline;
-  final String endTimeline;
+    int serialNumber;
+    String name;
+    String description;
+    String startTimeline;
+    String endTimeline;
 
   Round({
     required this.serialNumber,

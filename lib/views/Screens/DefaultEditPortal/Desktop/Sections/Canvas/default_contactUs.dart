@@ -36,20 +36,20 @@ class _DefaultEditContactUsAndFooterSectionState
     final contactMemberNumber2Controller = TextEditingController();
     final hackathonDetailsProvider =
         Provider.of<HackathonDetailsProvider>(context);
-    if(hackathonDetailsProvider.hackathonContactName1.isNotEmpty){
-      contactMemberName1Controller.text = hackathonDetailsProvider.hackathonContactName1;
+    if(hackathonDetailsProvider.contact1Name.isNotEmpty){
+      contactMemberName1Controller.text = hackathonDetailsProvider.contact1Name;
     }
 
-    if(hackathonDetailsProvider.hackathonContactNumber1.isNotEmpty){
-      contactMemberNumber1Controller.text = hackathonDetailsProvider.hackathonContactNumber1;
+    if(hackathonDetailsProvider.contact1Number.isNotEmpty){
+      contactMemberNumber1Controller.text = hackathonDetailsProvider.contact1Number;
     }
 
-    if(hackathonDetailsProvider.hackathonContactName2.isNotEmpty){
-      contactMemberName2Controller.text = hackathonDetailsProvider.hackathonContactName2;
+    if(hackathonDetailsProvider.contact2Name.isNotEmpty){
+      contactMemberName2Controller.text = hackathonDetailsProvider.contact2Name;
     }
 
-    if(hackathonDetailsProvider.hackathonContactNumber2.isNotEmpty){
-      contactMemberNumber1Controller.text = hackathonDetailsProvider.hackathonContactNumber2;
+    if(hackathonDetailsProvider.contact2Number.isNotEmpty){
+      contactMemberNumber1Controller.text = hackathonDetailsProvider.contact2Number;
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,7 +137,7 @@ class _DefaultEditContactUsAndFooterSectionState
                                     return null;
                                   },
                                   onSaved: (value) {
-                                    hackathonDetailsProvider.hackathonContactName1 =
+                                    hackathonDetailsProvider.contact1Name =
                                         value.toString();
                                   },
                                 ),
@@ -192,7 +192,8 @@ class _DefaultEditContactUsAndFooterSectionState
                                     return null;
                                   },
                                   onSaved: (value) {
-                                    hackathonDetailsProvider.hackathonContactNumber1 =
+
+                                    hackathonDetailsProvider.contact1Number =
                                         value.toString();
                                   },
                                 ),
@@ -266,7 +267,7 @@ class _DefaultEditContactUsAndFooterSectionState
                                     return null;
                                   },
                                   onSaved: (value) {
-                                    hackathonDetailsProvider.hackathonContactName2 =
+                                    hackathonDetailsProvider.contact2Name =
                                         value.toString();
                                   },
                                 ),
@@ -319,7 +320,7 @@ class _DefaultEditContactUsAndFooterSectionState
                                     return null;
                                   },
                                   onSaved: (value) {
-                                    hackathonDetailsProvider.hackathonContactNumber2 =
+                                    hackathonDetailsProvider.contact2Number =
                                         value.toString();
                                   },
                                 ),

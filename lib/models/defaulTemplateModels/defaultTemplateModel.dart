@@ -1,10 +1,10 @@
 import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
 
 class DefaultTemplateApiResponse {
-  final Hackathon hackathons;
-  final List<Round> rounds;
-  final List<TextFieldProperties> fields;
-  final List<ContainerProperties> containers;
+   Hackathon hackathons;
+   List<Round> rounds;
+   List<TextFieldProperties> fields;
+   List<ContainerProperties> containers;
 
   DefaultTemplateApiResponse({
     required this.hackathons,
