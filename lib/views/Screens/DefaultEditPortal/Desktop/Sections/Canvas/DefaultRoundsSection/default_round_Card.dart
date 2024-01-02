@@ -41,6 +41,16 @@ class DefaultRoundCard extends StatelessWidget {
       roundNameController.text = hackathonDetailsProvider.roundsList[index].name;
     }
 
+
+    if (hackathonDetailsProvider.roundsList[index].startTimeline.isNotEmpty) {
+      roundStartDateController.text = hackathonDetailsProvider.roundsList[index].startTimeline;
+    }
+
+
+    if (hackathonDetailsProvider.roundsList[index].endTimeline.isNotEmpty) {
+      roundEndDateController.text = hackathonDetailsProvider.roundsList[index].endTimeline;
+    }
+
     return InkWell(
       hoverColor: Colors.white,
       onTap: onTap,
@@ -127,7 +137,7 @@ class DefaultRoundCard extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       if (hackathonDetailsProvider.roundsList.length != 1) {
-                        hackathonDetailsProvider.deleteRound(index);
+                        hackathonDetailsProvider.deleteRound(index, context);
                       }
                     },
                     child: Container(

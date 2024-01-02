@@ -49,7 +49,7 @@ class _DefaultEditContactUsAndFooterSectionState
     }
 
     if(hackathonDetailsProvider.contact2Number.isNotEmpty){
-      contactMemberNumber1Controller.text = hackathonDetailsProvider.contact2Number;
+      contactMemberNumber2Controller.text = hackathonDetailsProvider.contact2Number;
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -21,6 +21,13 @@ class RoundsAndRules extends StatelessWidget {
     // Retrieve the RulesProvider instance from the nearest ancestor
     // in the widget tree, using the Provider package.
     final rulesProvider = Provider.of<RulesProvider>(context);
+
+    String extractDate(String dateTimeString) {
+  DateTime dateTime = DateTime.parse(dateTimeString);
+  // Construct the date string
+  String date = "${dateTime.year.toString().padLeft(4, '0')}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}";
+  return date;
+}
     return Padding(
       key: rulesAndRounds,
       padding: EdgeInsets.symmetric(
@@ -69,8 +76,8 @@ class RoundsAndRules extends StatelessWidget {
                                defaultTemplateModel!.rounds.length - 1 == index,
                             roundTitle:  defaultTemplateModel!.rounds[index].name,
                             roundDescription: defaultTemplateModel!.rounds[index].description,
-                            endDate: defaultTemplateModel!.rounds[index].endTimeline,
-                            startDate: defaultTemplateModel!.rounds[index].startTimeline,                             
+                            endDate: extractDate(defaultTemplateModel!.rounds[index].endTimeline),
+                            startDate: extractDate(defaultTemplateModel!.rounds[index].startTimeline),                             
                             onTap: () {
                               rulesProvider.setSelectedIndex(index);
                               rulesProvider.setDescriptionWidget(roundDetails(
@@ -87,6 +94,7 @@ class RoundsAndRules extends StatelessWidget {
         ],
       ),
     );
+    
   }
 
 

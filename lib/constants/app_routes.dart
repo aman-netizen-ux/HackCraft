@@ -9,13 +9,11 @@ import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/defa
 import 'package:major_project__widget_testing/views/Screens/HostNavigation/hostNavigation.dart';
 import 'package:major_project__widget_testing/views/Screens/MainNavigation/Desktop/Sections/Profile/profile.dart';
 import 'package:major_project__widget_testing/views/Screens/MainNavigation/mainNavigation.dart';
-import 'package:major_project__widget_testing/views/Screens/SingleHackathn/single_hackathon.dart';
 import 'package:major_project__widget_testing/views/Screens/TempelateSelection/tempelate_selection.dart';
 
 class AppRoutes{
 static const String start = '/';
 static const String hostNavigation = '/hostNavigation';
-static const String singleHackathon = '/singleHackathon';
 static const String templateSelection = '/templateSelection';
 static const String contactSponsors = '/contactSponsors';
 // static const String defaultTemplate = '/defaultTemplate';
@@ -31,7 +29,6 @@ static Map<String, Widget Function(BuildContext)> routes = {
 // start: (context) =>  Navigation(),
 start: (context) => const MainNavigation(),
 hostNavigation: (context) => const HostNavigation(),
-singleHackathon: (context) => const SingleHackathon(),
 templateSelection: (context) => const TemplateSelection(),
 contactSponsors: (context) => const ContactSponsors(),
 // defaultTemplate: (context) => const DefaultTemplate(),

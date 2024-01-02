@@ -23,7 +23,7 @@ class _DefaultTemplateDesktopBodyState extends State<DefaultTemplateDesktopBody>
       children: [
         NavBar(defaultTemplateModel: widget.defaultTemplateModel),
         LandingSection(defaultTemplateModel: widget.defaultTemplateModel),
-        // RoundsAndRules(),
+        RoundsAndRules(defaultTemplateModel: widget.defaultTemplateModel),
         Aboutus(defaultTemplateModel: widget.defaultTemplateModel),
         GallerySection(),
         ContactUsAndFooterSection(defaultTemplateModel: widget.defaultTemplateModel)

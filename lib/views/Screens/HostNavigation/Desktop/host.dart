@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:major_project__widget_testing/state/templateSelectionprovider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
+import 'package:provider/provider.dart';
 
 class HostDesktopBody extends StatelessWidget {
   const HostDesktopBody({super.key});
@@ -41,6 +43,9 @@ class HostDesktopBody extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
+                  final templateSelectionProvider = Provider.of<TemplateSelectionProvider>(context, listen:false);
+                   templateSelectionProvider.selectTemplate(0);
+                   templateSelectionProvider.setTnC(false);
                   Navigator.pushNamed(context, '/templateSelection');
                 },
                 style: ElevatedButton.styleFrom(

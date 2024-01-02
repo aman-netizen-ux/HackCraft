@@ -38,6 +38,9 @@ class _SidePanelState extends State<SidePanel> {
               onTap: () {
                 if (widget.formKey.currentState!.validate()) {
                   widget.formKey.currentState!.save();
+
+                   rulesProvider.setSelectedIndex(-1);
+                              rulesProvider.setDescriptionWidget(SvgPicture.asset('assets/images/defaultTemplate/clickme.svg'));
                   Navigator.push(
                     context,
                     MaterialPageRoute(
