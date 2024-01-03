@@ -97,7 +97,7 @@ class _HomeHackathonState extends State<HomeHackathon> {
                           child: Container(
                               decoration: const BoxDecoration(
                                   color: Color(0xFFC3C0DF),
-                                  borderRadius: const BorderRadius.only(
+                                  borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(10),
                                       bottomLeft: Radius.circular(10))))),
                       Expanded(
@@ -240,12 +240,11 @@ class _HomeHackathonState extends State<HomeHackathon> {
                                   onEnter: (event) => _setHovering(index, true),
                                   onExit: (event) => _setHovering(index, false),
                                   child: InkWell(
-                                    onTap: () async{
+                                    onTap: () async {
                                       final singleHackathonProvider =
                                           Provider.of<SingleHackathonProvider>(
                                               context,
                                               listen: false);
-                                      print('_id: ${hackathon['_id']}');
 
                                       singleHackathonProvider.setIsLoading =
                                           true;
@@ -253,14 +252,15 @@ class _HomeHackathonState extends State<HomeHackathon> {
                                       await singleHackathonProvider
                                           .getSingleHackathonsList(
                                               hackathon['_id']);
-                                              print('Hi');
 
-                                              print(singleHackathonProvider.singleHackathon.hackathons.startDateTime);
-
-                                       final rulesProvider = Provider.of<RulesProvider>(context, listen:false);
+                                      final rulesProvider =
+                                          Provider.of<RulesProvider>(context,
+                                              listen: false);
 
                                       rulesProvider.setSelectedIndex(-1);
-                              rulesProvider.setDescriptionWidget(SvgPicture.asset('assets/images/defaultTemplate/clickme.svg'));
+                                      rulesProvider.setDescriptionWidget(
+                                          SvgPicture.asset(
+                                              'assets/images/defaultTemplate/clickme.svg'));
 
                                       Navigator.push(
                                         context,
@@ -270,9 +270,10 @@ class _HomeHackathonState extends State<HomeHackathon> {
                                                   defaultTemplateModel:
                                                       singleHackathonProvider
                                                           .singleHackathon,
+                                                  isEdit: false,
                                                 )),
                                       );
-                                      
+
                                       // Navigator.pushNamed(
                                       // context, '/singleHackathon');
                                     },

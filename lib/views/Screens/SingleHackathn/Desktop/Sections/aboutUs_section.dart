@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
-import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
 import 'package:major_project__widget_testing/state/Registration.dart/getRegistration.dart';
+import 'package:major_project__widget_testing/state/getHackathon/getSingleHackathonProvider.dart';
 import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
-
 import 'package:provider/provider.dart';
 
 class Aboutus extends StatelessWidget {
-  const Aboutus(
-      {super.key, required this.defaultTemplateModel, required this.isEdit});
-  final DefaultTemplateApiResponse? defaultTemplateModel;
-  final bool isEdit;
+  const Aboutus({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final hackathonDetailsProvider =
-        Provider.of<HackathonDetailsProvider>(context);
+    final singleHackathonProvider =
+        Provider.of<SingleHackathonProvider>(context);
     return Padding(
       key: aboutUs,
       padding: EdgeInsets.only(top: scaleHeight(context, 96)),
@@ -44,8 +41,7 @@ class Aboutus extends StatelessWidget {
                       top: scaleHeight(context, 59),
                       bottom: scaleHeight(context, 165)),
                   child: Text(
-                    // hackathonDetailsProvider.hackathonAbout,
-                    defaultTemplateModel!.hackathons.about,
+                    singleHackathonProvider.singleHackathon!.hackathons.about,
                     // 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis velit nec justo fermentum dignissim. Sed lacinia ex eu mi malesuada, sed interdum metus posuere. Vivamus auctor sapien in eleifend. Fusce nec est eget lorem ultrices facilisis a eget dolor. Integer eget velit sit amet lorem gravida vestibulum. Proin eget vestibulum nunc. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur eget tellus ut odio facilisis bibendum nec nec tortor. Vivamus iaculis, turpis et tincidunt mattis, est arcu laoreet urna, nec dignissim nisl odio a nunc. Phasellus fermentum tristique orci, vel convallis tortor vehicula nec.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis velit nec justo fermentum dignissim. Sed lacinia ex eu mi malesuada, sed interdum metus posuere. Vivamus auctor sapien in eleifend. Fusce nec est eget lorem ultrices facilisis a eget dolor. Integer eget velit sit amet lorem gravida vestibulum. Proin eget vestibulum nunc. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur eget tellus ut odio facilisis bibendum nec nec tortor. Vivamus iaculis, turpis et tincidunt mattis, est arcu laoreet urna, nec dignissim nisl odio a nunc. Phasellus fermentum tristique orci, vel convallis tortor vehicula nec.Suspendisse potenti. Donec ullamcorper consectetur nunc, ut aliquam nulla blandit eget. Nunc pharetra diam ac turpis viverra varius. Sed ut erat justo. Fusce in tellus ut sapien venenatis volutpat. Nam eu sapien nec enim rhoncus volutpat vel eu libero. Nam vel augue sit amet odio malesuada mattis eget eu sapien. Integer ut nisi vitae libero gravida pharetra. Nunc varius tincidunt justo, a vehicula justo rhoncus ut. Sed bibendum, risus at euismod venenatis, purus metus tincidunt libero, a facilisis justo justo id libero. Maecenas ultricies augue a hendrerit iaculis.',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.getFont(
@@ -71,17 +67,7 @@ class Aboutus extends StatelessWidget {
                     borderRadius: BorderRadius.circular(55),
                   ),
                   child: ElevatedButton(
-                      onPressed: () {
-                        if (!isEdit) {
-                          final getRegistrationFormProvider =
-                              Provider.of<GetRegistrationFormProvider>(context,
-                                  listen: false);
-
-                          getRegistrationFormProvider
-                              .getRegForm(defaultTemplateModel!.hackathons.id);
-                          Navigator.pushNamed(context, '/getRegistration');
-                        }
-                      },
+                      onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(55)),

@@ -176,7 +176,16 @@ void increaseTemproraryRoundsCount() {
       _hackathonDetails.rounds.removeAt(index);
       notifyListeners();
     } else {
-      print("Invalid index");
+      debugPrint("Invalid index");
+    }
+  }
+
+  void deleteTemproraryRound(int index, BuildContext context) {
+    if (index >= 0 && index < _temporaryRoundList.length) {
+      _temporaryRoundList.removeAt(index);
+      notifyListeners();
+    } else {
+      debugPrint("Invalid index");
     }
   }
 
@@ -195,7 +204,7 @@ void increaseTemproraryRoundsCount() {
       _hackathonDetails.rounds[index].description = newDescription;
       notifyListeners();
     } else {
-      print("Invalid index");
+      debugPrint("Invalid index");
     }
   }
 
@@ -224,7 +233,7 @@ void increaseTemproraryRoundsCount() {
       _hackathonDetails.rounds[index].startTimeline = startDate;
       notifyListeners();
     } else {
-      print("Invalid index");
+      debugPrint("Invalid index");
     }
   }
 
@@ -233,13 +242,14 @@ void increaseTemproraryRoundsCount() {
       _hackathonDetails.rounds[index].endTimeline = endDate;
       notifyListeners();
     } else {
-      print("Invalid index");
+      debugPrint("Invalid index");
     }
   }
 
   DefaultTemplateApiResponse _hackathonDetails = DefaultTemplateApiResponse(
     hackathons: Hackathon(
       // Provide default or initial values here
+      id: "",
       name: '',
       organisationName: '',
       modeOfConduct: '',

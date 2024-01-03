@@ -103,7 +103,7 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
                             onTap: () {
                               Navigator.pop(context);
                             },
-                            child: Icon(Icons.arrow_back)),
+                            child: const Icon(Icons.arrow_back)),
                         SizedBox(
                           width: scaleWidth(context, 10),
                         ),
@@ -215,7 +215,7 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
                           SizedBox(
                             width: scaleWidth(context, 25),
                           ),
-                          Icon(
+                          const Icon(
                             Icons.arrow_forward,
                             color: Colors.white,
                           )

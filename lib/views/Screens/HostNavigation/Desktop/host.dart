@@ -17,8 +17,7 @@ class HostDesktopBody extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-              'Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit.',
+          Text('Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit.',
               textAlign: TextAlign.center,
               style: GoogleFonts.getFont(fontFamily2,
                   fontSize: scaleHeight(context, 54),
@@ -43,9 +42,11 @@ class HostDesktopBody extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  final templateSelectionProvider = Provider.of<TemplateSelectionProvider>(context, listen:false);
-                   templateSelectionProvider.selectTemplate(0);
-                   templateSelectionProvider.setTnC(false);
+                  final templateSelectionProvider =
+                      Provider.of<TemplateSelectionProvider>(context,
+                          listen: false);
+                  templateSelectionProvider.selectTemplate(0);
+                  templateSelectionProvider.setTnC(false);
                   Navigator.pushNamed(context, '/templateSelection');
                 },
                 style: ElevatedButton.styleFrom(
@@ -78,7 +79,7 @@ class HostDesktopBody extends StatelessWidget {
                         horizontal: scaleWidth(context, 39)),
                     backgroundColor: Colors.white,
                     elevation: 0,
-                    side: BorderSide(color: red, width: 1),
+                    side: const BorderSide(color: red, width: 1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(rad5_10),
                     )),
@@ -97,4 +98,3 @@ class HostDesktopBody extends StatelessWidget {
     );
   }
 }
-

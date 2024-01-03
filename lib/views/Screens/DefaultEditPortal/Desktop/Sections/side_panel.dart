@@ -7,6 +7,7 @@ import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dar
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/default_template.dart';
+import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/createRegistrationform.dart';
 import 'package:provider/provider.dart';
 
 class SidePanel extends StatefulWidget {
@@ -39,14 +40,16 @@ class _SidePanelState extends State<SidePanel> {
                 if (widget.formKey.currentState!.validate()) {
                   widget.formKey.currentState!.save();
 
-                   rulesProvider.setSelectedIndex(-1);
-                              rulesProvider.setDescriptionWidget(SvgPicture.asset('assets/images/defaultTemplate/clickme.svg'));
+                  rulesProvider.setSelectedIndex(-1);
+                  rulesProvider.setDescriptionWidget(SvgPicture.asset(
+                      'assets/images/defaultTemplate/clickme.svg'));
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => DefaultTemplate(
                               defaultTemplateModel:
                                   hackathonDetailsProvider.hackathonDetails,
+                              isEdit: true,
                             )),
                   );
 
@@ -76,9 +79,6 @@ class _SidePanelState extends State<SidePanel> {
 
                   List<Map<String, dynamic>> rounds =
                       hackathonDetailsProvider.roundsList.map((round) {
-                    print(round.startTimeline);
-                    print(round.endTimeline);
-
                     return {
                       "serial_number":
                           hackathonDetailsProvider.roundsList.indexOf(round) +
@@ -90,68 +90,57 @@ class _SidePanelState extends State<SidePanel> {
                     };
                   }).toList();
 
-                  print(hackathonDetailsProvider.deadline);
-
-                  print(hackathonDetailsProvider.startDateTime);
-
-                  await CreateHackathon().postSingleHackathon(
-                      // {
-                      //   "hackathon": {
-                      //     "name": hackathonDetailsProvider.hackathonName,
-                      //     "organisation_name": "Gov of India",
-                      //     "mode_of_conduct": hackathonDetailsProvider.modeOfConduct,
-                      //     "deadline": "2023-12-20",
-                      //     "team_size": 4,
-                      //     "visible": "Public",
-                      //     "start_date_time": "2024-12-24T00:00:00Z",
-                      //     "about": hackathonDetailsProvider.about,
-                      //     "brief":
-                      //         hackathonDetailsProvider.brief,
-                      //     "website": "https://req",
-                      //     "fee": 100.00,
-                      //     "venue": "hackathonDetailsProvider.hackathonVenue",
-                      //     "contact1_name":
-                      //         "hackathonDetailsProvider.hackathonContactName1",
-                      //     "contact1_number": 9876556789,
-                      //     "contact2_name":
-                      //         "hackathonDetailsProvider.hackathonContactName2",
-                      //     "contact2_number": 1234567890
-                      //   },
-                      //   "round": [],
-                      //   "fields": [],
-                      //   "containers": []
-                      // }
-                      {
-
-                        "hackathon": {
-                          "name": hackathonDetailsProvider.hackathonName,
-                          "organisation_name": "Gov of India",
-                          "mode_of_conduct": hackathonDetailsProvider.modeOfConduct,
-                          "deadline": "2024-10-10",
-                          "team_size": 3,
-                          "visible": "Public",
-                          "start_date_time":
-                              "${hackathonDetailsProvider.startDateTime}T00:00:00Z",
-                          "about": hackathonDetailsProvider.about,
-                          "brief": hackathonDetailsProvider.brief,
-                          "website": "https://req",
-                          "fee": 100.00,
-                          "venue": hackathonDetailsProvider.venue,
-                          "contact1_name":
-                              hackathonDetailsProvider.contact1Name,
-                          "contact1_number":9087654321,
-                          "contact2_name":
-                              hackathonDetailsProvider.contact2Name,
-                          "contact2_number":8907654321
-
-                        },
-                        "round": rounds,
-                        "fields": [],
-                        "containers": []
-                      }
-
-                      ,
-                      context);
+                  final hackathonId =
+                      await CreateHackathon().postSingleHackathon({
+                    "hackathon": {
+                      "name": hackathonDetailsProvider.hackathonName,
+                      "organisation_name": "Gov of India",
+                      "mode_of_conduct": hackathonDetailsProvider.modeOfConduct,
+                      "deadline": "2024-10-10",
+                      "team_size": 3,
+                      "visible": "Public",
+                      "start_date_time":
+                          "${hackathonDetailsProvider.startDateTime}T00:00:00Z",
+                      "about": hackathonDetailsProvider.about,
+                      "brief": hackathonDetailsProvider.brief,
+                      "website": "https://req",
+                      "fee": 100.00,
+                      "venue": hackathonDetailsProvider.venue,
+                      "contact1_name": hackathonDetailsProvider.contact1Name,
+                      "contact1_number": 9087654321,
+                      "contact2_name": hackathonDetailsProvider.contact2Name,
+                      "contact2_number": 8907654321
+                    },
+                    "round": rounds,
+                    "fields": [],
+                    "containers": []
+                  }, context);
+                  if (hackathonId.isNotEmpty) {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Success'),
+                          content:
+                              const Text('Hackathon created successfully!'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => RegistrationForm(
+                                              hackathonId: hackathonId,
+                                            )));
+                              },
+                              child: Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
                 }
               },
               child: SvgPicture.asset(
@@ -194,16 +183,6 @@ class SectionButton extends StatelessWidget {
             horizontal: scaleWidth(context, 19),
             vertical: scaleHeight(context, 14),
           ),
-          // margin: EdgeInsets.symmetric(
-          //   vertical: scaleHeight(context, 15),
-          // ).copyWith(
-          //   top: index == 0
-          //       ? 0
-          //       : null, // Remove top margin for the first item
-          //   bottom: index == 5
-          //       ? 0
-          //       : null, // Remove bottom margin for the last item
-          // ),
           decoration: BoxDecoration(
             color: selectedSection == index ? sectionSelection : null,
             borderRadius: BorderRadius.circular(rad5_3),

@@ -9,55 +9,36 @@ class CreateHackathon {
   postSingleHackathon(Map<String, dynamic> params, BuildContext context) async {
     try {
       final String baseUrl = dotenv.get('postHackathon');
-
+      final String id;
       final response = await http.post(
         Uri.parse(baseUrl),
         headers: <String, String>{
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
         body: jsonEncode(params),
       );
 
-      print("1");
-      print(response.statusCode);
       if (response.statusCode == 201) {
-        
+        final Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+        id = jsonResponse['hackathon created']['_id'];
         debugPrint('Hackathon created successfully');
 
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Success'),
-              content: Text('Hackathon created successfully!'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-
-        return true;
+        return id;
       } else {
-        // Parse the error response
         final errorResponse = jsonDecode(response.body);
         String errorMessage = '';
         errorResponse['error'].forEach((k, v) {
           errorMessage += '$k: ${v.join(', ')}\n';
         });
 
-        print(errorMessage);
-        return [];
+        debugPrint(errorMessage);
+        return '';
       }
     } catch (e) {
-      print("Error message : $e");
-      return [];
+      debugPrint("Error message : $e");
+      return null;
     }
   }
 }

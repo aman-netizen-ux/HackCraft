@@ -1,28 +1,30 @@
 class Hackathon {
-    String? logo;
-    String name;
-    String organisationName;
-    String modeOfConduct;
-    String deadline;
-    int teamSize;
-    String visible;
-    String startDateTime;
-    String about;
-    String brief;
-    String? image1;
-    String? image2;
-    String? image3;
-    String? image4;
-    String? image5;
-    String website;
-    String fee;
-    String venue;
-    String contact1Name;
-    String contact1Number;
-    String contact2Name;
-    String contact2Number;
+  String id;
+  String? logo;
+  String name;
+  String organisationName;
+  String modeOfConduct;
+  String deadline;
+  int teamSize;
+  String visible;
+  String startDateTime;
+  String about;
+  String brief;
+  String? image1;
+  String? image2;
+  String? image3;
+  String? image4;
+  String? image5;
+  String website;
+  String fee;
+  String venue;
+  String contact1Name;
+  String contact1Number;
+  String contact2Name;
+  String contact2Number;
 
   Hackathon({
+    required this.id,
     this.logo,
     required this.name,
     required this.organisationName,
@@ -48,6 +50,7 @@ class Hackathon {
   });
 
   factory Hackathon.fromJson(Map<String, dynamic> json) => Hackathon(
+        id: json['_id'],
         logo: json['logo'],
         name: json['name'],
         organisationName: json['organisation_name'],
@@ -99,11 +102,11 @@ class Hackathon {
 }
 
 class Round {
-    int serialNumber;
-    String name;
-    String description;
-    String startTimeline;
-    String endTimeline;
+  int serialNumber;
+  String name;
+  String description;
+  String startTimeline;
+  String endTimeline;
 
   Round({
     required this.serialNumber,
@@ -146,7 +149,7 @@ class TextFieldProperties {
 }
 
 class ContainerProperties {
- ContainerProperties();
+  ContainerProperties();
   factory ContainerProperties.fromJson(Map<String, dynamic> json) {
     return ContainerProperties();
   }
@@ -154,4 +157,4 @@ class ContainerProperties {
   Map<String, dynamic> toJson() {
     return {};
   }
-  }
+}

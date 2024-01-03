@@ -7,31 +7,27 @@ class RulesProvider with ChangeNotifier {
   Widget _descriptionWidget =
       SvgPicture.asset('assets/images/defaultTemplate/clickme.svg');
 
-Widget _editDescriptionWidget =
+  Widget _editDescriptionWidget =
       SvgPicture.asset('assets/images/defaultTemplate/clickme.svg');
 
-      int _selectedIndex = -1;
-      int _editSelectedIndex=-1;
+  int _selectedIndex = -1;
+  int _editSelectedIndex = -1;
 
-   int get selectedIndex => _selectedIndex;
-      int get editSelectedIndex => _editSelectedIndex;
+  int get selectedIndex => _selectedIndex;
+  int get editSelectedIndex => _editSelectedIndex;
 
-
-   void setSelectedIndex(int index){
+  void setSelectedIndex(int index) {
     _selectedIndex = index;
     notifyListeners();
-   }
+  }
 
-    void setEditSelectedIndex(int index){
+  void setEditSelectedIndex(int index) {
     _editSelectedIndex = index;
     notifyListeners();
-   }
-
- 
+  }
 
   Widget get descriptionWidget => _descriptionWidget;
-    Widget get editDescriptionWidget => _editDescriptionWidget;
-
+  Widget get editDescriptionWidget => _editDescriptionWidget;
 
 //When the user clicks on any card, the _description widget will get updated with the description of that round, and instead of an image, text will now be shown.
   void setDescriptionWidget(Widget value) {
@@ -39,8 +35,7 @@ Widget _editDescriptionWidget =
     notifyListeners();
   }
 
-
-   void setEditDescriptionWidget(Widget value) {
+  void setEditDescriptionWidget(Widget value) {
     _editDescriptionWidget = value;
     notifyListeners();
   }

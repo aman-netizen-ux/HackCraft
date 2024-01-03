@@ -244,7 +244,7 @@ class DefaultRoundCard extends StatelessWidget {
                             return null;
                           },
                           onSaved: (value) {
-                           hackathonDetailsProvider.updateRoundStartDate(
+                            hackathonDetailsProvider.updateRoundStartDate(
                                 index, value.toString());
                           },
                         ),
