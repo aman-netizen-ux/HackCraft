@@ -6,6 +6,7 @@ import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/models/allHackathonsModel.dart';
 import 'package:major_project__widget_testing/state/getAllHackathons/getAllHackathonsProvider.dart';
+import 'package:major_project__widget_testing/state/getHackathon/getSingleHackathonProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:provider/provider.dart';
@@ -25,11 +26,13 @@ class _HomeHackathonState extends State<HomeHackathon> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<AllHackathonProvider>(context, listen: false)
-          .getAllHackathonsList();
-    });
+    final hackathonsProvider =
+        Provider.of<AllHackathonProvider>(context, listen: false);
+    hackathonsProvider.getAllHackathonsList();
+
+   
   }
+
 
   final List<Color> pastelColors = [
     const Color(0xFFD4A5A5),
@@ -90,10 +93,11 @@ class _HomeHackathonState extends State<HomeHackathon> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 20,
                   mainAxisExtent: 230,
+                  mainAxisSpacing: 20
                 ),
                 itemBuilder: (BuildContext context, int index) {
                   final hackathon = hackathonsProvider.allHackathons[index];
-                  Color cardColor = getRandomPastelColor();
+                  Color? cardColor = getRandomPastelColor();
                   return Container(
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -105,9 +109,9 @@ class _HomeHackathonState extends State<HomeHackathon> {
                           Expanded(
                               flex: 20,
                               child: Container(
-                                  decoration: BoxDecoration(
-                                      color: cardColor,
-                                      borderRadius: const BorderRadius.only(
+                                  decoration: const BoxDecoration(
+                                      color: Color(0xFFC3C0DF),
+                                      borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(10),
                                           bottomLeft: Radius.circular(10))))),
                           Expanded(
@@ -272,7 +276,19 @@ class _HomeHackathonState extends State<HomeHackathon> {
                                       onExit: (event) =>
                                           _setHovering(index, false),
                                       child: InkWell(
-                                        onTap: () {},
+                                        onTap: () {
+                                          final singleHackathonProvider =
+                                          Provider.of<SingleHackathonProvider>(
+                                              context,
+                                              listen: false);
+                                              
+
+                                              singleHackathonProvider.setIsLoading= true;
+                                        
+                                        singleHackathonProvider.getSingleHackathonsList(hackathon.id);
+                                      Navigator.pushNamed(
+                                          context, '/singleHackathon');
+                                        },
                                         child: Center(
                                           child: Container(
                                             width: double.infinity,

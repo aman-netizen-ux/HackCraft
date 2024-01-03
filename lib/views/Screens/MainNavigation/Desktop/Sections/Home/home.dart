@@ -10,7 +10,7 @@ class Home extends StatelessWidget {
     return 
     ListView(
       children: const  [
-        SizedBox(height: 50,),
+        SizedBox(height: 25,),
         HomeLanding(),
         SizedBox(height: 150),
         HomeHackathon()

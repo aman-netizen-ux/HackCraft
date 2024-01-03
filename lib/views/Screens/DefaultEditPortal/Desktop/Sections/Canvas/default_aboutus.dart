@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
@@ -126,18 +127,19 @@ class DefaultEditAboutus extends StatelessWidget {
             //but the difference is that the above one was positioned from the top and this one was positioned from the bottom.
             //Run the code once, and you'll understand.
             Positioned(
-              bottom: -defaultEditScaleWidth(containerWidth, 120),
+              bottom: -defaultEditScaleWidth(containerWidth, 200),//120
               child: Container(
                 color: lavender,
-                height: defaultEditScaleHeight(containerHeight, 240),
+                height: defaultEditScaleHeight(containerHeight, 400),//240
                 width: defaultEditScaleWidth(containerWidth, 1118),
                 margin: EdgeInsets.symmetric(
                     horizontal: defaultEditScaleWidth(containerWidth, 81)),
+                    child: SvgPicture.asset('assets/icons/defaultEditPortal/about.svg', fit: BoxFit.fill)
               ),
             ),
           ]),
           SizedBox(
-            height: defaultEditScaleHeight(containerHeight, 153),
+            height: defaultEditScaleHeight(containerHeight, 233),//153
           )
         ],
       ),

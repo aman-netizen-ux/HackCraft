@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:major_project__widget_testing/constants/app_routes.dart';
 import 'package:major_project__widget_testing/state/galleryProvider.dart';
 import 'package:major_project__widget_testing/state/getAllHackathons/getAllHackathonsProvider.dart';
+import 'package:major_project__widget_testing/state/getHackathon/getSingleHackathonProvider.dart';
 import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/state/hostNavigationProvider.dart';
 import 'package:major_project__widget_testing/state/mainNavigationProvider.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => GalleryProvider()),
         ChangeNotifierProvider(create: (context) => HackathonDetailsProvider()),
         ChangeNotifierProvider(create: (context) => AllHackathonProvider()),
+        ChangeNotifierProvider(create: (context) => SingleHackathonProvider()),
 
       ],
       child: MaterialApp(
