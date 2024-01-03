@@ -23,6 +23,7 @@ class FormBuilderQuestion extends StatelessWidget {
     if (question.type == 'QuestionType.text') {
       responseField = FormBuilderTextField(
         name: '${fieldPrefix}_response_text',
+        enabled: false,
         decoration: InputDecoration(
           labelText: 'Response ',
           filled: true,
@@ -51,6 +52,10 @@ class FormBuilderQuestion extends StatelessWidget {
     } else if (question.type == 'QuestionType.multipleChoice') {
       responseField = FormBuilderCheckboxGroup(
         name: '${fieldPrefix}_response_multiChoice',
+        enabled: false,
+        decoration: const InputDecoration(
+          border: InputBorder.none,
+        ),
         options: question.options.map((option) {
           return FormBuilderFieldOption(
             value: option,

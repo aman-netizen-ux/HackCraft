@@ -20,13 +20,20 @@ class PostApiService {
     try {
       if (response.statusCode == 201) {
         debugPrint('Registration success');
-        return true;
+        return response.statusCode;
       } else {
-        return false;
+        final errorResponse = jsonDecode(response.body);
+        String errorMessage = '';
+        errorResponse['error'].forEach((k, v) {
+          errorMessage += '$k: ${v.join(', ')}\n';
+        });
+
+        debugPrint(errorMessage);
+        return response.statusCode;
       }
     } catch (e) {
       debugPrint("Error message : $e");
-      return null;
+      return response.statusCode;
     }
   }
 }

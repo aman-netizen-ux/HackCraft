@@ -67,16 +67,7 @@ class Aboutus extends StatelessWidget {
                     borderRadius: BorderRadius.circular(55),
                   ),
                   child: ElevatedButton(
-                      onPressed: () {
-                        final formProvider = Provider.of<GetRegistrationForm>(
-                            context,
-                            listen: false);
-                        formProvider.getRegForm(singleHackathonProvider
-                            .singleHackathon['hackathon']['_id']);
-                        print(singleHackathonProvider
-                            .singleHackathon['hackathon']['_id']);
-                        Navigator.pushNamed(context, '/registrationForm');
-                      },
+                      onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(55)),

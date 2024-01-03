@@ -15,7 +15,6 @@ class ApiService {
     try {
       if (response.statusCode == 200) {
         final Map<String, dynamic> jsonResponse = json.decode(response.body);
-        //   debugPrint('API Response: $jsonResponse');
         return jsonResponse;
       } else {
         return {};

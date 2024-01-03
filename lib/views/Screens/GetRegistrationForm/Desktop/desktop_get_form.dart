@@ -1,3 +1,5 @@
+import 'dart:js_interop';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
@@ -7,25 +9,30 @@ import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:provider/provider.dart';
 
 class GetRegistered extends StatelessWidget {
+  const GetRegistered({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final formProvider = Provider.of<GetRegistrationForm>(context);
-    final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
+    final formProvider = Provider.of<GetRegistrationFormProvider>(context);
+    final GlobalKey<FormBuilderState> _getformKey =
+        GlobalKey<FormBuilderState>();
     return Stack(
       children: [
         Container(
           color: vibrantGreen,
+          height: MediaQuery.of(context).size.height,
         ),
-        Align(
-          alignment: Alignment.bottomCenter,
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
           child: ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
             child: Container(
-              color: Colors.blueAccent,
-              height: scaleHeight(context, 350),
-              //  width: scaleWidth(context, 1280),
+              color: white,
+              height: scaleHeight(context, 650),
               child: FormBuilder(
-                key: _formKey,
+                key: _getformKey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: ListView(
                   shrinkWrap: false,
@@ -37,20 +44,40 @@ class GetRegistered extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.saveAndValidate()) {
-                              final getformData = _formKey.currentState!.value;
-                              // Process and save the form data as needed
+                        Padding(
+                          padding: const EdgeInsets.all(80),
+                          child: SizedBox(
+                            width: 200,
+                            height: 50,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (_getformKey.currentState!
+                                    .saveAndValidate()) {
+                                  final getformData =
+                                      _getformKey.currentState!.value;
+                                  // Process and save the form data as needed
 
-                              print(getformData);
-                            }
-                          },
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.green),
+                                  print(getformData);
+                                }
+                              },
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(Colors.green),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        30), // Curved border radius
+                                  ),
+                                ),
+                              ),
+                              child: const Text(
+                                'Submit',
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w600),
+                              ),
+                            ),
                           ),
-                          child: const Text('Submit'),
                         ),
                       ],
                     ),
@@ -77,7 +104,7 @@ class GetRegistered extends StatelessWidget {
         ),
       ),
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -112,7 +139,7 @@ class GetRegistered extends StatelessWidget {
         ),
       ),
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -145,7 +172,7 @@ class GetRegistered extends StatelessWidget {
         ),
       ),
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -173,20 +200,19 @@ class GetRegistered extends StatelessWidget {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30.0),
                 ),
-                hintText: 'Mobile Number',
                 hintStyle: const TextStyle(
                   fontSize: 20,
                   color: Color.fromARGB(255, 106, 108, 123),
                 ),
                 errorStyle: const TextStyle(fontSize: 14),
               ),
-              initialValue: formData['participant_phone'].toString(),
+              initialValue: '',
             ),
           ],
         ),
       ),
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -201,6 +227,12 @@ class GetRegistered extends StatelessWidget {
             ),
             FormBuilderDropdown(
               name: 'participant_gender',
+              validator: (value) {
+                if (value == null) {
+                  return "Please Select gender";
+                }
+                return null;
+              },
               decoration: InputDecoration(
                   filled: true,
                   fillColor: offWhite,
@@ -226,60 +258,85 @@ class GetRegistered extends StatelessWidget {
   }
 
   Widget _buildCustomFormField(CustomField field) {
-    switch (field.type) {
-      case 'Short':
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
+    if (!field.shortAns.isNull) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Text(
                 field.label,
                 style: const TextStyle(
-                    color: Color(0xff1a202c),
-                    fontSize: 24,
-                    fontWeight: FontWeight.w400),
-              ),
-              FormBuilderTextField(
-                name: 'response_${field.id}',
-                decoration: InputDecoration(
-                  // labelText: field.label,
-                  filled: true,
-                  fillColor: offWhite,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
+                  color: Color(0xff1a202c),
+                  fontSize: 24,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
-            ],
-          ),
-        );
-      case 'Multiple':
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(field.label,
-                  style: const TextStyle(
-                      color: Color(0xff1a202c),
-                      fontSize: 24,
-                      fontWeight: FontWeight
-                          .w400)), // Optional: Display the label above the options
-              FormBuilderCheckboxGroup(
-                name: 'response_${field.id}',
-                options: field.options
-                    .map((option) => FormBuilderFieldOption(
-                          value: option,
-                          child: Text(option),
-                        ))
-                    .toList(),
+            ),
+            FormBuilderTextField(
+              name: 'response_${field.id}',
+              //  initialValue: field.label,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: offWhite,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
               ),
-            ],
-          ),
-        );
-      default:
-        return const SizedBox.shrink(); // For unsupported types
+            ),
+          ],
+        ),
+      );
+    } else if (!field.multiple.isNull) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Text(
+                field.label,
+                style: const TextStyle(
+                  color: Color(0xff1a202c),
+                  fontSize: 24,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+            FormBuilderRadioGroup<String>(
+              name: 'response_${field.id}',
+              orientation: OptionsOrientation.vertical,
+              options: field.options
+                  .map((option) => FormBuilderFieldOption(
+                        value: option,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 8,
+                          ),
+                          child: Text(
+                            option,
+                            style: const TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                      ))
+                  .toList(),
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+              ),
+              activeColor: Colors.green,
+              controlAffinity: ControlAffinity.leading,
+              separator: const SizedBox(height: 25),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return const SizedBox.shrink(); // For unsupported types
     }
   }
 }

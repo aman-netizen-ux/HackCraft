@@ -183,6 +183,7 @@ class HackathonDetailsProvider with ChangeNotifier {
   DefaultTemplateApiResponse _hackathonDetails = DefaultTemplateApiResponse(
     hackathons: Hackathon(
       // Provide default or initial values here
+      id: "",
       name: '',
       organisationName: '',
       modeOfConduct: '',

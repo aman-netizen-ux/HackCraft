@@ -35,7 +35,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => HackathonDetailsProvider()),
         ChangeNotifierProvider(create: (context) => AllHackathonProvider()),
         ChangeNotifierProvider(create: (context) => SingleHackathonProvider()),
-        ChangeNotifierProvider(create: (context) => GetRegistrationForm()),
+        ChangeNotifierProvider(
+            create: (context) => GetRegistrationFormProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

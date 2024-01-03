@@ -5,52 +5,11 @@ import 'package:major_project__widget_testing/models/defaulTemplateModels/defaul
 import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
 
 //This provider is for the gallery section.
-class SingleHackathonProvider with ChangeNotifier{
-
-  DefaultTemplateApiResponse _singleHackathon= DefaultTemplateApiResponse(
+class SingleHackathonProvider with ChangeNotifier {
+  DefaultTemplateApiResponse _singleHackathon = DefaultTemplateApiResponse(
     hackathons: Hackathon(
       // Provide default or initial values here
-      name: '',
-      organisationName: '',
-      modeOfConduct: '',
-      deadline: '',
-      teamSize: 0,
-      visible: '',
-      startDateTime: '',
-      about: '',
-      brief: '',
-      website: '',
-      fee: '',
-      venue: '',
-      contact1Name: '',
-      contact1Number: '',
-      contact2Name: '',
-      contact2Number: '',
-    ),
-    rounds: [],
-    fields: [],
-    containers: [],
-  ) ;
-  bool _isLoading=false;
-
-  DefaultTemplateApiResponse get singleHackathon => _singleHackathon;
-  bool get isLoading=> _isLoading;
-
-  set setIsLoading(bool value) {
-    _isLoading = value;
-    notifyListeners();
-  }
-
-  Future<void> getSingleHackathonsList(String id) async{
-
-        final response = await GetSingleHackathon().getSingleHackathon(id);
-if (response != null && response is DefaultTemplateApiResponse) {
-      _singleHackathon = response; // Directly assign the response
-      print('Im in if');
-    } else {
-      _singleHackathon =  DefaultTemplateApiResponse(
-    hackathons: Hackathon(
-      // Provide default or initial values here
+      id: '',
       name: '',
       organisationName: '',
       modeOfConduct: '',
@@ -72,14 +31,52 @@ if (response != null && response is DefaultTemplateApiResponse) {
     fields: [],
     containers: [],
   );
-  print('Im in else');
+  bool _isLoading = false;
+
+  DefaultTemplateApiResponse get singleHackathon => _singleHackathon;
+  bool get isLoading => _isLoading;
+
+  set setIsLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
+
+  Future<void> getSingleHackathonsList(String id) async {
+    final response = await GetSingleHackathon().getSingleHackathon(id);
+    if (response != null && response is DefaultTemplateApiResponse) {
+      _singleHackathon = response; // Directly assign the response
+      print('Im in if');
+    } else {
+      _singleHackathon = DefaultTemplateApiResponse(
+        hackathons: Hackathon(
+          // Provide default or initial values here
+          id: '',
+          name: '',
+          organisationName: '',
+          modeOfConduct: '',
+          deadline: '',
+          teamSize: 0,
+          visible: '',
+          startDateTime: '',
+          about: '',
+          brief: '',
+          website: '',
+          fee: '',
+          venue: '',
+          contact1Name: '',
+          contact1Number: '',
+          contact2Name: '',
+          contact2Number: '',
+        ),
+        rounds: [],
+        fields: [],
+        containers: [],
+      );
+      print('Im in else');
     }
 
-
-
-
     print('************_singleHackathon: $_singleHackathon**************');
-    _isLoading=false;
+    _isLoading = false;
     notifyListeners();
   }
 }

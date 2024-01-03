@@ -8,6 +8,7 @@ import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dar
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/default_template.dart';
+import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/createRegistrationform.dart';
 import 'package:provider/provider.dart';
 
 class SidePanel extends StatefulWidget {
@@ -45,6 +46,7 @@ class _SidePanelState extends State<SidePanel> {
                         builder: (context) => DefaultTemplate(
                               defaultTemplateModel:
                                   hackathonDetailsProvider.hackathonDetails,
+                              isEdit: true,
                             )),
                   );
 
@@ -92,61 +94,58 @@ class _SidePanelState extends State<SidePanel> {
 
                   print(hackathonDetailsProvider.startDateTime);
 
-                  await CreateHackathon().postSingleHackathon(
-                      // {
-                      //   "hackathon": {
-                      //     "name": hackathonDetailsProvider.hackathonName,
-                      //     "organisation_name": "Gov of India",
-                      //     "mode_of_conduct": hackathonDetailsProvider.modeOfConduct,
-                      //     "deadline": "2023-12-20",
-                      //     "team_size": 4,
-                      //     "visible": "Public",
-                      //     "start_date_time": "2024-12-24T00:00:00Z",
-                      //     "about": hackathonDetailsProvider.about,
-                      //     "brief":
-                      //         hackathonDetailsProvider.brief,
-                      //     "website": "https://req",
-                      //     "fee": 100.00,
-                      //     "venue": "hackathonDetailsProvider.hackathonVenue",
-                      //     "contact1_name":
-                      //         "hackathonDetailsProvider.hackathonContactName1",
-                      //     "contact1_number": 9876556789,
-                      //     "contact2_name":
-                      //         "hackathonDetailsProvider.hackathonContactName2",
-                      //     "contact2_number": 1234567890
-                      //   },
-                      //   "round": [],
-                      //   "fields": [],
-                      //   "containers": []
-                      // }
-                      {
-                        "hackathon": {
-                          "name": hackathonDetailsProvider.hackathonName,
-                          "organisation_name": "Gov of India",
-                          "mode_of_conduct":
-                              hackathonDetailsProvider.modeOfConduct,
-                          "deadline": "2024-10-10",
-                          "team_size": 3,
-                          "visible": "Public",
-                          "start_date_time":
-                              "${hackathonDetailsProvider.startDateTime}T00:00:00Z",
-                          "about": hackathonDetailsProvider.about,
-                          "brief": hackathonDetailsProvider.brief,
-                          "website": "https://req",
-                          "fee": 100.00,
-                          "venue": hackathonDetailsProvider.venue,
-                          "contact1_name":
-                              hackathonDetailsProvider.contact1Name,
-                          "contact1_number": 9087654321,
-                          "contact2_name":
-                              hackathonDetailsProvider.contact2Name,
-                          "contact2_number": 8907654321
-                        },
-                        "round": rounds,
-                        "fields": [],
-                        "containers": []
+                  final hackathonId =
+                      await CreateHackathon().postSingleHackathon({
+                    "hackathon": {
+                      "name": hackathonDetailsProvider.hackathonName,
+                      "organisation_name": "Gov of India",
+                      "mode_of_conduct": hackathonDetailsProvider.modeOfConduct,
+                      "deadline": "2024-10-10",
+                      "team_size": 3,
+                      "visible": "Public",
+                      "start_date_time":
+                          "${hackathonDetailsProvider.startDateTime}T00:00:00Z",
+                      "about": hackathonDetailsProvider.about,
+                      "brief": hackathonDetailsProvider.brief,
+                      "website": "https://req",
+                      "fee": 100.00,
+                      "venue": hackathonDetailsProvider.venue,
+                      "contact1_name": hackathonDetailsProvider.contact1Name,
+                      "contact1_number": 9087654321,
+                      "contact2_name": hackathonDetailsProvider.contact2Name,
+                      "contact2_number": 8907654321
+                    },
+                    "round": rounds,
+                    "fields": [],
+                    "containers": []
+                  }, context);
+                  print("object");
+                  if (hackathonId.isNotEmpty) {
+                    print(hackathonId);
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Success'),
+                          content: Text('Hackathon created successfully!'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => RegistrationForm(
+                                              hackathonId: hackathonId,
+                                            )));
+                              },
+                              child: Text('OK'),
+                            ),
+                          ],
+                        );
                       },
-                      context);
+                    );
+                  }
                 }
               },
               child: SvgPicture.asset(

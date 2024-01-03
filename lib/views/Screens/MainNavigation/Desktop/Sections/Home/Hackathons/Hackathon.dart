@@ -267,6 +267,7 @@ class _HomeHackathonState extends State<HomeHackathon> {
                                                   defaultTemplateModel:
                                                       singleHackathonProvider
                                                           .singleHackathon,
+                                                  isEdit: false,
                                                 )),
                                       );
 
