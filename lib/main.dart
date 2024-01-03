@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:major_project__widget_testing/Constants/app_routes.dart';
+import 'package:major_project__widget_testing/constants/app_routes.dart';
 import 'package:major_project__widget_testing/state/Registration.dart/getRegistration.dart';
 import 'package:major_project__widget_testing/state/galleryProvider.dart';
 import 'package:major_project__widget_testing/state/getAllHackathons/getAllHackathonsProvider.dart';

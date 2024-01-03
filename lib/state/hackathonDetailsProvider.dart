@@ -189,14 +189,7 @@ void increaseTemproraryRoundsCount() {
     }
   }
 
-  void deleteTemproraryRound(int index, BuildContext context) {
-    if (index >= 0 && index < _temporaryRoundList.length) {
-      _temporaryRoundList.removeAt(index);
-      notifyListeners();
-    } else {
-      print("Invalid index");
-    }
-  }
+
 
   // Function to update round description
   void updateRoundDescription(int index, String newDescription) {

@@ -256,7 +256,7 @@ class GetRegistered extends StatelessWidget {
   }
 
   Widget _buildCustomFormField(CustomField field) {
-    if (!field.shortAns.isNull) {
+    if (field.shortAns != null) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 15),
         child: Column(
@@ -287,7 +287,7 @@ class GetRegistered extends StatelessWidget {
           ],
         ),
       );
-    } else if (!field.multiple.isNull) {
+    } else if (field.multiple.isNotEmpty) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 15),
         child: Column(
