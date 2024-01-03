@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:major_project__widget_testing/api/post_default_hackathon.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
-import 'package:major_project__widget_testing/state/Registration.dart/getRegistration.dart';
 import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
@@ -40,6 +39,10 @@ class _SidePanelState extends State<SidePanel> {
               onTap: () {
                 if (widget.formKey.currentState!.validate()) {
                   widget.formKey.currentState!.save();
+
+                  rulesProvider.setSelectedIndex(-1);
+                  rulesProvider.setDescriptionWidget(SvgPicture.asset(
+                      'assets/images/defaultTemplate/clickme.svg'));
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -76,9 +79,6 @@ class _SidePanelState extends State<SidePanel> {
 
                   List<Map<String, dynamic>> rounds =
                       hackathonDetailsProvider.roundsList.map((round) {
-                    print(round.startTimeline);
-                    print(round.endTimeline);
-
                     return {
                       "serial_number":
                           hackathonDetailsProvider.roundsList.indexOf(round) +
@@ -89,10 +89,6 @@ class _SidePanelState extends State<SidePanel> {
                       "end_timeline": "${round.endTimeline}T18:00:00Z"
                     };
                   }).toList();
-
-                  print(hackathonDetailsProvider.deadline);
-
-                  print(hackathonDetailsProvider.startDateTime);
 
                   final hackathonId =
                       await CreateHackathon().postSingleHackathon({
@@ -119,16 +115,15 @@ class _SidePanelState extends State<SidePanel> {
                     "fields": [],
                     "containers": []
                   }, context);
-                  print("object");
                   if (hackathonId.isNotEmpty) {
-                    print(hackathonId);
                     showDialog(
                       context: context,
                       barrierDismissible: false,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text('Success'),
-                          content: Text('Hackathon created successfully!'),
+                          title: const Text('Success'),
+                          content:
+                              const Text('Hackathon created successfully!'),
                           actions: [
                             TextButton(
                               onPressed: () {
@@ -188,16 +183,6 @@ class SectionButton extends StatelessWidget {
             horizontal: scaleWidth(context, 19),
             vertical: scaleHeight(context, 14),
           ),
-          // margin: EdgeInsets.symmetric(
-          //   vertical: scaleHeight(context, 15),
-          // ).copyWith(
-          //   top: index == 0
-          //       ? 0
-          //       : null, // Remove top margin for the first item
-          //   bottom: index == 5
-          //       ? 0
-          //       : null, // Remove bottom margin for the last item
-          // ),
           decoration: BoxDecoration(
             color: selectedSection == index ? sectionSelection : null,
             borderRadius: BorderRadius.circular(rad5_3),

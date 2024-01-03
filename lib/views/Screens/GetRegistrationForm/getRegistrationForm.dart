@@ -19,9 +19,9 @@ class _GetRegistrationFormState extends State<GetRegistrationForm> {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: ResponsiveLayout(
-            mobileBody: GetRegistered(), //TODO: Add mobile body
-            desktopBody: GetRegistered(),
-            tabletBody: GetRegistered(), //TODO: Add tablet body
+            mobileBody: const GetRegistered(), //TODO: Add mobile body
+            desktopBody: const GetRegistered(),
+            tabletBody: const GetRegistered(), //TODO: Add tablet body
           ),
         ),
       ),

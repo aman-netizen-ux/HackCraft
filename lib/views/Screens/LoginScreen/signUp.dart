@@ -113,8 +113,6 @@ class _SignUpState extends State<SignUp> {
                                         ? names.sublist(1).join(' ')
                                         : '';
                                     // Now you can use firstName and lastName as needed
-                                    print('First Name: $firstName');
-                                    print('Last Name: $lastName');
                                   },
                                 ),
                               ),

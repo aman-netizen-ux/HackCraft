@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/state/templateSelectionprovider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
@@ -100,7 +102,7 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
                             onTap: () {
                               Navigator.pop(context);
                             },
-                            child: Icon(Icons.arrow_back)),
+                            child: const Icon(Icons.arrow_back)),
                         SizedBox(
                           width: scaleWidth(context, 10),
                         ),
@@ -161,9 +163,24 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
                       onPressed: () {
                         if (templateSelectionProvider.isTnCChecked!) {
                           if (templateSelectionProvider.selectedTemplate == 1) {
+                            final templateSelectionProvider =
+                                Provider.of<TemplateSelectionProvider>(context,
+                                    listen: false);
+                            templateSelectionProvider.selectTemplate(0);
+                            templateSelectionProvider.setTnC(false);
+
+                            final rulesProvider = Provider.of<RulesProvider>(
+                                context,
+                                listen: false);
+                            rulesProvider.setEditSelectedIndex(-1);
+                            rulesProvider.setEditDescriptionWidget(
+                                SvgPicture.asset(
+                                    'assets/images/defaultTemplate/clickme.svg'));
                             Navigator.pushNamed(context, '/defaultEditPortal');
-                          } else if (templateSelectionProvider.selectedTemplate ==2) {
-                             Navigator.pushNamed(context, '/customEditPortal');
+                          } else if (templateSelectionProvider
+                                  .selectedTemplate ==
+                              2) {
+                            Navigator.pushNamed(context, '/customEditPortal');
                           } else {
                             // TODO Create something to tell user to select card and check terms and conditions
                           }
@@ -192,7 +209,7 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
                           SizedBox(
                             width: scaleWidth(context, 25),
                           ),
-                          Icon(
+                          const Icon(
                             Icons.arrow_forward,
                             color: Colors.white,
                           )

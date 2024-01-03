@@ -19,7 +19,6 @@ class FormBuilderQuestion extends StatelessWidget {
     final fieldPrefix = 'question_$questionIndex';
 
     Widget? responseField;
-    print('Question type: ${question.type}');
     if (question.type == 'QuestionType.text') {
       responseField = FormBuilderTextField(
         name: '${fieldPrefix}_response_text',
@@ -84,7 +83,7 @@ class FormBuilderQuestion extends StatelessWidget {
         ),
         if (question.type == QuestionType.multipleChoice)
           FormBuilderTextField(
-            name: '$fieldPrefix\_options',
+            name: '${fieldPrefix}_options',
             decoration: InputDecoration(
               labelText: 'Options (comma-separated)',
               filled: true,

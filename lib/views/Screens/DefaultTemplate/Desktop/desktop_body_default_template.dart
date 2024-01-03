@@ -26,10 +26,11 @@ class _DefaultTemplateDesktopBodyState
       children: [
         NavBar(defaultTemplateModel: widget.defaultTemplateModel),
         LandingSection(defaultTemplateModel: widget.defaultTemplateModel),
-        // RoundsAndRules(),
+        RoundsAndRules(defaultTemplateModel: widget.defaultTemplateModel),
         Aboutus(
-            defaultTemplateModel: widget.defaultTemplateModel,
-            isEdit: widget.isEdit),
+          defaultTemplateModel: widget.defaultTemplateModel,
+          isEdit: widget.isEdit,
+        ),
         GallerySection(),
         ContactUsAndFooterSection(
             defaultTemplateModel: widget.defaultTemplateModel)

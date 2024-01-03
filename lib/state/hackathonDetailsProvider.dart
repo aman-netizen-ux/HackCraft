@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
+import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
+import 'package:provider/provider.dart';
 
 class HackathonDetailsProvider with ChangeNotifier {
 //   String  _hackathonName= "";
@@ -125,20 +127,22 @@ class HackathonDetailsProvider with ChangeNotifier {
 
   void increaseRoundsCount() {
     _hackathonDetails.rounds.add(Round(
-        serialNumber: 1,
-        name: "round 1",
-        description: "Round 1 description",
-        startTimeline: "2024-12-12",
-        endTimeline: "2024-12-12"));
+        serialNumber: _hackathonDetails.rounds.length + 1,
+        name: "",
+        description: "",
+        startTimeline: "",
+        endTimeline: ""));
     notifyListeners();
   }
 
-  void deleteRound(int index) {
+  void deleteRound(int index, BuildContext context) {
     if (index >= 0 && index < _hackathonDetails.rounds.length) {
+      final rulesProvider = Provider.of<RulesProvider>(context, listen: false);
+      rulesProvider.setEditSelectedIndex(index - 1);
       _hackathonDetails.rounds.removeAt(index);
       notifyListeners();
     } else {
-      print("Invalid index");
+      debugPrint("Invalid index");
     }
   }
 
@@ -148,7 +152,7 @@ class HackathonDetailsProvider with ChangeNotifier {
       _hackathonDetails.rounds[index].description = newDescription;
       notifyListeners();
     } else {
-      print("Invalid index");
+      debugPrint("Invalid index");
     }
   }
 
@@ -158,7 +162,7 @@ class HackathonDetailsProvider with ChangeNotifier {
       _hackathonDetails.rounds[index].name = newTitle;
       notifyListeners();
     } else {
-      print("Invalid index");
+      debugPrint("Invalid index");
     }
   }
 
@@ -167,7 +171,7 @@ class HackathonDetailsProvider with ChangeNotifier {
       _hackathonDetails.rounds[index].startTimeline = startDate;
       notifyListeners();
     } else {
-      print("Invalid index");
+      debugPrint("Invalid index");
     }
   }
 
@@ -176,7 +180,7 @@ class HackathonDetailsProvider with ChangeNotifier {
       _hackathonDetails.rounds[index].endTimeline = endDate;
       notifyListeners();
     } else {
-      print("Invalid index");
+      debugPrint("Invalid index");
     }
   }
 
@@ -188,7 +192,7 @@ class HackathonDetailsProvider with ChangeNotifier {
       organisationName: '',
       modeOfConduct: '',
       deadline: '',
-      teamSize: 0,
+      teamSize: -1,
       visible: '',
       startDateTime: '',
       about: '',
@@ -204,10 +208,10 @@ class HackathonDetailsProvider with ChangeNotifier {
     rounds: [
       Round(
           serialNumber: 1,
-          name: "Round 1",
-          description: "Round 1 description",
-          startTimeline: "2024-12-12",
-          endTimeline: "2024-12-12")
+          name: "",
+          description: "",
+          startTimeline: "",
+          endTimeline: "")
     ],
     fields: [],
     containers: [],

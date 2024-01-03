@@ -56,8 +56,6 @@ class GetRegistered extends StatelessWidget {
                                   final getformData =
                                       _getformKey.currentState!.value;
                                   // Process and save the form data as needed
-
-                                  print(getformData);
                                 }
                               },
                               style: ButtonStyle(

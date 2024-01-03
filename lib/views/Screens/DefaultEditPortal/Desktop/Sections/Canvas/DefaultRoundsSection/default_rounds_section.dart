@@ -82,7 +82,7 @@ class DefaultRoundsAndRules extends StatelessWidget {
                                       context,
                                       containerHeight,
                                       containerWidth,
-                                      index));
+                                      ));
                             },
                             containerHeight: containerHeight,
                             containerWidth: containerWidth,
@@ -116,11 +116,11 @@ class DefaultRoundsAndRules extends StatelessWidget {
 
 //This widget was created in order to show the description of the round after clicking on any round card.
   Widget defaultRoundDetails(String roundDetails, BuildContext context,
-      double containerHeight, double containerWidth, int index) {
+      double containerHeight, double containerWidth) {
     return DefaultRoundsDescription(
         description: roundDetails,
         containerHeight: containerHeight,
         containerWidth: containerWidth,
-        index: index);
+       );
   }
 }

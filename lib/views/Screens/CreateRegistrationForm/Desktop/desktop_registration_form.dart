@@ -88,14 +88,14 @@ class _RegistrationFormDesktopBodyState
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Success'),
-            content: Text('Registration Form created successfully!'),
+            title: const Text('Success'),
+            content: const Text('Registration Form created successfully!'),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/');
                 },
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -108,12 +108,12 @@ class _RegistrationFormDesktopBodyState
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('Error'),
-            content:
-                Text('Failed to create Registration Form. Please try again.'),
+            content: const Text(
+                'Failed to create Registration Form. Please try again.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );

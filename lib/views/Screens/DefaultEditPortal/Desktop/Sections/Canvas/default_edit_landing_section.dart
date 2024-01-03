@@ -45,6 +45,11 @@ class DefaultEditLandingSection extends StatelessWidget {
       hackathonModeController.text = hackathonDetailsProvider.modeOfConduct;
     }
 
+     if (hackathonDetailsProvider.teamSize>=0) {
+      hackathonTeamSizeController.text = hackathonDetailsProvider.teamSize.toString();
+    }
+
+
     hackathonDescriptionController.text =
         hackathonDetailsProvider.brief;
 

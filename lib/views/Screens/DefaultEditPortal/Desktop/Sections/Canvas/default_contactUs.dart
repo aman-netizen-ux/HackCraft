@@ -50,7 +50,7 @@ class _DefaultEditContactUsAndFooterSectionState
     }
 
     if (hackathonDetailsProvider.contact2Number.isNotEmpty) {
-      contactMemberNumber1Controller.text =
+      contactMemberNumber2Controller.text =
           hackathonDetailsProvider.contact2Number;
     }
     return Column(

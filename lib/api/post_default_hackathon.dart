@@ -23,7 +23,6 @@ class CreateHackathon {
         final Map<String, dynamic> jsonResponse = json.decode(response.body);
 
         id = jsonResponse['hackathon created']['_id'];
-        print(id);
         debugPrint('Hackathon created successfully');
 
         return id;

@@ -6,6 +6,7 @@ import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/state/getAllHackathons/getAllHackathonsProvider.dart';
 import 'package:major_project__widget_testing/state/getHackathon/getSingleHackathonProvider.dart';
+import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/default_template.dart';
@@ -96,7 +97,7 @@ class _HomeHackathonState extends State<HomeHackathon> {
                           child: Container(
                               decoration: const BoxDecoration(
                                   color: Color(0xFFC3C0DF),
-                                  borderRadius: const BorderRadius.only(
+                                  borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(10),
                                       bottomLeft: Radius.circular(10))))),
                       Expanded(
@@ -244,7 +245,6 @@ class _HomeHackathonState extends State<HomeHackathon> {
                                           Provider.of<SingleHackathonProvider>(
                                               context,
                                               listen: false);
-                                      print('_id: ${hackathon['_id']}');
 
                                       singleHackathonProvider.setIsLoading =
                                           true;
@@ -252,12 +252,15 @@ class _HomeHackathonState extends State<HomeHackathon> {
                                       await singleHackathonProvider
                                           .getSingleHackathonsList(
                                               hackathon['_id']);
-                                      print('Hi');
 
-                                      print(singleHackathonProvider
-                                          .singleHackathon
-                                          .hackathons
-                                          .startDateTime);
+                                      final rulesProvider =
+                                          Provider.of<RulesProvider>(context,
+                                              listen: false);
+
+                                      rulesProvider.setSelectedIndex(-1);
+                                      rulesProvider.setDescriptionWidget(
+                                          SvgPicture.asset(
+                                              'assets/images/defaultTemplate/clickme.svg'));
 
                                       Navigator.push(
                                         context,

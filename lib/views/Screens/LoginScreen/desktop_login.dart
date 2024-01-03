@@ -203,7 +203,7 @@ class _LoginPageDesktopState extends State<LoginPageDesktop> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        Home()),
+                                                        const Home()),
                                               );
                                               // FirebaseAuth.instance
                                               //     .signInWithEmailAndPassword(
@@ -242,7 +242,7 @@ class _LoginPageDesktopState extends State<LoginPageDesktop> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          SignUp()),
+                                                          const SignUp()),
                                                 );
                                               },
                                               child: const Text("SignUp")),

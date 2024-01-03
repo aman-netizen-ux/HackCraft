@@ -96,18 +96,18 @@ class _EditPlatformState extends State<EditPlatform> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Container(
                         height: 70,
                         width: double.infinity,
-                        margin: EdgeInsets.symmetric(horizontal: 50),
+                        margin: const EdgeInsets.symmetric(horizontal: 50),
                         color: Colors.brown[400],
                       ),
-                      SizedBox(height: 50),
+                      const SizedBox(height: 50),
                       Container(
                         height: 470,
                         width: double.infinity,
-                        margin: EdgeInsets.symmetric(horizontal: 50),
+                        margin: const EdgeInsets.symmetric(horizontal: 50),
                         color: Colors.white,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -122,8 +122,6 @@ class _EditPlatformState extends State<EditPlatform> {
                                         2 * 50; // considering flex 2 and 8
                                 double percentage =
                                     (_navBarHeight / whiteContainerWidth) * 100;
-                                print(whiteContainerWidth);
-                                print(percentage);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -132,10 +130,9 @@ class _EditPlatformState extends State<EditPlatform> {
                                 );
                               },
                               child: Container(
-                                // key: _whiteContainerKey,
                                 height: 20,
                                 width: _navBarHeight,
-                                margin: EdgeInsets.symmetric(
+                                margin: const EdgeInsets.symmetric(
                                     horizontal: 25, vertical: 25),
                                 color: Colors.blue[200],
                               ),

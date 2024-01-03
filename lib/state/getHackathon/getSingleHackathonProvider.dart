@@ -45,7 +45,6 @@ class SingleHackathonProvider with ChangeNotifier {
     final response = await GetSingleHackathon().getSingleHackathon(id);
     if (response != null && response is DefaultTemplateApiResponse) {
       _singleHackathon = response; // Directly assign the response
-      print('Im in if');
     } else {
       _singleHackathon = DefaultTemplateApiResponse(
         hackathons: Hackathon(
@@ -72,10 +71,8 @@ class SingleHackathonProvider with ChangeNotifier {
         fields: [],
         containers: [],
       );
-      print('Im in else');
     }
 
-    print('************_singleHackathon: $_singleHackathon**************');
     _isLoading = false;
     notifyListeners();
   }
