@@ -123,11 +123,45 @@ class HackathonDetailsProvider with ChangeNotifier {
 //     endTimeline: "2024-12-12")
 //       ];
 
+  List<Round> _temporaryRoundList = [
+    Round(
+        serialNumber: 1,
+        name: "",
+        description: "",
+        startTimeline: "",
+        endTimeline: "")
+  ];
+
+  List<Round> get temporaryRoundList => _temporaryRoundList;
+  set temporaryRoundList(List<Round> value) {
+    _temporaryRoundList = value;
+    notifyListeners();
+  }
+
+  void updateTemporaryRoundDescription(int index, String newDescription) {
+    if (index >= 0 && index < _temporaryRoundList.length) {
+      _temporaryRoundList[index].description = newDescription;
+      notifyListeners();
+    } else {
+      print("Invalid index");
+    }
+  }
+
   List<Round> get roundsList => _hackathonDetails.rounds;
 
   void increaseRoundsCount() {
     _hackathonDetails.rounds.add(Round(
-        serialNumber: _hackathonDetails.rounds.length+1,
+        serialNumber: _hackathonDetails.rounds.length + 1,
+        name: "",
+        description: "",
+        startTimeline: "",
+        endTimeline: ""));
+    notifyListeners();
+  }
+
+void increaseTemproraryRoundsCount() {
+    _temporaryRoundList.add(Round(
+        serialNumber: _hackathonDetails.rounds.length + 1,
         name: "",
         description: "",
         startTimeline: "",
@@ -137,9 +171,18 @@ class HackathonDetailsProvider with ChangeNotifier {
 
   void deleteRound(int index, BuildContext context) {
     if (index >= 0 && index < _hackathonDetails.rounds.length) {
-       final rulesProvider = Provider.of<RulesProvider>(context, listen: false);
-       rulesProvider.setEditSelectedIndex(index-1);
+      final rulesProvider = Provider.of<RulesProvider>(context, listen: false);
+      rulesProvider.setEditSelectedIndex(index - 1);
       _hackathonDetails.rounds.removeAt(index);
+      notifyListeners();
+    } else {
+      print("Invalid index");
+    }
+  }
+
+  void deleteTemproraryRound(int index, BuildContext context) {
+    if (index >= 0 && index < _temporaryRoundList.length) {
+      _temporaryRoundList.removeAt(index);
       notifyListeners();
     } else {
       print("Invalid index");
@@ -162,6 +205,16 @@ class HackathonDetailsProvider with ChangeNotifier {
       _hackathonDetails.rounds[index].name = newTitle;
       notifyListeners();
     } else {
+      print("Invalid index");
+    }
+  }
+
+
+  void updateTemporaryRoundTile(int index, String newTile){
+    if(index>=0 && index<_temporaryRoundList.length){
+      _temporaryRoundList[index].name=newTile;
+      notifyListeners();
+    }else{
       print("Invalid index");
     }
   }
@@ -322,6 +375,13 @@ class HackathonDetailsProvider with ChangeNotifier {
     _hackathonDetails.hackathons.contact2Number = value;
     notifyListeners();
   }
+
+
+  void synchronizeTemporaryRoundListWithRoundsList() {
+  _temporaryRoundList = List.from(_hackathonDetails.rounds);
+  notifyListeners();
+}
+
 
   // String get organisationName => _defaultTemplateApiResponse.hackathons.organisationName;
 

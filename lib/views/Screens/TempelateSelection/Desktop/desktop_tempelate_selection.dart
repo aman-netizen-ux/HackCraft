@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/state/templateSelectionprovider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
@@ -168,6 +169,11 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
                                     listen: false);
                             templateSelectionProvider.selectTemplate(0);
                             templateSelectionProvider.setTnC(false);
+                             final hackathonDetailsProvider = Provider.of<HackathonDetailsProvider>(
+                                context,
+                                listen: false);
+
+                                hackathonDetailsProvider.synchronizeTemporaryRoundListWithRoundsList();
 
                             final rulesProvider = Provider.of<RulesProvider>(
                                 context,

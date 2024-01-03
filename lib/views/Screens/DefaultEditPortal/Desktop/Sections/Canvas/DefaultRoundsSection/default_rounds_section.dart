@@ -92,6 +92,7 @@ class DefaultRoundsAndRules extends StatelessWidget {
                  InkWell(
                 onTap: (){
                   hackathonDetailsProvider.increaseRoundsCount();
+                  hackathonDetailsProvider.increaseTemproraryRoundsCount();
                 },
                 child: DottedBorder(
                     borderType: BorderType.Circle,
