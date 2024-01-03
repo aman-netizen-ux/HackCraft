@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
+import 'package:major_project__widget_testing/state/Registration.dart/getRegistration.dart';
 import 'package:major_project__widget_testing/state/getHackathon/getSingleHackathonProvider.dart';
 import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
@@ -15,8 +16,7 @@ class Aboutus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-     final singleHackathonProvider =
+    final singleHackathonProvider =
         Provider.of<SingleHackathonProvider>(context);
     return Padding(
       key: aboutUs,
@@ -43,7 +43,7 @@ class Aboutus extends StatelessWidget {
                   child: Text(
                     singleHackathonProvider.singleHackathon!.hackathons.about,
                     // 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis velit nec justo fermentum dignissim. Sed lacinia ex eu mi malesuada, sed interdum metus posuere. Vivamus auctor sapien in eleifend. Fusce nec est eget lorem ultrices facilisis a eget dolor. Integer eget velit sit amet lorem gravida vestibulum. Proin eget vestibulum nunc. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur eget tellus ut odio facilisis bibendum nec nec tortor. Vivamus iaculis, turpis et tincidunt mattis, est arcu laoreet urna, nec dignissim nisl odio a nunc. Phasellus fermentum tristique orci, vel convallis tortor vehicula nec.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis velit nec justo fermentum dignissim. Sed lacinia ex eu mi malesuada, sed interdum metus posuere. Vivamus auctor sapien in eleifend. Fusce nec est eget lorem ultrices facilisis a eget dolor. Integer eget velit sit amet lorem gravida vestibulum. Proin eget vestibulum nunc. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur eget tellus ut odio facilisis bibendum nec nec tortor. Vivamus iaculis, turpis et tincidunt mattis, est arcu laoreet urna, nec dignissim nisl odio a nunc. Phasellus fermentum tristique orci, vel convallis tortor vehicula nec.Suspendisse potenti. Donec ullamcorper consectetur nunc, ut aliquam nulla blandit eget. Nunc pharetra diam ac turpis viverra varius. Sed ut erat justo. Fusce in tellus ut sapien venenatis volutpat. Nam eu sapien nec enim rhoncus volutpat vel eu libero. Nam vel augue sit amet odio malesuada mattis eget eu sapien. Integer ut nisi vitae libero gravida pharetra. Nunc varius tincidunt justo, a vehicula justo rhoncus ut. Sed bibendum, risus at euismod venenatis, purus metus tincidunt libero, a facilisis justo justo id libero. Maecenas ultricies augue a hendrerit iaculis.',
-                   textAlign: TextAlign.center,
+                    textAlign: TextAlign.center,
                     style: GoogleFonts.getFont(
                       fontFamily2,
                       fontWeight: FontWeight.w400,
@@ -83,23 +83,23 @@ class Aboutus extends StatelessWidget {
             //This container is used to show the prize section. It's also positioned like the above container,
             //but the difference is that the above one was positioned from the top and this one was positioned from the bottom.
             //Run the code once, and you'll understand.
-            Positioned(              
-              bottom: -scaleWidth(context, 200),//120
-              child: Container(                
-                // color: lavender,
-                height: scaleHeight(context, 400),//240
-                width: scaleWidth(context, 1118),
-                margin:
-                    EdgeInsets.symmetric(horizontal: scaleWidth(context, 81)),
-                    child: SvgPicture.asset('assets/icons/defaultEditPortal/about.svg', fit: BoxFit.fill)
-              ),
+            Positioned(
+              bottom: -scaleWidth(context, 200), //120
+              child: Container(
+                  // color: lavender,
+                  height: scaleHeight(context, 400), //240
+                  width: scaleWidth(context, 1118),
+                  margin:
+                      EdgeInsets.symmetric(horizontal: scaleWidth(context, 81)),
+                  child: SvgPicture.asset(
+                      'assets/icons/defaultEditPortal/about.svg',
+                      fit: BoxFit.fill)),
             ),
           ]),
           SizedBox(
-            height: scaleHeight(context, 233),//153
+            height: scaleHeight(context, 233), //153
           )
         ],
-
       ),
     );
   }

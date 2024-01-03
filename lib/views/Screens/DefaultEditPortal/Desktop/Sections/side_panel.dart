@@ -6,6 +6,8 @@ import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/default_template.dart';
+import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/createRegistrationform.dart';
 import 'package:provider/provider.dart';
 
 class SidePanel extends StatefulWidget {
@@ -38,8 +40,21 @@ class _SidePanelState extends State<SidePanel> {
                 if (widget.formKey.currentState!.validate()) {
                   widget.formKey.currentState!.save();
 
+                  rulesProvider.setSelectedIndex(-1);
+                  rulesProvider.setDescriptionWidget(SvgPicture.asset(
+                      'assets/images/defaultTemplate/clickme.svg'));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DefaultTemplate(
+                              defaultTemplateModel:
+                                  hackathonDetailsProvider.hackathonDetails,
+                              isEdit: true,
+                            )),
+                  );
+
                   // hackathonDetailsProvider.hackathonName=widget.textinput.toString();
-                  Navigator.pushNamed(context, '/defaultTemplate');
+                  // Navigator.pushNamed(context, '/defaultTemplate');
                 }
               },
               child: const Icon(
@@ -63,45 +78,69 @@ class _SidePanelState extends State<SidePanel> {
                   widget.formKey.currentState!.save();
 
                   List<Map<String, dynamic>> rounds =
-                      rulesProvider.roundsList.map((round) {
-                    print(round['startDate']);
-                    print("${round['startDate']}T00:00:00Z");
+                      hackathonDetailsProvider.roundsList.map((round) {
                     return {
                       "serial_number":
-                          rulesProvider.roundsList.indexOf(round) + 1,
-                      "name": round['roundTitle'],
-                      "description": round['roundDescription'],
-                      "start_timeline": "${round['startDate']}T00:00:00Z",
-                      "end_timeline": "${round['endDate']}T18:00:00Z"
+                          hackathonDetailsProvider.roundsList.indexOf(round) +
+                              1,
+                      "name": round.name,
+                      "description": round.description,
+                      "start_timeline": "${round.startTimeline}T00:00:00Z",
+                      "end_timeline": "${round.endTimeline}T18:00:00Z"
                     };
                   }).toList();
-                  print(hackathonDetailsProvider.hackathonContactNumber1);
 
-                  await CreateHackathon().postSingleHackathon({
+                  final hackathonId =
+                      await CreateHackathon().postSingleHackathon({
                     "hackathon": {
-                      "name": "hackathonDetailsProvider.hackathonName",
+                      "name": hackathonDetailsProvider.hackathonName,
                       "organisation_name": "Gov of India",
-                      "mode_of_conduct": "Online",
-                      "deadline": "2023-12-20",
-                      "team_size": 4,
+                      "mode_of_conduct": hackathonDetailsProvider.modeOfConduct,
+                      "deadline": "2024-10-10",
+                      "team_size": hackathonDetailsProvider.teamSize,
                       "visible": "Public",
-                      "start_date_time": "2024-12-24T00:00:00Z",
-                      "about": "hackathonDetailsProvider.hackathonAbout",
-                      "brief": "hackathonDetailsProvider.hackathonDescription",
+                      "start_date_time":
+                          "${hackathonDetailsProvider.startDateTime}T00:00:00Z",
+                      "about": hackathonDetailsProvider.about,
+                      "brief": hackathonDetailsProvider.brief,
                       "website": "https://req",
-                      "fee": 100.00,
-                      "venue": "hackathonDetailsProvider.hackathonVenue",
-                      "contact1_name":
-                          "hackathonDetailsProvider.hackathonContactName1",
-                      "contact1_number": 9876556789,
-                      "contact2_name":
-                          "hackathonDetailsProvider.hackathonContactName2",
-                      "contact2_number": 1234567890
+                      "fee": hackathonDetailsProvider.fee,
+                      "venue": hackathonDetailsProvider.venue,
+                      "contact1_name": hackathonDetailsProvider.contact1Name,
+                      "contact1_number": int.parse(hackathonDetailsProvider.contact1Number),
+                      "contact2_name": hackathonDetailsProvider.contact2Name,
+                      "contact2_number": int.parse(hackathonDetailsProvider.contact2Number)
                     },
                     "round": rounds,
                     "fields": [],
                     "containers": []
                   }, context);
+                  if (hackathonId.isNotEmpty) {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Success'),
+                          content:
+                              const Text('Hackathon created successfully!'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => RegistrationForm(
+                                              hackathonId: hackathonId,
+                                            )));
+                              },
+                              child: Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
                 }
               },
               child: SvgPicture.asset(
@@ -144,16 +183,6 @@ class SectionButton extends StatelessWidget {
             horizontal: scaleWidth(context, 19),
             vertical: scaleHeight(context, 14),
           ),
-          // margin: EdgeInsets.symmetric(
-          //   vertical: scaleHeight(context, 15),
-          // ).copyWith(
-          //   top: index == 0
-          //       ? 0
-          //       : null, // Remove top margin for the first item
-          //   bottom: index == 5
-          //       ? 0
-          //       : null, // Remove bottom margin for the last item
-          // ),
           decoration: BoxDecoration(
             color: selectedSection == index ? sectionSelection : null,
             borderRadius: BorderRadius.circular(rad5_3),

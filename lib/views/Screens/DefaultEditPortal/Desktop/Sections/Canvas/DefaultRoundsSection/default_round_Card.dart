@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
+import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
@@ -30,12 +31,25 @@ class DefaultRoundCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rulesProvider = Provider.of<RulesProvider>(context);
+    final hackathonDetailsProvider =
+        Provider.of<HackathonDetailsProvider>(context);
     final roundNameController = TextEditingController();
     final roundStartDateController = TextEditingController();
     final roundEndDateController = TextEditingController();
 
-    if (rulesProvider.roundsList[index]["roundTitle"]!.isNotEmpty) {
-      roundNameController.text = rulesProvider.roundsList[index]["roundTitle"]!;
+    if (hackathonDetailsProvider.roundsList[index].name.isNotEmpty) {
+      roundNameController.text =
+          hackathonDetailsProvider.roundsList[index].name;
+    }
+
+
+    if (hackathonDetailsProvider.roundsList[index].startTimeline.isNotEmpty) {
+      roundStartDateController.text = hackathonDetailsProvider.roundsList[index].startTimeline;
+    }
+
+
+    if (hackathonDetailsProvider.roundsList[index].endTimeline.isNotEmpty) {
+      roundEndDateController.text = hackathonDetailsProvider.roundsList[index].endTimeline;
     }
 
     return InkWell(
@@ -116,15 +130,15 @@ class DefaultRoundCard extends StatelessWidget {
                             return null;
                           },
                           onSaved: (value) {
-                            rulesProvider.updateRoundTitle(
+                            hackathonDetailsProvider.updateRoundTitle(
                                 index, value.toString());
                           },
                         ),
                       )),
                   InkWell(
                     onTap: () {
-                      if (rulesProvider.roundsList.length != 1) {
-                        rulesProvider.deleteRound(index);
+                      if (hackathonDetailsProvider.roundsList.length != 1) {
+                        hackathonDetailsProvider.deleteRound(index, context);
                       }
                     },
                     child: Container(
@@ -187,7 +201,7 @@ class DefaultRoundCard extends StatelessWidget {
                           cursorColor: Colors.black,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.all(0),
-                            hintText: 'DD/MMM/YYYY',
+                            hintText: 'YYYY-MM-DD',
                             hintStyle: GoogleFonts.getFont(fontFamily2,
                                 fontSize:
                                     defaultEditScaleHeight(containerHeight, 20),
@@ -215,7 +229,7 @@ class DefaultRoundCard extends StatelessWidget {
                             return null;
                           },
                           onSaved: (value) {
-                           rulesProvider.updateRoundStartDate(
+                            hackathonDetailsProvider.updateRoundStartDate(
                                 index, value.toString());
                           },
                         ),
@@ -287,7 +301,7 @@ class DefaultRoundCard extends StatelessWidget {
                           cursorColor: Colors.black,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.all(0),
-                            hintText: 'DD/MMM/YYYY',
+                            hintText: 'YYYY-MM-DD',
                             hintStyle: GoogleFonts.getFont(fontFamily2,
                                 fontSize:
                                     defaultEditScaleHeight(containerHeight, 20),
@@ -315,7 +329,7 @@ class DefaultRoundCard extends StatelessWidget {
                             return null;
                           },
                           onSaved: (value) {
-                            rulesProvider.updateRoundEndDate(
+                            hackathonDetailsProvider.updateRoundEndDate(
                                 index, value.toString());
                           },
                         ),

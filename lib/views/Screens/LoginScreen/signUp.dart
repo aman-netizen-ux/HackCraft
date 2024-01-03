@@ -113,8 +113,6 @@ class _SignUpState extends State<SignUp> {
                                         ? names.sublist(1).join(' ')
                                         : '';
                                     // Now you can use firstName and lastName as needed
-                                    print('First Name: $firstName');
-                                    print('Last Name: $lastName');
                                   },
                                 ),
                               ),
@@ -220,20 +218,21 @@ class _SignUpState extends State<SignUp> {
                                   color: darkBlue2,
                                   child: ElevatedButton(
                                       onPressed: () {
-                                        FirebaseAuth.instance
-                                            .createUserWithEmailAndPassword(
-                                                email: _emailText.text,
-                                                password: _passwordText.text)
-                                            .then((value) {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => Home()),
-                                          );
-                                          // navigate to home screen
-                                        }).onError((error, stackTrace) {
-                                          print("Error ${error.toString()}");
-                                        });
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Home()),
+                                        );
+                                        // FirebaseAuth.instance
+                                        //     .createUserWithEmailAndPassword(
+                                        //         email: _emailText.text,
+                                        //         password: _passwordText.text)
+                                        //     .then((value) {
+
+                                        //   // navigate to home screen
+                                        // }).onError((error, stackTrace) {
+                                        //   print("Error ${error.toString()}");
+                                        // });
                                       },
                                       style: ButtonStyle(
                                         backgroundColor:

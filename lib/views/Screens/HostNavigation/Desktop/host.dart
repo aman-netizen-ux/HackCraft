@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:major_project__widget_testing/state/templateSelectionprovider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
+import 'package:provider/provider.dart';
 
 class HostDesktopBody extends StatelessWidget {
   const HostDesktopBody({super.key});
@@ -15,8 +17,7 @@ class HostDesktopBody extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-              'Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit.',
+          Text('Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit.',
               textAlign: TextAlign.center,
               style: GoogleFonts.getFont(fontFamily2,
                   fontSize: scaleHeight(context, 54),
@@ -41,6 +42,11 @@ class HostDesktopBody extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
+                  final templateSelectionProvider =
+                      Provider.of<TemplateSelectionProvider>(context,
+                          listen: false);
+                  templateSelectionProvider.selectTemplate(0);
+                  templateSelectionProvider.setTnC(false);
                   Navigator.pushNamed(context, '/templateSelection');
                 },
                 style: ElevatedButton.styleFrom(
@@ -73,7 +79,7 @@ class HostDesktopBody extends StatelessWidget {
                         horizontal: scaleWidth(context, 39)),
                     backgroundColor: Colors.white,
                     elevation: 0,
-                    side: BorderSide(color: red, width: 1),
+                    side: const BorderSide(color: red, width: 1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(rad5_10),
                     )),
@@ -92,4 +98,3 @@ class HostDesktopBody extends StatelessWidget {
     );
   }
 }
-

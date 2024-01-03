@@ -11,18 +11,18 @@ import 'package:provider/provider.dart';
 class DefaultRoundsDescription extends StatelessWidget {
   final double containerHeight;
   final double containerWidth;
-  final int index;
   final String description;
-  const DefaultRoundsDescription({super.key, required this.description, required this.containerHeight, required this.containerWidth, required this.index});
+  const DefaultRoundsDescription({super.key, required this.description, required this.containerHeight, required this.containerWidth, });
 
   @override
   Widget build(BuildContext context) {
     final roundDescriptionController = TextEditingController();
      final rulesProvider = Provider.of<RulesProvider>(context);
+final hackathonDetailsProvider =
+        Provider.of<HackathonDetailsProvider>(context);
 
-
-     if(rulesProvider.roundsList[index]["roundDescription"]!.isNotEmpty){
-      roundDescriptionController.text = rulesProvider.roundsList[index]["roundDescription"]!;
+     if(hackathonDetailsProvider.roundsList[rulesProvider.editSelectedIndex].description!.isNotEmpty){
+      roundDescriptionController.text = hackathonDetailsProvider.roundsList[rulesProvider.editSelectedIndex].description;
     }
     return Container(
         width: defaultEditScaleWidth(containerWidth, 550),
@@ -95,7 +95,7 @@ class DefaultRoundsDescription extends StatelessWidget {
                         return null;
                       },
                       onSaved: (value) {
-                        rulesProvider.updateRoundDescription(index, value.toString()) ;
+                        hackathonDetailsProvider.updateRoundDescription(rulesProvider.editSelectedIndex, value.toString()) ;
                       },
                     ),
               )

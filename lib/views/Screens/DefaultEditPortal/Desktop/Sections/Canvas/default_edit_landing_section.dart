@@ -32,28 +32,33 @@ class DefaultEditLandingSection extends StatelessWidget {
           hackathonDetailsProvider.hackathonName;
     }
 
-    if (hackathonDetailsProvider.hackathonDescription.isNotEmpty) {
+    if (hackathonDetailsProvider.brief.isNotEmpty) {
       hackathonDescriptionController.text =
-          hackathonDetailsProvider.hackathonDescription;
+          hackathonDetailsProvider.brief;
     }
 
-    if (hackathonDetailsProvider.hackathonDate.isNotEmpty) {
-      HackathonDateController.text = hackathonDetailsProvider.hackathonDate;
+    if (hackathonDetailsProvider.startDateTime.isNotEmpty) {
+      HackathonDateController.text = hackathonDetailsProvider.startDateTime;
     }
 
-    if (hackathonDetailsProvider.hackathonMode.isNotEmpty) {
-      hackathonModeController.text = hackathonDetailsProvider.hackathonMode;
+    if (hackathonDetailsProvider.modeOfConduct.isNotEmpty) {
+      hackathonModeController.text = hackathonDetailsProvider.modeOfConduct;
     }
+
+     if (hackathonDetailsProvider.teamSize>=0) {
+      hackathonTeamSizeController.text = hackathonDetailsProvider.teamSize.toString();
+    }
+
 
     hackathonDescriptionController.text =
-        hackathonDetailsProvider.hackathonDescription;
+        hackathonDetailsProvider.brief;
 
-    if (hackathonDetailsProvider.hackathonVenue.isNotEmpty) {
-      hackathonVenueController.text = hackathonDetailsProvider.hackathonVenue;
+    if (hackathonDetailsProvider.venue.isNotEmpty) {
+      hackathonVenueController.text = hackathonDetailsProvider.venue;
     }
 
-    if (hackathonDetailsProvider.hackathonfee.isNotEmpty) {
-      hackathonFeeController.text = hackathonDetailsProvider.hackathonfee;
+    if (hackathonDetailsProvider.fee.isNotEmpty) {
+      hackathonFeeController.text = hackathonDetailsProvider.fee;
     }
 
     return Padding(
@@ -188,7 +193,7 @@ class DefaultEditLandingSection extends StatelessWidget {
                             return null;
                           },
                           onSaved: (value) {
-                            hackathonDetailsProvider.hackathonDescription =
+                            hackathonDetailsProvider.brief =
                                 value.toString();
                           },
                         ),
@@ -211,7 +216,7 @@ class DefaultEditLandingSection extends StatelessWidget {
                         detail: 'Date',
                         controller: HackathonDateController,
                         onSaved: (value) {
-                          hackathonDetailsProvider.hackathonDate =
+                          hackathonDetailsProvider.startDateTime =
                               value.toString();
                         },
                         type: TextInputType.text,
@@ -223,7 +228,7 @@ class DefaultEditLandingSection extends StatelessWidget {
                         detail: 'Mode of Conduct',
                         controller: hackathonModeController,
                         onSaved: (value) {
-                          hackathonDetailsProvider.hackathonMode =
+                          hackathonDetailsProvider.modeOfConduct =
                               value.toString();
                         },
                         type: TextInputType.text,
@@ -235,7 +240,7 @@ class DefaultEditLandingSection extends StatelessWidget {
                         detail: 'Participation fee',
                         controller: hackathonFeeController,
                         onSaved: (value) {
-                          hackathonDetailsProvider.hackathonfee =
+                          hackathonDetailsProvider.fee =
                               value.toString();
                         },
                         type: TextInputType.text,
@@ -247,7 +252,7 @@ class DefaultEditLandingSection extends StatelessWidget {
                           detail: 'Team Size',
                           controller: hackathonTeamSizeController,
                           onSaved: (value) {
-                            hackathonDetailsProvider.hackathonTeamSize =
+                            hackathonDetailsProvider.teamSize =
                                 int.tryParse(value ?? '') ?? 0;
                           },
                           type: TextInputType.number,
@@ -258,7 +263,7 @@ class DefaultEditLandingSection extends StatelessWidget {
                         detail: 'Venue',
                         controller: hackathonVenueController,
                         onSaved: (value) {
-                          hackathonDetailsProvider.hackathonVenue =
+                          hackathonDetailsProvider.venue =
                               value.toString();
                         },
                         type: TextInputType.text,

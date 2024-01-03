@@ -7,8 +7,10 @@ import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/models/allHackathonsModel.dart';
 import 'package:major_project__widget_testing/state/getAllHackathons/getAllHackathonsProvider.dart';
 import 'package:major_project__widget_testing/state/getHackathon/getSingleHackathonProvider.dart';
+import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/default_template.dart';
 import 'package:provider/provider.dart';
 
 class HomeHackathon extends StatefulWidget {
@@ -29,10 +31,7 @@ class _HomeHackathonState extends State<HomeHackathon> {
     final hackathonsProvider =
         Provider.of<AllHackathonProvider>(context, listen: false);
     hackathonsProvider.getAllHackathonsList();
-
-   
   }
-
 
   final List<Color> pastelColors = [
     const Color(0xFFD4A5A5),
@@ -81,7 +80,7 @@ class _HomeHackathonState extends State<HomeHackathon> {
                   height: lineHeight(25, 45),
                   fontWeight: FontWeight.w500)),
           SizedBox(
-            height: 1000,
+            //height: 1000,
             child: GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -276,30 +275,53 @@ class _HomeHackathonState extends State<HomeHackathon> {
                                       onExit: (event) =>
                                           _setHovering(index, false),
                                       child: InkWell(
-                                        onTap: () {
+                                        onTap: () async{
                                           final singleHackathonProvider =
                                           Provider.of<SingleHackathonProvider>(
                                               context,
                                               listen: false);
-                                              
 
-                                              singleHackathonProvider.setIsLoading= true;
-                                        
-                                        singleHackathonProvider.getSingleHackathonsList(hackathon.id);
-                                      Navigator.pushNamed(
-                                          context, '/singleHackathon');
-                                        },
-                                        child: Center(
-                                          child: Container(
-                                            width: double.infinity,
-                                            height: scaleHeight(context, 50),
-                                            alignment: Alignment.center,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(25)),
-                                              color: _isHovering &&
-                                                      (index == _index)
+                                      singleHackathonProvider.setIsLoading =
+                                          true;
+
+                                      await singleHackathonProvider
+                                          .getSingleHackathonsList(
+                                              hackathon.id);
+
+                                      final rulesProvider =
+                                          Provider.of<RulesProvider>(context,
+                                              listen: false);
+
+                                      rulesProvider.setSelectedIndex(-1);
+                                      rulesProvider.setDescriptionWidget(
+                                          SvgPicture.asset(
+                                              'assets/images/defaultTemplate/clickme.svg'));
+
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                DefaultTemplate(
+                                                  defaultTemplateModel:
+                                                      singleHackathonProvider
+                                                          .singleHackathon,
+                                                  isEdit: false,
+                                                )),
+                                      );
+
+                                      // Navigator.pushNamed(
+                                      // context, '/singleHackathon');
+                                    },
+                                    child: Center(
+                                      child: Container(
+                                        width: double.infinity,
+                                        height: scaleHeight(context, 50),
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(25)),
+                                          color:
+                                              _isHovering && (index == _index)
                                                   ? darkBlue
                                                   : Colors.white,
                                               border:

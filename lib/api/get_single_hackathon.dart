@@ -18,13 +18,13 @@ class GetSingleHackathon {
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> jsonResponse = json.decode(response.body);
-        // debugPrint('API Response: $jsonResponse');
+
         return DefaultTemplateApiResponse.fromJson(jsonResponse);
       } else {
         return null;
       }
     } catch (e) {
-      print("Error message : $e");
+      debugPrint("Error message : $e");
       return null;
     }
   }

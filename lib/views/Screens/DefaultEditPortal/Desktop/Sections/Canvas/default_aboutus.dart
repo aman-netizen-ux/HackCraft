@@ -19,8 +19,8 @@ class DefaultEditAboutus extends StatelessWidget {
     final hackathonAboutController = TextEditingController();
     final hackathonDetailsProvider =
         Provider.of<HackathonDetailsProvider>(context);
-    if(hackathonDetailsProvider.hackathonAbout.isNotEmpty){
-      hackathonAboutController.text = hackathonDetailsProvider.hackathonAbout;
+    if(hackathonDetailsProvider.about.isNotEmpty){
+      hackathonAboutController.text = hackathonDetailsProvider.about;
     }
 
     return Padding(
@@ -79,7 +79,7 @@ class DefaultEditAboutus extends StatelessWidget {
                       return null;
                     },
                     onSaved: (value) {
-                      hackathonDetailsProvider.hackathonAbout =
+                      hackathonDetailsProvider.about =
                           value.toString();
                     },
                   ),

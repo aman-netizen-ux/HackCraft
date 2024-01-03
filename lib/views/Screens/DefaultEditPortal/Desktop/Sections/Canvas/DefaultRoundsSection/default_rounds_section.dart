@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
@@ -22,6 +23,8 @@ class DefaultRoundsAndRules extends StatelessWidget {
     // Retrieve the RulesProvider instance from the nearest ancestor
     // in the widget tree, using the Provider package.
     final rulesProvider = Provider.of<RulesProvider>(context);
+    final hackathonDetailsProvider =
+        Provider.of<HackathonDetailsProvider>(context);
     return Padding(
       padding: EdgeInsets.symmetric(
           horizontal: defaultEditScaleWidth(containerWidth, 81),
@@ -59,32 +62,27 @@ class DefaultRoundsAndRules extends StatelessWidget {
                     //just the list that will be used will come from the API.
                     child: ListView(
                         shrinkWrap: true,
-                        children: List.generate(rulesProvider.roundsList.length,
+                        children: List.generate(hackathonDetailsProvider.roundsList.length,
                             (index) {
                           //Generates the round card along with the timeline
                           return DefaultCustomTimelineTile(
                             cardIndex: index,
                             isFirst: index == 0,
                             isLast:
-                                rulesProvider.roundsList.length - 1 == index,
-                            roundTitle: rulesProvider.roundsList[index]
-                                ['roundTitle']!,
-                            roundDescription: rulesProvider.roundsList[index]
-                                ['roundDescription']!,
-                            endDate: rulesProvider.roundsList[index]
-                                ['endDate']!,
-                            startDate: rulesProvider.roundsList[index]
-                                ['startDate']!,
+                                hackathonDetailsProvider.roundsList.length - 1 == index,
+                            roundTitle: hackathonDetailsProvider.roundsList[index].name,                                
+                            roundDescription: hackathonDetailsProvider.roundsList[index].description,
+                            endDate: hackathonDetailsProvider.roundsList[index].endTimeline,
+                            startDate: hackathonDetailsProvider.roundsList[index].startTimeline,
                             onTap: () {
                               rulesProvider.setEditSelectedIndex(index);
                               rulesProvider.setEditDescriptionWidget(
                                   defaultRoundDetails(
-                                      rulesProvider.roundsList[index]
-                                          ['roundDescription']!,
+                                      hackathonDetailsProvider.roundsList[index].description,
                                       context,
                                       containerHeight,
                                       containerWidth,
-                                      index));
+                                      ));
                             },
                             containerHeight: containerHeight,
                             containerWidth: containerWidth,
@@ -93,7 +91,7 @@ class DefaultRoundsAndRules extends StatelessWidget {
                 Expanded(flex: 03, child: 
                  InkWell(
                 onTap: (){
-                  rulesProvider.increaseRoundsCount();
+                  hackathonDetailsProvider.increaseRoundsCount();
                 },
                 child: DottedBorder(
                     borderType: BorderType.Circle,
@@ -118,11 +116,11 @@ class DefaultRoundsAndRules extends StatelessWidget {
 
 //This widget was created in order to show the description of the round after clicking on any round card.
   Widget defaultRoundDetails(String roundDetails, BuildContext context,
-      double containerHeight, double containerWidth, int index) {
+      double containerHeight, double containerWidth) {
     return DefaultRoundsDescription(
         description: roundDetails,
         containerHeight: containerHeight,
         containerWidth: containerWidth,
-        index: index);
+       );
   }
 }

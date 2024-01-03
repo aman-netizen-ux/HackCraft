@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
-import 'package:major_project__widget_testing/models/questionModel.dart';
+import 'package:major_project__widget_testing/models/Registration/questionModel.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 
 class FormBuilderQuestion extends StatelessWidget {
@@ -19,10 +19,10 @@ class FormBuilderQuestion extends StatelessWidget {
     final fieldPrefix = 'question_$questionIndex';
 
     Widget? responseField;
-    print('Question type: ${question.type}');
     if (question.type == 'QuestionType.text') {
       responseField = FormBuilderTextField(
         name: '${fieldPrefix}_response_text',
+        enabled: false,
         decoration: InputDecoration(
           labelText: 'Response ',
           filled: true,
@@ -51,6 +51,10 @@ class FormBuilderQuestion extends StatelessWidget {
     } else if (question.type == 'QuestionType.multipleChoice') {
       responseField = FormBuilderCheckboxGroup(
         name: '${fieldPrefix}_response_multiChoice',
+        enabled: false,
+        decoration: const InputDecoration(
+          border: InputBorder.none,
+        ),
         options: question.options.map((option) {
           return FormBuilderFieldOption(
             value: option,
@@ -79,7 +83,7 @@ class FormBuilderQuestion extends StatelessWidget {
         ),
         if (question.type == QuestionType.multipleChoice)
           FormBuilderTextField(
-            name: '$fieldPrefix\_options',
+            name: '${fieldPrefix}_options',
             decoration: InputDecoration(
               labelText: 'Options (comma-separated)',
               filled: true,
