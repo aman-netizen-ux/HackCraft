@@ -83,143 +83,161 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
         Stack(
           clipBehavior: Clip.none,
           children: [
-            Container(
-              height: scaleHeight(context, 234),
-              width: double.infinity,
-              color: green,
-              alignment: Alignment.bottomCenter,
-              padding: EdgeInsets.only(
-                  left: scaleWidth(context, 81),
-                  right: scaleWidth(context, 81),
-                  bottom: scaleHeight(context, 28)),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+            Column(
+              children: [
+                SizedBox(height: scaleHeight(context, 311)),
+                Container(
+                  height: scaleHeight(context, 234),
+                  width: double.infinity,
+                  color: green,
+                  alignment: Alignment.bottomCenter,
+                  padding: EdgeInsets.only(
+                      left: scaleWidth(context, 81),
+                      right: scaleWidth(context, 81),
+                      bottom: scaleHeight(context, 28)),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        InkWell(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Icon(Icons.arrow_back)),
-                        SizedBox(
-                          width: scaleWidth(context, 10),
-                        ),
-                        Text('Back to\nScreen',
-                            style: GoogleFonts.getFont(fontFamily2,
-                                fontSize: scaleHeight(context, 18),
-                                color: black1,
-                                fontWeight: FontWeight.w600,
-                                height: lineHeight(23, 18))),
-                      ],
-                    ),
-
-                    // SizedBox(
-                    //   width: scaleWidth(context, 30),
-                    //   child: CheckboxListTile(
-                    //     value: false,
-                    //     onChanged: (isch){},
-                    //     title:
-                    Row(
-                      children: [
-                        Checkbox(
-                            value: templateSelectionProvider.isTnCChecked,
-                            activeColor: black1_75,
-                            side: const BorderSide(
-                              color: black1_100,
-                            ),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(rad5_1)),
-                            onChanged: (value) {
-                              if (value!) {
-                                showTermsAndConditions(context);
-                              } else {
-                                templateSelectionProvider.setTnC(value);
-                              }
-                            }),
                         InkWell(
                           onTap: () {
-                            showTermsAndConditions(context);
+                            Navigator.pop(context);
                           },
-                          child: Text(
-                            'I agree with Terms and conditions',
-                            style: GoogleFonts.getFont(fontFamily2,
-                                fontSize: scaleHeight(context, 18),
-                                color: black1,
-                                fontWeight: FontWeight.w300,
-                                height: lineHeight(22, 18),
-                                decoration: TextDecoration.underline,
-                                decorationColor: black1_100),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.arrow_back),
+                              SizedBox(
+                                width: scaleWidth(context, 10),
+                              ),
+                              Text('Back to\nScreen',
+                                  style: GoogleFonts.getFont(fontFamily2,
+                                      fontSize: scaleHeight(context, 18),
+                                      color: black1,
+                                      fontWeight: FontWeight.w600,
+                                      height: lineHeight(23, 18))),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
+                        Row(
+                          children: [
+                            Checkbox(
+                                value: templateSelectionProvider.isTnCChecked,
+                                activeColor: black1_75,
+                                side: const BorderSide(
+                                  color: black1_100,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(rad5_1)),
+                                onChanged: (value) {
+                                  if (templateSelectionProvider.selectedTemplate != 0) {
+                                    if (value!) {
+                                      // If checkbox is checked, show the terms and conditions popup
+                                      showTermsAndConditions(context);
+                                    } else {
+                                      // If checkbox is unchecked, just update the state without showing the popup
+                                      templateSelectionProvider.setTnC(value);
+                                    }
+                                  } else {
+                                    // If no template is selected, show a message and keep the checkbox unchecked
+                                    templateSelectionProvider.setTnC(false);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                            'Please select a template before agreeing to the terms and conditions.'),
+                                        duration: Duration(seconds: 2),
+                                      ),
+                                    );
+                                  }
+                                }),
+                            InkWell(
+                              onTap: () {
+                                showTermsAndConditions(context);
+                              },
+                              child: Text(
+                                'I agree with Terms and conditions',
+                                style: GoogleFonts.getFont(fontFamily2,
+                                    fontSize: scaleHeight(context, 18),
+                                    color: black1,
+                                    fontWeight: FontWeight.w300,
+                                    height: lineHeight(22, 18),
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: black1_100),
+                              ),
+                            ),
+                          ],
+                        ),
 
-                    //     ),
-                    // ),
+                        //     ),
+                        // ),
 
-                    ElevatedButton(
-                      onPressed: () {
-                        if (templateSelectionProvider.isTnCChecked!) {
-                          if (templateSelectionProvider.selectedTemplate == 1) {
-                            final templateSelectionProvider =
-                                Provider.of<TemplateSelectionProvider>(context,
-                                    listen: false);
-                            templateSelectionProvider.selectTemplate(0);
-                            templateSelectionProvider.setTnC(false);
+                        ElevatedButton(
+                          onPressed: () {
+                            if (templateSelectionProvider.isTnCChecked!) {
+                              if (templateSelectionProvider.selectedTemplate ==
+                                  1) {
+                                final templateSelectionProvider =
+                                    Provider.of<TemplateSelectionProvider>(
+                                        context,
+                                        listen: false);
+                                templateSelectionProvider.selectTemplate(0);
+                                templateSelectionProvider.setTnC(false);
 
-                            final rulesProvider = Provider.of<RulesProvider>(
-                                context,
-                                listen: false);
-                            rulesProvider.setEditSelectedIndex(-1);
-                            rulesProvider.setEditDescriptionWidget(
-                                SvgPicture.asset(
-                                    'assets/images/defaultTemplate/clickme.svg'));
-                            Navigator.pushNamed(context, '/defaultEditPortal');
-                          } else if (templateSelectionProvider
-                                  .selectedTemplate ==
-                              2) {
-                            Navigator.pushNamed(context, '/customEditPortal');
-                          } else {
-                            // TODO Create something to tell user to select card and check terms and conditions
-                          }
-                        } else {}
-                      },
-                      style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.only(
-                              top: scaleHeight(context, 12),
-                              bottom: scaleHeight(context, 12),
-                              left: scaleWidth(context, 44),
-                              right: scaleWidth(context, 13)),
-                          backgroundColor: black1,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(rad5_10),
-                          )),
-                      child: Row(
-                        children: [
-                          Text('Next',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.getFont(fontFamily2,
-                                  fontSize: scaleHeight(context, 18),
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                  height: lineHeight(23, 18))),
-                          SizedBox(
-                            width: scaleWidth(context, 25),
+                                final rulesProvider =
+                                    Provider.of<RulesProvider>(context,
+                                        listen: false);
+                                rulesProvider.setEditSelectedIndex(-1);
+                                rulesProvider.setEditDescriptionWidget(
+                                    SvgPicture.asset(
+                                        'assets/images/defaultTemplate/clickme.svg'));
+                                Navigator.pushNamed(
+                                    context, '/defaultEditPortal');
+                              } else if (templateSelectionProvider
+                                      .selectedTemplate ==
+                                  2) {
+                                Navigator.pushNamed(
+                                    context, '/customEditPortal');
+                              } else {
+                                // TODO Create something to tell user to select card and check terms and conditions
+                              }
+                            } else {}
+                          },
+                          style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.only(
+                                  top: scaleHeight(context, 12),
+                                  bottom: scaleHeight(context, 12),
+                                  left: scaleWidth(context, 44),
+                                  right: scaleWidth(context, 13)),
+                              backgroundColor: black1,
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(rad5_10),
+                              )),
+                          child: Row(
+                            children: [
+                              Text('Next',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.getFont(fontFamily2,
+                                      fontSize: scaleHeight(context, 18),
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                      height: lineHeight(23, 18))),
+                              SizedBox(
+                                width: scaleWidth(context, 25),
+                              ),
+                              const Icon(
+                                Icons.arrow_forward,
+                                color: Colors.white,
+                              )
+                            ],
                           ),
-                          const Icon(
-                            Icons.arrow_forward,
-                            color: Colors.white,
-                          )
-                        ],
-                      ),
-                    )
-                  ]),
+                        )
+                      ]),
+                ),
+              ],
             ),
             Positioned(
-                top: -scaleHeight(context, 311),
+                //top: -scaleHeight(context, 311),
                 left:
                     (scaleWidth(context, 1280) - scaleWidth(context, 855)) / 2,
                 child: Row(

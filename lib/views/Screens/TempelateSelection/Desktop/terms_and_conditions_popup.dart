@@ -102,6 +102,7 @@ void showTermsAndConditions(BuildContext context) {
                       width: scaleWidth(context, 237),
                       child: ElevatedButton(
                         onPressed: () {
+                          templateSelectionProvider.setTnC(false);
                           Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
