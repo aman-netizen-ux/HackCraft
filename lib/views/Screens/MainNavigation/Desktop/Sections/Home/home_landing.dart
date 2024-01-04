@@ -7,7 +7,8 @@ import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 
 class HomeLanding extends StatelessWidget {
-  const HomeLanding({super.key});
+  final VoidCallback onExploreTap;
+  const HomeLanding({super.key, required this.onExploreTap});
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +55,7 @@ class HomeLanding extends StatelessWidget {
                         fontWeight: FontWeight.w500)),
               ),
               InkWell(
-                onTap: () {
-                  
-                },
+                onTap: onExploreTap,
                 child: Container(
                   width : scaleWidth(context, 200),
                   height : scaleHeight(context, 50),
