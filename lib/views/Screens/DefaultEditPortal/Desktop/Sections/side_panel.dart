@@ -41,12 +41,9 @@ class _SidePanelState extends State<SidePanel> {
 
     if (_isLoading) {
     // Show loading indicator
-     showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return Center(child: CircularProgressIndicator());
-        });
+     
+    return Center(child: CircularProgressIndicator());
+      
   }
 
     return Padding(
