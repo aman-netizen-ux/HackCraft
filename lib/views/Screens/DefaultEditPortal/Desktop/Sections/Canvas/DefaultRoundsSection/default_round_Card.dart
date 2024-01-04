@@ -37,16 +37,11 @@ class DefaultRoundCard extends StatelessWidget {
     final roundStartDateController = TextEditingController();
     final roundEndDateController = TextEditingController();
 
-    if(hackathonDetailsProvider.temporaryRoundList[index].name.isNotEmpty){
-      roundNameController.text=hackathonDetailsProvider.temporaryRoundList[index].name;
-
-    }else{
+   
 
     if (hackathonDetailsProvider.roundsList[index].name.isNotEmpty) {
 
-      hackathonDetailsProvider.updateTemporaryRoundTile(index, hackathonDetailsProvider.roundsList[index].name);
-      roundNameController.text = hackathonDetailsProvider.temporaryRoundList[index].name;
-    }
+      roundNameController.text = hackathonDetailsProvider.roundsList[index].name;
     }
 
 
@@ -140,9 +135,10 @@ class DefaultRoundCard extends StatelessWidget {
                             }
                             return null;
                           },
-                          onChanged: (value){
-                            hackathonDetailsProvider.updateTemporaryRoundTile(index, value.toString());
-                          },
+                          // onChanged: (value){
+                          //  hackathonDetailsProvider.updateRoundTitle(
+                          //       index, value.toString());
+                          // },
                           onSaved: (value) {
                             hackathonDetailsProvider.updateRoundTitle(
                                 index, value.toString());
@@ -153,7 +149,7 @@ class DefaultRoundCard extends StatelessWidget {
                     onTap: () {
                       if (hackathonDetailsProvider.roundsList.length != 1 && hackathonDetailsProvider.temporaryRoundList.length!=1) {
                         hackathonDetailsProvider.deleteRound(index, context);
-                        hackathonDetailsProvider.deleteTemproraryRound(index, context);
+                        // hackathonDetailsProvider.deleteTemproraryRound(index, context);
                       }
                     },
                     child: Container(

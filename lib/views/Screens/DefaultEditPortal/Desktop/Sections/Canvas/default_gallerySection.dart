@@ -4,6 +4,7 @@ import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/state/galleryProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +19,7 @@ class DefaultEditGallerySection extends StatelessWidget {
     // in the widget tree, using the Provider package.
     final galleryProvider = Provider.of<GalleryProvider>(context);
     return Padding(
+      key: galleryEdit,
       padding: EdgeInsets.only(
         left: defaultEditScaleWidth(containerWidth, 81),
         right: defaultEditScaleWidth(containerWidth, 81),

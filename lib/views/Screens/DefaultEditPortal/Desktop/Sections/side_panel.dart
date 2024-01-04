@@ -6,6 +6,7 @@ import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/default_template.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/createRegistrationform.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,8 @@ class SidePanel extends StatefulWidget {
 }
 
 class _SidePanelState extends State<SidePanel> {
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     final hackathonDetailsProvider =
@@ -28,126 +31,212 @@ class _SidePanelState extends State<SidePanel> {
 
     final rulesProvider = Provider.of<RulesProvider>(context);
 
+    List<GlobalKey<State<StatefulWidget>>> keyValues = [
+      homeEdit,
+      rulesAndRoundsEdit,
+      aboutUsEdit,
+      galleryEdit,
+      contactUsEdit
+    ];
+
+    if (_isLoading) {
+    // Show loading indicator
+     showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return Center(child: CircularProgressIndicator());
+        });
+  }
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: scaleHeight(context, 45)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          InkWell(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () {
-                if (widget.formKey.currentState!.validate()) {
-                  widget.formKey.currentState!.save();
+          PopupMenuButton<String>(
+              offset: Offset(scaleWidth(context, 50), 0),
+              onSelected: (String result) {
+                print(result);
+                if (result == 'SavePreview') {
+                  if (widget.formKey.currentState!.validate()) {
+                    widget.formKey.currentState!.save();
 
-                  rulesProvider.setSelectedIndex(-1);
-                  rulesProvider.setDescriptionWidget(SvgPicture.asset(
-                      'assets/images/defaultTemplate/clickme.svg'));
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => DefaultTemplate(
-                              defaultTemplateModel:
-                                  hackathonDetailsProvider.hackathonDetails,
-                              isEdit: true,
-                            )),
-                  );
+                    previewFunction(rulesProvider, hackathonDetailsProvider);
+                  }
+                } else if (result == 'Save') {
+                } else if (result == 'Host') {
+                  if (widget.formKey.currentState!.validate()) {
+                    widget.formKey.currentState!.save();
 
-                  // hackathonDetailsProvider.hackathonName=widget.textinput.toString();
-                  // Navigator.pushNamed(context, '/defaultTemplate');
+                    hostHackathon(rulesProvider, hackathonDetailsProvider);
+                  }
+                } else {
+                  Navigator.pop(context);
                 }
               },
-              child: const Icon(
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                    const PopupMenuItem<String>(
+                      value: 'Back',
+                      child: Text('Back'),
+                    ),
+                    const PopupMenuItem<String>(
+                      value: 'Save',
+                      child: Text('Save and Back'),
+                    ),
+                    const PopupMenuItem<String>(
+                      value: 'SavePreview',
+                      child: Text('Save and Preview'),
+                    ),
+                    const PopupMenuItem<String>(
+                      value: 'Host',
+                      child: Text('Host Hackathon'),
+                    ),
+                  ],
+              icon: const Icon(
                 Icons.menu,
                 color: Colors.white,
               )),
           Column(
-            children: List.generate(6, (index) {
-              int selectedSection = 2;
+            children: List.generate(5, (index) {
+              int selectedSection = 0;
               return SectionButton(
                 selectedSection: selectedSection,
                 index: index,
+                onTap: () {
+                  scrollToItem(keyValues[index]);
+                },
               );
             }),
           ),
           InkWell(
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
-              onTap: () async {
-                if (widget.formKey.currentState!.validate()) {
-                  widget.formKey.currentState!.save();
-
-                  List<Map<String, dynamic>> rounds =
-                      hackathonDetailsProvider.roundsList.map((round) {
-                    return {
-                      "serial_number":
-                          hackathonDetailsProvider.roundsList.indexOf(round) +
-                              1,
-                      "name": round.name,
-                      "description": round.description,
-                      "start_timeline": "${round.startTimeline}T00:00:00Z",
-                      "end_timeline": "${round.endTimeline}T18:00:00Z"
-                    };
-                  }).toList();
-
-                  final hackathonId =
-                      await CreateHackathon().postSingleHackathon({
-                    "hackathon": {
-                      "name": hackathonDetailsProvider.hackathonName,
-                      "organisation_name": "Gov of India",
-                      "mode_of_conduct": hackathonDetailsProvider.modeOfConduct,
-                      "deadline": "2024-10-10",
-                      "team_size": 3,
-                      "visible": "Public",
-                      "start_date_time":
-                          "${hackathonDetailsProvider.startDateTime}T00:00:00Z",
-                      "about": hackathonDetailsProvider.about,
-                      "brief": hackathonDetailsProvider.brief,
-                      "website": "https://req",
-                      "fee": 100.00,
-                      "venue": hackathonDetailsProvider.venue,
-                      "contact1_name": hackathonDetailsProvider.contact1Name,
-                      "contact1_number": 9087654321,
-                      "contact2_name": hackathonDetailsProvider.contact2Name,
-                      "contact2_number": 8907654321
-                    },
-                    "round": rounds,
-                    "fields": [],
-                    "containers": []
-                  }, context);
-                  if (hackathonId.isNotEmpty) {
-                    showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Success'),
-                          content:
-                              const Text('Hackathon created successfully!'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => RegistrationForm(
-                                              hackathonId: hackathonId,
-                                            )));
-                              },
-                              child: Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  }
-                }
-              },
+              onTap: () {},
               child: SvgPicture.asset(
                   'assets/icons/defaultEditPortal/settings.svg'))
         ],
       ),
     );
+  }
+
+  void previewFunction(RulesProvider rulesProvider,
+      HackathonDetailsProvider hackathonDetailsProvider) {
+    rulesProvider.setSelectedIndex(-1);
+    rulesProvider.setDescriptionWidget(
+        SvgPicture.asset('assets/images/defaultTemplate/clickme.svg'));
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => DefaultTemplate(
+                defaultTemplateModel: hackathonDetailsProvider.hackathonDetails,
+                isEdit: true,
+              )),
+    );
+  }
+
+  void hostHackathon(RulesProvider rulesProvider,
+      HackathonDetailsProvider hackathonDetailsProvider) async {
+    setState(() {
+      _isLoading = true;
+    });
+    // if(_isLoading){
+    //    showDialog(
+    //     context: context,
+    //     barrierDismissible: false,
+    //     builder: (BuildContext context) {
+    //       return Center(child: CircularProgressIndicator());
+    //     });
+    // }
+    List<Map<String, dynamic>> rounds =
+        hackathonDetailsProvider.roundsList.map((round) {
+      return {
+        "serial_number": hackathonDetailsProvider.roundsList.indexOf(round) + 1,
+        "name": round.name,
+        "description": round.description,
+        "start_timeline": "${round.startTimeline}T00:00:00Z",
+        "end_timeline": "${round.endTimeline}T18:00:00Z"
+      };
+    }).toList();
+
+    final hackathonId = await CreateHackathon().postSingleHackathon({
+      "hackathon": {
+        "name": hackathonDetailsProvider.hackathonName,
+        "organisation_name": "Gov of India",
+        "mode_of_conduct": hackathonDetailsProvider.modeOfConduct,
+        "deadline": "2024-10-10",
+        "team_size": 3,
+        "visible": "Public",
+        "start_date_time":
+            "${hackathonDetailsProvider.startDateTime}T00:00:00Z",
+        "about": hackathonDetailsProvider.about,
+        "brief": hackathonDetailsProvider.brief,
+        "website": "https://req",
+        "fee": 100.00,
+        "venue": hackathonDetailsProvider.venue,
+        "contact1_name": hackathonDetailsProvider.contact1Name,
+        "contact1_number": 9087654321,
+        "contact2_name": hackathonDetailsProvider.contact2Name,
+        "contact2_number": 8907654321
+      },
+      "round": rounds,
+      "fields": [],
+      "containers": []
+    }, context);
+
+    if (hackathonId.isNotEmpty) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Success'),
+            content: const Text('Hackathon created successfully!'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RegistrationForm(
+                                hackathonId: hackathonId,
+                              )));
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Uhh-Ohh!'),
+            content: const Text('Something wet wrong'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RegistrationForm(
+                                hackathonId: hackathonId,
+                              )));
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 }
 
@@ -156,10 +245,12 @@ class SectionButton extends StatelessWidget {
     super.key,
     required this.selectedSection,
     required this.index,
+    this.onTap,
   });
 
   final int selectedSection;
   final int index;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -175,9 +266,7 @@ class SectionButton extends StatelessWidget {
         hoverColor: sectionSelection.withOpacity(0.2),
         splashColor: sectionSelection,
         borderRadius: BorderRadius.circular(rad5_3),
-        onTap: () {
-          // Add your onTap functionality here
-        },
+        onTap: onTap,
         child: Container(
           padding: EdgeInsets.symmetric(
             horizontal: scaleWidth(context, 19),

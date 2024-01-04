@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
@@ -62,6 +63,7 @@ class DefaultEditLandingSection extends StatelessWidget {
     }
 
     return Padding(
+      key: homeEdit,
       padding: EdgeInsets.only(
           right: defaultEditScaleWidth(containerWidth, 81),
           left: defaultEditScaleWidth(containerWidth, 81),

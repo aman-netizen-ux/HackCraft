@@ -28,28 +28,15 @@ class DefaultRoundsDescription extends StatelessWidget {
 
         print(hackathonDetailsProvider.roundsList[rulesProvider.editSelectedIndex]
           .description);
-    if (hackathonDetailsProvider
-        .temporaryRoundList[rulesProvider.editSelectedIndex]
-        .description
-        .isNotEmpty) {
-
-print('if');
-      roundDescriptionController.text = hackathonDetailsProvider
-          .temporaryRoundList[rulesProvider.editSelectedIndex].description;
-
-    } else {
+    
       if (hackathonDetailsProvider.roundsList[rulesProvider.editSelectedIndex]
           .description.isNotEmpty) {
-print('else');
-        hackathonDetailsProvider.updateTemporaryRoundDescription(
-            rulesProvider.editSelectedIndex,
-            hackathonDetailsProvider
-                .roundsList[rulesProvider.editSelectedIndex].description);
 
-        roundDescriptionController.text = hackathonDetailsProvider
-          .temporaryRoundList[rulesProvider.editSelectedIndex].description;
+
+        roundDescriptionController.text = hackathonDetailsProvider.roundsList[rulesProvider.editSelectedIndex]
+          .description;
       }
-    }
+    
 
     // if (hackathonDetailsProvider.roundsList[rulesProvider.editSelectedIndex]
     //       .description!.isNotEmpty) {
@@ -134,10 +121,7 @@ print('else');
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    hackathonDetailsProvider.updateTemporaryRoundDescription(
-                        rulesProvider.editSelectedIndex, value.toString());
-                  },
+                 
                   onSaved: (value) {
                     hackathonDetailsProvider.updateRoundDescription(
                         rulesProvider.editSelectedIndex, value.toString());
