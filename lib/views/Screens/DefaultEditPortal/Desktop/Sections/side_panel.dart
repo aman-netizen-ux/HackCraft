@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:major_project__widget_testing/api/post_default_hackathon.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
+import 'package:major_project__widget_testing/state/defaulttemplateProvider.dart';
 import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
@@ -23,11 +24,15 @@ class SidePanel extends StatefulWidget {
 
 class _SidePanelState extends State<SidePanel> {
   bool _isLoading = false;
+  
+
 
   @override
   Widget build(BuildContext context) {
     final hackathonDetailsProvider =
         Provider.of<HackathonDetailsProvider>(context);
+    final defaultTemplateProvider =
+        Provider.of<DefaultTemplateProvider>(context);
 
     final rulesProvider = Provider.of<RulesProvider>(context);
 
@@ -96,11 +101,11 @@ class _SidePanelState extends State<SidePanel> {
               )),
           Column(
             children: List.generate(5, (index) {
-              int selectedSection = 0;
               return SectionButton(
-                selectedSection: selectedSection,
+                selectedSection: defaultTemplateProvider.selectedSection,
                 index: index,
                 onTap: () {
+                   defaultTemplateProvider.setSelectedSection(index);
                   scrollToItem(keyValues[index]);
                 },
               );

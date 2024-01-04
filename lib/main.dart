@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:major_project__widget_testing/constants/app_routes.dart';
 import 'package:major_project__widget_testing/state/Registration.dart/getRegistration.dart';
+import 'package:major_project__widget_testing/state/defaulttemplateProvider.dart';
 import 'package:major_project__widget_testing/state/galleryProvider.dart';
 import 'package:major_project__widget_testing/state/getAllHackathons/getAllHackathonsProvider.dart';
 import 'package:major_project__widget_testing/state/getHackathon/getSingleHackathonProvider.dart';
@@ -37,6 +38,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => SingleHackathonProvider()),
         ChangeNotifierProvider(
             create: (context) => GetRegistrationFormProvider()),
+        ChangeNotifierProvider(
+            create: (context) => DefaultTemplateProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
