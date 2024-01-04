@@ -212,7 +212,7 @@ class DefaultRoundCard extends StatelessWidget {
                           cursorColor: Colors.black,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.all(0),
-                            hintText: 'DD/MMM/YYYY',
+                            hintText: 'YYYY-MM-DD',
                             hintStyle: GoogleFonts.getFont(fontFamily2,
                                 fontSize:
                                     defaultEditScaleHeight(containerHeight, 20),
@@ -312,7 +312,7 @@ class DefaultRoundCard extends StatelessWidget {
                           cursorColor: Colors.black,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.all(0),
-                            hintText: 'DD/MMM/YYYY',
+                            hintText: 'YYYY-MM-DD',
                             hintStyle: GoogleFonts.getFont(fontFamily2,
                                 fontSize:
                                     defaultEditScaleHeight(containerHeight, 20),

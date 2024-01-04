@@ -5,8 +5,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
+import 'package:major_project__widget_testing/state/getAllHackathons/getAllHackathonsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
+import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -16,8 +18,19 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  
   bool _isHovering = false;
   late int _index;
+
+   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final hackathonsProvider =
+        Provider.of<AllHackathonProvider>(context, listen: false);
+    hackathonsProvider.getAllHackathonsList();
+  }
+
   final List<Color> pastelColors = [
     const Color(0xFFD4A5A5),
     const Color(0xFFA5D3D3),
@@ -42,8 +55,17 @@ class _ProfileState extends State<Profile> {
     return pastelColors[random.nextInt(pastelColors.length)];
   }
 
+  String extractDate(String dateTimeString) {
+    DateTime dateTime = DateTime.parse(dateTimeString);
+    // Construct the date string
+    String date =
+        "${dateTime.year.toString().padLeft(4, '0')}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}";
+    return date;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final hackathonsProvider = Provider.of<AllHackathonProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -111,14 +133,14 @@ class _ProfileState extends State<Profile> {
                       fontWeight: FontWeight.w500)),
             ),
             SizedBox(
-              height: 1000,
+              //height: 1000,
               child: GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(
                     horizontal: scaleWidth(context, 60),
                     vertical: scaleHeight(context, 25)),
-                itemCount: 8,
+                itemCount:  hackathonsProvider.allHackathons.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   crossAxisSpacing: 30,
@@ -126,6 +148,7 @@ class _ProfileState extends State<Profile> {
                   mainAxisExtent: 230,
                 ),
                 itemBuilder: (BuildContext context, int index) {
+                  final hackathon = hackathonsProvider.allHackathons[index];
                   Color cardColor = getRandomPastelColor();
                   return Card(
                       color: grey1,
@@ -151,11 +174,11 @@ class _ProfileState extends State<Profile> {
                                     Column(
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        Text('Hackathon ${index + 1}',
+                                        Text(hackathon.name,
                                             style: GoogleFonts.getFont(
                                                 fontFamily2,
                                                 fontSize: scaleHeight(
-                                                    context, 40),
+                                                    context, 30),
                                                 color: black1,
                                                 height: lineHeight(25, 40),
                                                 fontWeight:
@@ -166,7 +189,7 @@ class _ProfileState extends State<Profile> {
                                         Padding(
                                           padding: EdgeInsets.only( right : scaleWidth(context, 44)),
                                           child: Text(
-                                              'Organization Name ${index + 1}',
+                                              hackathon.organisationName,
                                               style: GoogleFonts.getFont(
                                                   fontFamily2,
                                                   fontSize: scaleHeight(
@@ -195,7 +218,8 @@ class _ProfileState extends State<Profile> {
                                                     lineHeight(22.4, 18),
                                                 fontWeight:
                                                     FontWeight.w300)),
-                                        Text('Start Date ${index + 1}',
+                                        Text(extractDate(
+                                                    hackathon.startDate),
                                             style: GoogleFonts.getFont(
                                                 fontFamily2,
                                                 fontSize: scaleHeight(

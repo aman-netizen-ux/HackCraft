@@ -167,19 +167,19 @@ class _SidePanelState extends State<SidePanel> {
         "organisation_name": "Gov of India",
         "mode_of_conduct": hackathonDetailsProvider.modeOfConduct,
         "deadline": "2024-10-10",
-        "team_size": 3,
+        "team_size": hackathonDetailsProvider.teamSize,
         "visible": "Public",
         "start_date_time":
             "${hackathonDetailsProvider.startDateTime}T00:00:00Z",
         "about": hackathonDetailsProvider.about,
         "brief": hackathonDetailsProvider.brief,
         "website": "https://req",
-        "fee": 100.00,
+        "fee": hackathonDetailsProvider.fee,
         "venue": hackathonDetailsProvider.venue,
         "contact1_name": hackathonDetailsProvider.contact1Name,
-        "contact1_number": 9087654321,
+        "contact1_number": int.parse(hackathonDetailsProvider.contact1Number),
         "contact2_name": hackathonDetailsProvider.contact2Name,
-        "contact2_number": 8907654321
+        "contact2_number": int.parse(hackathonDetailsProvider.contact2Number)
       },
       "round": rounds,
       "fields": [],

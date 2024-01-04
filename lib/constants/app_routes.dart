@@ -15,6 +15,7 @@ import 'package:major_project__widget_testing/views/Screens/TempelateSelection/t
 class AppRoutes {
   static const String start = '/';
   static const String hostNavigation = '/hostNavigation';
+static const String singleHackathon = '/singleHackathon';
   static const String templateSelection = '/templateSelection';
   static const String contactSponsors = '/contactSponsors';
 // static const String defaultTemplate = '/defaultTemplate';

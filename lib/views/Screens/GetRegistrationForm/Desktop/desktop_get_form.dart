@@ -256,38 +256,7 @@ class GetRegistered extends StatelessWidget {
   }
 
   Widget _buildCustomFormField(CustomField field) {
-    if (field.shortAns != null) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: Text(
-                field.label,
-                style: const TextStyle(
-                  color: Color(0xff1a202c),
-                  fontSize: 24,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-            FormBuilderTextField(
-              name: 'response_${field.id}',
-              //  initialValue: field.label,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: offWhite,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-    } else if (field.multiple.isNotEmpty) {
+    if (field.multiple.isNotEmpty) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 15),
         child: Column(
@@ -329,6 +298,38 @@ class GetRegistered extends StatelessWidget {
               activeColor: Colors.green,
               controlAffinity: ControlAffinity.leading,
               separator: const SizedBox(height: 25),
+            ),
+          ],
+        ),
+      );
+    }
+    else  if ( field.shortAns != null ) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Text(
+                field.label,
+                style: const TextStyle(
+                  color: Color(0xff1a202c),
+                  fontSize: 24,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+            FormBuilderTextField(
+              name: 'response_${field.id}',
+              //  initialValue: field.label,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: offWhite,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+              ),
             ),
           ],
         ),
