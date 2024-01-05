@@ -35,10 +35,20 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
+      - name: Create .env file
+        run: |
+          echo "getAllHackathons=${{ vars.GETALLHACKATHONS }}" > .env
+          echo "getHackathon=${{ vars.GETHACKATHON }}" >> .env
+          echo "getRegistration=${{ vars.GETREGISTRATION }}" >> .env
+          echo "postHackathon=${{ vars.POSTHACKATHON }}" >> .env
+          echo "registration=${{ vars.REGISTRATION }}" >> .env
       
       - name: Merge to branch
         run: |
           git checkout Dev
+      - name: Print .env file
+        run: cat .env
+      
 
       - run: flutter pub get
       - run: flutter build web
