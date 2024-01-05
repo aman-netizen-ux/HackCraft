@@ -37,10 +37,16 @@ class DefaultRoundCard extends StatelessWidget {
     final roundStartDateController = TextEditingController();
     final roundEndDateController = TextEditingController();
 
+   
+
     if (hackathonDetailsProvider.roundsList[index].name.isNotEmpty) {
-      roundNameController.text =
-          hackathonDetailsProvider.roundsList[index].name;
+
+      roundNameController.text = hackathonDetailsProvider.roundsList[index].name;
     }
+
+
+
+
 
 
     if (hackathonDetailsProvider.roundsList[index].startTimeline.isNotEmpty) {
@@ -129,6 +135,10 @@ class DefaultRoundCard extends StatelessWidget {
                             }
                             return null;
                           },
+                          // onChanged: (value){
+                          //  hackathonDetailsProvider.updateRoundTitle(
+                          //       index, value.toString());
+                          // },
                           onSaved: (value) {
                             hackathonDetailsProvider.updateRoundTitle(
                                 index, value.toString());
@@ -137,8 +147,9 @@ class DefaultRoundCard extends StatelessWidget {
                       )),
                   InkWell(
                     onTap: () {
-                      if (hackathonDetailsProvider.roundsList.length != 1) {
+                      if (hackathonDetailsProvider.roundsList.length != 1 && hackathonDetailsProvider.temporaryRoundList.length!=1) {
                         hackathonDetailsProvider.deleteRound(index, context);
+                        // hackathonDetailsProvider.deleteTemproraryRound(index, context);
                       }
                     },
                     child: Container(

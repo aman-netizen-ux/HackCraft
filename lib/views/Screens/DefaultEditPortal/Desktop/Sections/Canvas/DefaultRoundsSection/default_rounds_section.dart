@@ -8,7 +8,6 @@ import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/DefaultRoundsSection/default_rounds_description_section.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/DefaultRoundsSection/default_timeline_tile.dart';
-import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/RoundsSection/roundsDescriptionSection.dart';
 import 'package:provider/provider.dart';
 import 'package:dotted_border/dotted_border.dart';
 
@@ -26,6 +25,7 @@ class DefaultRoundsAndRules extends StatelessWidget {
     final hackathonDetailsProvider =
         Provider.of<HackathonDetailsProvider>(context);
     return Padding(
+     
       padding: EdgeInsets.symmetric(
           horizontal: defaultEditScaleWidth(containerWidth, 81),
           vertical: defaultEditScaleHeight(containerHeight, 70)),
@@ -92,6 +92,7 @@ class DefaultRoundsAndRules extends StatelessWidget {
                  InkWell(
                 onTap: (){
                   hackathonDetailsProvider.increaseRoundsCount();
+                  // hackathonDetailsProvider.increaseTemproraryRoundsCount();
                 },
                 child: DottedBorder(
                     borderType: BorderType.Circle,

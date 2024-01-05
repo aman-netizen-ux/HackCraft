@@ -54,6 +54,7 @@ class _DefaultEditContactUsAndFooterSectionState
           hackathonDetailsProvider.contact2Number;
     }
     return Column(
+      
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(

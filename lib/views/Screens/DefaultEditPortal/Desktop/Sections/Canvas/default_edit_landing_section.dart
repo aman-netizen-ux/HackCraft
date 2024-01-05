@@ -62,6 +62,7 @@ class DefaultEditLandingSection extends StatelessWidget {
     }
 
     return Padding(
+      
       padding: EdgeInsets.only(
           right: defaultEditScaleWidth(containerWidth, 81),
           left: defaultEditScaleWidth(containerWidth, 81),
