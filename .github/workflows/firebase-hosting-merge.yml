@@ -48,6 +48,8 @@ jobs:
           git checkout Dev
       - name: Print .env file
         run: cat .env
+      - name: Run Flutter Build (Release)
+        run: flutter build web --release  
       
 
       - run: flutter pub get
