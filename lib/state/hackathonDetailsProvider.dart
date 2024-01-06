@@ -172,7 +172,11 @@ void increaseTemproraryRoundsCount() {
   void deleteRound(int index, BuildContext context) {
     if (index >= 0 && index < _hackathonDetails.rounds.length) {
       final rulesProvider = Provider.of<RulesProvider>(context, listen: false);
-      rulesProvider.setEditSelectedIndex(index - 1);
+      rulesProvider.editSelectedIndex==-1
+      ?rulesProvider.setEditSelectedIndex(- 1)
+      : rulesProvider.editSelectedIndex==0
+      ?rulesProvider.setEditSelectedIndex(0)
+      :rulesProvider.setEditSelectedIndex(index-1);
       _hackathonDetails.rounds.removeAt(index);
       notifyListeners();
     } else {
