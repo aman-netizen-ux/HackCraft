@@ -76,8 +76,12 @@ class RoundsAndRules extends StatelessWidget {
                                defaultTemplateModel!.rounds.length - 1 == index,
                             roundTitle:  defaultTemplateModel!.rounds[index].name,
                             roundDescription: defaultTemplateModel!.rounds[index].description,
-                            endDate: extractDate(defaultTemplateModel!.rounds[index].endTimeline),
-                            startDate: extractDate(defaultTemplateModel!.rounds[index].startTimeline),                             
+                            endDate:defaultTemplateModel!.rounds[index].endTimeline==''
+                          ? ''
+                          :extractDate(defaultTemplateModel!.rounds[index].endTimeline),
+                            startDate:defaultTemplateModel!.rounds[index].startTimeline==''
+                          ? ''
+                          :extractDate(defaultTemplateModel!.rounds[index].startTimeline),                             
                             onTap: () {
                               rulesProvider.setSelectedIndex(index);
                               rulesProvider.setDescriptionWidget(roundDetails(

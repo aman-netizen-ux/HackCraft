@@ -61,12 +61,13 @@ class _SidePanelState extends State<SidePanel> {
               onSelected: (String result) {
                 print(result);
                 if (result == 'SavePreview') {
-                  if (widget.formKey.currentState!.validate()) {
+                  // if (widget.formKey.currentState!.validate()) {
                     widget.formKey.currentState!.save();
 
                     previewFunction(rulesProvider, hackathonDetailsProvider);
-                  }
+                  // }
                 } else if (result == 'Save') {
+                  //TODO
                 } else if (result == 'Host') {
                   if (widget.formKey.currentState!.validate()) {
                     widget.formKey.currentState!.save();
@@ -88,7 +89,7 @@ class _SidePanelState extends State<SidePanel> {
                     ),
                     const PopupMenuItem<String>(
                       value: 'SavePreview',
-                      child: Text('Save and Preview'),
+                      child: Text('Preview'),
                     ),
                     const PopupMenuItem<String>(
                       value: 'Host',
@@ -164,7 +165,7 @@ class _SidePanelState extends State<SidePanel> {
     final hackathonId = await CreateHackathon().postSingleHackathon({
       "hackathon": {
         "name": hackathonDetailsProvider.hackathonName,
-        "organisation_name": "Gov of India",
+        "organisation_name": hackathonDetailsProvider.organisationName,
         "mode_of_conduct": hackathonDetailsProvider.modeOfConduct,
         "deadline": "2024-10-10",
         "team_size": hackathonDetailsProvider.teamSize,

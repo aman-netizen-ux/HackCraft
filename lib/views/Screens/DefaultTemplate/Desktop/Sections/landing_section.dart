@@ -50,7 +50,7 @@ class LandingSection extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Organisation name presents',
+                      Text('${ defaultTemplateModel!.hackathons.organisationName} presents',
                           style: GoogleFonts.getFont(fontFamily2,
                               fontSize: scaleHeight(context, 20),
                               color: greyish1,
@@ -98,7 +98,9 @@ class LandingSection extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       hackathonDetailContainer(
-                          detail:extractDate(defaultTemplateModel!.hackathons.startDateTime)),
+                          detail:defaultTemplateModel!.hackathons.startDateTime==''
+                          ? ''
+                          :extractDate(defaultTemplateModel!.hackathons.startDateTime)),
                       hackathonDetailContainer(
                           detail: defaultTemplateModel!.hackathons.modeOfConduct),
                       hackathonDetailContainer(

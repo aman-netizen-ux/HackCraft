@@ -16,6 +16,8 @@ class DefaultEditLandingSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hackathonOrganisationController = TextEditingController();
+
     final landingHackathonNameController = TextEditingController();
     final hackathonDescriptionController = TextEditingController();
     final HackathonDateController = TextEditingController();
@@ -26,6 +28,11 @@ class DefaultEditLandingSection extends StatelessWidget {
 
     final hackathonDetailsProvider =
         Provider.of<HackathonDetailsProvider>(context);
+
+    if (hackathonDetailsProvider.organisationName.isNotEmpty) {
+      hackathonOrganisationController.text =
+          hackathonDetailsProvider.organisationName;
+    }
 
     if (hackathonDetailsProvider.hackathonName.isNotEmpty) {
       landingHackathonNameController.text =
@@ -91,19 +98,65 @@ class DefaultEditLandingSection extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Organisation name presents',
+
+                      SizedBox(
+                        width: defaultEditScaleWidth(containerWidth, 700),
+                        height: defaultEditScaleHeight(containerHeight, 50),
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          textAlignVertical: TextAlignVertical.center,
+                          controller: hackathonOrganisationController,
+                          cursorHeight:
+                              defaultEditScaleHeight(containerHeight, 20),
+                          cursorColor: Colors.black,
+                          decoration: InputDecoration(
+                            hintText:
+                                'Organisation name',
+                            hintStyle: GoogleFonts.getFont(fontFamily2,
+                                fontSize:
+                                    defaultEditScaleHeight(containerHeight, 20),
+                                color: greyish1,
+                                fontWeight: FontWeight.w500,
+                                height: lineHeight(22.4,
+                                    20)), //Line Height is changed because of cursor size, initial line height was 22.4
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            focusedErrorBorder: InputBorder.none,
+                            counterText: "",
+                          ),
+                          maxLength: 300,
+                          maxLines: 4,
+                          keyboardType: TextInputType.text,
                           style: GoogleFonts.getFont(fontFamily2,
                               fontSize:
                                   defaultEditScaleHeight(containerHeight, 20),
                               color: greyish1,
                               fontWeight: FontWeight.w500,
-                              height: lineHeight(22.4, 20))),
+                              height:
+                                  lineHeight(22.4, 20)), //Line Height Changed
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return '';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            hackathonDetailsProvider.organisationName =
+                                value.toString();
+                          },
+                        ),
+                      ),
+
+                     
+
                       SizedBox(
-                        height: defaultEditScaleHeight(containerHeight, 42),
+                        height: defaultEditScaleHeight(containerHeight, 30),//42
                       ),
                       SizedBox(
                         width: defaultEditScaleWidth(containerWidth, 700),
                         height: defaultEditScaleHeight(containerHeight, 54),
+
                         child: TextFormField(
                           textAlign: TextAlign.center,
                           textAlignVertical: TextAlignVertical.center,

@@ -74,8 +74,9 @@ class DefaultEditAboutus extends StatelessWidget {
                           focusedErrorBorder: InputBorder.none,
                           counterText: "",
                         ),
-                        maxLength: 1900,
-                        keyboardType: TextInputType.text,
+                        // maxLength: 1900,//commented so user can type any no. of characters as he wants 
+                          maxLines: null,//null so user can add any no. of lines as he want(will work together with  keyboardType: TextInputType.multiline)
+                        keyboardType: TextInputType.multiline,//null so user can add any no. of lines as he want(will work together with maxline: null)
                         style: GoogleFonts.getFont(fontFamily2,
                             fontSize:
                                 defaultEditScaleHeight(containerHeight, 18),

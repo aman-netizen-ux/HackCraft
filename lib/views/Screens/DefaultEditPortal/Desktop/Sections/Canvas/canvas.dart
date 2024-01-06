@@ -111,7 +111,7 @@ void _scrollListener() {
                     )),
                 Container(
                    key: rulesAndRoundsEdit,
-                  color: Colors.blue[100],
+                  color: Colors.white,
                   child: DefaultRoundsAndRules(
                       containerHeight: whiteContainerHeight,
                       containerWidth: whiteContainerWidth),
@@ -125,7 +125,7 @@ void _scrollListener() {
                 ),
                 Container(
                 key: galleryEdit,
-                  color: Colors.blue[100],
+                  color: Colors.white,
                   child: DefaultEditGallerySection(
                       containerHeight: whiteContainerHeight,
                       containerWidth: whiteContainerWidth),
