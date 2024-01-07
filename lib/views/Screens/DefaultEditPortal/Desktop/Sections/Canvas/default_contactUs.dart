@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
@@ -20,6 +20,38 @@ class DefaultEditContactUsAndFooterSection extends StatefulWidget {
 
 class _DefaultEditContactUsAndFooterSectionState
     extends State<DefaultEditContactUsAndFooterSection> {
+
+
+late TextEditingController contactMemberName1Controller;
+late TextEditingController contactMemberName2Controller;
+late TextEditingController contactMemberNumber1Controller;
+late TextEditingController contactMemberNumber2Controller;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    contactMemberName1Controller = TextEditingController();
+    contactMemberName2Controller = TextEditingController();
+    contactMemberNumber1Controller = TextEditingController();
+    contactMemberNumber2Controller = TextEditingController();
+
+  }
+
+  @override
+  void dispose() {
+    contactMemberName1Controller.dispose();
+    contactMemberName2Controller.dispose();
+    contactMemberNumber1Controller.dispose();
+    contactMemberNumber2Controller.dispose();
+
+
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+
   List<String> footerLinks = [
     "Terms",
     "FAQ",
@@ -30,10 +62,6 @@ class _DefaultEditContactUsAndFooterSectionState
   ];
   @override
   Widget build(BuildContext context) {
-    final contactMemberName1Controller = TextEditingController();
-    final contactMemberName2Controller = TextEditingController();
-    final contactMemberNumber1Controller = TextEditingController();
-    final contactMemberNumber2Controller = TextEditingController();
     final hackathonDetailsProvider =
         Provider.of<HackathonDetailsProvider>(context);
     if (hackathonDetailsProvider.contact1Name.isNotEmpty) {

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
+import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
+import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
@@ -8,26 +11,108 @@ import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:provider/provider.dart';
 
-class DefaultEditLandingSection extends StatelessWidget {
+class DefaultEditLandingSection extends StatefulWidget {
   final double containerHeight;
   final double containerWidth;
   const DefaultEditLandingSection(
       {super.key, required this.containerHeight, required this.containerWidth});
 
   @override
-  Widget build(BuildContext context) {
-    final hackathonOrganisationController = TextEditingController();
+  State<DefaultEditLandingSection> createState() =>
+      _DefaultEditLandingSectionState();
+}
 
-    final landingHackathonNameController = TextEditingController();
-    final hackathonDescriptionController = TextEditingController();
-    final HackathonDateController = TextEditingController();
-    final hackathonModeController = TextEditingController();
-    final hackathonFeeController = TextEditingController();
-    final hackathonTeamSizeController = TextEditingController();
-    final hackathonVenueController = TextEditingController();
+class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
+  /*controllers are initialized out of the build so onTap can be used in textFormField without 
+  every time updating other textFormFields It will only initialize when init runs and
+  gets disposed of when widget will get remove from widget tree*/
+  late TextEditingController landingHackathonNameController;
+  late TextEditingController hackathonOrganisationController;
+  late TextEditingController hackathonDescriptionController;
+  late TextEditingController hackathonDateController;
+  late TextEditingController hackathonModeController;
+  late TextEditingController hackathonFeeController;
+   late TextEditingController hackathonTeamSizeController;
+  late TextEditingController hackathonVenueController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    hackathonOrganisationController = TextEditingController();
+    landingHackathonNameController = TextEditingController();
+    hackathonDescriptionController = TextEditingController();
+    hackathonDateController = TextEditingController();
+    hackathonModeController = TextEditingController();
+    hackathonFeeController = TextEditingController();
+     hackathonTeamSizeController = TextEditingController();
+    hackathonVenueController = TextEditingController();
+
+// HackathonTextPropertiesProvider is for text Field Properties and its methods
+    final hackathonTextPropertiesProvider =
+        Provider.of<HackathonTextPropertiesProvider>(context, listen: false);
+
+   final hackathonDetailsProvider =
+        Provider.of<HackathonDetailsProvider>(context, listen: false);
+
+/*  We are passing Global keys like organisationKey, hackathonNameKey defined in utils to set the properties 
+    of every text form fields defined with these unique keys and
+    we can gwt the properties as well with the same keys*/
+
+    // the values being passed here are the initial values
+    hackathonTextPropertiesProvider.textFieldPropertiesMap[organisationKey] =
+        TextFieldProperties(
+      size: hackathonDetailsProvider.hackathonDetails.fields[0].textProperties.size,
+      align: 'left',
+      font: 'Fira Sans',
+      fontWeight: 100,
+      italics: false,
+      letterSpacing: 0,
+      strikethrogh: false,
+      textColor: '',
+      underline: false,
+      upperCase: false,
+    );
+    hackathonTextPropertiesProvider.textFieldPropertiesMap[hackathonNameKey] =
+        TextFieldProperties(
+      size: 54,
+      align: 'left',
+      font: 'Fira Sans',
+      fontWeight: 100,
+      italics: false,
+      letterSpacing: 0,
+      strikethrogh: false,
+      textColor: '',
+      underline: false,
+      upperCase: false,
+    );
+  }
+
+  @override
+  void dispose() {
+    hackathonOrganisationController.dispose();
+    landingHackathonNameController.dispose();
+    hackathonDescriptionController.dispose();
+    hackathonDateController.dispose();
+    hackathonModeController.dispose();
+    hackathonFeeController.dispose();
+     hackathonTeamSizeController.dispose();
+    hackathonVenueController.dispose();
+
+    // ... dispose other controllers
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+       // final hackathonTeamSizeController = TextEditingController();
 
     final hackathonDetailsProvider =
         Provider.of<HackathonDetailsProvider>(context);
+
+    final hackathonTextPropertiesProvider =
+        Provider.of<HackathonTextPropertiesProvider>(context);
 
     if (hackathonDetailsProvider.organisationName.isNotEmpty) {
       hackathonOrganisationController.text =
@@ -40,25 +125,22 @@ class DefaultEditLandingSection extends StatelessWidget {
     }
 
     if (hackathonDetailsProvider.brief.isNotEmpty) {
-      hackathonDescriptionController.text =
-          hackathonDetailsProvider.brief;
+      hackathonDescriptionController.text = hackathonDetailsProvider.brief;
     }
 
     if (hackathonDetailsProvider.startDateTime.isNotEmpty) {
-      HackathonDateController.text = hackathonDetailsProvider.startDateTime;
+      hackathonDateController.text = hackathonDetailsProvider.startDateTime;
     }
 
     if (hackathonDetailsProvider.modeOfConduct.isNotEmpty) {
       hackathonModeController.text = hackathonDetailsProvider.modeOfConduct;
     }
 
-     if (hackathonDetailsProvider.teamSize>=0) {
-      hackathonTeamSizeController.text = hackathonDetailsProvider.teamSize.toString();
+    if (hackathonDetailsProvider.teamSize.isNotEmpty) {
+      hackathonTeamSizeController.text =
+          hackathonDetailsProvider.teamSize;
     }
 
-
-    hackathonDescriptionController.text =
-        hackathonDetailsProvider.brief;
 
     if (hackathonDetailsProvider.venue.isNotEmpty) {
       hackathonVenueController.text = hackathonDetailsProvider.venue;
@@ -69,17 +151,16 @@ class DefaultEditLandingSection extends StatelessWidget {
     }
 
     return Padding(
-      
       padding: EdgeInsets.only(
-          right: defaultEditScaleWidth(containerWidth, 81),
-          left: defaultEditScaleWidth(containerWidth, 81),
-          bottom: defaultEditScaleHeight(containerHeight, 39)),
+          right: defaultEditScaleWidth(widget.containerWidth, 81),
+          left: defaultEditScaleWidth(widget.containerWidth, 81),
+          bottom: defaultEditScaleHeight(widget.containerHeight, 39)),
       child: Column(
         children: [
           //NavBar
 
           SizedBox(
-            height: defaultEditScaleHeight(containerHeight, 70),
+            height: defaultEditScaleHeight(widget.containerHeight, 70),
           ),
 
           //Landing Section
@@ -87,8 +168,8 @@ class DefaultEditLandingSection extends StatelessWidget {
             clipBehavior: Clip.none,
             children: [
               Container(
-                height: defaultEditScaleHeight(containerHeight, 523),
-                width: defaultEditScaleWidth(containerWidth, 1108),
+                height: defaultEditScaleHeight(widget.containerHeight, 523),
+                width: defaultEditScaleWidth(widget.containerWidth, 1108),
                 alignment: Alignment.center,
                 decoration: const BoxDecoration(
                     color: lavender,
@@ -98,27 +179,39 @@ class DefaultEditLandingSection extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-
                       SizedBox(
-                        width: defaultEditScaleWidth(containerWidth, 700),
-                        height: defaultEditScaleHeight(containerHeight, 50),
+                        width:
+                            defaultEditScaleWidth(widget.containerWidth, 700),
+                        height:
+                            defaultEditScaleHeight(widget.containerHeight, 50),
                         child: TextFormField(
+                          // the key is passed to fetch the properties of the text form field mapped against this key
+                          key: organisationKey,
                           textAlign: TextAlign.center,
                           textAlignVertical: TextAlignVertical.center,
                           controller: hackathonOrganisationController,
-                          cursorHeight:
-                              defaultEditScaleHeight(containerHeight, 20),
+                          cursorHeight: defaultEditScaleHeight(
+                              widget.containerHeight, 20),
                           cursorColor: Colors.black,
                           decoration: InputDecoration(
-                            hintText:
-                                'Organisation name',
+                            hintText: 'Organisation name',
                             hintStyle: GoogleFonts.getFont(fontFamily2,
-                                fontSize:
-                                    defaultEditScaleHeight(containerHeight, 20),
+                                fontSize: defaultEditScaleHeight(
+                                    widget.containerHeight,
+                                    hackathonTextPropertiesProvider
+                                        .textFieldPropertiesMap[
+                                            organisationKey]!
+                                        .size
+                                        .toDouble()), //20
                                 color: greyish1,
                                 fontWeight: FontWeight.w500,
-                                height: lineHeight(22.4,
-                                    20)), //Line Height is changed because of cursor size, initial line height was 22.4
+                                height: lineHeight(
+                                    22.4,
+                                    hackathonTextPropertiesProvider
+                                        .textFieldPropertiesMap[
+                                            organisationKey]!
+                                        .size
+                                        .toDouble())), //20 //Line Height is changed because of cursor size, initial line height was 22.4
                             enabledBorder: InputBorder.none,
                             focusedBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
@@ -129,17 +222,29 @@ class DefaultEditLandingSection extends StatelessWidget {
                           maxLines: 4,
                           keyboardType: TextInputType.text,
                           style: GoogleFonts.getFont(fontFamily2,
-                              fontSize:
-                                  defaultEditScaleHeight(containerHeight, 20),
+                              fontSize: defaultEditScaleHeight(
+                                  widget.containerHeight,
+                                  hackathonTextPropertiesProvider
+                                      .textFieldPropertiesMap[organisationKey]!
+                                      .size
+                                      .toDouble()), //20
                               color: greyish1,
                               fontWeight: FontWeight.w500,
-                              height:
-                                  lineHeight(22.4, 20)), //Line Height Changed
+                              height: lineHeight(
+                                  22.4,
+                                  hackathonTextPropertiesProvider
+                                      .textFieldPropertiesMap[organisationKey]!
+                                      .size
+                                      .toDouble())), //20 //Line Height Changed
                           validator: (value) {
                             if (value!.isEmpty) {
                               return '';
                             }
                             return null;
+                          },
+                          onTap: () {
+                            hackathonTextPropertiesProvider
+                                .selectedTextFieldKey = organisationKey;
                           },
                           onSaved: (value) {
                             hackathonDetailsProvider.organisationName =
@@ -147,32 +252,42 @@ class DefaultEditLandingSection extends StatelessWidget {
                           },
                         ),
                       ),
-
-                     
-
                       SizedBox(
-                        height: defaultEditScaleHeight(containerHeight, 30),//42
+                        height: defaultEditScaleHeight(
+                            widget.containerHeight, 30), //42
                       ),
                       SizedBox(
-                        width: defaultEditScaleWidth(containerWidth, 700),
-                        height: defaultEditScaleHeight(containerHeight, 54),
-
+                        width:
+                            defaultEditScaleWidth(widget.containerWidth, 700),
+                        height:
+                            defaultEditScaleHeight(widget.containerHeight, 54),
                         child: TextFormField(
+                          key: hackathonNameKey,
                           textAlign: TextAlign.center,
                           textAlignVertical: TextAlignVertical.center,
                           controller: landingHackathonNameController,
-                          cursorHeight:
-                              defaultEditScaleHeight(containerHeight, 49),
+                          cursorHeight: defaultEditScaleHeight(
+                              widget.containerHeight, 49),
                           cursorColor: Colors.black,
                           decoration: InputDecoration(
                             hintText: 'Your Hackathon Name ',
                             hintStyle: GoogleFonts.getFont(fontFamily2,
-                                fontSize:
-                                    defaultEditScaleHeight(containerHeight, 54),
+                                fontSize: defaultEditScaleHeight(
+                                    widget.containerHeight,
+                                    hackathonTextPropertiesProvider
+                                        .textFieldPropertiesMap[
+                                            hackathonNameKey]!
+                                        .size
+                                        .toDouble()), //54
                                 color: black2,
                                 fontWeight: FontWeight.w600,
-                                height: lineHeight(50.4,
-                                    54)), //Line Height is changed because of cursor size, initial line height was 22.4
+                                height: lineHeight(
+                                    50.4,
+                                    hackathonTextPropertiesProvider
+                                        .textFieldPropertiesMap[
+                                            hackathonNameKey]!
+                                        .size
+                                        .toDouble())), //54 //Line Height is changed because of cursor size, initial line height was 22.4
                             enabledBorder: InputBorder.none,
                             focusedBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
@@ -182,17 +297,29 @@ class DefaultEditLandingSection extends StatelessWidget {
                           maxLength: 30,
                           keyboardType: TextInputType.text,
                           style: GoogleFonts.getFont(fontFamily2,
-                              fontSize:
-                                  defaultEditScaleHeight(containerHeight, 54),
+                              fontSize: defaultEditScaleHeight(
+                                  widget.containerHeight,
+                                  hackathonTextPropertiesProvider
+                                      .textFieldPropertiesMap[hackathonNameKey]!
+                                      .size
+                                      .toDouble()), //54
                               color: black2,
                               fontWeight: FontWeight.w600,
-                              height:
-                                  lineHeight(50.4, 54)), //Line Height Changed
+                              height: lineHeight(
+                                  50.4,
+                                  hackathonTextPropertiesProvider
+                                      .textFieldPropertiesMap[hackathonNameKey]!
+                                      .size
+                                      .toDouble())), //54 //Line Height Changed
                           validator: (value) {
                             if (value!.isEmpty) {
                               return '';
                             }
                             return null;
+                          },
+                          onTap: () {
+                            hackathonTextPropertiesProvider
+                                .selectedTextFieldKey = hackathonNameKey;
                           },
                           onSaved: (value) {
                             hackathonDetailsProvider.hackathonName =
@@ -201,25 +328,27 @@ class DefaultEditLandingSection extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: defaultEditScaleHeight(containerHeight, 11),
+                        height:
+                            defaultEditScaleHeight(widget.containerHeight, 11),
                       ),
-
                       SizedBox(
-                        width: defaultEditScaleWidth(containerWidth, 700),
-                        height: defaultEditScaleHeight(containerHeight, 95),
+                        width:
+                            defaultEditScaleWidth(widget.containerWidth, 700),
+                        height:
+                            defaultEditScaleHeight(widget.containerHeight, 95),
                         child: TextFormField(
                           textAlign: TextAlign.center,
                           textAlignVertical: TextAlignVertical.center,
                           controller: hackathonDescriptionController,
-                          cursorHeight:
-                              defaultEditScaleHeight(containerHeight, 20),
+                          cursorHeight: defaultEditScaleHeight(
+                              widget.containerHeight, 20),
                           cursorColor: Colors.black,
                           decoration: InputDecoration(
                             hintText:
                                 'Give us brief about your hackathon (60 words)',
                             hintStyle: GoogleFonts.getFont(fontFamily2,
-                                fontSize:
-                                    defaultEditScaleHeight(containerHeight, 18),
+                                fontSize: defaultEditScaleHeight(
+                                    widget.containerHeight, 18),
                                 color: black2,
                                 fontWeight: FontWeight.w400,
                                 height: lineHeight(22.4,
@@ -234,8 +363,8 @@ class DefaultEditLandingSection extends StatelessWidget {
                           maxLines: 4,
                           keyboardType: TextInputType.text,
                           style: GoogleFonts.getFont(fontFamily2,
-                              fontSize:
-                                  defaultEditScaleHeight(containerHeight, 18),
+                              fontSize: defaultEditScaleHeight(
+                                  widget.containerHeight, 18),
                               color: black2,
                               fontWeight: FontWeight.w400,
                               height:
@@ -247,8 +376,7 @@ class DefaultEditLandingSection extends StatelessWidget {
                             return null;
                           },
                           onSaved: (value) {
-                            hackathonDetailsProvider.brief =
-                                value.toString();
+                            hackathonDetailsProvider.brief = value.toString();
                           },
                         ),
                       ),
@@ -257,18 +385,18 @@ class DefaultEditLandingSection extends StatelessWidget {
                 ),
               ),
               Positioned(
-                bottom: -defaultEditScaleHeight(containerHeight, 51),
+                bottom: -defaultEditScaleHeight(widget.containerHeight, 51),
                 child: Container(
-                  width: defaultEditScaleWidth(containerWidth, 1108),
+                  width: defaultEditScaleWidth(widget.containerWidth, 1108),
                   // padding: EdgeInsets.symmetric(horizontal: defaultEditScaleWidth(containerWidth, 68.5)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       hackathonDetailContainer(
-                        containerHeight: containerHeight,
-                        containerWidth: containerWidth,
+                        containerHeight: widget.containerHeight,
+                        containerWidth: widget.containerWidth,
                         detail: 'Date',
-                        controller: HackathonDateController,
+                        controller: hackathonDateController,
                         onSaved: (value) {
                           hackathonDetailsProvider.startDateTime =
                               value.toString();
@@ -277,8 +405,8 @@ class DefaultEditLandingSection extends StatelessWidget {
                         hint: 'Date',
                       ),
                       hackathonDetailContainer(
-                        containerHeight: containerHeight,
-                        containerWidth: containerWidth,
+                        containerHeight: widget.containerHeight,
+                        containerWidth: widget.containerWidth,
                         detail: 'Mode of Conduct',
                         controller: hackathonModeController,
                         onSaved: (value) {
@@ -289,36 +417,33 @@ class DefaultEditLandingSection extends StatelessWidget {
                         hint: 'Mode of Conduct',
                       ),
                       hackathonDetailContainer(
-                        containerHeight: containerHeight,
-                        containerWidth: containerWidth,
+                        containerHeight: widget.containerHeight,
+                        containerWidth: widget.containerWidth,
                         detail: 'Participation fee',
                         controller: hackathonFeeController,
                         onSaved: (value) {
-                          hackathonDetailsProvider.fee =
-                              value.toString();
+                          hackathonDetailsProvider.fee = value.toString();
                         },
                         type: TextInputType.text,
                         hint: 'Participation fee',
                       ),
                       hackathonDetailContainer(
-                          containerHeight: containerHeight,
-                          containerWidth: containerWidth,
+                          containerHeight: widget.containerHeight,
+                          containerWidth: widget.containerWidth,
                           detail: 'Team Size',
                           controller: hackathonTeamSizeController,
                           onSaved: (value) {
-                            hackathonDetailsProvider.teamSize =
-                                int.tryParse(value ?? '') ?? 0;
+                            hackathonDetailsProvider.teamSize = value.toString();
                           },
                           type: TextInputType.number,
                           hint: 'Team Size'),
                       hackathonDetailContainer(
-                        containerHeight: containerHeight,
-                        containerWidth: containerWidth,
+                        containerHeight: widget.containerHeight,
+                        containerWidth: widget.containerWidth,
                         detail: 'Venue',
                         controller: hackathonVenueController,
                         onSaved: (value) {
-                          hackathonDetailsProvider.venue =
-                              value.toString();
+                          hackathonDetailsProvider.venue = value.toString();
                         },
                         type: TextInputType.text,
                         hint: 'Venue',
@@ -332,7 +457,7 @@ class DefaultEditLandingSection extends StatelessWidget {
 
           //spacing
           SizedBox(
-            height: defaultEditScaleHeight(containerHeight, 90),
+            height: defaultEditScaleHeight(widget.containerHeight, 90),
           )
         ],
       ),
@@ -406,7 +531,6 @@ class hackathonDetailContainer extends StatelessWidget {
             return null;
           },
           onSaved: onSaved),
-
     );
   }
 }

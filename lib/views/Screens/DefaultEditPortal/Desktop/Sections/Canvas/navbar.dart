@@ -2,20 +2,51 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
-import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:provider/provider.dart';
 
-class DefaultEditNavBar extends StatelessWidget {
+class DefaultEditNavBar extends StatefulWidget {
   final double containerHeight;
   final double containerWidth;
   const DefaultEditNavBar(
       {super.key, required this.containerHeight, required this.containerWidth});
 
   @override
+  State<DefaultEditNavBar> createState() => _DefaultEditNavBarState();
+}
+
+class _DefaultEditNavBarState extends State<DefaultEditNavBar> {
+  late TextEditingController hackathonNameController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+   hackathonNameController = TextEditingController();
+   final hackathonDetailsProvider = Provider.of<HackathonDetailsProvider>(context, listen: false);
+
+  // Set the initial text for the controller
+  hackathonNameController.text = hackathonDetailsProvider.hackathonName;
+
+  // Listen for changes in the provider and update the controller accordingly
+  hackathonDetailsProvider.addListener(() {
+    if (hackathonNameController.text != hackathonDetailsProvider.hackathonName) {
+      hackathonNameController.text = hackathonDetailsProvider.hackathonName;
+    }
+  });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    hackathonNameController.dispose();
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
-    final hackathonNameController = TextEditingController();
+    //final hackathonNameController = TextEditingController();
     final hackathonDetailsProvider =
         Provider.of<HackathonDetailsProvider>(context);
     if(hackathonDetailsProvider.hackathonName.isNotEmpty){
@@ -23,9 +54,9 @@ class DefaultEditNavBar extends StatelessWidget {
     }
     return Padding(
       padding: EdgeInsets.only(
-          right: defaultEditScaleWidth(containerWidth, 81),
-          left: defaultEditScaleWidth(containerWidth, 81),
-          top: defaultEditScaleHeight(containerHeight, 39)),
+          right: defaultEditScaleWidth(widget.containerWidth, 81),
+          left: defaultEditScaleWidth(widget.containerWidth, 81),
+          top: defaultEditScaleHeight(widget.containerHeight, 39)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -33,21 +64,21 @@ class DefaultEditNavBar extends StatelessWidget {
             children: [
               //container to be updated with image logic
               Container(
-                  height: defaultEditScaleHeight(containerHeight, 44),
-                  width: defaultEditScaleHeight(containerHeight, 44),
+                  height: defaultEditScaleHeight(widget.containerHeight, 44),
+                  width: defaultEditScaleHeight(widget.containerHeight, 44),
                   color: Colors.black.withOpacity(0.3)),
               SizedBox(
-                width: defaultEditScaleWidth(containerWidth, 6),
+                width: defaultEditScaleWidth(widget.containerWidth, 6),
               ),
               SizedBox(
-                width: defaultEditScaleWidth(containerWidth, 266),
+                width: defaultEditScaleWidth(widget.containerWidth, 266),
                 child: TextFormField(
                   controller: hackathonNameController,
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
                     hintText: 'Your Hackathon',
                     hintStyle: GoogleFonts.getFont(fontFamily2,
-                        fontSize: defaultEditScaleHeight(containerHeight, 20),
+                        fontSize: defaultEditScaleHeight(widget.containerHeight, 20),
                         color: black1,
                         fontWeight: FontWeight.w400,
                         height: lineHeight(22.4, 20)),
@@ -60,7 +91,7 @@ class DefaultEditNavBar extends StatelessWidget {
                   maxLength: 30,
                   keyboardType: TextInputType.text,
                   style: GoogleFonts.getFont(fontFamily2,
-                      fontSize: defaultEditScaleHeight(containerHeight, 20),
+                      fontSize: defaultEditScaleHeight(widget.containerHeight, 20),
                       color: black1,
                       fontWeight: FontWeight.w400,
                       height: lineHeight(22.4, 20)),
@@ -83,7 +114,7 @@ class DefaultEditNavBar extends StatelessWidget {
                 onPressed: () {},
                 child: Text('Home',
                     style: GoogleFonts.getFont(fontFamily2,
-                        fontSize: defaultEditScaleHeight(containerHeight, 14),
+                        fontSize: defaultEditScaleHeight(widget.containerHeight, 14),
                         color: black1,
                         fontWeight: FontWeight.w400,
                         height: lineHeight(22.4, 14))),
@@ -92,7 +123,7 @@ class DefaultEditNavBar extends StatelessWidget {
                 onPressed: () {},
                 child: Text('Rounds',
                     style: GoogleFonts.getFont(fontFamily2,
-                        fontSize: defaultEditScaleHeight(containerHeight, 14),
+                        fontSize: defaultEditScaleHeight(widget.containerHeight, 14),
                         color: black1,
                         fontWeight: FontWeight.w400,
                         height: lineHeight(22.4, 14))),
@@ -101,7 +132,7 @@ class DefaultEditNavBar extends StatelessWidget {
                 onPressed: () {},
                 child: Text('About Us',
                     style: GoogleFonts.getFont(fontFamily2,
-                        fontSize: defaultEditScaleHeight(containerHeight, 14),
+                        fontSize: defaultEditScaleHeight(widget.containerHeight, 14),
                         color: black1,
                         fontWeight: FontWeight.w400,
                         height: lineHeight(22.4, 14))),
@@ -110,7 +141,7 @@ class DefaultEditNavBar extends StatelessWidget {
                 onPressed: () {},
                 child: Text('Gallery',
                     style: GoogleFonts.getFont(fontFamily2,
-                        fontSize: defaultEditScaleHeight(containerHeight, 14),
+                        fontSize: defaultEditScaleHeight(widget.containerHeight, 14),
                         color: black1,
                         fontWeight: FontWeight.w400,
                         height: lineHeight(22.4, 14))),
@@ -119,7 +150,7 @@ class DefaultEditNavBar extends StatelessWidget {
                 onPressed: () {},
                 child: Text('Contact Us',
                     style: GoogleFonts.getFont(fontFamily2,
-                        fontSize: defaultEditScaleHeight(containerHeight, 14),
+                        fontSize: defaultEditScaleHeight(widget.containerHeight, 14),
                         color: black1,
                         fontWeight: FontWeight.w400,
                         height: lineHeight(22.4, 14))),

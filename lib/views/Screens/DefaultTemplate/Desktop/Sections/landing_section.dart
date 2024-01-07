@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
-import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
@@ -52,10 +52,14 @@ class LandingSection extends StatelessWidget {
                     children: [
                       Text('${ defaultTemplateModel!.hackathons.organisationName} presents',
                           style: GoogleFonts.getFont(fontFamily2,
-                              fontSize: scaleHeight(context, 20),
+                              fontSize: scaleHeight(context, 
+                              defaultTemplateModel!.fields[0].textProperties.size.toDouble()//20
+                              ),
                               color: greyish1,
                               fontWeight: FontWeight.w500,
-                              height: lineHeight(22.4, 20))),
+                              height: lineHeight(22.4, 
+                              defaultTemplateModel!.fields[0].textProperties.size.toDouble()
+                              ))),
                       SizedBox(
                         height: scaleHeight(context, 42),
                       ),
@@ -64,10 +68,14 @@ class LandingSection extends StatelessWidget {
                           defaultTemplateModel!.hackathons.name,
                           // hackathonDetailsProvider.hackathonName,
                           style: GoogleFonts.getFont(fontFamily2,
-                              fontSize: scaleHeight(context, 54),
+                              fontSize: scaleHeight(context, 
+                              defaultTemplateModel!.fields[1].textProperties.size.toDouble()//54
+                              ),
                               color: black2,
                               fontWeight: FontWeight.w600,
-                              height: lineHeight(22.4, 54))),
+                              height: lineHeight(22.4, 
+                              defaultTemplateModel!.fields[1].textProperties.size.toDouble()
+                              ))),
                       SizedBox(
                         height: scaleHeight(context, 11),
                       ),
@@ -106,8 +114,7 @@ class LandingSection extends StatelessWidget {
                       hackathonDetailContainer(
                           detail: defaultTemplateModel!.hackathons.fee),
                       hackathonDetailContainer(
-                          detail: defaultTemplateModel!.hackathons.teamSize
-                              .toString()),
+                          detail: defaultTemplateModel!.hackathons.teamSize),
                       hackathonDetailContainer(
                           detail: defaultTemplateModel!.hackathons.venue),
                     ],

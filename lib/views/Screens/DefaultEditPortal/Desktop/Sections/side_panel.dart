@@ -3,9 +3,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:major_project__widget_testing/api/post_default_hackathon.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
+import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
 import 'package:major_project__widget_testing/state/defaulttemplateProvider.dart';
-import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
+import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/default_template.dart';
@@ -24,8 +27,6 @@ class SidePanel extends StatefulWidget {
 
 class _SidePanelState extends State<SidePanel> {
   bool _isLoading = false;
-  
-
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +36,8 @@ class _SidePanelState extends State<SidePanel> {
         Provider.of<DefaultTemplateProvider>(context);
 
     final rulesProvider = Provider.of<RulesProvider>(context);
+    final hackathonTextPropertiesProvider =
+        Provider.of<HackathonTextPropertiesProvider>(context);
 
     List<GlobalKey<State<StatefulWidget>>> keyValues = [
       homeEdit,
@@ -45,11 +48,10 @@ class _SidePanelState extends State<SidePanel> {
     ];
 
     if (_isLoading) {
-    // Show loading indicator
-     
-    return Center(child: CircularProgressIndicator());
-      
-  }
+      // Show loading indicator
+
+      return Center(child: CircularProgressIndicator());
+    }
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: scaleHeight(context, 45)),
@@ -62,9 +64,9 @@ class _SidePanelState extends State<SidePanel> {
                 print(result);
                 if (result == 'SavePreview') {
                   // if (widget.formKey.currentState!.validate()) {
-                    widget.formKey.currentState!.save();
+                  widget.formKey.currentState!.save();
 
-                    previewFunction(rulesProvider, hackathonDetailsProvider);
+                  previewFunction(rulesProvider, hackathonDetailsProvider, hackathonTextPropertiesProvider);
                   // }
                 } else if (result == 'Save') {
                   //TODO
@@ -72,7 +74,7 @@ class _SidePanelState extends State<SidePanel> {
                   if (widget.formKey.currentState!.validate()) {
                     widget.formKey.currentState!.save();
 
-                    hostHackathon(rulesProvider, hackathonDetailsProvider);
+                    hostHackathon(rulesProvider, hackathonDetailsProvider, hackathonTextPropertiesProvider);
                   }
                 } else {
                   Navigator.pop(context);
@@ -106,7 +108,7 @@ class _SidePanelState extends State<SidePanel> {
                 selectedSection: defaultTemplateProvider.selectedSection,
                 index: index,
                 onTap: () {
-                   defaultTemplateProvider.setSelectedSection(index);
+                  defaultTemplateProvider.setSelectedSection(index);
                   scrollToItem(keyValues[index]);
                 },
               );
@@ -124,10 +126,30 @@ class _SidePanelState extends State<SidePanel> {
   }
 
   void previewFunction(RulesProvider rulesProvider,
-      HackathonDetailsProvider hackathonDetailsProvider) {
+      HackathonDetailsProvider hackathonDetailsProvider, HackathonTextPropertiesProvider hackathonTextPropertiesProvider) {
     rulesProvider.setSelectedIndex(-1);
     rulesProvider.setDescriptionWidget(
         SvgPicture.asset('assets/images/defaultTemplate/clickme.svg'));
+
+    //saving the text properties in _hackathonDetails ->field in provider
+    hackathonDetailsProvider.textFields = [
+      // TextFieldPropertiesArray is the representation of every objects in the fields in api
+      TextFieldPropertiesArray(
+        name: 'Org',
+        type: 'text', 
+        /* textProperties contains all the properties of the single text        
+         hackathonTextPropertiesProvider.textFieldPropertiesMap[organisationKey]! gives 
+         all the text properties of TextFieldProperties type  in {} format 
+        and putting these values in textProperties  */
+        textProperties: hackathonTextPropertiesProvider.textFieldPropertiesMap[organisationKey]!
+        ),
+        TextFieldPropertiesArray(
+          name: 'Hackathon Name',
+        type: 'text', 
+        textProperties: hackathonTextPropertiesProvider.textFieldPropertiesMap[hackathonNameKey]!
+        )
+    ];
+
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -139,7 +161,7 @@ class _SidePanelState extends State<SidePanel> {
   }
 
   void hostHackathon(RulesProvider rulesProvider,
-      HackathonDetailsProvider hackathonDetailsProvider) async {
+      HackathonDetailsProvider hackathonDetailsProvider, HackathonTextPropertiesProvider hackathonTextPropertiesProvider) async {
     setState(() {
       _isLoading = true;
     });
@@ -162,13 +184,28 @@ class _SidePanelState extends State<SidePanel> {
       };
     }).toList();
 
+
+   // made the field variable to pass in api giving the values to field like we are passing above(check preview fields for more)
+    List<TextFieldPropertiesArray> fields= [
+      TextFieldPropertiesArray(
+        type: 'text', 
+        name: 'Org',
+        textProperties: hackathonTextPropertiesProvider.textFieldPropertiesMap[organisationKey]!
+        ),
+        TextFieldPropertiesArray(
+        type: 'text', 
+        name: 'Hackathon name',
+        textProperties: hackathonTextPropertiesProvider.textFieldPropertiesMap[hackathonNameKey]!
+        )
+    ];
+
     final hackathonId = await CreateHackathon().postSingleHackathon({
       "hackathon": {
         "name": hackathonDetailsProvider.hackathonName,
         "organisation_name": hackathonDetailsProvider.organisationName,
         "mode_of_conduct": hackathonDetailsProvider.modeOfConduct,
         "deadline": "2024-10-10",
-        "team_size": hackathonDetailsProvider.teamSize,
+        "team_size": int.parse(hackathonDetailsProvider.teamSize),
         "visible": "Public",
         "start_date_time":
             "${hackathonDetailsProvider.startDateTime}T00:00:00Z",
@@ -183,7 +220,7 @@ class _SidePanelState extends State<SidePanel> {
         "contact2_number": int.parse(hackathonDetailsProvider.contact2Number)
       },
       "round": rounds,
-      "fields": [],
+      "fields":fields,
       "containers": []
     }, context);
 
@@ -205,7 +242,7 @@ class _SidePanelState extends State<SidePanel> {
                                 hackathonId: hackathonId,
                               )));
                 },
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -222,14 +259,9 @@ class _SidePanelState extends State<SidePanel> {
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RegistrationForm(
-                                hackathonId: hackathonId,
-                              )));
+                  Navigator.pop(context);
                 },
-                child: Text('OK'),
+                child: const Text('Cancel'),
               ),
             ],
           );

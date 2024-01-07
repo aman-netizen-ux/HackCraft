@@ -3,20 +3,44 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
-import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:provider/provider.dart';
 
-class DefaultEditAboutus extends StatelessWidget {
+class DefaultEditAboutus extends StatefulWidget {
   final double containerHeight;
   final double containerWidth;
   const DefaultEditAboutus(
       {super.key, required this.containerHeight, required this.containerWidth});
 
   @override
+  State<DefaultEditAboutus> createState() => _DefaultEditAboutusState();
+}
+
+class _DefaultEditAboutusState extends State<DefaultEditAboutus> {
+
+  late TextEditingController hackathonAboutController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    hackathonAboutController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    hackathonAboutController.dispose();
+
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
-    final hackathonAboutController = TextEditingController();
     final hackathonDetailsProvider =
         Provider.of<HackathonDetailsProvider>(context);
     if (hackathonDetailsProvider.about.isNotEmpty) {
@@ -26,7 +50,7 @@ class DefaultEditAboutus extends StatelessWidget {
     return Padding(
       
       padding:
-          EdgeInsets.only(top: defaultEditScaleHeight(containerHeight, 67)),
+          EdgeInsets.only(top: defaultEditScaleHeight(widget.containerHeight, 67)),
       child: Column(
         children: [
           Stack(clipBehavior: Clip.none, children: [
@@ -36,24 +60,24 @@ class DefaultEditAboutus extends StatelessWidget {
               children: [
                 SizedBox(
                   width: double.infinity,
-                  height: defaultEditScaleHeight(containerHeight, 29),
+                  height: defaultEditScaleHeight(widget.containerHeight, 29),
                   // color: Colors.blue,
                 ),
                 Container(
                     width: double.infinity,
                     margin: EdgeInsets.symmetric(
-                        horizontal: defaultEditScaleWidth(containerWidth, 37)),
+                        horizontal: defaultEditScaleWidth(widget.containerWidth, 37)),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         border: Border.all(
                             color: black3,
-                            width: defaultEditScaleWidth(containerWidth, 1))),
+                            width: defaultEditScaleWidth(widget.containerWidth, 1))),
                     child: Padding(
                       padding: EdgeInsets.only(
-                          left: defaultEditScaleWidth(containerWidth, 44),
-                          right: defaultEditScaleWidth(containerWidth, 44),
-                          top: defaultEditScaleHeight(containerHeight, 59),
-                          bottom: defaultEditScaleHeight(containerHeight, 165)),
+                          left: defaultEditScaleWidth(widget.containerWidth, 44),
+                          right: defaultEditScaleWidth(widget.containerWidth, 44),
+                          top: defaultEditScaleHeight(widget.containerHeight, 59),
+                          bottom: defaultEditScaleHeight(widget.containerHeight, 165)),
                       child: TextFormField(
                         controller: hackathonAboutController,
                         textAlignVertical: TextAlignVertical.center,
@@ -64,7 +88,7 @@ class DefaultEditAboutus extends StatelessWidget {
                               'Give a detail description of your hahathon',
                           hintStyle: GoogleFonts.getFont(fontFamily2,
                               fontSize:
-                                  defaultEditScaleHeight(containerHeight, 18),
+                                  defaultEditScaleHeight(widget.containerHeight, 18),
                               color: black2,
                               fontWeight: FontWeight.w400,
                               height: lineHeight(22.4, 18)),
@@ -79,7 +103,7 @@ class DefaultEditAboutus extends StatelessWidget {
                         keyboardType: TextInputType.multiline,//null so user can add any no. of lines as he want(will work together with maxline: null)
                         style: GoogleFonts.getFont(fontFamily2,
                             fontSize:
-                                defaultEditScaleHeight(containerHeight, 18),
+                                defaultEditScaleHeight(widget.containerHeight, 18),
                             color: black2,
                             fontWeight: FontWeight.w400,
                             height: lineHeight(22.4, 18)),
@@ -108,7 +132,7 @@ class DefaultEditAboutus extends StatelessWidget {
 
                     Container(
                   width: double.infinity,
-                  height: defaultEditScaleHeight(containerWidth, 125),
+                  height: defaultEditScaleHeight(widget.containerWidth, 125),
                   // color: Colors.blue,
                 ),
               ],
@@ -119,9 +143,9 @@ class DefaultEditAboutus extends StatelessWidget {
                 // top: -defaultEditScaleWidth(containerWidth, 29),
                 child: Container(
               margin: EdgeInsets.symmetric(
-                  horizontal: defaultEditScaleWidth(containerWidth, 512)),
-              height: defaultEditScaleHeight(containerHeight, 58),
-              width: defaultEditScaleWidth(containerWidth, 256),
+                  horizontal: defaultEditScaleWidth(widget.containerWidth, 512)),
+              height: defaultEditScaleHeight(widget.containerHeight, 58),
+              width: defaultEditScaleWidth(widget.containerWidth, 256),
               decoration: BoxDecoration(
                 color: black4,
                 borderRadius: BorderRadius.circular(55),
@@ -136,7 +160,7 @@ class DefaultEditAboutus extends StatelessWidget {
                   child: Text("Get Registered",
                       style: GoogleFonts.getFont(fontFamily2,
                           fontWeight: FontWeight.w600,
-                          fontSize: defaultEditScaleWidth(containerWidth, 21),
+                          fontSize: defaultEditScaleWidth(widget.containerWidth, 21),
                           height: lineHeight(22.4, 21),
                           color: black1))),
             )),
@@ -144,20 +168,20 @@ class DefaultEditAboutus extends StatelessWidget {
             //but the difference is that the above one was positioned from the top and this one was positioned from the bottom.
             //Run the code once, and you'll understand.
             Positioned(
-              bottom:defaultEditScaleHeight(containerWidth, 0),//120
+              bottom:defaultEditScaleHeight(widget.containerWidth, 0),//120
               child: Container(
                   color: lavender,
-                  height: defaultEditScaleHeight(containerHeight, 400), //240
-                  width: defaultEditScaleWidth(containerWidth, 1118),
+                  height: defaultEditScaleHeight(widget.containerHeight, 400), //240
+                  width: defaultEditScaleWidth(widget.containerWidth, 1118),
                   margin: EdgeInsets.symmetric(
-                      horizontal: defaultEditScaleWidth(containerWidth, 81)),
+                      horizontal: defaultEditScaleWidth(widget.containerWidth, 81)),
                   child: SvgPicture.asset(
                       'assets/icons/defaultEditPortal/about.svg',
                       fit: BoxFit.fill)),
             ),
           ]),
           SizedBox(
-            height: defaultEditScaleHeight(containerHeight, 0), //153 //233
+            height: defaultEditScaleHeight(widget.containerHeight, 0), //153 //233
           )
         ],
       ),
