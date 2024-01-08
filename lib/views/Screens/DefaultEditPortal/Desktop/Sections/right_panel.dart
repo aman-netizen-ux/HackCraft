@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Components/separator.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/canvas.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/stackedToolBar.dart';
-import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/toolbar.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/toolbar.dart';
+import 'package:provider/provider.dart';
 
 class RightPanel extends StatefulWidget {
    RightPanel({super.key, required this.formKey, this.textinput});
 
     final GlobalKey<FormState> formKey;
-         String? textinput;
+    String? textinput;
 
 
 
@@ -21,6 +23,8 @@ class RightPanel extends StatefulWidget {
 class _RightPanelState extends State<RightPanel> {
   @override
   Widget build(BuildContext context) {
+     final hackathonTextProvider =
+        Provider.of<HackathonTextPropertiesProvider>(context);
     return Container(
       height: double.infinity,
       width: double.infinity,
@@ -46,11 +50,14 @@ class _RightPanelState extends State<RightPanel> {
               )
             ],
           ),
-          Align(
-             alignment: Alignment.topCenter,
-            child: Padding(
-                padding: EdgeInsets.only(top: scaleHeight(context, 60)),
-                child: StackedToolBar()),
+          Visibility(
+            visible: hackathonTextProvider.isBoldSelected,
+            child: Align(
+               alignment: Alignment.topCenter,
+              child: Padding(
+                  padding: EdgeInsets.only(top: scaleHeight(context, 60)),
+                  child: StackedToolBar()),
+            ),
           ),
           
           Align(
