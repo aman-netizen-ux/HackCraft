@@ -71,7 +71,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       italics: false,
       letterSpacing: 0,
       strikethrogh: false,
-      textColor: '',
+      textColor: 'Color(0xFF564A4A);',
       underline: false,
       upperCase: false,
     );
@@ -84,7 +84,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       italics: false,
       letterSpacing: 0,
       strikethrogh: false,
-      textColor: '',
+      textColor: 'Color(0xFF000100)',
       underline: false,
       upperCase: false,
     );
@@ -212,7 +212,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                                             organisationKey]!
                                         .size
                                         .toDouble()), //20
-                                color: greyish1,
+                                color: hackathonTextPropertiesProvider.stringToColor(organisationKey),//greyish1
                                 fontWeight:hackathonTextPropertiesProvider.getSelectedTextFieldFontWeight(organisationKey),
                                 height: lineHeight(
                                     22.4,
@@ -244,7 +244,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                                       .underline
                                   ? TextDecoration.underline
                                   : TextDecoration.none,
-                              color: greyish1,
+                              color: hackathonTextPropertiesProvider.stringToColor(organisationKey),//greyish1
                               fontWeight:hackathonTextPropertiesProvider.getSelectedTextFieldFontWeight(organisationKey),
                               height: lineHeight(
                                   22.4,
@@ -300,7 +300,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                                             hackathonNameKey]!
                                         .size
                                         .toDouble()), //54
-                                color: black2,
+                                color: hackathonTextPropertiesProvider.stringToColor(hackathonNameKey), //black2,
                                 fontWeight: hackathonTextPropertiesProvider.getSelectedTextFieldFontWeight(hackathonNameKey),
                                 height: lineHeight(
                                     50.4,
@@ -337,7 +337,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                                       .italics
                                   ? FontStyle.italic
                                   : FontStyle.normal,
-                              color: black2,
+                              color: hackathonTextPropertiesProvider.stringToColor(hackathonNameKey),// black2
                               fontWeight: hackathonTextPropertiesProvider.getSelectedTextFieldFontWeight(hackathonNameKey),
                               height: lineHeight(
                                   50.4,

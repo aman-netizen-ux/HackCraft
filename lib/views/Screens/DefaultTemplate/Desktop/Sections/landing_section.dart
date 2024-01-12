@@ -51,7 +51,7 @@ class LandingSection extends StatelessWidget {
                 child: Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('${ defaultTemplateModel!.hackathons.organisationName} presents',
                           style: GoogleFonts.getFont(defaultTemplateModel!.fields[0].textProperties.font,
@@ -60,7 +60,7 @@ class LandingSection extends StatelessWidget {
                               ),
                               fontStyle: defaultTemplateModel!.fields[0].textProperties.italics ? FontStyle.italic : FontStyle.normal,
                               decoration: defaultTemplateModel!.fields[0].textProperties.underline ? TextDecoration.underline : TextDecoration.none,
-                              color: greyish1,
+                              color: defaultTemplateProvider.stringToColor(defaultTemplateModel!.fields[0].textProperties.textColor),
                               fontWeight: defaultTemplateProvider.fontWeightFromInt(defaultTemplateModel!.fields[0].textProperties.fontWeight),
                               height: lineHeight(22.4, 
                               defaultTemplateModel!.fields[0].textProperties.size.toDouble()
@@ -78,7 +78,7 @@ class LandingSection extends StatelessWidget {
                               ),
                               decoration: defaultTemplateModel!.fields[1].textProperties.underline ? TextDecoration.underline : TextDecoration.none,
                               fontStyle: defaultTemplateModel!.fields[1].textProperties.italics ? FontStyle.italic : FontStyle.normal,
-                              color: black2,
+                              color:  defaultTemplateProvider.stringToColor(defaultTemplateModel!.fields[1].textProperties.textColor),
                               fontWeight: defaultTemplateProvider.fontWeightFromInt(defaultTemplateModel!.fields[1].textProperties.fontWeight),
                               height: lineHeight(22.4, 
                               defaultTemplateModel!.fields[1].textProperties.size.toDouble()

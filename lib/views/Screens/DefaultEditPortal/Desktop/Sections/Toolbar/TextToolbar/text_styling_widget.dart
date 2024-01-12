@@ -24,7 +24,13 @@ class TextStylingWidget extends StatelessWidget {
         CustomToolWidget(
           message: "Bold",
           onTap: () {
-             hackathonTextProvider.setBoldSelection();
+            hackathonTextProvider.setBoldSelection();
+            if (hackathonTextProvider.isTextColorSelected) {
+              hackathonTextProvider.setIsTextColorSelected();
+            }
+            if (hackathonTextProvider.isColorPickerSelected) {
+              hackathonTextProvider.setIsColorPickerSelected();
+            }
           },
           child: SvgPicture.asset("assets/icons/defaultEditPortal/bold.svg"),
         ),
@@ -34,29 +40,31 @@ class TextStylingWidget extends StatelessWidget {
         CustomToolWidget(
           message: "Italics",
           onTap: () {
-           hackathonTextProvider.toggleItalicsForSelectedTextField();
+            hackathonTextProvider.toggleItalicsForSelectedTextField();
           },
           child: SvgPicture.asset("assets/icons/defaultEditPortal/italics.svg"),
         ),
         SizedBox(
           width: scaleWidth(context, 2),
         ),
-        CustomToolWidget( 
+        CustomToolWidget(
           message: "Underline",
           onTap: () {
             hackathonTextProvider.toggleUnderlineForSelectedTextField();
           },
-          child: SvgPicture.asset("assets/icons/defaultEditPortal/underline.svg"),
+          child:
+              SvgPicture.asset("assets/icons/defaultEditPortal/underline.svg"),
         ),
         SizedBox(
           width: scaleWidth(context, 2),
         ),
-        CustomToolWidget( 
+        CustomToolWidget(
           message: "Strikethrough",
           onTap: () {
             print('strikethrough');
           },
-          child: SvgPicture.asset("assets/icons/defaultEditPortal/strikeThrough.svg"),
+          child: SvgPicture.asset(
+              "assets/icons/defaultEditPortal/strikeThrough.svg"),
         ),
         SizedBox(
           width: scaleWidth(context, 2),

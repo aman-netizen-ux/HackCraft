@@ -12,6 +12,29 @@ class DefaultTemplateProvider with ChangeNotifier{
     notifyListeners();
   }
 
+  Color stringToColor(String colorString) {
+   
+      try {
+        // Checking if the string contains '(' and ')'
+        if (colorString.contains('(') && colorString.contains(')')) {
+          // Extracting the hex color code from the string
+          String hexColor = colorString.split('(')[1].split(')')[0];
+          // Converting to a Color object
+          return Color(int.parse(hexColor));
+        } else {
+          throw FormatException("Invalid format");
+        }
+      } catch (e) {
+        print('Error converting string to color: $e');
+        // Return a default color in case of an error
+        return Colors.black; // Default color
+      }
+    
+
+    
+    // Extracting the hex color code from the string
+  }
+
   FontWeight fontWeightFromInt(int weight) {
   switch (weight) {
     case 100:

@@ -8,6 +8,7 @@ import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
+import 'package:major_project__widget_testing/views/Components/toolTip_custom_decoration.dart';
 import 'package:provider/provider.dart';
 
 class LetterSpacingWidget extends StatefulWidget {
@@ -42,6 +43,15 @@ class _LetterSpacingWidgetState extends State<LetterSpacingWidget> {
     final hackathonTextProvider =
         Provider.of<HackathonTextPropertiesProvider>(context);
     return Tooltip(
+      verticalOffset: 5,
+      decoration: const ShapeDecoration(
+        shape: ToolTipCustomDecoration(
+          side: TooltipSide.top,
+          borderColor: greyish3,
+          borderWidth: 0
+        ),
+        color: greyish7,
+      ),
       message: "Letter Spacing",
       child: Row(
         children: [

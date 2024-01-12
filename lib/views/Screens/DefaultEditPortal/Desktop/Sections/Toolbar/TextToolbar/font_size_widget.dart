@@ -8,6 +8,7 @@ import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
+import 'package:major_project__widget_testing/views/Components/toolTip_custom_decoration.dart';
 import 'package:provider/provider.dart';
 
 class FontSizeWidget extends StatefulWidget {
@@ -51,6 +52,12 @@ class _FontSizeWidgetState extends State<FontSizeWidget> {
         children: [
           Tooltip(
             message: "Decrease Font Size",
+            verticalOffset: 5,
+            decoration: const ShapeDecoration(
+              shape: ToolTipCustomDecoration(
+                  side: TooltipSide.top, borderColor: greyish3, borderWidth: 0),
+              color: greyish7,
+            ),
             child: MouseRegion(
               onEnter: (_) => setState(() => subtractHover = true),
               onExit: (_) => setState(() => subtractHover = false),
@@ -76,6 +83,12 @@ class _FontSizeWidgetState extends State<FontSizeWidget> {
           ),
           Tooltip(
             message: "Font Size",
+            verticalOffset: 5,
+            decoration: const ShapeDecoration(
+              shape: ToolTipCustomDecoration(
+                  side: TooltipSide.top, borderColor: greyish3, borderWidth: 0),
+              color: greyish7,
+            ),
             child: SizedBox(
               height: scaleHeight(context, 37),
               width: scaleHeight(context, 56),
@@ -114,6 +127,12 @@ class _FontSizeWidgetState extends State<FontSizeWidget> {
           ),
           Tooltip(
             message: "Increase Font Size",
+            verticalOffset: 5,
+            decoration: const ShapeDecoration(
+              shape: ToolTipCustomDecoration(
+                  side: TooltipSide.top, borderColor: greyish3, borderWidth: 0),
+              color: greyish7,
+            ),
             child: MouseRegion(
               onEnter: (_) => setState(() => addHover = true),
               onExit: (_) => setState(() => addHover = false),
@@ -124,8 +143,8 @@ class _FontSizeWidgetState extends State<FontSizeWidget> {
                 child: Container(
                     height: scaleHeight(context, 37),
                     width: scaleHeight(context, 37),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: scaleHeight(context, 5)),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: scaleHeight(context, 5)),
                     color: addHover ? grey5.withOpacity(0.1) : null,
                     child: SvgPicture.asset(
                         "assets/icons/defaultEditPortal/add.svg")),

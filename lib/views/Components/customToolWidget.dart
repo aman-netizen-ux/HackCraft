@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:major_project__widget_testing/views/Components/toolTip_custom_decoration.dart';
 
 class CustomToolWidget extends StatefulWidget {
   const CustomToolWidget({
@@ -45,6 +46,15 @@ class _CustomToolWidgetState extends State<CustomToolWidget> {
   Widget build(BuildContext context) {
     return Tooltip(
       message: widget.message,
+      verticalOffset: 5,
+      decoration: const ShapeDecoration(
+        shape: ToolTipCustomDecoration(
+          side: TooltipSide.top,
+          borderColor: greyish3,
+          borderWidth: 0
+        ),
+        color: greyish7,
+      ),
       child: MouseRegion(
         onEnter: (_) => setState(() => isHover = true),
         onExit: (_) => setState(() => isHover = false),

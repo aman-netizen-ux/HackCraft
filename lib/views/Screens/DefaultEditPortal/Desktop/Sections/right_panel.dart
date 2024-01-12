@@ -4,7 +4,7 @@ import 'package:major_project__widget_testing/state/default_template_providers.d
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Components/separator.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/canvas.dart';
-import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/stackedToolBar.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/StackedToolBar/stackedToolBar.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/toolbar.dart';
 import 'package:provider/provider.dart';
 
@@ -51,14 +51,16 @@ class _RightPanelState extends State<RightPanel> {
             ],
           ),
           Visibility(
-            visible: hackathonTextProvider.isBoldSelected,
+            visible: hackathonTextProvider.isBoldSelected || hackathonTextProvider.isTextColorSelected,
             child: Align(
                alignment: Alignment.topCenter,
               child: Padding(
                   padding: EdgeInsets.only(top: scaleHeight(context, 60)),
-                  child: StackedToolBar()),
+                  child:const StackedToolBar()),
             ),
           ),
+
+         
           
           Align(
             alignment: Alignment.bottomCenter,
