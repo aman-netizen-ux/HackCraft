@@ -37,6 +37,22 @@ class _LineSpacingWidgetState extends State<LineSpacingWidget> {
     super.dispose();
   }
 
+  void handleLineHeightChanged(int value) {
+    setState(() {
+      lineSpacingController.text = value.toString();
+    });
+    final hackathonTextProvider =
+        Provider.of<HackathonTextPropertiesProvider>(context, listen: false);
+    // Update the provider with the new line spacing value
+   // hackathonTextProvider.setLineSpacing(value);
+  }
+
+  
+
+  
+    
+
+
   @override
   Widget build(BuildContext context) {
     final hackathonTextProvider =
@@ -92,6 +108,12 @@ class _LineSpacingWidgetState extends State<LineSpacingWidget> {
                   color: Colors.white,
                   fontWeight: FontWeight.w400,
                   height: lineHeight(23, 20)),
+              onSubmitted: (value) {
+                int? spacingValue = int.tryParse(value);
+                if (spacingValue != null) {
+                  handleLineHeightChanged(spacingValue);
+                }
+              },
             ),
           ),
         ],
@@ -99,3 +121,4 @@ class _LineSpacingWidgetState extends State<LineSpacingWidget> {
     );
   }
 }
+

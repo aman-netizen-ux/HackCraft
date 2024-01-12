@@ -19,22 +19,6 @@ class TextPropertiesPanelWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        // InkWell(
-        //   onTap: () {
-        //     final hackathonTextPropertiesProvider =
-        //         Provider.of<HackathonTextPropertiesProvider>(context,
-        //             listen: false);
-        //     hackathonTextPropertiesProvider.increaseFontSize();
-        //   },
-        //   child: Container(
-        //     height: 30,
-        //     width: 30,
-        //     decoration: BoxDecoration(
-        //         borderRadius: BorderRadius.circular(8),
-        //         color: Colors.white),
-        //   ),
-        // ),
-        //SizedBox(width: scaleWidth(context, 20)),
         FontWidget(hackathonTextProvider: hackathonTextProvider),
         SizedBox(width: scaleWidth(context, 20)),
         const FontSizeWidget(),
@@ -53,42 +37,6 @@ class TextPropertiesPanelWidget extends StatelessWidget {
         ),
 
         const TextFormattingWidget(),
-        // InkWell(
-        //     onTap: () {
-        //       //hackathonTextProvider.toggleUnderlineForSelectedTextField();
-        //       hackathonTextProvider.setBoldSelection();
-        //     },
-        //     child: Icon(
-        //       Icons.format_bold_sharp,
-        //       color: hackathonTextProvider
-        //               .isBoldSelected
-        //           ? Colors.blue // Highlighted when underline is enabled
-        //           : Colors.white,
-        //     )),
-        //     SizedBox(width: scaleWidth(context, 20)),
-        // InkWell(
-        //     onTap: () {
-        //       hackathonTextProvider.toggleItalicsForSelectedTextField();
-        //     },
-        //     child: Icon(
-        //       Icons.format_italic,
-        //       color: hackathonTextProvider
-        //               .isItalicsEnabledForSelectedTextField()
-        //           ? Colors.blue // Highlighted when italics is enabled
-        //           : Colors.white,
-        //     )),
-        // SizedBox(width: scaleWidth(context, 20)),
-        // InkWell(
-        //     onTap: () {
-        //       hackathonTextProvider.toggleUnderlineForSelectedTextField();
-        //     },
-        //     child: Icon(
-        //       Icons.format_underline,
-        //       color: hackathonTextProvider
-        //               .isUnderlineEnabledForSelectedTextField()
-        //           ? Colors.blue // Highlighted when underline is enabled
-        //           : Colors.white,
-        //     ))
       ],
     );
   }

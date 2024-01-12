@@ -44,6 +44,16 @@ class _FontSizeWidgetState extends State<FontSizeWidget> {
   Widget build(BuildContext context) {
     final hackathonTextProvider =
         Provider.of<HackathonTextPropertiesProvider>(context);
+    if (hackathonTextProvider.selectedTextFieldKey != null) {
+      if (hackathonTextProvider
+              .textFieldPropertiesMap[
+                  hackathonTextProvider.selectedTextFieldKey]!.size > 0) {
+        fontSizeController.text = hackathonTextProvider
+            .textFieldPropertiesMap[hackathonTextProvider.selectedTextFieldKey]!
+            .size
+            .toString();
+      }
+    }
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(rad5_1),
@@ -97,7 +107,7 @@ class _FontSizeWidgetState extends State<FontSizeWidget> {
                 cursorColor: Colors.white,
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
-                  hintText: '1',
+                  hintText: "",
                   hintStyle: GoogleFonts.getFont(fontFamily1,
                       fontSize: scaleHeight(context, 20),
                       color: Colors.white,
@@ -117,6 +127,9 @@ class _FontSizeWidgetState extends State<FontSizeWidget> {
                     color: Colors.white,
                     fontWeight: FontWeight.w400,
                     height: lineHeight(23, 20)),
+                onSubmitted: (value) {
+                  hackathonTextProvider.setFontSize(value);
+                },
               ),
             ),
           ),

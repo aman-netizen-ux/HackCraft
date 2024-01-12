@@ -32,6 +32,7 @@ class TextStylingWidget extends StatelessWidget {
               hackathonTextProvider.setIsColorPickerSelected();
             }
           },
+          isWidgetClicked: true,  
           child: SvgPicture.asset("assets/icons/defaultEditPortal/bold.svg"),
         ),
         SizedBox(
@@ -42,6 +43,8 @@ class TextStylingWidget extends StatelessWidget {
           onTap: () {
             hackathonTextProvider.toggleItalicsForSelectedTextField();
           },
+          isWidgetClicked: hackathonTextProvider.selectedTextFieldKey != null ? 
+          hackathonTextProvider.textFieldPropertiesMap[hackathonTextProvider.selectedTextFieldKey]!.italics : false,
           child: SvgPicture.asset("assets/icons/defaultEditPortal/italics.svg"),
         ),
         SizedBox(
@@ -52,8 +55,9 @@ class TextStylingWidget extends StatelessWidget {
           onTap: () {
             hackathonTextProvider.toggleUnderlineForSelectedTextField();
           },
-          child:
-              SvgPicture.asset("assets/icons/defaultEditPortal/underline.svg"),
+          isWidgetClicked: hackathonTextProvider.selectedTextFieldKey != null ? 
+          hackathonTextProvider.textFieldPropertiesMap[hackathonTextProvider.selectedTextFieldKey]!.underline : false,
+          child: SvgPicture.asset("assets/icons/defaultEditPortal/underline.svg"),
         ),
         SizedBox(
           width: scaleWidth(context, 2),
@@ -61,10 +65,11 @@ class TextStylingWidget extends StatelessWidget {
         CustomToolWidget(
           message: "Strikethrough",
           onTap: () {
-            print('strikethrough');
+            hackathonTextProvider.toggleStrikeThroughForSelectedTextField();
           },
-          child: SvgPicture.asset(
-              "assets/icons/defaultEditPortal/strikeThrough.svg"),
+          isWidgetClicked: hackathonTextProvider.selectedTextFieldKey != null ? 
+          hackathonTextProvider.textFieldPropertiesMap[hackathonTextProvider.selectedTextFieldKey]!.strikethrogh : false,
+          child: SvgPicture.asset("assets/icons/defaultEditPortal/strikeThrough.svg"),
         ),
         SizedBox(
           width: scaleWidth(context, 2),
@@ -73,8 +78,10 @@ class TextStylingWidget extends StatelessWidget {
           message: "All Caps",
           child: SvgPicture.asset("assets/icons/defaultEditPortal/allCaps.svg"),
           onTap: () {
-            print('all caps');
+            hackathonTextProvider.toggleAllCapsForSelectedTextField();
           },
+          isWidgetClicked: hackathonTextProvider.selectedTextFieldKey != null ? 
+          hackathonTextProvider.textFieldPropertiesMap[hackathonTextProvider.selectedTextFieldKey]!.upperCase : false,
         ),
       ],
     );
