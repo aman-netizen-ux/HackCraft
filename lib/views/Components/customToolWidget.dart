@@ -7,12 +7,13 @@ class CustomToolWidget extends StatefulWidget {
   const CustomToolWidget({
     super.key,
     this.onTap,
-    required this.child, required this.message,
+    required this.child, required this.message, required this.isWidgetClicked,
   });
 
   final void Function()? onTap;
   final Widget child;
   final String message;
+  final bool isWidgetClicked;
 
   @override
   State<CustomToolWidget> createState() => _CustomToolWidgetState();
@@ -20,19 +21,19 @@ class CustomToolWidget extends StatefulWidget {
 
 class _CustomToolWidgetState extends State<CustomToolWidget> {
   bool isHover = false;
-  bool isClicked = false;
+  //bool isClicked = false;
 //need to customize the hover and click handles for bold and alignment and bullets acc. to requirement
   void _handleTap() {
-    setState(() {
-      isClicked = !isClicked;
-    });
+    // setState(() {
+    //   isClicked = !isClicked;
+    // });
     if (widget.onTap != null) {
       widget.onTap!();
     }
   }
 
   Color? _determineColor() {
-    if (isClicked) {
+    if (widget.isWidgetClicked) {
       return grey5.withOpacity(0.2); // Color when clicked
     } else if (isHover) {
       return grey5.withOpacity(0.1); // Color when hovered

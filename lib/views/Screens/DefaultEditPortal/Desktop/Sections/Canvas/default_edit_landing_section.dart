@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
@@ -65,7 +66,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
         TextFieldProperties(
       size: 20,
       //size: hackathonDetailsProvider.hackathonDetails.fields[0].textProperties.size,
-      align: 'left',
+      align: 'center',
       font: 'Fira Sans',
       fontWeight: 500,
       italics: false,
@@ -78,7 +79,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
     hackathonTextPropertiesProvider.textFieldPropertiesMap[hackathonNameKey] =
         TextFieldProperties(
       size: 54,
-      align: 'left',
+      align: 'center',
       font: 'Montserrat',
       fontWeight: 600,
       italics: false,
@@ -149,6 +150,14 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       hackathonFeeController.text = hackathonDetailsProvider.fee;
     }
 
+// ********************* Below are the conditions to make any text in the uppercase ***************
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      hackathonTextPropertiesProvider.convertAndRevertBackFromUpperCase(
+          hackathonOrganisationController, organisationKey);
+      hackathonTextPropertiesProvider.convertAndRevertBackFromUpperCase(
+          landingHackathonNameController, hackathonNameKey);
+    });
+
     return Padding(
       padding: EdgeInsets.only(
           right: defaultEditScaleWidth(widget.containerWidth, 81),
@@ -186,7 +195,10 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                         child: TextFormField(
                           // the key is passed to fetch the properties of the text form field mapped against this key
                           key: organisationKey,
-                          textAlign: TextAlign.center,
+                          textAlign: hackathonTextPropertiesProvider
+                              .getTextAlign(hackathonTextPropertiesProvider
+                                  .textFieldPropertiesMap[organisationKey]!
+                                  .align),
                           textAlignVertical: TextAlignVertical.center,
                           controller: hackathonOrganisationController,
                           cursorHeight: defaultEditScaleHeight(
@@ -194,7 +206,6 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                           cursorColor: Colors.black,
                           decoration: InputDecoration(
                             hintText: 'Organisation name',
-
                             hintStyle: GoogleFonts.getFont(
                                 hackathonTextPropertiesProvider
                                     .textFieldPropertiesMap[organisationKey]!
@@ -205,6 +216,20 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                                         .italics
                                     ? FontStyle.italic
                                     : FontStyle.normal,
+                                decoration: TextDecoration.combine([
+                                  hackathonTextPropertiesProvider
+                                          .textFieldPropertiesMap[
+                                              organisationKey]!
+                                          .strikethrogh
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none,
+                                  hackathonTextPropertiesProvider
+                                          .textFieldPropertiesMap[
+                                              organisationKey]!
+                                          .underline
+                                      ? TextDecoration.underline
+                                      : TextDecoration.none,
+                                ]),
                                 fontSize: defaultEditScaleHeight(
                                     widget.containerHeight,
                                     hackathonTextPropertiesProvider
@@ -213,11 +238,14 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                                         .size
                                         .toDouble()), //20
                                 color: greyish1,
-                                fontWeight:hackathonTextPropertiesProvider.getSelectedTextFieldFontWeight(organisationKey),
+                                fontWeight: hackathonTextPropertiesProvider
+                                    .getSelectedTextFieldFontWeight(
+                                        organisationKey),
                                 height: lineHeight(
                                     22.4,
                                     hackathonTextPropertiesProvider
-                                        .textFieldPropertiesMap[organisationKey]!
+                                        .textFieldPropertiesMap[
+                                            organisationKey]!
                                         .size
                                         .toDouble())), //20 //Line Height is changed because of cursor size, initial line height was 22.4
                             enabledBorder: InputBorder.none,
@@ -226,6 +254,11 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                             focusedErrorBorder: InputBorder.none,
                             counterText: "",
                           ),
+                          inputFormatters: [
+                            UpperCaseTextFormatter(
+                                hackathonTextPropertiesProvider,
+                                organisationKey),
+                          ],
                           maxLength: 300,
                           maxLines: 4,
                           keyboardType: TextInputType.text,
@@ -239,13 +272,24 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                                       .textFieldPropertiesMap[organisationKey]!
                                       .size
                                       .toDouble()), //20
-                              decoration: hackathonTextPropertiesProvider
-                                      .textFieldPropertiesMap[organisationKey]!
-                                      .underline
-                                  ? TextDecoration.underline
-                                  : TextDecoration.none,
+                              decoration: TextDecoration.combine([
+                                hackathonTextPropertiesProvider
+                                        .textFieldPropertiesMap[
+                                            organisationKey]!
+                                        .strikethrogh
+                                    ? TextDecoration.lineThrough
+                                    : TextDecoration.none,
+                                hackathonTextPropertiesProvider
+                                        .textFieldPropertiesMap[
+                                            organisationKey]!
+                                        .underline
+                                    ? TextDecoration.underline
+                                    : TextDecoration.none,
+                              ]),
                               color: greyish1,
-                              fontWeight:hackathonTextPropertiesProvider.getSelectedTextFieldFontWeight(organisationKey),
+                              fontWeight: hackathonTextPropertiesProvider
+                                  .getSelectedTextFieldFontWeight(
+                                      organisationKey),
                               height: lineHeight(
                                   22.4,
                                   hackathonTextPropertiesProvider
@@ -281,7 +325,10 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                             defaultEditScaleHeight(widget.containerHeight, 54),
                         child: TextFormField(
                           key: hackathonNameKey,
-                          textAlign: TextAlign.center,
+                          textAlign: hackathonTextPropertiesProvider
+                              .getTextAlign(hackathonTextPropertiesProvider
+                                  .textFieldPropertiesMap[hackathonNameKey]!
+                                  .align),
                           textAlignVertical: TextAlignVertical.center,
                           controller: landingHackathonNameController,
                           cursorHeight: defaultEditScaleHeight(
@@ -293,6 +340,21 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                                 hackathonTextPropertiesProvider
                                     .textFieldPropertiesMap[hackathonNameKey]!
                                     .font,
+                                decoration: TextDecoration.combine([
+                                  hackathonTextPropertiesProvider
+                                          .textFieldPropertiesMap[
+                                              hackathonNameKey]!
+                                          .strikethrogh
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none,
+                                  hackathonTextPropertiesProvider
+                                          .textFieldPropertiesMap[
+                                              hackathonNameKey]!
+                                          .underline
+                                      ? TextDecoration.underline
+                                      : TextDecoration.none,
+                                ]),
+                                letterSpacing: hackathonTextPropertiesProvider.textFieldPropertiesMap[hackathonNameKey]!.letterSpacing.toDouble(),
                                 fontSize: defaultEditScaleHeight(
                                     widget.containerHeight,
                                     hackathonTextPropertiesProvider
@@ -301,7 +363,9 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                                         .size
                                         .toDouble()), //54
                                 color: black2,
-                                fontWeight: hackathonTextPropertiesProvider.getSelectedTextFieldFontWeight(hackathonNameKey),
+                                fontWeight: hackathonTextPropertiesProvider
+                                    .getSelectedTextFieldFontWeight(
+                                        hackathonNameKey),
                                 height: lineHeight(
                                     50.4,
                                     hackathonTextPropertiesProvider
@@ -315,6 +379,11 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                             focusedErrorBorder: InputBorder.none,
                             counterText: "",
                           ),
+                          inputFormatters: [
+                            UpperCaseTextFormatter(
+                                hackathonTextPropertiesProvider,
+                                hackathonNameKey),
+                          ],
                           maxLength: 30,
                           keyboardType: TextInputType.text,
                           style: GoogleFonts.getFont(
@@ -327,18 +396,30 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                                       .textFieldPropertiesMap[hackathonNameKey]!
                                       .size
                                       .toDouble()), //54
-                              decoration: hackathonTextPropertiesProvider
-                                      .textFieldPropertiesMap[hackathonNameKey]!
-                                      .underline
-                                  ? TextDecoration.underline
-                                  : TextDecoration.none,
+                                      letterSpacing: hackathonTextPropertiesProvider.textFieldPropertiesMap[hackathonNameKey]!.letterSpacing.toDouble(),
+                              decoration: TextDecoration.combine([
+                                hackathonTextPropertiesProvider
+                                        .textFieldPropertiesMap[
+                                            hackathonNameKey]!
+                                        .strikethrogh
+                                    ? TextDecoration.lineThrough
+                                    : TextDecoration.none,
+                                hackathonTextPropertiesProvider
+                                        .textFieldPropertiesMap[
+                                            hackathonNameKey]!
+                                        .underline
+                                    ? TextDecoration.underline
+                                    : TextDecoration.none,
+                              ]),
                               fontStyle: hackathonTextPropertiesProvider
                                       .textFieldPropertiesMap[hackathonNameKey]!
                                       .italics
                                   ? FontStyle.italic
                                   : FontStyle.normal,
                               color: black2,
-                              fontWeight: hackathonTextPropertiesProvider.getSelectedTextFieldFontWeight(hackathonNameKey),
+                              fontWeight: hackathonTextPropertiesProvider
+                                  .getSelectedTextFieldFontWeight(
+                                      hackathonNameKey),
                               height: lineHeight(
                                   50.4,
                                   hackathonTextPropertiesProvider
@@ -356,6 +437,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                                 .selectedTextFieldKey = hackathonNameKey;
                             hackathonTextPropertiesProvider
                                 .updateSelectedFontFromTextField();
+                                hackathonTextPropertiesProvider.getLetterSpacing();
                           },
                           onSaved: (value) {
                             hackathonDetailsProvider.hackathonName =
@@ -500,8 +582,35 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       ),
     );
   }
-  
+}
 
+class UpperCaseTextFormatter extends TextInputFormatter {
+  final HackathonTextPropertiesProvider provider;
+  final GlobalKey key;
+
+  UpperCaseTextFormatter(this.provider, this.key);
+
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    // Check if the uppercase mode is active for the current text field
+    bool shouldConvertToUppercase =
+        provider.textFieldPropertiesMap[key]!.upperCase;
+
+    if (shouldConvertToUppercase) {
+      return TextEditingValue(
+        text: newValue.text.toUpperCase(),
+        selection: newValue.selection,
+      );
+    }
+    return newValue; // Return as-is if no conversion is needed
+  }
+}
+
+class ToggleAllCapsNotification extends Notification {
+  final bool isAllCaps;
+
+  ToggleAllCapsNotification({required this.isAllCaps});
 }
 
 class hackathonDetailContainer extends StatelessWidget {

@@ -22,7 +22,6 @@ class LineSpacingWidget extends StatefulWidget {
 class _LineSpacingWidgetState extends State<LineSpacingWidget> {
   late TextEditingController lineSpacingController;
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -36,6 +35,22 @@ class _LineSpacingWidgetState extends State<LineSpacingWidget> {
     // TODO: implement dispose
     super.dispose();
   }
+
+  void handleLineHeightChanged(int value) {
+    setState(() {
+      lineSpacingController.text = value.toString();
+    });
+    final hackathonTextProvider =
+        Provider.of<HackathonTextPropertiesProvider>(context, listen: false);
+    // Update the provider with the new line spacing value
+   // hackathonTextProvider.setLineSpacing(value);
+  }
+
+  
+
+  
+    
+
 
   @override
   Widget build(BuildContext context) {
@@ -51,48 +66,49 @@ class _LineSpacingWidgetState extends State<LineSpacingWidget> {
             padding: EdgeInsets.symmetric(
                 vertical: scaleHeight(context, 7),
                 horizontal: scaleHeight(context, 7)),
-            child: SvgPicture.asset("assets/icons/defaultEditPortal/lineSpacing.svg"),
+            child: SvgPicture.asset(
+                "assets/icons/defaultEditPortal/lineSpacing.svg"),
           ),
-    
-           Container(
-              height: scaleHeight(context, 37),
-              width: scaleHeight(context, 57),
-              decoration: BoxDecoration(
+          Container(
+            height: scaleHeight(context, 37),
+            width: scaleHeight(context, 57),
+            decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(rad5_1),
-                border: Border.all(
-                  color: greyish3,
-                  width: 1
-                )
-              ),
-              child: TextField(
-                controller: lineSpacingController,
-                cursorColor: Colors.white,
-                textAlign: TextAlign.center,
-                textAlignVertical: TextAlignVertical.center,
-                decoration: InputDecoration(
-                  hintText: '1',
-                  hintStyle: GoogleFonts.getFont(fontFamily1,
-                      fontSize: scaleHeight(context, 20),
-                      color: Colors.white,
-                      fontWeight: FontWeight.w400,
-                      height: lineHeight(23, 20)),
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  focusedErrorBorder: InputBorder.none,
-                  counterText: "",
-                ),
-                maxLength: 2,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                keyboardType: TextInputType.number,
-                style: GoogleFonts.getFont(fontFamily1,
+                border: Border.all(color: greyish3, width: 1)),
+            child: TextField(
+              controller: lineSpacingController,
+              cursorColor: Colors.white,
+              textAlign: TextAlign.center,
+              textAlignVertical: TextAlignVertical.center,
+              decoration: InputDecoration(
+                hintText: '1',
+                hintStyle: GoogleFonts.getFont(fontFamily1,
                     fontSize: scaleHeight(context, 20),
                     color: Colors.white,
                     fontWeight: FontWeight.w400,
                     height: lineHeight(23, 20)),
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                focusedErrorBorder: InputBorder.none,
+                counterText: "",
               ),
+              maxLength: 2,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              keyboardType: TextInputType.number,
+              style: GoogleFonts.getFont(fontFamily1,
+                  fontSize: scaleHeight(context, 20),
+                  color: Colors.white,
+                  fontWeight: FontWeight.w400,
+                  height: lineHeight(23, 20)),
+              onSubmitted: (value) {
+                int? spacingValue = int.tryParse(value);
+                if (spacingValue != null) {
+                  handleLineHeightChanged(spacingValue);
+                }
+              },
             ),
-          
+          ),
         ],
       ),
     );

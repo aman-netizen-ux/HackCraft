@@ -22,12 +22,17 @@ class LetterSpacingWidget extends StatefulWidget {
 class _LetterSpacingWidgetState extends State<LetterSpacingWidget> {
   late TextEditingController lineSpacingController;
 
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     lineSpacingController = TextEditingController();
+    final hackathonTextProvider =
+        Provider.of<HackathonTextPropertiesProvider>(context, listen: false);
+    if (hackathonTextProvider.selectedTextFieldKey != null) {
+      int currentSpacing = hackathonTextProvider.getLetterSpacing();
+      lineSpacingController.text = currentSpacing.toString();
+    }
   }
 
   @override
@@ -35,6 +40,16 @@ class _LetterSpacingWidgetState extends State<LetterSpacingWidget> {
     lineSpacingController.dispose();
     // TODO: implement dispose
     super.dispose();
+  }
+
+  void handleLineSpacingChanged(int value) {
+    setState(() {
+      lineSpacingController.text = value.toString();
+    });
+    final hackathonTextProvider =
+        Provider.of<HackathonTextPropertiesProvider>(context, listen: false);
+    // Update the provider with the new line spacing value
+    hackathonTextProvider.setLetterSpacing(value);
   }
 
   @override
@@ -45,56 +60,60 @@ class _LetterSpacingWidgetState extends State<LetterSpacingWidget> {
       message: "Letter Spacing",
       child: Row(
         children: [
-         
-    
-           Container(
-              height: scaleHeight(context, 37),
-              width: scaleHeight(context, 57),
-              decoration: BoxDecoration(
+          Container(
+            height: scaleHeight(context, 37),
+            width: scaleHeight(context, 57),
+            decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(rad5_1),
-                border: Border.all(
-                  color: greyish3,
-                  width: 1
-                )
-              ),
-              child: TextField(
-                controller: lineSpacingController,
-                cursorColor: Colors.white,
-                textAlign: TextAlign.center,
-                textAlignVertical: TextAlignVertical.center,
-                decoration: InputDecoration(
-                  hintText: '1',
-                  hintStyle: GoogleFonts.getFont(fontFamily1,
-                      fontSize: scaleHeight(context, 20),
-                      color: Colors.white,
-                      fontWeight: FontWeight.w400,
-                      height: lineHeight(23, 20)),
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  focusedErrorBorder: InputBorder.none,
-                  counterText: "",
-                ),
-                maxLength: 2,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                keyboardType: TextInputType.number,
-                style: GoogleFonts.getFont(fontFamily1,
+                border: Border.all(color: greyish3, width: 1)),
+            child: TextField(
+              controller: lineSpacingController,
+              cursorColor: Colors.white,
+              textAlign: TextAlign.center,
+              textAlignVertical: TextAlignVertical.center,
+              decoration: InputDecoration(
+                hintText: '1',
+                hintStyle: GoogleFonts.getFont(fontFamily1,
                     fontSize: scaleHeight(context, 20),
                     color: Colors.white,
                     fontWeight: FontWeight.w400,
                     height: lineHeight(23, 20)),
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                focusedErrorBorder: InputBorder.none,
+                counterText: "",
               ),
+              maxLength: 2,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              keyboardType: TextInputType.number,
+              style: GoogleFonts.getFont(fontFamily1,
+                  fontSize: scaleHeight(context, 20),
+                  color: Colors.white,
+                  fontWeight: FontWeight.w400,
+                  height: lineHeight(23, 20)),
+              onSubmitted: (value) {
+                int? letterSpacing = int.tryParse(value);
+                if (letterSpacing != null) {
+                  handleLineSpacingChanged(letterSpacing);
+                }
+              },
+              onTap: () {
+                int currentSpacing = hackathonTextProvider.getLetterSpacing();
+                // Assuming you have a way to access the LetterSpacingWidget's controller
+                lineSpacingController.text = currentSpacing.toString();
+              },
             ),
-    
-             Container(
+          ),
+          Container(
             height: scaleHeight(context, 37),
             width: scaleHeight(context, 37),
             padding: EdgeInsets.symmetric(
                 vertical: scaleHeight(context, 7),
                 horizontal: scaleHeight(context, 7)),
-            child: SvgPicture.asset("assets/icons/defaultEditPortal/letterSpacing.svg"),
+            child: SvgPicture.asset(
+                "assets/icons/defaultEditPortal/letterSpacing.svg"),
           ),
-          
         ],
       ),
     );

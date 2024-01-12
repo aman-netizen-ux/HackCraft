@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/default_edit_landing_section.dart';
 
 class HackathonTextPropertiesProvider with ChangeNotifier {
   // textFieldPropertiesMap temporary saves all the text properties of every text form field
@@ -193,6 +194,82 @@ void updateSelectedFontFromTextField(){
     }
   }
 
+//Set the strikeThrough value for the respective textField
+  void toggleStrikeThroughForSelectedTextField() {
+    if (_selectedTextFieldKey != null &&
+        textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
+      textFieldPropertiesMap[_selectedTextFieldKey!]!.strikethrogh = 
+        !textFieldPropertiesMap[_selectedTextFieldKey!]!.strikethrogh;
+      notifyListeners();
+    }
+  }
+
+  //Set the  value for the respective textField
+  void toggleAllCapsForSelectedTextField() {
+    if (_selectedTextFieldKey != null &&
+        textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
+      textFieldPropertiesMap[_selectedTextFieldKey!]!.upperCase = 
+        !textFieldPropertiesMap[_selectedTextFieldKey!]!.upperCase;
+      notifyListeners();  
+    }
+  }
+
+  //To store the initial written text in the textfield
+  Map<GlobalKey, String> _originalTexts = {};
+
+  void convertAndRevertBackFromUpperCase(TextEditingController controller, GlobalKey key) {
+  var upperCase = textFieldPropertiesMap[key]!.upperCase;
+
+  if (upperCase) {
+    if (!_originalTexts.containsKey(key)) {
+      // Store the original text before converting to uppercase
+      _originalTexts[key] = controller.text;
+    }
+    controller.text = controller.text.toUpperCase();
+  } else {
+    // Transition from uppercase to non-uppercase
+    if (_originalTexts.containsKey(key)) {
+      String originalText = _originalTexts[key]!;
+      String currentText = controller.text;
+
+      // Reconstruct the text by applying deletions and additions to the original text
+      String reconstructedText = reconstructText(originalText, currentText);
+
+      controller.text = reconstructedText;
+      _originalTexts.remove(key);
+    }
+  }
+}
+
+//This function helps in keeping the modifications in the original change intact
+String reconstructText(String originalText, String currentText) {
+  // Convert the original text to uppercase for comparison
+  String originalTextUpper = originalText.toUpperCase();
+  
+  // Find the common prefix and suffix between the original (in uppercase) and current text
+  int prefixLength = 0;
+  while (prefixLength < originalTextUpper.length && prefixLength < currentText.length
+         && originalTextUpper[prefixLength] == currentText[prefixLength]) {
+    prefixLength++;
+  }
+
+  int suffixLength = 0;
+  while (suffixLength + prefixLength < originalTextUpper.length
+         && suffixLength + prefixLength < currentText.length
+         && originalTextUpper[originalTextUpper.length - suffixLength - 1]
+         == currentText[currentText.length - suffixLength - 1]) {
+    suffixLength++;
+  }
+
+  // Reconstruct the text by keeping the original (non-uppercase) prefix and suffix,
+  // and using the current text for the middle part
+  String prefix = originalText.substring(0, prefixLength);
+  String middle = currentText.substring(prefixLength, currentText.length - suffixLength);
+  String suffix = originalText.substring(originalText.length - suffixLength);
+
+  return prefix + middle + suffix;
+}
+
 //Fetch whether the italics is enabled for the respective textField
   bool isItalicsEnabledForSelectedTextField() {
     if (_selectedTextFieldKey != null &&
@@ -226,8 +303,17 @@ void updateSelectedFontFromTextField(){
     if (_selectedTextFieldKey != null &&
         textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
       textFieldPropertiesMap[_selectedTextFieldKey!]!.size += 1;
-      print(textFieldPropertiesMap[_selectedTextFieldKey!]!.size);
       notifyListeners();
+    }
+  }
+
+  void setFontSize(String value){
+    if (_selectedTextFieldKey != null &&
+        textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
+          if(int.tryParse(value)!= null){
+            textFieldPropertiesMap[_selectedTextFieldKey!]!.size = int.tryParse(value)!;
+            notifyListeners();
+          } 
     }
   }
 
@@ -235,10 +321,101 @@ void updateSelectedFontFromTextField(){
     if (_selectedTextFieldKey != null &&
         textFieldPropertiesMap.containsKey(_selectedTextFieldKey) && textFieldPropertiesMap[_selectedTextFieldKey!]!.size >= 2) {
       textFieldPropertiesMap[_selectedTextFieldKey!]!.size -= 1;
-      print(textFieldPropertiesMap[_selectedTextFieldKey!]!.size);
       notifyListeners();
     }
   }
 
+  //Set the alignment of the text alongwith their respective icon
+
+  //Alignment icon for the respective alignment
+  IconData getAlignmentIcon(){
+    if(_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)){
+      var currentAlignment = textFieldPropertiesMap[_selectedTextFieldKey]!.align;
+
+      switch(currentAlignment){
+        case 'left':
+          return Icons.format_align_left_rounded;
+        case 'right':
+          return Icons.format_align_right_rounded;
+        case 'center':
+          return Icons.format_align_center_rounded;
+        case 'justify':
+          return Icons.format_align_justify_rounded;
+      }
+    }
+    return Icons.format_align_center_rounded;
+  }
+
+  void toggleTextAlignment(){
+    if(_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)){
+      var currentAlignment = textFieldPropertiesMap[_selectedTextFieldKey]!.align;
+
+      switch(currentAlignment){
+        case 'left' :
+          textFieldPropertiesMap[_selectedTextFieldKey]!.align = 'center';
+          break;
+        case 'center':
+          textFieldPropertiesMap[_selectedTextFieldKey]!.align = 'right';
+          break;
+        case 'right':
+          textFieldPropertiesMap[_selectedTextFieldKey]!.align = 'justify';
+          break;
+        case 'justify':
+          textFieldPropertiesMap[_selectedTextFieldKey]!.align = 'left';
+          break;
+        default:
+          textFieldPropertiesMap[_selectedTextFieldKey]!.align = 'left';
+          break;
+      }
+      notifyListeners();
+    }
+  }
+
+  //Convert the string alignment coming from the API to TextAlign
+  TextAlign getTextAlign(String align){
+    switch(align){
+      case 'left':
+        return TextAlign.left;
+      case 'right':
+        return TextAlign.right;
+      case 'center':
+        return TextAlign.center;
+      case 'justify':
+        return TextAlign.justify;
+      default:
+        return TextAlign.center;
+    }
+  }
+
+  //Set lineSpacing value
+  // void setLineSpacing(int spacing) {
+  //   if (_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
+  //     textFieldPropertiesMap[_selectedTextFieldKey]!.letterSpacing = spacing;
+  //     notifyListeners();
+  //   }
+  // }
+
+  // int getLineSpacing() {
+  //   if (_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
+  //     return textFieldPropertiesMap[_selectedTextFieldKey]!.letterSpacing;
+  //   }
+  //   return 1; // Default value
+  // }
+
+
+  //Set letterSpacing value
+  void setLetterSpacing(int spacing) {
+    if (_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
+      textFieldPropertiesMap[_selectedTextFieldKey]!.letterSpacing = spacing;
+      notifyListeners();
+    }
+  }
+
+  int getLetterSpacing() {
+    if (_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
+      return textFieldPropertiesMap[_selectedTextFieldKey]!.letterSpacing;
+    }
+    return 1; // Default value
+  }
 
 }

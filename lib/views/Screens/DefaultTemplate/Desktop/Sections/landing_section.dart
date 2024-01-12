@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
 import 'package:major_project__widget_testing/state/defaulttemplateProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
@@ -22,6 +23,10 @@ class LandingSection extends StatelessWidget {
         Provider.of<HackathonDetailsProvider>(context);
     final defaultTemplateProvider =
         Provider.of<DefaultTemplateProvider>(context);
+    final hackathonTextProvider =
+        Provider.of<HackathonTextPropertiesProvider>(context);
+
+        print('HACK CBS : ${hackathonTextProvider.getTextAlign(defaultTemplateModel!.fields[0].textProperties.align)}');
 
     return Padding(
       key: home,
@@ -50,39 +55,49 @@ class LandingSection extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(rad5_6))),
                 child: Center(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('${ defaultTemplateModel!.hackathons.organisationName} presents',
-                          style: GoogleFonts.getFont(defaultTemplateModel!.fields[0].textProperties.font,
-                              fontSize: scaleHeight(context, 
-                              defaultTemplateModel!.fields[0].textProperties.size.toDouble()//20
-                              ),
-                              fontStyle: defaultTemplateModel!.fields[0].textProperties.italics ? FontStyle.italic : FontStyle.normal,
-                              decoration: defaultTemplateModel!.fields[0].textProperties.underline ? TextDecoration.underline : TextDecoration.none,
-                              color: greyish1,
-                              fontWeight: defaultTemplateProvider.fontWeightFromInt(defaultTemplateModel!.fields[0].textProperties.fontWeight),
-                              height: lineHeight(22.4, 
-                              defaultTemplateModel!.fields[0].textProperties.size.toDouble()
-                              ))),
+                      SizedBox(
+                        width : scaleWidth(context, 700),
+                        height : scaleHeight(context, 50),
+                        child: Text('${ defaultTemplateModel!.hackathons.organisationName} presents',
+                        textAlign: hackathonTextProvider.getTextAlign(defaultTemplateModel!.fields[0].textProperties.align),
+                            style: GoogleFonts.getFont(defaultTemplateModel!.fields[0].textProperties.font,
+                                fontSize: scaleHeight(context, 
+                                defaultTemplateModel!.fields[0].textProperties.size.toDouble()//20
+                                ),
+                                fontStyle: defaultTemplateModel!.fields[0].textProperties.italics ? FontStyle.italic : FontStyle.normal,
+                                decoration: defaultTemplateModel!.fields[0].textProperties.underline ? TextDecoration.underline : TextDecoration.none,
+                                color: greyish1,
+                                fontWeight: defaultTemplateProvider.fontWeightFromInt(defaultTemplateModel!.fields[0].textProperties.fontWeight),
+                                height: lineHeight(22.4, 
+                                defaultTemplateModel!.fields[0].textProperties.size.toDouble()
+                                ))),
+                      ),
                       SizedBox(
                         height: scaleHeight(context, 42),
                       ),
-                      Text(
-                          // 'Your Hackathon Name',
-                          defaultTemplateModel!.hackathons.name,
-                          // hackathonDetailsProvider.hackathonName,
-                          style: GoogleFonts.getFont(defaultTemplateModel!.fields[1].textProperties.font,
-                              fontSize: scaleHeight(context, 
-                              defaultTemplateModel!.fields[1].textProperties.size.toDouble()//54
-                              ),
-                              decoration: defaultTemplateModel!.fields[1].textProperties.underline ? TextDecoration.underline : TextDecoration.none,
-                              fontStyle: defaultTemplateModel!.fields[1].textProperties.italics ? FontStyle.italic : FontStyle.normal,
-                              color: black2,
-                              fontWeight: defaultTemplateProvider.fontWeightFromInt(defaultTemplateModel!.fields[1].textProperties.fontWeight),
-                              height: lineHeight(22.4, 
-                              defaultTemplateModel!.fields[1].textProperties.size.toDouble()
-                              ))),
+                      SizedBox(
+                        width : scaleWidth(context, 700),
+                        height : scaleHeight(context, 54),
+                        child: Text(
+                            // 'Your Hackathon Name',
+                            defaultTemplateModel!.hackathons.name,
+                            textAlign: hackathonTextProvider.getTextAlign(defaultTemplateModel!.fields[1].textProperties.align),
+                            // hackathonDetailsProvider.hackathonName,
+                            style: GoogleFonts.getFont(defaultTemplateModel!.fields[1].textProperties.font,
+                                fontSize: scaleHeight(context, 
+                                defaultTemplateModel!.fields[1].textProperties.size.toDouble()//54
+                                ),
+                                decoration: defaultTemplateModel!.fields[1].textProperties.underline ? TextDecoration.underline : TextDecoration.none,
+                                fontStyle: defaultTemplateModel!.fields[1].textProperties.italics ? FontStyle.italic : FontStyle.normal,
+                                color: black2,
+                                fontWeight: defaultTemplateProvider.fontWeightFromInt(defaultTemplateModel!.fields[1].textProperties.fontWeight),
+                                height: lineHeight(22.4, 
+                                defaultTemplateModel!.fields[1].textProperties.size.toDouble()
+                                ))),
+                      ),
                       SizedBox(
                         height: scaleHeight(context, 11),
                       ),
