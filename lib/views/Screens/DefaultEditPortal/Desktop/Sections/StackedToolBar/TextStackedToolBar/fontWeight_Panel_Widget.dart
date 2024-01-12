@@ -32,7 +32,7 @@ class _FontWeightPanelWidgetState extends State<FontWeightPanelWidget> {
   Widget build(BuildContext context) {
     return Container(
         height: scaleHeight(context, 60),
-        width: scaleWidth(context, 735),
+        width: scaleWidth(context, 770),
         decoration: BoxDecoration(
             color: grey3,
             borderRadius: BorderRadius.circular(rad5_2),
@@ -42,7 +42,11 @@ class _FontWeightPanelWidgetState extends State<FontWeightPanelWidget> {
           children: List<Widget>.generate(
             fontWeights.length * 2 - 1,
             (index) => index % 2 == 0
-                ? fontWeightItem(fontWeights[index ~/ 2], context, "assets/icons/defaultEditPortal/boldIcons/bold${(index ~/ 2)+1}.svg" )
+                ? FontWeightItem(
+                    name: fontWeights[index ~/ 2],
+                    index: (index ~/ 2) + 1,
+                    assetPath:
+                        "assets/icons/defaultEditPortal/boldIcons/bold${(index ~/ 2) + 1}.svg")
                 : const VerticalDivider(
                     color: greyish3,
                     indent: 10.0,
@@ -51,31 +55,78 @@ class _FontWeightPanelWidgetState extends State<FontWeightPanelWidget> {
           ),
         ));
   }
+}
 
-  Widget fontWeightItem(String name, BuildContext context, String assetPath) {
-    final hackathonTextProvider = Provider.of<HackathonTextPropertiesProvider>(context);
-    return InkWell(
-      onTap: () => hackathonTextProvider.updateFontWeight(name),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
+class FontWeightItem extends StatefulWidget {
+  const FontWeightItem(
+      {super.key,
+      required this.name,
+      required this.assetPath,
+      required this.index});
+  final String name;
+  final String assetPath;
+  final int index;
 
-          SvgPicture.asset(
-            assetPath,
-            color: hackathonTextProvider.isFontWeightSelected(name)
-                  ? Colors.blue
-                  : Colors.white
+  @override
+  State<FontWeightItem> createState() => _FontWeightItemState();
+}
+
+class _FontWeightItemState extends State<FontWeightItem> {
+  bool isHover = false;
+  Color? _determineColor(bool isClicked) {
+    if (isClicked) {
+      return grey5.withOpacity(0.2); // Color when clicked
+    } else if (isHover) {
+      return grey5.withOpacity(0.1); // Color when hovered
+    } else {
+      return null; // Normal color
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final hackathonTextProvider =
+        Provider.of<HackathonTextPropertiesProvider>(context);
+    return MouseRegion(
+      onEnter: (_) => setState(() => isHover = true),
+      onExit: (_) => setState(() => isHover = false),
+      child: InkWell(
+        onTap: () => hackathonTextProvider.updateFontWeight(widget.name),
+        child: Container(
+          alignment: Alignment.center,
+          margin: EdgeInsets.symmetric(
+              vertical: scaleWidth(context, 6),
+              ),
+          padding: EdgeInsets.symmetric(
+              // vertical: scaleWidth(context, 2),
+              horizontal: scaleWidth(context, 6)),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(rad5_1)),
+            color: _determineColor(
+                hackathonTextProvider.isFontWeightSelected(widget.name)),
           ),
-
-          SizedBox(width: scaleWidth(context, 2),),
-          
-          Text(name,
-              style: GoogleFonts.capriola(
-                  fontWeight: FontWeight.w400,
-                  fontSize: scaleHeight(context, 14),
-                  height: lineHeight(22.4, 14),
-                  color: Colors.white)),
-        ],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                widget.assetPath,
+              ),
+              SizedBox(
+                width: scaleWidth(context, 2),
+              ),
+              Text(widget.name,
+                  style: GoogleFonts.getFont(
+                      hackathonTextProvider
+                          .textFieldPropertiesMap[hackathonTextProvider.selectedTextFieldKey]!.font,
+                      fontWeight: hackathonTextProvider
+                          .fontWeightFromInt(widget.index * 100),
+                      fontSize: scaleHeight(context, 14),
+                      height: lineHeight(22.4, 14),
+                      color: Colors.white)),
+            ],
+          ),
+        ),
       ),
     );
   }

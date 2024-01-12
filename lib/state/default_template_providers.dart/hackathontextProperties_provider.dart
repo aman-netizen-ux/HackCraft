@@ -161,12 +161,12 @@ Color getPrimaryColor(Color color) {
   FontWeight getSelectedTextFieldFontWeight(GlobalKey key) {
     if (textFieldPropertiesMap.containsKey(key)) {
       int weightIndex = textFieldPropertiesMap[key]!.fontWeight;
-      return _fontWeightFromInt(weightIndex);
+      return fontWeightFromInt(weightIndex);
     }
     return FontWeight.normal;
   }
 
-  FontWeight _fontWeightFromInt(int weight) {
+  FontWeight fontWeightFromInt(int weight) {
     switch (weight) {
       case 100:
         return FontWeight.w100;
@@ -369,89 +369,15 @@ String reconstructText(String originalText, String currentText) {
     }
   }
 
-//Set the strikeThrough value for the respective textField
-  void toggleStrikeThroughForSelectedTextField() {
-    if (_selectedTextFieldKey != null &&
-        textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
-      textFieldPropertiesMap[_selectedTextFieldKey!]!.strikethrogh = 
-        !textFieldPropertiesMap[_selectedTextFieldKey!]!.strikethrogh;
-      notifyListeners();
-    }
-  }
 
-  //Set the  value for the respective textField
-  void toggleAllCapsForSelectedTextField() {
-    if (_selectedTextFieldKey != null &&
-        textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
-      textFieldPropertiesMap[_selectedTextFieldKey!]!.upperCase = 
-        !textFieldPropertiesMap[_selectedTextFieldKey!]!.upperCase;
-      notifyListeners();  
-    }
-  }
 
-  //To store the initial written text in the textfield
-  Map<GlobalKey, String> _originalTexts = {};
-
-  void convertAndRevertBackFromUpperCase(TextEditingController controller, GlobalKey key) {
-  var upperCase = textFieldPropertiesMap[key]!.upperCase;
-
-  if (upperCase) {
-    if (!_originalTexts.containsKey(key)) {
-      // Store the original text before converting to uppercase
-      _originalTexts[key] = controller.text;
-    }
-    controller.text = controller.text.toUpperCase();
-  } else {
-    // Transition from uppercase to non-uppercase
-    if (_originalTexts.containsKey(key)) {
-      String originalText = _originalTexts[key]!;
-      String currentText = controller.text;
-
-      // Reconstruct the text by applying deletions and additions to the original text
-      String reconstructedText = reconstructText(originalText, currentText);
-
-      controller.text = reconstructedText;
-      _originalTexts.remove(key);
-    }
-  }
-}
-
-//This function helps in keeping the modifications in the original change intact
-String reconstructText(String originalText, String currentText) {
-  // Convert the original text to uppercase for comparison
-  String originalTextUpper = originalText.toUpperCase();
+ 
   
-  // Find the common prefix and suffix between the original (in uppercase) and current text
-  int prefixLength = 0;
-  while (prefixLength < originalTextUpper.length && prefixLength < currentText.length
-         && originalTextUpper[prefixLength] == currentText[prefixLength]) {
-    prefixLength++;
-  }
+ 
 
-  int suffixLength = 0;
-  while (suffixLength + prefixLength < originalTextUpper.length
-         && suffixLength + prefixLength < currentText.length
-         && originalTextUpper[originalTextUpper.length - suffixLength - 1]
-         == currentText[currentText.length - suffixLength - 1]) {
-    suffixLength++;
-  }
 
-  // Reconstruct the text by keeping the original (non-uppercase) prefix and suffix,
-  // and using the current text for the middle part
-  String prefix = originalText.substring(0, prefixLength);
-  String middle = currentText.substring(prefixLength, currentText.length - suffixLength);
-  String suffix = originalText.substring(originalText.length - suffixLength);
 
-  return prefix + middle + suffix;
-}
-
-  void textColorChange(String colorHex) {
-    if (_selectedTextFieldKey != null &&
-        textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
-      textFieldPropertiesMap[_selectedTextFieldKey!]!.textColor = colorHex;
-      notifyListeners();
-    }
-  }
+  
 
 //Fetch whether the italics is enabled for the respective textField
   bool isItalicsEnabledForSelectedTextField() {
