@@ -119,6 +119,7 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                       padding: EdgeInsets.only(
@@ -126,15 +127,20 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
                       ),
                       //Title of the round
                       child: Container(
-                        height: defaultEditScaleHeight(widget.containerHeight, 30),
+                        // height: defaultEditScaleHeight(widget.containerHeight, 30),
                         width: defaultEditScaleWidth(widget.containerWidth, 150),
                         alignment: Alignment.topLeft,
+                        margin: EdgeInsets.only(
+                         top: defaultEditScaleHeight(widget.containerHeight, 35)
+                        ),
+                        
                         // color: Colors.amberAccent[100],
                         child: TextFormField(
                           //textAlignVertical: TextAlignVertical.top,
                           controller: roundNameController,
                           cursorColor: Colors.black,
                           decoration: InputDecoration(
+                            isDense: true,
                             contentPadding: EdgeInsets.all(0),
                             hintText: 'Round Name',
                             hintStyle: GoogleFonts.getFont(fontFamily2,
@@ -239,6 +245,7 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
                           controller: roundStartDateController,
                           cursorColor: Colors.black,
                           decoration: InputDecoration(
+                            isDense: true,
                             contentPadding: EdgeInsets.all(0),
                             hintText: 'YYYY-MM-DD',
                             hintStyle: GoogleFonts.getFont(fontFamily2,
@@ -339,6 +346,7 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
                           controller: roundEndDateController,
                           cursorColor: Colors.black,
                           decoration: InputDecoration(
+                            isDense: true,
                             contentPadding: EdgeInsets.all(0),
                             hintText: 'YYYY-MM-DD',
                             hintStyle: GoogleFonts.getFont(fontFamily2,

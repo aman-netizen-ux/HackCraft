@@ -188,10 +188,11 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                        width:
-                            defaultEditScaleWidth(widget.containerWidth, 700),
+                        width:defaultEditScaleWidth(widget.containerWidth, 700),
+                         
                         height:
                             defaultEditScaleHeight(widget.containerHeight, 50),
+                        
                         child: TextFormField(
                           // the key is passed to fetch the properties of the text form field mapped against this key
                           key: organisationKey,
@@ -306,6 +307,9 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                             hackathonTextPropertiesProvider
                                 .updateSelectedFontFromTextField();
                           },
+                          // onTapOutside: (){
+                          //   hackathonTextPropertiesProvider.sel
+                          // },
                           onSaved: (value) {
                             hackathonDetailsProvider.organisationName =
                                 value.toString();
@@ -316,11 +320,17 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                         height: defaultEditScaleHeight(
                             widget.containerHeight, 30), //42
                       ),
-                      SizedBox(
+                      Container(
                         width:
                             defaultEditScaleWidth(widget.containerWidth, 700),
                         height:
                             defaultEditScaleHeight(widget.containerHeight, 54),
+                            decoration: hackathonTextPropertiesProvider.selectedTextFieldKey==organisationKey
+                        ? BoxDecoration(
+                          border: Border.all(
+                            color: Colors.red
+                          )
+                        ): null,
                         child: TextFormField(
                           key: hackathonNameKey,
                           textAlign: hackathonTextPropertiesProvider
@@ -370,7 +380,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                                         .size
                                         .toDouble())), //54 //Line Height is changed because of cursor size, initial line height was 22.4
                             enabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
+                            focusedBorder:InputBorder.none,
                             errorBorder: InputBorder.none,
                             focusedErrorBorder: InputBorder.none,
                             counterText: "",

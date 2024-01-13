@@ -32,8 +32,12 @@ class TextStylingWidget extends StatelessWidget {
               hackathonTextProvider.setIsColorPickerSelected();
             }
           },
-          isWidgetClicked: true,  
-          child: SvgPicture.asset("assets/icons/defaultEditPortal/bold.svg"),
+          isWidgetClicked: hackathonTextProvider.isBoldSelected,  
+          child: hackathonTextProvider.selectedTextFieldKey==null
+          ?SvgPicture.asset("assets/icons/defaultEditPortal/bold.svg")
+          :SvgPicture.asset("assets/icons/defaultEditPortal/boldIcons/bold${
+            (hackathonTextProvider.textFieldPropertiesMap[hackathonTextProvider.selectedTextFieldKey]!.fontWeight)/100
+          }.svg"),
         ),
         SizedBox(
           width: scaleWidth(context, 2),

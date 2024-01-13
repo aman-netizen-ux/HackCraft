@@ -26,7 +26,7 @@ class TextFormattingWidget extends StatelessWidget {
           onTap: () {
             hackathonTextProvider.toggleTextAlignment();
           },
-          isWidgetClicked: true,
+          isWidgetClicked: false,
           child: Icon(hackathonTextProvider.getAlignmentIcon(), color: Colors.white,)
         ),
         SizedBox(

@@ -33,7 +33,9 @@ class _ToolBarState extends State<ToolBar> {
               color: grey3,
               borderRadius: BorderRadius.circular(rad5_2),
               border: Border.all(color: greyish3)),
-          child: TextPropertiesPanelWidget(hackathonTextProvider: hackathonTextProvider)),
+          child: hackathonTextProvider.selectedTextFieldKey!=null
+          ?TextPropertiesPanelWidget(hackathonTextProvider: hackathonTextProvider)
+          : null),
     );
   }
 }
