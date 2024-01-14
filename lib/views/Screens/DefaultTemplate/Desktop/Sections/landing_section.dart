@@ -26,8 +26,7 @@ class LandingSection extends StatelessWidget {
     final hackathonTextProvider =
         Provider.of<HackathonTextPropertiesProvider>(context);
 
-        var logger = Logger();
-        logger.i('HACK CBS : ${hackathonTextProvider.getTextAlign(defaultTemplateModel!.fields[0].textProperties.align)}');
+       
 
     return Padding(
       key: home,

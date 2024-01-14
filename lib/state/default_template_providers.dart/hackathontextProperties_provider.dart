@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
 import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
-import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
-import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/default_edit_landing_section.dart';
 
 class HackathonTextPropertiesProvider with ChangeNotifier {
   // textFieldPropertiesMap temporary saves all the text properties of every text form field
