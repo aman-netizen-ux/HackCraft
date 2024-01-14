@@ -161,14 +161,7 @@ class _SidePanelState extends State<SidePanel> {
     setState(() {
       _isLoading = true;
     });
-    // if(_isLoading){
-    //    showDialog(
-    //     context: context,
-    //     barrierDismissible: false,
-    //     builder: (BuildContext context) {
-    //       return Center(child: CircularProgressIndicator());
-    //     });
-    // }
+    
     List<Map<String, dynamic>> rounds =
         hackathonDetailsProvider.roundsList.map((round) {
       return {

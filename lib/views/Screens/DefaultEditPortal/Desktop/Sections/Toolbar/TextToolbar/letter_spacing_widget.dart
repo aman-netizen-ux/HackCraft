@@ -28,12 +28,6 @@ class _LetterSpacingWidgetState extends State<LetterSpacingWidget> {
     // TODO: implement initState
     super.initState();
     lineSpacingController = TextEditingController();
-    final hackathonTextProvider =
-        Provider.of<HackathonTextPropertiesProvider>(context, listen: false);
-    if (hackathonTextProvider.selectedTextFieldKey != null) {
-      int currentSpacing = hackathonTextProvider.getLetterSpacing();
-      lineSpacingController.text = currentSpacing.toString();
-    }
   }
 
   @override
@@ -56,15 +50,16 @@ class _LetterSpacingWidgetState extends State<LetterSpacingWidget> {
   @override
   Widget build(BuildContext context) {
     final hackathonTextProvider =
-        Provider.of<HackathonTextPropertiesProvider>(context);
+        Provider.of<HackathonTextPropertiesProvider>(context, listen: true);
+    if (hackathonTextProvider.selectedTextFieldKey != null) {
+      int currentSpacing = hackathonTextProvider.getLetterSpacing();
+      lineSpacingController.text = currentSpacing.toString();
+    }
     return Tooltip(
       verticalOffset: 5,
       decoration: const ShapeDecoration(
         shape: ToolTipCustomDecoration(
-          side: TooltipSide.top,
-          borderColor: greyish3,
-          borderWidth: 0
-        ),
+            side: TooltipSide.top, borderColor: greyish3, borderWidth: 0),
         color: greyish7,
       ),
       message: "Letter Spacing",

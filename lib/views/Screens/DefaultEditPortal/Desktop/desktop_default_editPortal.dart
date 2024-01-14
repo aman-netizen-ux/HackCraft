@@ -22,10 +22,10 @@ class _DefaultEditPortalDesktopBodyState
     return GestureDetector(
       onTap: () {
         final hackathonTextProvider =
-            Provider.of<HackathonTextPropertiesProvider>(context,
-                listen: false);
+        Provider.of<HackathonTextPropertiesProvider>(context, listen: false);
 
-        hackathonTextProvider.selectedTextFieldKey = null;
+        hackathonTextProvider.selectedTextFieldKey=null;
+
         if (hackathonTextProvider.isTextColorSelected) {
           hackathonTextProvider.setIsTextColorSelected();
         }
@@ -35,7 +35,6 @@ class _DefaultEditPortalDesktopBodyState
         if (hackathonTextProvider.isBoldSelected) {
           hackathonTextProvider.setBoldSelection();
         }
-
       },
       child: Row(
         children: [
