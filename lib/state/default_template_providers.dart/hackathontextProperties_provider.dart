@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
 import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/default_edit_landing_section.dart';
@@ -127,7 +128,6 @@ value for thin is 100; so taking the value 100 , if thin is selected */
 
 Color getPrimaryColor(Color color) {
   if (color is MaterialColor) {
-    print(color[500] ?? color);
     return color[500] ?? color; // Return the primary color if it's a MaterialColor
   } else {
     return color; // Return the color itself if it's not a MaterialColor
@@ -148,7 +148,8 @@ Color getPrimaryColor(Color color) {
           throw FormatException("Invalid format");
         }
       } catch (e) {
-        print('Error converting string to color: $e');
+        var logger = Logger();
+        logger.e('Error converting string to color: $e');
         // Return a default color in case of an error
         return Colors.black; // Default color
       }

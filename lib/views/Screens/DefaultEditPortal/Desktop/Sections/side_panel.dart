@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:logger/logger.dart';
 import 'package:major_project__widget_testing/api/post_default_hackathon.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
@@ -53,8 +54,6 @@ class _SidePanelState extends State<SidePanel> {
       return Center(child: CircularProgressIndicator());
     }
 
-
-
     return Padding(
       padding: EdgeInsets.symmetric(vertical: scaleHeight(context, 45)),
       child: Column(
@@ -63,7 +62,8 @@ class _SidePanelState extends State<SidePanel> {
           PopupMenuButton<String>(
               offset: Offset(scaleWidth(context, 50), 0),
               onSelected: (String result) {
-                print(result);
+                var logger = Logger();
+                logger.i(result);
                 if (result == 'SavePreview') {
                   // if (widget.formKey.currentState!.validate()) {
                   widget.formKey.currentState!.save();
@@ -132,18 +132,15 @@ class _SidePanelState extends State<SidePanel> {
   void previewFunction(
       RulesProvider rulesProvider,
       HackathonDetailsProvider hackathonDetailsProvider,
-      HackathonTextPropertiesProvider hackathonTextPropertiesProvider
-      ) {
+      HackathonTextPropertiesProvider hackathonTextPropertiesProvider) {
     rulesProvider.setSelectedIndex(-1);
     rulesProvider.setDescriptionWidget(
         SvgPicture.asset('assets/images/defaultTemplate/clickme.svg'));
 
-    List<TextFieldPropertiesArray> fields= hackathonTextPropertiesProvider.getTextProperties();
+    List<TextFieldPropertiesArray> fields =
+        hackathonTextPropertiesProvider.getTextProperties();
     //  following is to add roundsTextProperties according to their key in the above defined fields list
-     fields= hackathonTextPropertiesProvider.addRoundsTextProperties(fields);
-
- 
-    
+    fields = hackathonTextPropertiesProvider.addRoundsTextProperties(fields);
 
     hackathonDetailsProvider.textFields = fields;
 
@@ -183,12 +180,10 @@ class _SidePanelState extends State<SidePanel> {
       };
     }).toList();
 
-    List<TextFieldPropertiesArray> fields= hackathonTextPropertiesProvider.getTextProperties();
+    List<TextFieldPropertiesArray> fields =
+        hackathonTextPropertiesProvider.getTextProperties();
     //  following is to add roundsTextProperties according to their key in the above defined fields list
-    fields= hackathonTextPropertiesProvider.addRoundsTextProperties(fields);
-
-    
-    
+    fields = hackathonTextPropertiesProvider.addRoundsTextProperties(fields);
 
     final hackathonId = await CreateHackathon().postSingleHackathon({
       "hackathon": {

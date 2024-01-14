@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:major_project__widget_testing/api/Registartion/fetchRegistration.dart';
 import 'package:major_project__widget_testing/models/Registration/customField.dart';
+
+var logger = Logger();
 
 //This provider is for the registration section.
 class GetRegistrationFormProvider with ChangeNotifier {
@@ -17,7 +20,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
       if (response.containsKey('form') && response['form'].isNotEmpty) {
         _formData = response['form'][0];
       } else {
-        debugPrint("Form data is empty or not found");
+        logger.i("Form data is empty or not found");
       }
 
       if (response.containsKey('custom_fields')) {
@@ -28,13 +31,13 @@ class GetRegistrationFormProvider with ChangeNotifier {
               .toList();
           notifyListeners();
         } else {
-          debugPrint("Custom fields are empty or null");
+          logger.i("Custom fields are empty or null");
         }
       } else {
-        debugPrint("Custom fields key not found in response");
+        logger.i("Custom fields key not found in response");
       }
     } catch (e) {
-      debugPrint("Error fetching registration form: $e");
+      logger.e("Error fetching registration form: $e");
     }
   }
 }

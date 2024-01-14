@@ -81,10 +81,10 @@ class _DefaultRoundsDescriptionState extends State<DefaultRoundsDescription> {
     final rulesProvider = Provider.of<RulesProvider>(context);
     final hackathonDetailsProvider =
         Provider.of<HackathonDetailsProvider>(context);
-
+       
         print(hackathonDetailsProvider.roundsList[rulesProvider.editSelectedIndex]
           .description);
-
+        
          
 
     final hackathonTextPropertiesProvider =

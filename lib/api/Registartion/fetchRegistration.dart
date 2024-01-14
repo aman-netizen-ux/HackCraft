@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 
 class ApiService {
   getRegistration(String uId) async {
@@ -20,7 +21,8 @@ class ApiService {
         return {};
       }
     } catch (e) {
-      debugPrint("Error message : $e");
+      var logger = Logger();
+      logger.e("Error message : $e");
       return {};
     }
   }

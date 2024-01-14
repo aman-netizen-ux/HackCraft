@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logger/logger.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
@@ -26,7 +27,8 @@ class LandingSection extends StatelessWidget {
     final hackathonTextProvider =
         Provider.of<HackathonTextPropertiesProvider>(context);
 
-        print('HACK CBS : ${hackathonTextProvider.getTextAlign(defaultTemplateModel!.fields[0].textProperties.align)}');
+        var logger = Logger();
+        logger.i('HACK CBS : ${hackathonTextProvider.getTextAlign(defaultTemplateModel!.fields[0].textProperties.align)}');
 
     return Padding(
       key: home,

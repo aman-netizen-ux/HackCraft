@@ -36,7 +36,8 @@ class TextFormattingWidget extends StatelessWidget {
         //   child: SvgPicture.asset("assets/icons/defaultEditPortal/.svg"),
         //   message: "List",
         //   onTap: () {
-        //     print('bullets');
+        //     var logger = Logger();
+        //     logger.i('bullets');
         //   },
         // ),
         // SizedBox(

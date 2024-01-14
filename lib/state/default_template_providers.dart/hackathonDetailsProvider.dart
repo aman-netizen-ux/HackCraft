@@ -1,12 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:provider/provider.dart';
 
 class HackathonDetailsProvider with ChangeNotifier {
+  var logger = Logger();
 //not being used currently
   List<Round> _temporaryRoundList = [
     Round(
@@ -30,7 +32,8 @@ class HackathonDetailsProvider with ChangeNotifier {
       _temporaryRoundList[index].description = newDescription;
       notifyListeners();
     } else {
-      print("Invalid index");
+      
+      logger.w("Invalid index");
     }
   }
 
@@ -68,7 +71,7 @@ class HackathonDetailsProvider with ChangeNotifier {
       _hackathonDetails.rounds.removeAt(index);
       notifyListeners();
     } else {
-      debugPrint("Invalid index");
+      logger.w("Invalid index");
     }
   }
 
@@ -78,7 +81,7 @@ class HackathonDetailsProvider with ChangeNotifier {
       _temporaryRoundList.removeAt(index);
       notifyListeners();
     } else {
-      debugPrint("Invalid index");
+      logger.w("Invalid index");
     }
   }
 
@@ -88,7 +91,7 @@ class HackathonDetailsProvider with ChangeNotifier {
       _hackathonDetails.rounds[index].description = newDescription;
       notifyListeners();
     } else {
-      debugPrint("Invalid index");
+      logger.w("Invalid index");
     }
   }
 
@@ -97,7 +100,7 @@ class HackathonDetailsProvider with ChangeNotifier {
       _hackathonDetails.rounds[index].name = newTitle;
       notifyListeners();
     } else {
-      print("Invalid index");
+      logger.w("Invalid index");
     }
   }
 
@@ -107,7 +110,7 @@ class HackathonDetailsProvider with ChangeNotifier {
       _temporaryRoundList[index].name = newTile;
       notifyListeners();
     } else {
-      print("Invalid index");
+      logger.w("Invalid index");
     }
   }
 
@@ -116,7 +119,7 @@ class HackathonDetailsProvider with ChangeNotifier {
       _hackathonDetails.rounds[index].startTimeline = startDate;
       notifyListeners();
     } else {
-      debugPrint("Invalid index");
+      logger.w("Invalid index");
     }
   }
 
@@ -125,7 +128,7 @@ class HackathonDetailsProvider with ChangeNotifier {
       _hackathonDetails.rounds[index].endTimeline = endDate;
       notifyListeners();
     } else {
-      debugPrint("Invalid index");
+      logger.w("Invalid index");
     }
   }
 

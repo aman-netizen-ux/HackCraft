@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 
 class CreateHackathon {
+  var logger = Logger();
   //Get All the Hackathons
   postSingleHackathon(Map<String, dynamic> params, BuildContext context) async {
     try {
@@ -23,7 +25,7 @@ class CreateHackathon {
         final Map<String, dynamic> jsonResponse = json.decode(response.body);
 
         id = jsonResponse['hackathon created']['_id'];
-        debugPrint('Hackathon created successfully');
+        logger.i('Hackathon created successfully');
 
         return id;
       } else {
@@ -33,11 +35,11 @@ class CreateHackathon {
           errorMessage += '$k: ${v.join(', ')}\n';
         });
 
-        debugPrint(errorMessage);
+        logger.e(errorMessage);
         return '';
       }
     } catch (e) {
-      debugPrint("Error message : $e");
+      logger.e("Error message : $e");
       return null;
     }
   }

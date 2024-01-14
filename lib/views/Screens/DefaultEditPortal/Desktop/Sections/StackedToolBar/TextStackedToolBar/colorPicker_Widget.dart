@@ -100,7 +100,6 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
                                         hackathonTextProvider
                                             .selectedTextFieldKey!),
                                 onChanged: (value) {
-                                  print(value);
                                   Color primaryColor = hackathonTextProvider
                                       .getPrimaryColor(value);
                                   hackathonTextProvider
@@ -118,7 +117,6 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
                                         hackathonTextProvider
                                             .selectedTextFieldKey!),
                                 onChanged: (value) {
-                                  print(value);
                                   Color primaryColor = hackathonTextProvider
                                       .getPrimaryColor(value);
                                   hackathonTextProvider
@@ -237,8 +235,6 @@ class _ColoPickerCardState extends State<ColoPickerCard> {
                   paletteType: PaletteType.hslWithHue, // have to think
                   pickerAreaHeightPercent: 0.8,
                   onColorChanged: (value) {
-                    color = value;
-                    print(color.toString());
                     hackathonTextProvider.addColor(value);
 
                     hackathonTextProvider.textColorChange(value.toString());
