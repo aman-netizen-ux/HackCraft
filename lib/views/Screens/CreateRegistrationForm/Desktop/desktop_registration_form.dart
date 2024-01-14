@@ -6,6 +6,7 @@ import 'package:major_project__widget_testing/models/Registration/questionModel.
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/addQuestion.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/formQuestion.dart';
+import 'package:major_project__widget_testing/views/Screens/MainNavigation/mainNavigation.dart';
 import 'package:provider/provider.dart';
 
 class RegistrationFormDesktopBody extends StatefulWidget {
@@ -93,7 +94,7 @@ class _RegistrationFormDesktopBodyState
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/');
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MainNavigation()), (Route<dynamic> route) => false);
                 },
                 child: const Text('OK'),
               ),

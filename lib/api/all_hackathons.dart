@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:logger/logger.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -18,10 +19,12 @@ class hackathons {
 
       if (response.statusCode == 200) {
         List<dynamic> jsonResponse = json.decode(response.body);
-        hackathonsList = jsonResponse.map((json) => HackathonModel.fromJson(json)).toList();
+        hackathonsList =
+            jsonResponse.map((json) => HackathonModel.fromJson(json)).toList();
       }
     } catch (e) {
-      print("Error getting hackathons: $e");
+      var logger = Logger();
+      logger.e("Error getting hackathons: $e");
     }
     return hackathonsList;
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
+import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/RoundsSection/roundCard.dart';
 import 'package:timeline_tile/timeline_tile.dart';
@@ -9,10 +10,13 @@ class CustomTimelineTile extends StatelessWidget {
   final bool isLast;
   //final bool isPast;
   final String roundTitle;
+  final TextFieldProperties roundTitleTextProperties;
   final int cardIndex;
   final String roundDescription;
   final String endDate;
   final String startDate;
+  final TextFieldProperties endDateTextProperties; 
+  final TextFieldProperties startDateTextProperties;
   final void Function()? onTap;
   const CustomTimelineTile(
       {super.key,
@@ -23,7 +27,7 @@ class CustomTimelineTile extends StatelessWidget {
       required this.roundDescription,
       required this.endDate,
       required this.startDate,
-      this.onTap, required this.cardIndex});
+      this.onTap, required this.cardIndex, required this.roundTitleTextProperties, required this.endDateTextProperties, required this.startDateTextProperties});
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +46,11 @@ class CustomTimelineTile extends StatelessWidget {
       endChild: RoundCard(
         index: cardIndex,
           title: roundTitle,
+          titleTextProperties: roundTitleTextProperties,
           enddate: endDate,
           startDate: startDate,
+          endDateTextProperties: endDateTextProperties,
+          startDateTextProperties: startDateTextProperties,
           onTap: onTap),
     );
   }

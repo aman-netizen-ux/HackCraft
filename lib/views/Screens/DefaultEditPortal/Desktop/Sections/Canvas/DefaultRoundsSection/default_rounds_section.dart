@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
+import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
@@ -92,6 +93,8 @@ class DefaultRoundsAndRules extends StatelessWidget {
                  InkWell(
                 onTap: (){
                   hackathonDetailsProvider.increaseRoundsCount();
+                  addGlobalKeys(hackathonDetailsProvider.roundsList.length - 1);
+                  hackathonDetailsProvider.addTextPropertiesInFields();
                   // hackathonDetailsProvider.increaseTemproraryRoundsCount();
                 },
                 child: DottedBorder(

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
 import 'package:major_project__widget_testing/state/defaulttemplateProvider.dart';
-import 'package:major_project__widget_testing/state/hackathonDetailsProvider.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/DefaultRoundsSection/default_rounds_section.dart';
@@ -83,11 +84,14 @@ class _DefaultCanvasState extends State<DefaultCanvas> {
     final hackathonDetailsProvider =
         Provider.of<HackathonDetailsProvider>(context);
 
+     final hackathonTextProvider =
+        Provider.of<HackathonTextPropertiesProvider>(context);
+
     return Expanded(
       flex: 8698,
       child: Container(
         //TODO: will change this color afterwards
-        color: Colors.white,
+        color: grey4,
         height: double.infinity,
         width: double.infinity,
         child: Form(
@@ -95,6 +99,8 @@ class _DefaultCanvasState extends State<DefaultCanvas> {
             child: SingleChildScrollView(
               controller: _scrollController,
               child: Column(children: [
+
+                
                 Container(
                     key: homeEdit,
                     color: Colors.white,
@@ -109,7 +115,7 @@ class _DefaultCanvasState extends State<DefaultCanvas> {
                       ],
                     )),
                 Container(
-                  key: rulesAndRoundsEdit,
+                   key: rulesAndRoundsEdit,
                   color: Colors.white,
                   child: DefaultRoundsAndRules(
                       containerHeight: whiteContainerHeight,
@@ -123,7 +129,7 @@ class _DefaultCanvasState extends State<DefaultCanvas> {
                       containerWidth: whiteContainerWidth),
                 ),
                 Container(
-                  key: galleryEdit,
+                key: galleryEdit,
                   color: Colors.white,
                   child: DefaultEditGallerySection(
                       containerHeight: whiteContainerHeight,

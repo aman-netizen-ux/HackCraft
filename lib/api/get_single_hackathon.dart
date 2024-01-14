@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
 
 class GetSingleHackathon {
@@ -24,7 +25,9 @@ class GetSingleHackathon {
         return null;
       }
     } catch (e) {
-      debugPrint("Error message : $e");
+      
+      var logger = Logger();
+      logger.e("Error message : $e");
       return null;
     }
   }

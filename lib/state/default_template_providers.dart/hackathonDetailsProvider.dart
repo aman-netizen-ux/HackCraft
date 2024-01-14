@@ -1,128 +1,15 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:provider/provider.dart';
 
 class HackathonDetailsProvider with ChangeNotifier {
-//   String  _hackathonName= "";
-//   String _hackathonDescription = "";
-//   String _hackathonDate = ""; //TODO: Need to be discussed the type of date
-//   String _hackathonModeOfConduct = "";
-//   String _hackathonFee = "";
-//   int _hackathonTeamSize = 0;
-//   String _hackathonVenue = "";
-//   String _hackathonAbout="";
-//   String _contactMemberName1="";
-//   String _contactMemberName2="";
-//   String _contactMeberNumber1="";
-//   String _contactMeberNumber2="";
-
-// //Hackathon Name
-//   String get hackathonName => _hackathonName;
-
-//   set hackathonName(String name) {
-//     _hackathonName = name;
-//     notifyListeners();
-//   }
-
-//   //Hackathon Description
-//   String get hackathonDescription => _hackathonDescription;
-
-//   set hackathonDescription(String desc) {
-//     _hackathonDescription = desc;
-//     notifyListeners();
-//   }
-
-//   //Hackathon Date
-//   String get hackathonDate => _hackathonDate;
-
-//   set hackathonDate(String date) {
-//     _hackathonDate = date;
-//     notifyListeners();
-//   }
-
-//   //Hackathon Mode of Conduct
-//   String get hackathonMode => _hackathonModeOfConduct;
-
-//   set hackathonMode(String mode) {
-//     _hackathonModeOfConduct = mode;
-//     notifyListeners();
-//   }
-
-//   //Hackathon Fee
-//   String get hackathonfee => _hackathonFee;
-
-//   set hackathonfee(String fee) {
-//     _hackathonFee = fee;
-//     notifyListeners();
-//   }
-
-//   //Hackathon Team Size
-//   int get hackathonTeamSize => _hackathonTeamSize;
-
-//   set hackathonTeamSize(int size) {
-//     _hackathonTeamSize = size;
-//     notifyListeners();
-//   }
-
-//   //Hackathon Venue
-//   String get hackathonVenue => _hackathonVenue;
-
-//   set hackathonVenue(String venue) {
-//     _hackathonVenue = venue;
-//     notifyListeners();
-//   }
-
-//   //Hackathon About
-//   String get hackathonAbout => _hackathonAbout;
-
-//   set hackathonAbout(String about) {
-//     _hackathonAbout = about;
-//     notifyListeners();
-//   }
-
-//   //Hackathon ContactName 1
-//   String get hackathonContactName1 => _contactMemberName1;
-
-//   set hackathonContactName1(String value) {
-//     _contactMemberName1 = value;
-//     notifyListeners();
-//   }
-
-//     //Hackathon ContactName 1
-//   String get hackathonContactName2 => _contactMemberName2;
-
-//   set hackathonContactName2(String value) {
-//     _contactMemberName2 = value;
-//     notifyListeners();
-//   }
-
-//     //Hackathon ContactName 1
-//   String get hackathonContactNumber1 => _contactMeberNumber1;
-
-//   set hackathonContactNumber1(String value) {
-//     _contactMeberNumber1 = value;
-//     notifyListeners();
-//   }
-
-//     //Hackathon ContactName 1
-//   String get hackathonContactNumber2 => _contactMeberNumber2;
-
-//   set hackathonContactNumber2(String value) {
-//     _contactMeberNumber2 = value;
-//     notifyListeners();
-//   }
-
-//  final List<Round> _roundsList = [
-
-//     Round(serialNumber: 1,
-//     name: "round 1",
-//     description: "Round 1 description",
-//     startTimeline: "2024-12-12",
-//     endTimeline: "2024-12-12")
-//       ];
-
+  var logger = Logger();
+//not being used currently
   List<Round> _temporaryRoundList = [
     Round(
         serialNumber: 1,
@@ -132,18 +19,21 @@ class HackathonDetailsProvider with ChangeNotifier {
         endTimeline: "")
   ];
 
+//not being used currently
   List<Round> get temporaryRoundList => _temporaryRoundList;
   set temporaryRoundList(List<Round> value) {
     _temporaryRoundList = value;
     notifyListeners();
   }
 
+//not being used currently
   void updateTemporaryRoundDescription(int index, String newDescription) {
     if (index >= 0 && index < _temporaryRoundList.length) {
       _temporaryRoundList[index].description = newDescription;
       notifyListeners();
     } else {
-      print("Invalid index");
+      
+      logger.w("Invalid index");
     }
   }
 
@@ -159,7 +49,8 @@ class HackathonDetailsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-void increaseTemproraryRoundsCount() {
+//not being used currently
+  void increaseTemproraryRoundsCount() {
     _temporaryRoundList.add(Round(
         serialNumber: _hackathonDetails.rounds.length + 1,
         name: "",
@@ -172,24 +63,27 @@ void increaseTemproraryRoundsCount() {
   void deleteRound(int index, BuildContext context) {
     if (index >= 0 && index < _hackathonDetails.rounds.length) {
       final rulesProvider = Provider.of<RulesProvider>(context, listen: false);
-      rulesProvider.setEditSelectedIndex(index - 1);
+      rulesProvider.editSelectedIndex == -1
+          ? rulesProvider.setEditSelectedIndex(-1)
+          : rulesProvider.editSelectedIndex == 0
+              ? rulesProvider.setEditSelectedIndex(0)
+              : rulesProvider.setEditSelectedIndex(index - 1);
       _hackathonDetails.rounds.removeAt(index);
       notifyListeners();
     } else {
-      debugPrint("Invalid index");
+      logger.w("Invalid index");
     }
   }
 
+//not being used currently
   void deleteTemproraryRound(int index, BuildContext context) {
     if (index >= 0 && index < _temporaryRoundList.length) {
       _temporaryRoundList.removeAt(index);
       notifyListeners();
     } else {
-      debugPrint("Invalid index");
+      logger.w("Invalid index");
     }
   }
-
-
 
   // Function to update round description
   void updateRoundDescription(int index, String newDescription) {
@@ -197,27 +91,26 @@ void increaseTemproraryRoundsCount() {
       _hackathonDetails.rounds[index].description = newDescription;
       notifyListeners();
     } else {
-      debugPrint("Invalid index");
+      logger.w("Invalid index");
     }
   }
 
-  // Function to update round description
   void updateRoundTitle(int index, String newTitle) {
     if (index >= 0 && index < _hackathonDetails.rounds.length) {
       _hackathonDetails.rounds[index].name = newTitle;
       notifyListeners();
     } else {
-      print("Invalid index");
+      logger.w("Invalid index");
     }
   }
 
-
-  void updateTemporaryRoundTile(int index, String newTile){
-    if(index>=0 && index<_temporaryRoundList.length){
-      _temporaryRoundList[index].name=newTile;
+//not being used currently
+  void updateTemporaryRoundTile(int index, String newTile) {
+    if (index >= 0 && index < _temporaryRoundList.length) {
+      _temporaryRoundList[index].name = newTile;
       notifyListeners();
-    }else{
-      print("Invalid index");
+    } else {
+      logger.w("Invalid index");
     }
   }
 
@@ -226,7 +119,7 @@ void increaseTemproraryRoundsCount() {
       _hackathonDetails.rounds[index].startTimeline = startDate;
       notifyListeners();
     } else {
-      debugPrint("Invalid index");
+      logger.w("Invalid index");
     }
   }
 
@@ -235,7 +128,7 @@ void increaseTemproraryRoundsCount() {
       _hackathonDetails.rounds[index].endTimeline = endDate;
       notifyListeners();
     } else {
-      debugPrint("Invalid index");
+      logger.w("Invalid index");
     }
   }
 
@@ -247,7 +140,7 @@ void increaseTemproraryRoundsCount() {
       organisationName: '',
       modeOfConduct: '',
       deadline: '',
-      teamSize: -1,
+      teamSize: '',
       visible: '',
       startDateTime: '',
       about: '',
@@ -268,7 +161,24 @@ void increaseTemproraryRoundsCount() {
           startTimeline: "",
           endTimeline: "")
     ],
-    fields: [],
+    fields: List.generate(
+      17,
+      (index) => TextFieldPropertiesArray(
+          name: '',
+          type: '',
+          textProperties: TextFieldProperties(
+            size: 0,
+            align: '',
+            font: '',
+            fontWeight: 0,
+            italics: false,
+            letterSpacing: -1,
+            strikethrogh: false,
+            textColor: '',
+            underline: false,
+            upperCase: false,
+          )),
+    ),
     containers: [],
   );
 
@@ -309,9 +219,9 @@ void increaseTemproraryRoundsCount() {
     notifyListeners();
   }
 
-  int get teamSize => _hackathonDetails.hackathons.teamSize;
+  String get teamSize => _hackathonDetails.hackathons.teamSize;
 
-  set teamSize(int value) {
+  set teamSize(String value) {
     _hackathonDetails.hackathons.teamSize = value;
     notifyListeners();
   }
@@ -379,12 +289,51 @@ void increaseTemproraryRoundsCount() {
     notifyListeners();
   }
 
+  List<TextFieldPropertiesArray> get textFields => _hackathonDetails.fields;
 
-  void synchronizeTemporaryRoundListWithRoundsList() {
-  _temporaryRoundList = List.from(_hackathonDetails.rounds);
-  notifyListeners();
+  set textFields(List<TextFieldPropertiesArray> value) {
+    _hackathonDetails.fields = value;
+    notifyListeners();
+  }
+
+  void addTextPropertiesInFields() {
+    _hackathonDetails.fields.addAll(List.generate(
+      4,
+      (index) => TextFieldPropertiesArray(
+          name: '',
+          type: '',
+          textProperties: TextFieldProperties(
+            size: 0,
+            align: '',
+            font: '',
+            fontWeight: 0,
+            italics: false,
+            letterSpacing: -1,
+            strikethrogh: false,
+            textColor: '',
+            underline: false,
+            upperCase: false,
+          )),
+    ));
+  }
+
+
+  void deleteTextPropertiesOfRoundsFromFields(int n) {
+  // Calculate the starting index for deletion
+  int startIndex = 13 + 4 * n;
+
+  // Perform deletion if the starting index is within the list bounds
+  if (startIndex < _hackathonDetails.fields.length) {
+    _hackathonDetails.fields.removeRange(startIndex, min(startIndex + 4, _hackathonDetails.fields.length));
+  }
 }
 
+
+//not being used currently
+  void synchronizeTemporaryRoundListWithRoundsList() {
+    _temporaryRoundList = List.from(_hackathonDetails.rounds);
+    notifyListeners();
+  }
 
   // String get organisationName => _defaultTemplateApiResponse.hackathons.organisationName;
 

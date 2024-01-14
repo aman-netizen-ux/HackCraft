@@ -5,7 +5,7 @@ class Hackathon {
   String organisationName;
   String modeOfConduct;
   String deadline;
-  int teamSize;
+  String teamSize;
   String visible;
   String startDateTime;
   String about;
@@ -56,7 +56,7 @@ class Hackathon {
         organisationName: json['organisation_name'],
         modeOfConduct: json['mode_of_conduct'],
         deadline: json['deadline'],
-        teamSize: json['team_size'],
+        teamSize: json['team_size'].toString(),
         visible: json['visible'],
         startDateTime: json['start_date_time'],
         about: json['about'],
@@ -138,20 +138,88 @@ class Round {
 }
 
 class TextFieldProperties {
-  TextFieldProperties();
+  String font;
+  int size;
+  String textColor;
+  int fontWeight;
+  bool italics;
+  bool underline;
+  bool strikethrogh;
+  bool upperCase;
+  String align;
+  int letterSpacing;
+
+  TextFieldProperties(
+      {
+        required this.font,
+      required this.size,
+      required this.textColor,
+      required this.fontWeight,
+      required this.italics,
+      required this.underline,
+      required this.strikethrogh,
+      required this.upperCase,
+      required this.align,
+      required this.letterSpacing
+      });
+
   factory TextFieldProperties.fromJson(Map<String, dynamic> json) {
-    return TextFieldProperties();
+    return TextFieldProperties(
+      font: json['font'],
+      size: json['size'],
+      textColor: json['text_color'],
+      fontWeight: json['font_weight'],
+      italics: json['italics'],
+      underline: json['underline'],
+      strikethrogh: json['strikethrogh'],
+      upperCase: json['upper_case'],
+      align: json['align'],
+      letterSpacing: json['letter_spacing'],
+    );
   }
 
   Map<String, dynamic> toJson() {
-    return {};
+    return {
+      'font': font,
+      'size': size,
+      'text_color': textColor,
+      'font_weight': fontWeight,
+      'italics': italics,
+      'underline': underline,
+      'strikethrogh': strikethrogh,
+      'upper_case': upperCase,
+      'align': align,
+      'letter_spacing': letterSpacing
+    };
   }
 }
 
-class ContainerProperties {
-  ContainerProperties();
-  factory ContainerProperties.fromJson(Map<String, dynamic> json) {
-    return ContainerProperties();
+class TextFieldPropertiesArray {
+  String type;
+  String name;
+  TextFieldProperties textProperties;
+  TextFieldPropertiesArray({
+    required this.type,
+    required this.textProperties,
+    required this.name
+  });
+  factory TextFieldPropertiesArray.fromJson(Map<String, dynamic> json) {
+    return TextFieldPropertiesArray(
+        textProperties: TextFieldProperties.fromJson(json['properties']),
+        name: json['name'],
+        type: json['type']);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'type': type,
+    'name': name, 'properties': textProperties.toJson()};
+  }
+}
+
+class ContainerPropertiesArray {
+  ContainerPropertiesArray();
+  factory ContainerPropertiesArray.fromJson(Map<String, dynamic> json) {
+    return ContainerPropertiesArray();
   }
 
   Map<String, dynamic> toJson() {

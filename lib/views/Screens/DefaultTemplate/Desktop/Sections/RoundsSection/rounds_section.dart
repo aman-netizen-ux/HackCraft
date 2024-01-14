@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
+import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
@@ -75,13 +76,21 @@ class RoundsAndRules extends StatelessWidget {
                             isLast:
                                defaultTemplateModel!.rounds.length - 1 == index,
                             roundTitle:  defaultTemplateModel!.rounds[index].name,
+                             roundTitleTextProperties: defaultTemplateModel!.fields[4*index+8].textProperties,//4*index+13
                             roundDescription: defaultTemplateModel!.rounds[index].description,
-                            endDate: extractDate(defaultTemplateModel!.rounds[index].endTimeline),
-                            startDate: extractDate(defaultTemplateModel!.rounds[index].startTimeline),                             
+                            endDate:defaultTemplateModel!.rounds[index].endTimeline==''
+                          ? ''
+                          :extractDate(defaultTemplateModel!.rounds[index].endTimeline),
+                            startDate:defaultTemplateModel!.rounds[index].startTimeline==''
+                          ? ''
+                          :extractDate(defaultTemplateModel!.rounds[index].startTimeline),  
+                          endDateTextProperties: defaultTemplateModel!.fields[4*index+11].textProperties,//4*index+16
+                          startDateTextProperties: defaultTemplateModel!.fields[4*index+10].textProperties,//4*index+15                         
                             onTap: () {
                               rulesProvider.setSelectedIndex(index);
                               rulesProvider.setDescriptionWidget(roundDetails(
                                   defaultTemplateModel!.rounds[index].description,
+                                   defaultTemplateModel!.fields[4*index+9].textProperties,//4*index+14
                                   context));
                             },
                           );
@@ -99,7 +108,7 @@ class RoundsAndRules extends StatelessWidget {
 
 
 //This widget was created in order to show the description of the round after clicking on any round card.
-  Widget roundDetails(String roundDetails, BuildContext context) {
-    return RoundsDescription(description : roundDetails);
+  Widget roundDetails(String roundDetails, TextFieldProperties decriptionProperties, BuildContext context) {
+    return RoundsDescription(description : roundDetails, decriptionProperties: decriptionProperties,);
   }
 }
