@@ -23,10 +23,18 @@ class _DefaultEditPortalDesktopBodyState
       onTap: (){
         final hackathonTextProvider =
         Provider.of<HackathonTextPropertiesProvider>(context, listen: false);
-        print(hackathonTextProvider.selectedTextFieldKey);
 
         hackathonTextProvider.selectedTextFieldKey=null;
-        print(hackathonTextProvider.selectedTextFieldKey);
+
+        if (hackathonTextProvider.isTextColorSelected) {
+          hackathonTextProvider.setIsTextColorSelected();
+        }
+        if (hackathonTextProvider.isColorPickerSelected) {
+          hackathonTextProvider.setIsColorPickerSelected();
+        }
+        if (hackathonTextProvider.isBoldSelected) {
+          hackathonTextProvider.setBoldSelection();
+        }
       },
       child: Row(
         children: [

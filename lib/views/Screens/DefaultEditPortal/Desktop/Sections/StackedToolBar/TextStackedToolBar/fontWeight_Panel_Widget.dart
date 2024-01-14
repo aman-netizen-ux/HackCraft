@@ -32,13 +32,14 @@ class _FontWeightPanelWidgetState extends State<FontWeightPanelWidget> {
   Widget build(BuildContext context) {
     return Container(
         height: scaleHeight(context, 60),
-        width: scaleWidth(context, 770),
+        //width: scaleWidth(context, 770),
         decoration: BoxDecoration(
             color: grey3,
             borderRadius: BorderRadius.circular(rad5_2),
             border: Border.all(color: greyish3)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: List<Widget>.generate(
             fontWeights.length * 2 - 1,
             (index) => index % 2 == 0

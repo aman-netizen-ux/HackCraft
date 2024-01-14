@@ -1,13 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:major_project__widget_testing/constants/colors.dart';
-import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
-import 'package:major_project__widget_testing/utils/scaling.dart';
-import 'package:major_project__widget_testing/views/Components/custom_colorPicker.dart';
-import 'package:major_project__widget_testing/views/Components/custom_swatchPicker.dart';
-import 'package:major_project__widget_testing/views/Components/toolTip_custom_decoration.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/StackedToolBar/TextStackedToolBar/colorPicker_Widget.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/StackedToolBar/TextStackedToolBar/fontWeight_Panel_Widget.dart';
 import 'package:provider/provider.dart';

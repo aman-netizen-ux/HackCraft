@@ -131,24 +131,8 @@ class _SidePanelState extends State<SidePanel> {
     rulesProvider.setDescriptionWidget(
         SvgPicture.asset('assets/images/defaultTemplate/clickme.svg'));
 
-    //saving the text properties in _hackathonDetails ->field in provider
-    hackathonDetailsProvider.textFields = [
-      // TextFieldPropertiesArray is the representation of every objects in the fields in api
-      TextFieldPropertiesArray(
-        name: 'Org',
-        type: 'text', 
-        /* textProperties contains all the properties of the single text        
-         hackathonTextPropertiesProvider.textFieldPropertiesMap[organisationKey]! gives 
-         all the text properties of TextFieldProperties type  in {} format 
-        and putting these values in textProperties  */
-        textProperties: hackathonTextPropertiesProvider.textFieldPropertiesMap[organisationKey]!
-        ),
-        TextFieldPropertiesArray(
-          name: 'Hackathon Name',
-        type: 'text', 
-        textProperties: hackathonTextPropertiesProvider.textFieldPropertiesMap[hackathonNameKey]!
-        )
-    ];
+    List<TextFieldPropertiesArray> fields= hackathonTextPropertiesProvider.getTextProperties();
+    hackathonDetailsProvider.textFields = fields;
 
     Navigator.push(
       context,
@@ -165,14 +149,7 @@ class _SidePanelState extends State<SidePanel> {
     setState(() {
       _isLoading = true;
     });
-    // if(_isLoading){
-    //    showDialog(
-    //     context: context,
-    //     barrierDismissible: false,
-    //     builder: (BuildContext context) {
-    //       return Center(child: CircularProgressIndicator());
-    //     });
-    // }
+    
     List<Map<String, dynamic>> rounds =
         hackathonDetailsProvider.roundsList.map((round) {
       return {
@@ -184,20 +161,7 @@ class _SidePanelState extends State<SidePanel> {
       };
     }).toList();
 
-
-   // made the field variable to pass in api giving the values to field like we are passing above(check preview fields for more)
-    List<TextFieldPropertiesArray> fields= [
-      TextFieldPropertiesArray(
-        type: 'text', 
-        name: 'Org',
-        textProperties: hackathonTextPropertiesProvider.textFieldPropertiesMap[organisationKey]!
-        ),
-        TextFieldPropertiesArray(
-        type: 'text', 
-        name: 'Hackathon name',
-        textProperties: hackathonTextPropertiesProvider.textFieldPropertiesMap[hackathonNameKey]!
-        )
-    ];
+   List<TextFieldPropertiesArray> fields= hackathonTextPropertiesProvider.getTextProperties();
 
     final hackathonId = await CreateHackathon().postSingleHackathon({
       "hackathon": {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
+import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/default_edit_landing_section.dart';
 
 class HackathonTextPropertiesProvider with ChangeNotifier {
@@ -496,6 +497,21 @@ String reconstructText(String originalText, String currentText) {
     }
   }
 
+  AlignmentGeometry getTextAlignForContainer(String align){
+    switch(align){
+      case 'left':
+        return Alignment.centerLeft;
+      case 'right':
+        return Alignment.centerRight;
+      case 'center':
+        return Alignment.center;
+      case 'justify':
+        return Alignment.centerLeft;
+      default:
+        return Alignment.center;
+    }
+  }
+
   //Set lineSpacing value
   // void setLineSpacing(int spacing) {
   //   if (_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
@@ -536,4 +552,73 @@ String reconstructText(String originalText, String currentText) {
     }
     return false;
   }
+
+  List<TextFieldPropertiesArray> getTextProperties(){
+  //saving the text properties in _hackathonDetails ->field in provider
+//or to pass in api giving the values to field
+    return [
+      // TextFieldPropertiesArray is the representation of every objects in the fields in api
+      TextFieldPropertiesArray(
+          name: 'Organization',
+          type: 'text',
+          /* textProperties contains all the properties of the single text        
+         hackathonTextPropertiesProvider.textFieldPropertiesMap[organisationKey]! gives 
+         all the text properties of TextFieldProperties type  in {} format 
+        and putting these values in textProperties  */
+          textProperties:textFieldPropertiesMap[organisationKey]!),
+      TextFieldPropertiesArray(
+          name: 'Hackathon Name',
+          type: 'text',
+          textProperties: textFieldPropertiesMap[hackathonNameKey]!),
+      TextFieldPropertiesArray(
+        name: 'brief',
+        type: 'text',
+        textProperties: textFieldPropertiesMap[briefKey]!),
+      TextFieldPropertiesArray(
+          name: 'hackathonStartDate',
+          type: 'text',
+          textProperties: textFieldPropertiesMap[hackathonStartDateKey]!),
+      TextFieldPropertiesArray(
+          name: 'Mode Of Conduct',
+          type: 'text',
+          textProperties: textFieldPropertiesMap[modeOfConductKey]!),
+      TextFieldPropertiesArray(
+          name: 'Participation Fee',
+          type: 'text',
+          textProperties: textFieldPropertiesMap[participationFeeKey]!),
+      TextFieldPropertiesArray(
+          name: 'teamSize',
+          type: 'text',
+          textProperties: textFieldPropertiesMap[teamSizeKey]!),
+      TextFieldPropertiesArray(
+          name: 'venue',
+          type: 'text',
+          textProperties: textFieldPropertiesMap[venueKey]!),
+      // TextFieldPropertiesArray(
+      //     name: 'descriptionKey',
+      //     type: 'text',
+      //     textProperties: hackathonTextPropertiesProvider
+      //         .textFieldPropertiesMap[descriptionKey]!),
+      // TextFieldPropertiesArray(
+      //     name: 'contactName1Key',
+      //     type: 'text',
+      //     textProperties: hackathonTextPropertiesProvider
+      //         .textFieldPropertiesMap[contactName1Key]!),
+      // TextFieldPropertiesArray(
+      //     name: 'contactName2Key',
+      //     type: 'text',
+      //     textProperties: hackathonTextPropertiesProvider
+      //         .textFieldPropertiesMap[contactName2Key]!),
+      // TextFieldPropertiesArray(
+      //     name: 'contactNumber1Key',
+      //     type: 'text',
+      //     textProperties: hackathonTextPropertiesProvider
+      //         .textFieldPropertiesMap[contactNumber1Key]!),
+      // TextFieldPropertiesArray(
+      //     name: 'contactNumber2Key',
+      //     type: 'text',
+      //     textProperties: hackathonTextPropertiesProvider
+      //         .textFieldPropertiesMap[contactNumber2Key]!)
+    ];
+}
 }
