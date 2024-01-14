@@ -3,10 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
+import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
+import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
+import 'package:major_project__widget_testing/utils/upperCaseTextFormatter.dart';
 import 'package:provider/provider.dart';
 
 // This file was created in order to create the card for the rounds section.
@@ -33,10 +37,9 @@ class DefaultRoundCard extends StatefulWidget {
 }
 
 class _DefaultRoundCardState extends State<DefaultRoundCard> {
-
-   late TextEditingController roundNameController;
-   late TextEditingController roundStartDateController;
-   late TextEditingController roundEndDateController;
+  late TextEditingController roundNameController;
+  late TextEditingController roundStartDateController;
+  late TextEditingController roundEndDateController;
 
   @override
   void initState() {
@@ -47,6 +50,94 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
     roundStartDateController = TextEditingController();
     roundEndDateController = TextEditingController();
 
+    final hackathonTextPropertiesProvider =
+        Provider.of<HackathonTextPropertiesProvider>(context, listen: false);
+
+    final hackathonDetailsProvider =
+        Provider.of<HackathonDetailsProvider>(context, listen: false);
+
+    hackathonTextPropertiesProvider.textFieldPropertiesMap[
+        roundGlobalKeysMap[widget.index]!['roundName']!] = TextFieldProperties(
+      size: 20,
+      //size: hackathonDetailsProvider.hackathonDetails.fields[0].textProperties.size,
+      align: 'left',
+      font: 'Fira Sans',
+      fontWeight: 400,
+      italics: false,
+      letterSpacing: 0,
+      strikethrogh: false,
+      textColor: 'Color(0xFF1A202C);',
+      underline: false,
+      upperCase: false,
+    );
+
+    hackathonTextPropertiesProvider.textFieldPropertiesMap[
+            roundGlobalKeysMap[widget.index]!['roundStartDate']!] =
+        TextFieldProperties(
+      size: 20,
+      //size: hackathonDetailsProvider.hackathonDetails.fields[0].textProperties.size,
+      align: 'left',
+      font: 'Fira Sans',
+      fontWeight: 400,
+      italics: false,
+      letterSpacing: 0,
+      strikethrogh: false,
+      textColor: 'Color(0xFF1A202C);',
+      underline: false,
+      upperCase: false,
+    );
+
+    hackathonTextPropertiesProvider.textFieldPropertiesMap[
+            roundGlobalKeysMap[widget.index]!['roundEndDate']!] =
+        TextFieldProperties(
+      size: 20,
+      //size: hackathonDetailsProvider.hackathonDetails.fields[0].textProperties.size,
+      align: 'left',
+      font: 'Fira Sans',
+      fontWeight: 400,
+      italics: false,
+      letterSpacing: 0,
+      strikethrogh: false,
+      textColor: 'Color(0xFF1A202C);',
+      underline: false,
+      upperCase: false,
+    );
+
+
+final rulesProvider = Provider.of<RulesProvider>(context, listen: false);
+
+    hackathonTextPropertiesProvider.textFieldPropertiesMap[
+        roundGlobalKeysMap[widget.index]!['roundDescription']!] = TextFieldProperties(
+      size: 16, //size is +1 in comparison to normal text whose fontsize was 15
+      //size: hackathonDetailsProvider.hackathonDetails.fields[0].textProperties.size,
+      align: 'center',
+      font: 'Fira Sans',
+      fontWeight: 400,
+      italics: false,
+      letterSpacing: 0,
+      strikethrogh: false,
+      textColor: 'Color(0xFF564A4A);',
+      underline: false,
+      upperCase: false,
+    );
+
+
+    if (hackathonDetailsProvider.roundsList[widget.index].name.isNotEmpty) {
+      roundNameController.text =
+          hackathonDetailsProvider.roundsList[widget.index].name;
+    }
+
+    if (hackathonDetailsProvider
+        .roundsList[widget.index].startTimeline.isNotEmpty) {
+      roundStartDateController.text =
+          hackathonDetailsProvider.roundsList[widget.index].startTimeline;
+    }
+
+    if (hackathonDetailsProvider
+        .roundsList[widget.index].endTimeline.isNotEmpty) {
+      roundEndDateController.text =
+          hackathonDetailsProvider.roundsList[widget.index].endTimeline;
+    }
   }
 
   @override
@@ -65,26 +156,21 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
     final hackathonDetailsProvider =
         Provider.of<HackathonDetailsProvider>(context);
 
-   
+    final hackathonTextPropertiesProvider =
+        Provider.of<HackathonTextPropertiesProvider>(context);
 
-    if (hackathonDetailsProvider.roundsList[widget.index].name.isNotEmpty) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      hackathonTextPropertiesProvider.convertAndRevertBackFromUpperCase(
+          roundNameController, roundGlobalKeysMap[widget.index]!['roundName']!);
 
-      roundNameController.text = hackathonDetailsProvider.roundsList[widget.index].name;
-    }
+      hackathonTextPropertiesProvider.convertAndRevertBackFromUpperCase(
+          roundStartDateController,
+          roundGlobalKeysMap[widget.index]!['roundStartDate']!);
 
-
-
-
-
-
-    if (hackathonDetailsProvider.roundsList[widget.index].startTimeline.isNotEmpty) {
-      roundStartDateController.text = hackathonDetailsProvider.roundsList[widget.index].startTimeline;
-    }
-
-
-    if (hackathonDetailsProvider.roundsList[widget.index].endTimeline.isNotEmpty) {
-      roundEndDateController.text = hackathonDetailsProvider.roundsList[widget.index].endTimeline;
-    }
+      hackathonTextPropertiesProvider.convertAndRevertBackFromUpperCase(
+          roundEndDateController,
+          roundGlobalKeysMap[widget.index]!['roundEndDate']!);
+    });
 
     return InkWell(
       hoverColor: Colors.white,
@@ -128,14 +214,21 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
                       //Title of the round
                       child: Container(
                         // height: defaultEditScaleHeight(widget.containerHeight, 30),
-                        width: defaultEditScaleWidth(widget.containerWidth, 150),
+                        width:
+                            defaultEditScaleWidth(widget.containerWidth, 150),
                         alignment: Alignment.topLeft,
                         margin: EdgeInsets.only(
-                         top: defaultEditScaleHeight(widget.containerHeight, 35)
-                        ),
-                        
+                            top: defaultEditScaleHeight(
+                                widget.containerHeight, 28)),
+
                         // color: Colors.amberAccent[100],
                         child: TextFormField(
+                          key: roundGlobalKeysMap[widget.index]!['roundName']!,
+                          textAlign: hackathonTextPropertiesProvider
+                              .getTextAlign(hackathonTextPropertiesProvider
+                                  .textFieldPropertiesMap[roundGlobalKeysMap[
+                                      widget.index]!['roundName']!]!
+                                  .align),
                           //textAlignVertical: TextAlignVertical.top,
                           controller: roundNameController,
                           cursorColor: Colors.black,
@@ -143,31 +236,111 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
                             isDense: true,
                             contentPadding: EdgeInsets.all(0),
                             hintText: 'Round Name',
-                            hintStyle: GoogleFonts.getFont(fontFamily2,
-                                fontSize:
-                                    defaultEditScaleHeight(widget.containerHeight, 20),
-                                color: black1,
-                                fontWeight: FontWeight.w400,
-                                height: lineHeight(22.4, 20)),
+                            hintStyle: GoogleFonts.getFont(
+                                hackathonTextPropertiesProvider
+                                    .textFieldPropertiesMap[roundGlobalKeysMap[
+                                        widget.index]!['roundName']!]!
+                                    .font,
+                                fontStyle:
+                                    hackathonTextPropertiesProvider.textFieldPropertiesMap[roundGlobalKeysMap[widget.index]!['roundName']!]!.italics
+                                        ? FontStyle.italic
+                                        : FontStyle.normal,
+                                decoration: TextDecoration.combine([
+                                  hackathonTextPropertiesProvider
+                                          .textFieldPropertiesMap[
+                                              roundGlobalKeysMap[widget.index]![
+                                                  'roundName']!]!
+                                          .strikethrogh
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none,
+                                  hackathonTextPropertiesProvider
+                                          .textFieldPropertiesMap[
+                                              roundGlobalKeysMap[widget.index]![
+                                                  'roundName']!]!
+                                          .underline
+                                      ? TextDecoration.underline
+                                      : TextDecoration.none,
+                                ]),
+                                fontSize: defaultEditScaleHeight(
+                                    widget.containerHeight,
+                                    hackathonTextPropertiesProvider.textFieldPropertiesMap[roundGlobalKeysMap[widget.index]!['roundName']!]!.size
+                                        .toDouble()),
+                                color: hackathonTextPropertiesProvider
+                                    .stringToColor(roundGlobalKeysMap[
+                                        widget.index]!['roundName']!),
+                                fontWeight: hackathonTextPropertiesProvider
+                                    .getSelectedTextFieldFontWeight(
+                                        roundGlobalKeysMap[widget.index]!['roundName']!),
+                                height: lineHeight(
+                                  22.4,
+                                  hackathonTextPropertiesProvider
+                                      .textFieldPropertiesMap[
+                                          roundGlobalKeysMap[widget.index]![
+                                              'roundName']!]!
+                                      .size
+                                      .toDouble(),
+                                )),
                             enabledBorder: InputBorder.none,
                             focusedBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
                             focusedErrorBorder: InputBorder.none,
                             counterText: "",
                           ),
+
+                          inputFormatters: [
+                            UpperCaseTextFormatter(
+                                hackathonTextPropertiesProvider,
+                                roundGlobalKeysMap[widget.index]![
+                                    'roundName']!),
+                          ],
                           maxLength: 10,
                           keyboardType: TextInputType.text,
-                          style: GoogleFonts.getFont(fontFamily2,
-                              fontSize:
-                                  defaultEditScaleHeight(widget.containerHeight, 20),
-                              color: black1,
-                              fontWeight: FontWeight.w400,
-                              height: lineHeight(22.4, 20)),
+                          style: GoogleFonts.getFont(
+                              hackathonTextPropertiesProvider
+                                  .textFieldPropertiesMap[roundGlobalKeysMap[
+                                      widget.index]!['roundName']!]!
+                                  .font,
+                              fontSize: defaultEditScaleHeight(
+                                  widget.containerHeight,
+                                  hackathonTextPropertiesProvider
+                                      .textFieldPropertiesMap[roundGlobalKeysMap[
+                                          widget.index]!['roundName']!]!
+                                      .size
+                                      .toDouble()), //20
+                              decoration: TextDecoration.combine([
+                                hackathonTextPropertiesProvider
+                                        .textFieldPropertiesMap[
+                                            roundGlobalKeysMap[widget.index]![
+                                                'roundName']!]!
+                                        .strikethrogh
+                                    ? TextDecoration.lineThrough
+                                    : TextDecoration.none,
+                                hackathonTextPropertiesProvider
+                                        .textFieldPropertiesMap[
+                                            roundGlobalKeysMap[widget.index]![
+                                                'roundName']!]!
+                                        .underline
+                                    ? TextDecoration.underline
+                                    : TextDecoration.none,
+                              ]),
+                              color: hackathonTextPropertiesProvider.stringToColor(
+                                  roundGlobalKeysMap[widget.index]![
+                                      'roundName']!), //greyish1
+                              fontWeight: hackathonTextPropertiesProvider.getSelectedTextFieldFontWeight(
+                                  roundGlobalKeysMap[widget.index]!['roundName']!),
+                              height: lineHeight(22.4, hackathonTextPropertiesProvider.textFieldPropertiesMap[roundGlobalKeysMap[widget.index]!['roundName']!]!.size.toDouble())),
                           validator: (value) {
                             if (value!.isEmpty) {
                               return '';
                             }
                             return null;
+                          },
+                          onTap: () {
+                            hackathonTextPropertiesProvider
+                                    .selectedTextFieldKey =
+                                roundGlobalKeysMap[widget.index]!['roundName']!;
+                            hackathonTextPropertiesProvider
+                                .updateSelectedFontFromTextField();
                           },
                           // onChanged: (value){
                           //  hackathonDetailsProvider.updateRoundTitle(
@@ -182,15 +355,22 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
                   InkWell(
                     onTap: () {
                       if (hackathonDetailsProvider.roundsList.length != 1) {
-                        hackathonDetailsProvider.deleteRound(widget.index, context);
+                        hackathonDetailsProvider.deleteRound(
+                            widget.index, context);
+                        deleteGlobalKeys(widget.index);
+                        hackathonDetailsProvider
+                            .deleteTextPropertiesOfRoundsFromFields(
+                                widget.index);
                         // hackathonDetailsProvider.deleteTemproraryRound(index, context);
                       }
                     },
                     child: Container(
                       width: defaultEditScaleWidth(widget.containerWidth, 130),
-                      height: defaultEditScaleHeight(widget.containerHeight, 30),
+                      height:
+                          defaultEditScaleHeight(widget.containerHeight, 30),
                       padding: EdgeInsets.symmetric(
-                        horizontal: defaultEditScaleWidth(widget.containerWidth, 10),
+                        horizontal:
+                            defaultEditScaleWidth(widget.containerWidth, 10),
                       ),
                       decoration: const BoxDecoration(
                           color: yellow,
@@ -202,10 +382,11 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
                         children: [
                           Icon(Icons.delete_rounded,
                               color: Colors.white,
-                              size:
-                                  defaultEditScaleHeight(widget.containerHeight, 18)),
+                              size: defaultEditScaleHeight(
+                                  widget.containerHeight, 18)),
                           SizedBox(
-                              width: defaultEditScaleWidth(widget.containerWidth, 5)),
+                              width: defaultEditScaleWidth(
+                                  widget.containerWidth, 5)),
                           Text("Remove Round",
                               style: GoogleFonts.getFont(fontFamily2,
                                   fontSize: defaultEditScaleHeight(
@@ -225,8 +406,10 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
                 children: [
                   Padding(
                       padding: EdgeInsets.only(
-                          left: defaultEditScaleWidth(widget.containerWidth, 25),
-                          right: defaultEditScaleWidth(widget.containerWidth, 15)
+                          left:
+                              defaultEditScaleWidth(widget.containerWidth, 25),
+                          right:
+                              defaultEditScaleWidth(widget.containerWidth, 15)
                           // bottom: defaultEditScaleHeight(containerHeight, 6)
                           ),
                       child:
@@ -237,42 +420,125 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
                           //         height: lineHeight(2.4, 20),
                           //         fontWeight: FontWeight.w400)),
                           Container(
-                        height: defaultEditScaleHeight(widget.containerHeight, 30),
-                        width: defaultEditScaleWidth(widget.containerWidth, 110),
+                        height:
+                            defaultEditScaleHeight(widget.containerHeight, 30),
+                        width:
+                            defaultEditScaleWidth(widget.containerWidth, 110),
                         // color: Colors.deepPurple[100],
                         alignment: Alignment.center,
                         child: TextFormField(
+                          key: roundGlobalKeysMap[widget.index]![
+                              'roundStartDate']!,
                           controller: roundStartDateController,
+                          textAlign: hackathonTextPropertiesProvider
+                              .getTextAlign(hackathonTextPropertiesProvider
+                                  .textFieldPropertiesMap[roundGlobalKeysMap[
+                                      widget.index]!['roundStartDate']!]!
+                                  .align),
                           cursorColor: Colors.black,
                           decoration: InputDecoration(
                             isDense: true,
                             contentPadding: EdgeInsets.all(0),
                             hintText: 'YYYY-MM-DD',
-                            hintStyle: GoogleFonts.getFont(fontFamily2,
-                                fontSize:
-                                    defaultEditScaleHeight(widget.containerHeight, 20),
-                                color: black1,
-                                fontWeight: FontWeight.w400,
-                                height: lineHeight(22.4, 20)),
+                            hintStyle: GoogleFonts.getFont(
+                                hackathonTextPropertiesProvider
+                                    .textFieldPropertiesMap[roundGlobalKeysMap[
+                                        widget.index]!['roundStartDate']!]!
+                                    .font,
+                                fontStyle: hackathonTextPropertiesProvider
+                                        .textFieldPropertiesMap[
+                                            roundGlobalKeysMap[widget.index]![
+                                                'roundStartDate']!]!
+                                        .italics
+                                    ? FontStyle.italic
+                                    : FontStyle.normal,
+                                decoration: TextDecoration.combine([
+                                  hackathonTextPropertiesProvider
+                                          .textFieldPropertiesMap[
+                                              roundGlobalKeysMap[widget.index]![
+                                                  'roundStartDate']!]!
+                                          .strikethrogh
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none,
+                                  hackathonTextPropertiesProvider
+                                          .textFieldPropertiesMap[
+                                              roundGlobalKeysMap[widget.index]![
+                                                  'roundStartDate']!]!
+                                          .underline
+                                      ? TextDecoration.underline
+                                      : TextDecoration.none,
+                                ]),
+                                fontSize: defaultEditScaleHeight(
+                                    widget.containerHeight,
+                                    hackathonTextPropertiesProvider
+                                        .textFieldPropertiesMap[
+                                            roundGlobalKeysMap[widget.index]![
+                                                'roundStartDate']!]!
+                                        .size
+                                        .toDouble()),
+                                color: hackathonTextPropertiesProvider.stringToColor(roundGlobalKeysMap[widget.index]!['roundStartDate']!),
+                                fontWeight: hackathonTextPropertiesProvider.getSelectedTextFieldFontWeight(roundGlobalKeysMap[widget.index]!['roundStartDate']!),
+                                height: lineHeight(
+                                  22.4,
+                                  hackathonTextPropertiesProvider
+                                      .textFieldPropertiesMap[
+                                          roundGlobalKeysMap[widget.index]![
+                                              'roundStartDate']!]!
+                                      .size
+                                      .toDouble(),
+                                )),
                             enabledBorder: InputBorder.none,
                             focusedBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
                             focusedErrorBorder: InputBorder.none,
                             counterText: "",
                           ),
+                          inputFormatters: [
+                            UpperCaseTextFormatter(
+                                hackathonTextPropertiesProvider,
+                                roundGlobalKeysMap[widget.index]![
+                                    'roundStartDate']!),
+                          ],
                           maxLength: 10,
                           keyboardType: TextInputType.text,
-                          style: GoogleFonts.getFont(fontFamily2,
-                              fontSize:
-                                  defaultEditScaleHeight(widget.containerHeight, 20),
-                              color: black1,
-                              fontWeight: FontWeight.w400,
-                              height: lineHeight(22.4, 20)),
+                          style: GoogleFonts.getFont(
+                              hackathonTextPropertiesProvider
+                                  .textFieldPropertiesMap[roundGlobalKeysMap[
+                                      widget.index]!['roundStartDate']!]!
+                                  .font,
+                              fontSize: defaultEditScaleHeight(
+                                  widget.containerHeight,
+                                  hackathonTextPropertiesProvider
+                                      .textFieldPropertiesMap[roundGlobalKeysMap[
+                                          widget.index]!['roundStartDate']!]!
+                                      .size
+                                      .toDouble()),
+                              color: hackathonTextPropertiesProvider.stringToColor(
+                                  roundGlobalKeysMap[widget.index]![
+                                      'roundStartDate']!), //black1,
+                              fontWeight: hackathonTextPropertiesProvider.getSelectedTextFieldFontWeight(
+                                  roundGlobalKeysMap[widget.index]!['roundStartDate']!),
+                              height: lineHeight(
+                                22.4,
+                                hackathonTextPropertiesProvider
+                                    .textFieldPropertiesMap[roundGlobalKeysMap[
+                                        widget.index]!['roundStartDate']!]!
+                                    .size
+                                    .toDouble(),
+                              )),
                           validator: (value) {
                             if (value!.isEmpty) {
                               return '';
                             }
                             return null;
+                          },
+                          onTap: () {
+                            hackathonTextPropertiesProvider
+                                    .selectedTextFieldKey =
+                                roundGlobalKeysMap[widget.index]![
+                                    'roundStartDate']!;
+                            hackathonTextPropertiesProvider
+                                .updateSelectedFontFromTextField();
                           },
                           onSaved: (value) {
                             hackathonDetailsProvider.updateRoundStartDate(
@@ -338,42 +604,125 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
                           //         height: lineHeight(2.4, 20),
                           //         fontWeight: FontWeight.w400)),
                           Container(
-                        height: defaultEditScaleHeight(widget.containerHeight, 30),
-                        width: defaultEditScaleWidth(widget.containerWidth, 110),
+                        height:
+                            defaultEditScaleHeight(widget.containerHeight, 30),
+                        width:
+                            defaultEditScaleWidth(widget.containerWidth, 110),
                         // color: Colors.deepPurple[100],
                         alignment: Alignment.center,
                         child: TextFormField(
+                          key: roundGlobalKeysMap[widget.index]![
+                              'roundEndDate']!,
                           controller: roundEndDateController,
+                          textAlign: hackathonTextPropertiesProvider
+                              .getTextAlign(hackathonTextPropertiesProvider
+                                  .textFieldPropertiesMap[roundGlobalKeysMap[
+                                      widget.index]!['roundEndDate']!]!
+                                  .align),
                           cursorColor: Colors.black,
                           decoration: InputDecoration(
                             isDense: true,
                             contentPadding: EdgeInsets.all(0),
                             hintText: 'YYYY-MM-DD',
-                            hintStyle: GoogleFonts.getFont(fontFamily2,
-                                fontSize:
-                                    defaultEditScaleHeight(widget.containerHeight, 20),
-                                color: black1,
-                                fontWeight: FontWeight.w400,
-                                height: lineHeight(22.4, 20)),
+                            hintStyle: GoogleFonts.getFont(
+                                hackathonTextPropertiesProvider
+                                    .textFieldPropertiesMap[roundGlobalKeysMap[
+                                        widget.index]!['roundEndDate']!]!
+                                    .font,
+                                fontStyle: hackathonTextPropertiesProvider
+                                        .textFieldPropertiesMap[
+                                            roundGlobalKeysMap[widget.index]![
+                                                'roundEndDate']!]!
+                                        .italics
+                                    ? FontStyle.italic
+                                    : FontStyle.normal,
+                                decoration: TextDecoration.combine([
+                                  hackathonTextPropertiesProvider
+                                          .textFieldPropertiesMap[
+                                              roundGlobalKeysMap[widget.index]![
+                                                  'roundEndDate']!]!
+                                          .strikethrogh
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none,
+                                  hackathonTextPropertiesProvider
+                                          .textFieldPropertiesMap[
+                                              roundGlobalKeysMap[widget.index]![
+                                                  'roundEndDate']!]!
+                                          .underline
+                                      ? TextDecoration.underline
+                                      : TextDecoration.none,
+                                ]),
+                                fontSize: defaultEditScaleHeight(
+                                    widget.containerHeight,
+                                    hackathonTextPropertiesProvider
+                                        .textFieldPropertiesMap[
+                                            roundGlobalKeysMap[widget.index]![
+                                                'roundEndDate']!]!
+                                        .size
+                                        .toDouble()),
+                                color: hackathonTextPropertiesProvider.stringToColor(roundGlobalKeysMap[widget.index]!['roundEndDate']!),
+                                fontWeight: hackathonTextPropertiesProvider.getSelectedTextFieldFontWeight(roundGlobalKeysMap[widget.index]!['roundEndDate']!),
+                                height: lineHeight(
+                                  22.4,
+                                  hackathonTextPropertiesProvider
+                                      .textFieldPropertiesMap[
+                                          roundGlobalKeysMap[widget.index]![
+                                              'roundEndDate']!]!
+                                      .size
+                                      .toDouble(),
+                                )),
                             enabledBorder: InputBorder.none,
                             focusedBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
                             focusedErrorBorder: InputBorder.none,
                             counterText: "",
                           ),
+                          inputFormatters: [
+                            UpperCaseTextFormatter(
+                                hackathonTextPropertiesProvider,
+                                roundGlobalKeysMap[widget.index]![
+                                    'roundEndDate']!),
+                          ],
                           maxLength: 10,
                           keyboardType: TextInputType.text,
-                          style: GoogleFonts.getFont(fontFamily2,
-                              fontSize:
-                                  defaultEditScaleHeight(widget.containerHeight, 20),
-                              color: black1,
-                              fontWeight: FontWeight.w400,
-                              height: lineHeight(22.4, 20)),
+                          style: GoogleFonts.getFont(
+                              hackathonTextPropertiesProvider
+                                  .textFieldPropertiesMap[roundGlobalKeysMap[
+                                      widget.index]!['roundEndDate']!]!
+                                  .font,
+                              fontSize: defaultEditScaleHeight(
+                                  widget.containerHeight,
+                                  hackathonTextPropertiesProvider
+                                      .textFieldPropertiesMap[roundGlobalKeysMap[
+                                          widget.index]!['roundEndDate']!]!
+                                      .size
+                                      .toDouble()),
+                              color: hackathonTextPropertiesProvider.stringToColor(
+                                  roundGlobalKeysMap[widget.index]![
+                                      'roundEndDate']!), //black1,
+                              fontWeight: hackathonTextPropertiesProvider.getSelectedTextFieldFontWeight(
+                                  roundGlobalKeysMap[widget.index]!['roundEndDate']!),
+                              height: lineHeight(
+                                22.4,
+                                hackathonTextPropertiesProvider
+                                    .textFieldPropertiesMap[roundGlobalKeysMap[
+                                        widget.index]!['roundEndDate']!]!
+                                    .size
+                                    .toDouble(),
+                              )),
                           validator: (value) {
                             if (value!.isEmpty) {
                               return '';
                             }
                             return null;
+                          },
+                          onTap: () {
+                            hackathonTextPropertiesProvider
+                                    .selectedTextFieldKey =
+                                roundGlobalKeysMap[widget.index]![
+                                    'roundEndDate']!;
+                            hackathonTextPropertiesProvider
+                                .updateSelectedFontFromTextField();
                           },
                           onSaved: (value) {
                             hackathonDetailsProvider.updateRoundEndDate(

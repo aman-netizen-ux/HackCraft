@@ -14,36 +14,43 @@ class DefaultEditPortalDesktopBody extends StatefulWidget {
 
 class _DefaultEditPortalDesktopBodyState
     extends State<DefaultEditPortalDesktopBody> {
-       final _formKey = GlobalKey<FormState>();
-          String? textinput = '';
+  final _formKey = GlobalKey<FormState>();
+  String? textinput = '';
 
   @override
   Widget build(BuildContext context) {
-    return  GestureDetector(
-      onTap: (){
+    return GestureDetector(
+      onTap: () {
         final hackathonTextProvider =
-        Provider.of<HackathonTextPropertiesProvider>(context, listen: false);
-        print(hackathonTextProvider.selectedTextFieldKey);
+            Provider.of<HackathonTextPropertiesProvider>(context,
+                listen: false);
 
-        hackathonTextProvider.selectedTextFieldKey=null;
-        print(hackathonTextProvider.selectedTextFieldKey);
+        hackathonTextProvider.selectedTextFieldKey = null;
+        if (hackathonTextProvider.isTextColorSelected) {
+          hackathonTextProvider.setIsTextColorSelected();
+        }
+        if (hackathonTextProvider.isColorPickerSelected) {
+          hackathonTextProvider.setIsColorPickerSelected();
+        }
+        if (hackathonTextProvider.isBoldSelected) {
+          hackathonTextProvider.setBoldSelection();
+        }
+
       },
       child: Row(
         children: [
-           Expanded(
+          Expanded(
               flex: 73,
               child: SidePanel(
                 formKey: _formKey,
                 textinput: textinput,
-              )
-            ),
+              )),
           Expanded(
               flex: 927,
               child: RightPanel(
-                 formKey: _formKey,
-                 textinput: textinput,
-              ) 
-              )
+                formKey: _formKey,
+                textinput: textinput,
+              ))
         ],
       ),
     );

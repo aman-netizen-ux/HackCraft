@@ -10,6 +10,7 @@ import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
+import 'package:major_project__widget_testing/utils/upperCaseTextFormatter.dart';
 import 'package:provider/provider.dart';
 
 class DefaultEditLandingSection extends StatefulWidget {
@@ -72,7 +73,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       italics: false,
       letterSpacing: 0,
       strikethrogh: false,
-      textColor: 'Color(0xFF564A4A);',
+      textColor: 'Color(0xFF564A4A)',
       underline: false,
       upperCase: false,
     );
@@ -588,34 +589,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
   }
 }
 
-class UpperCaseTextFormatter extends TextInputFormatter {
-  final HackathonTextPropertiesProvider provider;
-  final GlobalKey key;
 
-  UpperCaseTextFormatter(this.provider, this.key);
-
-  @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    // Check if the uppercase mode is active for the current text field
-    bool shouldConvertToUppercase =
-        provider.textFieldPropertiesMap[key]!.upperCase;
-
-    if (shouldConvertToUppercase) {
-      return TextEditingValue(
-        text: newValue.text.toUpperCase(),
-        selection: newValue.selection,
-      );
-    }
-    return newValue; // Return as-is if no conversion is needed
-  }
-}
-
-class ToggleAllCapsNotification extends Notification {
-  final bool isAllCaps;
-
-  ToggleAllCapsNotification({required this.isAllCaps});
-}
 
 class hackathonDetailContainer extends StatelessWidget {
   final double containerHeight;

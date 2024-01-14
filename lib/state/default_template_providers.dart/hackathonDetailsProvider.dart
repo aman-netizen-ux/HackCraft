@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
@@ -5,7 +7,6 @@ import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart'
 import 'package:provider/provider.dart';
 
 class HackathonDetailsProvider with ChangeNotifier {
-
 //not being used currently
   List<Round> _temporaryRoundList = [
     Round(
@@ -46,7 +47,7 @@ class HackathonDetailsProvider with ChangeNotifier {
   }
 
 //not being used currently
-void increaseTemproraryRoundsCount() {
+  void increaseTemproraryRoundsCount() {
     _temporaryRoundList.add(Round(
         serialNumber: _hackathonDetails.rounds.length + 1,
         name: "",
@@ -59,11 +60,11 @@ void increaseTemproraryRoundsCount() {
   void deleteRound(int index, BuildContext context) {
     if (index >= 0 && index < _hackathonDetails.rounds.length) {
       final rulesProvider = Provider.of<RulesProvider>(context, listen: false);
-      rulesProvider.editSelectedIndex==-1
-      ?rulesProvider.setEditSelectedIndex(- 1)
-      : rulesProvider.editSelectedIndex==0
-      ?rulesProvider.setEditSelectedIndex(0)
-      :rulesProvider.setEditSelectedIndex(index-1);
+      rulesProvider.editSelectedIndex == -1
+          ? rulesProvider.setEditSelectedIndex(-1)
+          : rulesProvider.editSelectedIndex == 0
+              ? rulesProvider.setEditSelectedIndex(0)
+              : rulesProvider.setEditSelectedIndex(index - 1);
       _hackathonDetails.rounds.removeAt(index);
       notifyListeners();
     } else {
@@ -80,8 +81,6 @@ void increaseTemproraryRoundsCount() {
       debugPrint("Invalid index");
     }
   }
-
-
 
   // Function to update round description
   void updateRoundDescription(int index, String newDescription) {
@@ -103,11 +102,11 @@ void increaseTemproraryRoundsCount() {
   }
 
 //not being used currently
-  void updateTemporaryRoundTile(int index, String newTile){
-    if(index>=0 && index<_temporaryRoundList.length){
-      _temporaryRoundList[index].name=newTile;
+  void updateTemporaryRoundTile(int index, String newTile) {
+    if (index >= 0 && index < _temporaryRoundList.length) {
+      _temporaryRoundList[index].name = newTile;
       notifyListeners();
-    }else{
+    } else {
       print("Invalid index");
     }
   }
@@ -129,7 +128,6 @@ void increaseTemproraryRoundsCount() {
       debugPrint("Invalid index");
     }
   }
-  
 
   DefaultTemplateApiResponse _hackathonDetails = DefaultTemplateApiResponse(
     hackathons: Hackathon(
@@ -160,47 +158,24 @@ void increaseTemproraryRoundsCount() {
           startTimeline: "",
           endTimeline: "")
     ],
-    fields: [
-      TextFieldPropertiesArray(
-        name: '',
-        type: '', 
-        textProperties:TextFieldProperties(
-          size: 0,
-          align: '',
-          font: '',
-          fontWeight: 0,
-          italics: false,
-          letterSpacing: -1,
-          strikethrogh: false,
-          textColor: '',
-          underline: false,
-          upperCase: false,
-
-          
-          ) ),
-
-
-    TextFieldPropertiesArray(
-      name: '',
-        type: '', 
-        textProperties:TextFieldProperties(
-          
-          size: 0,
-          align: '',
-          font: '',
-          fontWeight: 100,
-          italics: false,
-          letterSpacing: 0,
-          strikethrogh: false,
-          textColor: '',
-          underline: false,
-          upperCase: false,
-
-        ) ),
-      
-
-       
-    ],
+    fields: List.generate(
+      17,
+      (index) => TextFieldPropertiesArray(
+          name: '',
+          type: '',
+          textProperties: TextFieldProperties(
+            size: 0,
+            align: '',
+            font: '',
+            fontWeight: 0,
+            italics: false,
+            letterSpacing: -1,
+            strikethrogh: false,
+            textColor: '',
+            underline: false,
+            upperCase: false,
+          )),
+    ),
     containers: [],
   );
 
@@ -318,12 +293,44 @@ void increaseTemproraryRoundsCount() {
     notifyListeners();
   }
 
-//not being used currently
-  void synchronizeTemporaryRoundListWithRoundsList() {
-  _temporaryRoundList = List.from(_hackathonDetails.rounds);
-  notifyListeners();
+  void addTextPropertiesInFields() {
+    _hackathonDetails.fields.addAll(List.generate(
+      4,
+      (index) => TextFieldPropertiesArray(
+          name: '',
+          type: '',
+          textProperties: TextFieldProperties(
+            size: 0,
+            align: '',
+            font: '',
+            fontWeight: 0,
+            italics: false,
+            letterSpacing: -1,
+            strikethrogh: false,
+            textColor: '',
+            underline: false,
+            upperCase: false,
+          )),
+    ));
+  }
+
+
+  void deleteTextPropertiesOfRoundsFromFields(int n) {
+  // Calculate the starting index for deletion
+  int startIndex = 13 + 4 * n;
+
+  // Perform deletion if the starting index is within the list bounds
+  if (startIndex < _hackathonDetails.fields.length) {
+    _hackathonDetails.fields.removeRange(startIndex, min(startIndex + 4, _hackathonDetails.fields.length));
+  }
 }
 
+
+//not being used currently
+  void synchronizeTemporaryRoundListWithRoundsList() {
+    _temporaryRoundList = List.from(_hackathonDetails.rounds);
+    notifyListeners();
+  }
 
   // String get organisationName => _defaultTemplateApiResponse.hackathons.organisationName;
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
+import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/default_edit_landing_section.dart';
 
 class HackathonTextPropertiesProvider with ChangeNotifier {
@@ -536,4 +537,82 @@ String reconstructText(String originalText, String currentText) {
     }
     return false;
   }
+
+
+
+
+List<TextFieldPropertiesArray> getTextProperties(){
+  //saving the text properties in _hackathonDetails ->field in provider
+//or to pass in api giving the values to field
+    return [
+      // TextFieldPropertiesArray is the representation of every objects in the fields in api
+      TextFieldPropertiesArray(
+          name: 'Organization',
+          type: 'text',
+          /* textProperties contains all the properties of the single text        
+         hackathonTextPropertiesProvider.textFieldPropertiesMap[organisationKey]! gives 
+         all the text properties of TextFieldProperties type  in {} format 
+        and putting these values in textProperties  */
+          textProperties:textFieldPropertiesMap[organisationKey]!),
+      TextFieldPropertiesArray(
+          name: 'Hackathon Name',
+          type: 'text',
+          textProperties: textFieldPropertiesMap[hackathonNameKey]!),
+      
+      // TextFieldPropertiesArray(
+      //     name: 'descriptionKey',
+      //     type: 'text',
+      //     textProperties: hackathonTextPropertiesProvider
+      //         .textFieldPropertiesMap[descriptionKey]!),
+      // TextFieldPropertiesArray(
+      //     name: 'contactName1Key',
+      //     type: 'text',
+      //     textProperties: hackathonTextPropertiesProvider
+      //         .textFieldPropertiesMap[contactName1Key]!),
+      // TextFieldPropertiesArray(
+      //     name: 'contactName2Key',
+      //     type: 'text',
+      //     textProperties: hackathonTextPropertiesProvider
+      //         .textFieldPropertiesMap[contactName2Key]!),
+      // TextFieldPropertiesArray(
+      //     name: 'contactNumber1Key',
+      //     type: 'text',
+      //     textProperties: hackathonTextPropertiesProvider
+      //         .textFieldPropertiesMap[contactNumber1Key]!),
+      // TextFieldPropertiesArray(
+      //     name: 'contactNumber2Key',
+      //     type: 'text',
+      //     textProperties: hackathonTextPropertiesProvider
+      //         .textFieldPropertiesMap[contactNumber2Key]!)
+    ];
+}
+
+List<TextFieldPropertiesArray> addRoundsTextProperties(List<TextFieldPropertiesArray> fields){
+  roundGlobalKeysMap.forEach((key, value) {
+      fields.addAll([
+        TextFieldPropertiesArray(
+          name: 'round${key + 1}Name',
+          type: 'text',
+          textProperties: textFieldPropertiesMap[value['roundName']!]!,
+        ),
+        TextFieldPropertiesArray(
+          name: 'round${key + 1}Description',
+          type: 'text',
+          textProperties: textFieldPropertiesMap[value['roundDescription']!]!,
+        ),
+        TextFieldPropertiesArray(
+          name: 'round${key + 1}StartDate',
+          type: 'text',
+          textProperties: textFieldPropertiesMap[value['roundStartDate']!]!,
+        ),
+        TextFieldPropertiesArray(
+          name: 'round${key + 1}EndDate',
+          type: 'text',
+          textProperties:textFieldPropertiesMap[value['roundEndDate']!]!,
+        ),
+      ]);
+    });
+
+    return fields;
+}
 }

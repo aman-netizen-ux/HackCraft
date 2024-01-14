@@ -93,8 +93,12 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
                                 height: scaleHeight(context, 40),
                                 width: scaleWidth(context, 425),
                                 selectedColor: hackathonTextProvider
-                                    .stringToColor(hackathonTextProvider
-                                        .selectedTextFieldKey!),
+                                            .selectedTextFieldKey ==
+                                        null
+                                    ? Colors.transparent
+                                    : hackathonTextProvider.stringToColor(
+                                        hackathonTextProvider
+                                            .selectedTextFieldKey!),
                                 onChanged: (value) {
                                   print(value);
                                   Color primaryColor = hackathonTextProvider
@@ -107,8 +111,12 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
                                 width: scaleWidth(context, 425),
                                 recentColors: hackathonTextProvider.colors,
                                 selectedColor: hackathonTextProvider
-                                    .stringToColor(hackathonTextProvider
-                                        .selectedTextFieldKey!),
+                                            .selectedTextFieldKey ==
+                                        null
+                                    ? Colors.transparent
+                                    : hackathonTextProvider.stringToColor(
+                                        hackathonTextProvider
+                                            .selectedTextFieldKey!),
                                 onChanged: (value) {
                                   print(value);
                                   Color primaryColor = hackathonTextProvider
@@ -150,12 +158,17 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
                                   hackathonTextProvider
                                       .setIsColorPickerSelected();
                                 },
-                                child:
-                                    hackathonTextProvider.isColorsInSwatchList(
+                                child: hackathonTextProvider
+                                            .selectedTextFieldKey ==
+                                        null
+                                    ? SvgPicture.asset(
+                                            "assets/icons/defaultEditPortal/color_picker.svg")
+                                    : hackathonTextProvider.isColorsInSwatchList(
                                             hackathonTextProvider.stringToColor(
                                                 hackathonTextProvider
                                                     .selectedTextFieldKey!))
-                                        ? SvgPicture.asset("assets/icons/defaultEditPortal/color_picker.svg")
+                                        ? SvgPicture.asset(
+                                            "assets/icons/defaultEditPortal/color_picker.svg")
                                         : Container(
                                             width: scaleWidth(context, 22),
                                             height: scaleWidth(context, 22),
@@ -194,7 +207,10 @@ class _ColoPickerCardState extends State<ColoPickerCard> {
   Widget build(BuildContext context) {
     final hackathonTextProvider =
         Provider.of<HackathonTextPropertiesProvider>(context);
-    final _colorNotifier = ValueNotifier(hackathonTextProvider
+    final _colorNotifier = ValueNotifier(
+      hackathonTextProvider.selectedTextFieldKey ==null
+      ? Colors.transparent
+      :hackathonTextProvider
         .stringToColor(hackathonTextProvider.selectedTextFieldKey!));
     return Container(
         height: scaleHeight(context, 275),

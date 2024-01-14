@@ -53,6 +53,8 @@ class _SidePanelState extends State<SidePanel> {
       return Center(child: CircularProgressIndicator());
     }
 
+
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: scaleHeight(context, 45)),
       child: Column(
@@ -66,7 +68,8 @@ class _SidePanelState extends State<SidePanel> {
                   // if (widget.formKey.currentState!.validate()) {
                   widget.formKey.currentState!.save();
 
-                  previewFunction(rulesProvider, hackathonDetailsProvider, hackathonTextPropertiesProvider);
+                  previewFunction(rulesProvider, hackathonDetailsProvider,
+                      hackathonTextPropertiesProvider);
                   // }
                 } else if (result == 'Save') {
                   //TODO
@@ -74,7 +77,8 @@ class _SidePanelState extends State<SidePanel> {
                   if (widget.formKey.currentState!.validate()) {
                     widget.formKey.currentState!.save();
 
-                    hostHackathon(rulesProvider, hackathonDetailsProvider, hackathonTextPropertiesProvider);
+                    hostHackathon(rulesProvider, hackathonDetailsProvider,
+                        hackathonTextPropertiesProvider);
                   }
                 } else {
                   Navigator.pop(context);
@@ -125,30 +129,23 @@ class _SidePanelState extends State<SidePanel> {
     );
   }
 
-  void previewFunction(RulesProvider rulesProvider,
-      HackathonDetailsProvider hackathonDetailsProvider, HackathonTextPropertiesProvider hackathonTextPropertiesProvider) {
+  void previewFunction(
+      RulesProvider rulesProvider,
+      HackathonDetailsProvider hackathonDetailsProvider,
+      HackathonTextPropertiesProvider hackathonTextPropertiesProvider
+      ) {
     rulesProvider.setSelectedIndex(-1);
     rulesProvider.setDescriptionWidget(
         SvgPicture.asset('assets/images/defaultTemplate/clickme.svg'));
 
-    //saving the text properties in _hackathonDetails ->field in provider
-    hackathonDetailsProvider.textFields = [
-      // TextFieldPropertiesArray is the representation of every objects in the fields in api
-      TextFieldPropertiesArray(
-        name: 'Org',
-        type: 'text', 
-        /* textProperties contains all the properties of the single text        
-         hackathonTextPropertiesProvider.textFieldPropertiesMap[organisationKey]! gives 
-         all the text properties of TextFieldProperties type  in {} format 
-        and putting these values in textProperties  */
-        textProperties: hackathonTextPropertiesProvider.textFieldPropertiesMap[organisationKey]!
-        ),
-        TextFieldPropertiesArray(
-          name: 'Hackathon Name',
-        type: 'text', 
-        textProperties: hackathonTextPropertiesProvider.textFieldPropertiesMap[hackathonNameKey]!
-        )
-    ];
+    List<TextFieldPropertiesArray> fields= hackathonTextPropertiesProvider.getTextProperties();
+    //  following is to add roundsTextProperties according to their key in the above defined fields list
+     fields= hackathonTextPropertiesProvider.addRoundsTextProperties(fields);
+
+ 
+    
+
+    hackathonDetailsProvider.textFields = fields;
 
     Navigator.push(
       context,
@@ -160,8 +157,10 @@ class _SidePanelState extends State<SidePanel> {
     );
   }
 
-  void hostHackathon(RulesProvider rulesProvider,
-      HackathonDetailsProvider hackathonDetailsProvider, HackathonTextPropertiesProvider hackathonTextPropertiesProvider) async {
+  void hostHackathon(
+      RulesProvider rulesProvider,
+      HackathonDetailsProvider hackathonDetailsProvider,
+      HackathonTextPropertiesProvider hackathonTextPropertiesProvider) async {
     setState(() {
       _isLoading = true;
     });
@@ -184,20 +183,12 @@ class _SidePanelState extends State<SidePanel> {
       };
     }).toList();
 
+    List<TextFieldPropertiesArray> fields= hackathonTextPropertiesProvider.getTextProperties();
+    //  following is to add roundsTextProperties according to their key in the above defined fields list
+    fields= hackathonTextPropertiesProvider.addRoundsTextProperties(fields);
 
-   // made the field variable to pass in api giving the values to field like we are passing above(check preview fields for more)
-    List<TextFieldPropertiesArray> fields= [
-      TextFieldPropertiesArray(
-        type: 'text', 
-        name: 'Org',
-        textProperties: hackathonTextPropertiesProvider.textFieldPropertiesMap[organisationKey]!
-        ),
-        TextFieldPropertiesArray(
-        type: 'text', 
-        name: 'Hackathon name',
-        textProperties: hackathonTextPropertiesProvider.textFieldPropertiesMap[hackathonNameKey]!
-        )
-    ];
+    
+    
 
     final hackathonId = await CreateHackathon().postSingleHackathon({
       "hackathon": {
@@ -220,7 +211,7 @@ class _SidePanelState extends State<SidePanel> {
         "contact2_number": int.parse(hackathonDetailsProvider.contact2Number)
       },
       "round": rounds,
-      "fields":fields,
+      "fields": fields,
       "containers": []
     }, context);
 

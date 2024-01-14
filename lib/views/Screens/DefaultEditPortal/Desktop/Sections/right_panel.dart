@@ -51,7 +51,7 @@ class _RightPanelState extends State<RightPanel> {
             ],
           ),
           Visibility(
-            visible: hackathonTextProvider.isBoldSelected || hackathonTextProvider.isTextColorSelected,
+            visible: (hackathonTextProvider.isBoldSelected || hackathonTextProvider.isTextColorSelected)&& hackathonTextProvider.selectedTextFieldKey!=null,
             child: Align(
                alignment: Alignment.topCenter,
               child: Padding(
