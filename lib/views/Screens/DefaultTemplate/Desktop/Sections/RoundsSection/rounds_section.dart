@@ -76,7 +76,7 @@ class RoundsAndRules extends StatelessWidget {
                             isLast:
                                defaultTemplateModel!.rounds.length - 1 == index,
                             roundTitle:  defaultTemplateModel!.rounds[index].name,
-                             roundTitleTextProperties: defaultTemplateModel!.fields[4*index+2].textProperties,//4*index+13
+                             roundTitleTextProperties: defaultTemplateModel!.fields[4*index+8].textProperties,//4*index+13
                             roundDescription: defaultTemplateModel!.rounds[index].description,
                             endDate:defaultTemplateModel!.rounds[index].endTimeline==''
                           ? ''
@@ -84,13 +84,13 @@ class RoundsAndRules extends StatelessWidget {
                             startDate:defaultTemplateModel!.rounds[index].startTimeline==''
                           ? ''
                           :extractDate(defaultTemplateModel!.rounds[index].startTimeline),  
-                          endDateTextProperties: defaultTemplateModel!.fields[4*index+5].textProperties,//4*index+16
-                          startDateTextProperties: defaultTemplateModel!.fields[4*index+4].textProperties,//4*index+15                         
+                          endDateTextProperties: defaultTemplateModel!.fields[4*index+11].textProperties,//4*index+16
+                          startDateTextProperties: defaultTemplateModel!.fields[4*index+10].textProperties,//4*index+15                         
                             onTap: () {
                               rulesProvider.setSelectedIndex(index);
                               rulesProvider.setDescriptionWidget(roundDetails(
                                   defaultTemplateModel!.rounds[index].description,
-                                   defaultTemplateModel!.fields[4*index+3].textProperties,//4*index+14
+                                   defaultTemplateModel!.fields[4*index+9].textProperties,//4*index+14
                                   context));
                             },
                           );

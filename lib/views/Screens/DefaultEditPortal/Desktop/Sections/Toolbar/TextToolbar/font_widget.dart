@@ -34,7 +34,8 @@ class FontWidget extends StatelessWidget {
             return DropdownMenuItem<String>(
                 value: value,
                 child: Text(value,
-                    style: GoogleFonts.capriola(
+                    style: GoogleFonts.getFont(
+                      value,
                       color: Colors.white,
                         fontWeight: FontWeight.w400,
                         fontSize: scaleHeight(context, 20),
