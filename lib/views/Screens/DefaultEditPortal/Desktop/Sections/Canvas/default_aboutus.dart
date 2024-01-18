@@ -3,10 +3,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
+import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
+import 'package:major_project__widget_testing/utils/upperCaseTextFormatter.dart';
 import 'package:provider/provider.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
+import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
 
 class DefaultEditAboutus extends StatefulWidget {
   final double containerHeight;
@@ -28,6 +32,33 @@ class _DefaultEditAboutusState extends State<DefaultEditAboutus> {
     super.initState();
 
     hackathonAboutController = TextEditingController();
+
+    // HackathonTextPropertiesProvider is for text Field Properties and its methods
+    final hackathonTextPropertiesProvider =
+        Provider.of<HackathonTextPropertiesProvider>(context, listen: false);
+
+    final hackathonDetailsProvider =
+        Provider.of<HackathonDetailsProvider>(context, listen: false);
+
+     hackathonTextPropertiesProvider.textFieldPropertiesMap[descriptionKey] =
+        TextFieldProperties(
+      size: 20,
+      //size: hackathonDetailsProvider.hackathonDetails.fields[0].textProperties.size,
+      align: 'center',
+      font: 'Fira Sans',
+      fontWeight: 400,
+      italics: false,
+      letterSpacing: 0,
+      strikethrogh: false,
+      textColor: 'Color(0xFF000100)',
+      underline: false,
+      upperCase: false,
+    );
+
+    if (hackathonDetailsProvider.about.isNotEmpty) {
+      hackathonAboutController.text = hackathonDetailsProvider.about;
+    }
+
   }
 
   @override
@@ -43,10 +74,17 @@ class _DefaultEditAboutusState extends State<DefaultEditAboutus> {
   Widget build(BuildContext context) {
     final hackathonDetailsProvider =
         Provider.of<HackathonDetailsProvider>(context);
-    if (hackathonDetailsProvider.about.isNotEmpty) {
-      hackathonAboutController.text = hackathonDetailsProvider.about;
-    }
+      
+      final hackathonTextPropertiesProvider =
+        Provider.of<HackathonTextPropertiesProvider>(context);
 
+
+     WidgetsBinding.instance.addPostFrameCallback((_) {
+      hackathonTextPropertiesProvider.convertAndRevertBackFromUpperCase(
+          hackathonAboutController, descriptionKey);
+     
+    });
+    
     return Padding(
       
       padding:
@@ -79,42 +117,136 @@ class _DefaultEditAboutusState extends State<DefaultEditAboutus> {
                           top: defaultEditScaleHeight(widget.containerHeight, 59),
                           bottom: defaultEditScaleHeight(widget.containerHeight, 165)),
                       child: TextFormField(
-                        controller: hackathonAboutController,
+                        // the key is passed to fetch the properties of the text form field mapped against this key
+                        key: descriptionKey,
+                        textAlign: hackathonTextPropertiesProvider
+                            .getTextAlign(hackathonTextPropertiesProvider
+                                .textFieldPropertiesMap[descriptionKey]!
+                                .align),
                         textAlignVertical: TextAlignVertical.center,
-                        textAlign: TextAlign.center,
+                        controller: hackathonAboutController,
+                       //  cursorHeight: defaultEditScaleHeight(
+                       //      widget.containerHeight, 20),
                         cursorColor: Colors.black,
                         decoration: InputDecoration(
-                          hintText:
-                              'Give a detail description of your hahathon',
-                          hintStyle: GoogleFonts.getFont(fontFamily2,
-                              fontSize:
-                                  defaultEditScaleHeight(widget.containerHeight, 18),
-                              color: black2,
-                              fontWeight: FontWeight.w400,
-                              height: lineHeight(22.4, 18)),
+                          hintText: 'Give a detail description of your hackathon',
+                          hintStyle: GoogleFonts.getFont(
+                              hackathonTextPropertiesProvider
+                                  .textFieldPropertiesMap[descriptionKey]!
+                                  .font,
+                              fontStyle:
+                                  hackathonTextPropertiesProvider.textFieldPropertiesMap[descriptionKey]!.italics
+                                      ? FontStyle.italic
+                                      : FontStyle.normal,
+                              letterSpacing: hackathonTextPropertiesProvider
+                                  .textFieldPropertiesMap[descriptionKey]!
+                                  .letterSpacing
+                                  .toDouble(),
+                              decoration: TextDecoration.combine([
+                                hackathonTextPropertiesProvider
+                                        .textFieldPropertiesMap[
+                                            descriptionKey]!
+                                        .strikethrogh
+                                    ? TextDecoration.lineThrough
+                                    : TextDecoration.none,
+                                hackathonTextPropertiesProvider
+                                        .textFieldPropertiesMap[
+                                            descriptionKey]!
+                                        .underline
+                                    ? TextDecoration.underline
+                                    : TextDecoration.none,
+                              ]),
+                              fontSize: defaultEditScaleHeight(
+                                  widget.containerHeight,
+                                  hackathonTextPropertiesProvider.textFieldPropertiesMap[descriptionKey]!.size
+                                      .toDouble()), //20
+                              color: hackathonTextPropertiesProvider
+                                  .stringToColor(descriptionKey), //greyish1,
+                              fontWeight: hackathonTextPropertiesProvider
+                                  .getSelectedTextFieldFontWeight(
+                                      descriptionKey),
+                              height: lineHeight(
+                                  22.4,
+                                  hackathonTextPropertiesProvider
+                                      .textFieldPropertiesMap[descriptionKey]!
+                                      .size
+                                      .toDouble())), //20 //Line Height is changed because of cursor size, initial line height was 22.4
                           enabledBorder: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
                           focusedErrorBorder: InputBorder.none,
                           counterText: "",
                         ),
+                        inputFormatters: [
+                          UpperCaseTextFormatter(
+                              hackathonTextPropertiesProvider,
+                              descriptionKey),
+                        ],
                         // maxLength: 1900,//commented so user can type any no. of characters as he wants 
-                          maxLines: null,//null so user can add any no. of lines as he want(will work together with  keyboardType: TextInputType.multiline)
-                        keyboardType: TextInputType.multiline,//null so user can add any no. of lines as he want(will work together with maxline: null)
-                        style: GoogleFonts.getFont(fontFamily2,
-                            fontSize:
-                                defaultEditScaleHeight(widget.containerHeight, 18),
-                            color: black2,
-                            fontWeight: FontWeight.w400,
-                            height: lineHeight(22.4, 18)),
+                         maxLines: null,//null so user can add any no. of lines as he want(will work together with  keyboardType: TextInputType.multiline)
+                       keyboardType: TextInputType.multiline,//null so user can add any no. of lines as he want(will work together with maxline: null)
+                        style: GoogleFonts.getFont(
+                            hackathonTextPropertiesProvider
+                                .textFieldPropertiesMap[descriptionKey]!
+                                .font,
+                            fontSize: defaultEditScaleHeight(
+                                widget.containerHeight,
+                                hackathonTextPropertiesProvider
+                                    .textFieldPropertiesMap[descriptionKey]!
+                                    .size
+                                    .toDouble()), //20
+                            fontStyle: hackathonTextPropertiesProvider
+                                    .textFieldPropertiesMap[descriptionKey]!
+                                    .italics
+                                ? FontStyle.italic
+                                : FontStyle.normal,
+                            decoration: TextDecoration.combine([
+                              hackathonTextPropertiesProvider
+                                      .textFieldPropertiesMap[
+                                          descriptionKey]!
+                                      .strikethrogh
+                                  ? TextDecoration.lineThrough
+                                  : TextDecoration.none,
+                              hackathonTextPropertiesProvider
+                                      .textFieldPropertiesMap[
+                                          descriptionKey]!
+                                      .underline
+                                  ? TextDecoration.underline
+                                  : TextDecoration.none,
+                            ]),
+                            letterSpacing: hackathonTextPropertiesProvider
+                                .textFieldPropertiesMap[descriptionKey]!
+                                .letterSpacing
+                                .toDouble(),
+                            color: hackathonTextPropertiesProvider
+                                .stringToColor(descriptionKey), //greyish1
+                            fontWeight: hackathonTextPropertiesProvider.getSelectedTextFieldFontWeight(
+                                descriptionKey),
+                            height: lineHeight(
+                                22.4,
+                                hackathonTextPropertiesProvider
+                                    .textFieldPropertiesMap[descriptionKey]!
+                                    .size
+                                    .toDouble())), //20 //Line Height Changed
                         validator: (value) {
                           if (value!.isEmpty) {
                             return '';
                           }
                           return null;
                         },
+                        onTap: () {
+                          hackathonTextPropertiesProvider
+                              .selectedTextFieldKey = descriptionKey;
+                          hackathonTextPropertiesProvider
+                              .updateSelectedFontFromTextField();
+                          hackathonTextPropertiesProvider.getLetterSpacing();
+                        },
+                        // onTapOutside: (){
+                        //   hackathonTextPropertiesProvider.sel
+                        // },
                         onSaved: (value) {
-                          hackathonDetailsProvider.about = value.toString();
+                          hackathonDetailsProvider.about =
+                              value.toString();
                         },
                       ),
 
