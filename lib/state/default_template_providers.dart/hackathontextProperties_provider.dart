@@ -482,6 +482,7 @@ String reconstructText(String originalText, String currentText) {
   }
 
   //Convert the string alignment coming from the API to TextAlign
+  // has shifted to defaultTemplte provider
   TextAlign getTextAlign(String align){
     switch(align){
       case 'left':
@@ -496,7 +497,7 @@ String reconstructText(String originalText, String currentText) {
         return TextAlign.center;
     }
   }
-
+// has shifted to defaultTemplte provider
   AlignmentGeometry getTextAlignForContainer(String align){
     switch(align){
       case 'left':
@@ -565,60 +566,56 @@ String reconstructText(String originalText, String currentText) {
          hackathonTextPropertiesProvider.textFieldPropertiesMap[organisationKey]! gives 
          all the text properties of TextFieldProperties type  in {} format 
         and putting these values in textProperties  */
-          textProperties:textFieldPropertiesMap[organisationKey]!),
+          textProperties:textFieldPropertiesMap[organisationKey]!),//0
       TextFieldPropertiesArray(
           name: 'Hackathon Name',
           type: 'text',
-          textProperties: textFieldPropertiesMap[hackathonNameKey]!),
+          textProperties: textFieldPropertiesMap[hackathonNameKey]!),//1
       TextFieldPropertiesArray(
         name: 'brief',
         type: 'text',
-        textProperties: textFieldPropertiesMap[briefKey]!),
+        textProperties: textFieldPropertiesMap[briefKey]!),//2
       TextFieldPropertiesArray(
           name: 'hackathonStartDate',
           type: 'text',
-          textProperties: textFieldPropertiesMap[hackathonStartDateKey]!),
+          textProperties: textFieldPropertiesMap[hackathonStartDateKey]!),//3
       TextFieldPropertiesArray(
           name: 'Mode Of Conduct',
           type: 'text',
-          textProperties: textFieldPropertiesMap[modeOfConductKey]!),
+          textProperties: textFieldPropertiesMap[modeOfConductKey]!),//4
       TextFieldPropertiesArray(
           name: 'Participation Fee',
           type: 'text',
-          textProperties: textFieldPropertiesMap[participationFeeKey]!),
+          textProperties: textFieldPropertiesMap[participationFeeKey]!),//5
       TextFieldPropertiesArray(
           name: 'teamSize',
           type: 'text',
-          textProperties: textFieldPropertiesMap[teamSizeKey]!),
+          textProperties: textFieldPropertiesMap[teamSizeKey]!),//6
       TextFieldPropertiesArray(
           name: 'venue',
           type: 'text',
-          textProperties: textFieldPropertiesMap[venueKey]!),
-      // TextFieldPropertiesArray(
-      //     name: 'descriptionKey',
-      //     type: 'text',
-      //     textProperties: hackathonTextPropertiesProvider
-      //         .textFieldPropertiesMap[descriptionKey]!),
-      // TextFieldPropertiesArray(
-      //     name: 'contactName1Key',
-      //     type: 'text',
-      //     textProperties: hackathonTextPropertiesProvider
-      //         .textFieldPropertiesMap[contactName1Key]!),
-      // TextFieldPropertiesArray(
-      //     name: 'contactName2Key',
-      //     type: 'text',
-      //     textProperties: hackathonTextPropertiesProvider
-      //         .textFieldPropertiesMap[contactName2Key]!),
-      // TextFieldPropertiesArray(
-      //     name: 'contactNumber1Key',
-      //     type: 'text',
-      //     textProperties: hackathonTextPropertiesProvider
-      //         .textFieldPropertiesMap[contactNumber1Key]!),
-      // TextFieldPropertiesArray(
-      //     name: 'contactNumber2Key',
-      //     type: 'text',
-      //     textProperties: hackathonTextPropertiesProvider
-      //         .textFieldPropertiesMap[contactNumber2Key]!)
+          textProperties: textFieldPropertiesMap[venueKey]!),//7
+      TextFieldPropertiesArray(
+          name: 'description',
+          type: 'text',
+          textProperties: textFieldPropertiesMap[descriptionKey]!),//8
+      TextFieldPropertiesArray(
+          name: 'contactName1',
+          type: 'text',
+          textProperties: textFieldPropertiesMap[contactName1Key]!),//9
+      TextFieldPropertiesArray(
+          name: 'contactNumber1',
+          type: 'text',
+          textProperties: textFieldPropertiesMap[contactNumber1Key]!),//10
+      TextFieldPropertiesArray(
+          name: 'contactName2',
+          type: 'text',
+          textProperties:textFieldPropertiesMap[contactName2Key]!),//11
+      
+      TextFieldPropertiesArray(
+          name: 'contactNumber2',
+          type: 'text',
+          textProperties: textFieldPropertiesMap[contactNumber2Key]!)//12
     ];
 }
 

@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
-import 'package:major_project__widget_testing/constants/fontfamily.dart';
-import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
-import 'package:major_project__widget_testing/utils/text_lineheight.dart';
-import 'package:major_project__widget_testing/utils/upperCaseTextFormatter.dart';
+import 'package:major_project__widget_testing/views/Components/defaultTemplate_textFormField.dart';
 import 'package:provider/provider.dart';
 
 class DefaultRoundsDescription extends StatefulWidget {
@@ -24,7 +20,8 @@ class DefaultRoundsDescription extends StatefulWidget {
   });
 
   @override
-  State<DefaultRoundsDescription> createState() => _DefaultRoundsDescriptionState();
+  State<DefaultRoundsDescription> createState() =>
+      _DefaultRoundsDescriptionState();
 }
 
 class _DefaultRoundsDescriptionState extends State<DefaultRoundsDescription> {
@@ -45,6 +42,7 @@ class _DefaultRoundsDescriptionState extends State<DefaultRoundsDescription> {
 
     final rulesProvider = Provider.of<RulesProvider>(context, listen: false);
 
+    // commented becaiuse initiallization of description is shifted in round card
     // hackathonTextPropertiesProvider.textFieldPropertiesMap[
     //     roundGlobalKeysMap[ rulesProvider.editSelectedIndex]!['roundDescription']!] = TextFieldProperties(
     //   size: 16, //size is +1 in comparison to normal text whose fontsize was 15
@@ -63,7 +61,6 @@ class _DefaultRoundsDescriptionState extends State<DefaultRoundsDescription> {
     // if (hackathonDetailsProvider.roundsList[rulesProvider.editSelectedIndex]
     //       .description.isNotEmpty) {
 
-
     //     roundDescriptionController.text = hackathonDetailsProvider.roundsList[rulesProvider.editSelectedIndex]
     //       .description;
     //   }
@@ -76,35 +73,30 @@ class _DefaultRoundsDescriptionState extends State<DefaultRoundsDescription> {
     // TODO: implement dispose
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final rulesProvider = Provider.of<RulesProvider>(context);
     final hackathonDetailsProvider =
         Provider.of<HackathonDetailsProvider>(context);
-       
-        print(hackathonDetailsProvider.roundsList[rulesProvider.editSelectedIndex]
-          .description);
-        
-         
+
+    print(hackathonDetailsProvider
+        .roundsList[rulesProvider.editSelectedIndex].description);
 
     final hackathonTextPropertiesProvider =
         Provider.of<HackathonTextPropertiesProvider>(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       hackathonTextPropertiesProvider.convertAndRevertBackFromUpperCase(
-          roundDescriptionController, roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!);
-if (hackathonDetailsProvider.roundsList[rulesProvider.editSelectedIndex]
-          .description.isNotEmpty) {
-
-
-        roundDescriptionController.text = hackathonDetailsProvider.roundsList[rulesProvider.editSelectedIndex]
-          .description;
+          roundDescriptionController,
+          roundGlobalKeysMap[rulesProvider.editSelectedIndex]![
+              'roundDescription']!);
+      if (hackathonDetailsProvider
+          .roundsList[rulesProvider.editSelectedIndex].description.isNotEmpty) {
+        roundDescriptionController.text = hackathonDetailsProvider
+            .roundsList[rulesProvider.editSelectedIndex].description;
       }
-      
     });
-    
-      
-    
 
     // if (hackathonDetailsProvider.roundsList[rulesProvider.editSelectedIndex]
     //       .description!.isNotEmpty) {
@@ -156,115 +148,14 @@ if (hackathonDetailsProvider.roundsList[rulesProvider.editSelectedIndex]
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)),
                 ),
-                child: TextFormField(
-                  key: roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!,
-                  textAlign: hackathonTextPropertiesProvider
-                              .getTextAlign(hackathonTextPropertiesProvider
-                                  .textFieldPropertiesMap[roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!]!
-                                  .align),
+                child: DefaultTemplateTextFormField(
+                  hintText: 'Type your Description here...',
+                  fieldKey: roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!,
                   controller: roundDescriptionController,
-                  cursorColor: Colors.black,
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(0),
-                    hintText: 'Type your Description here...',
-                    hintStyle: GoogleFonts.getFont(
-                       hackathonTextPropertiesProvider
-                                    .textFieldPropertiesMap[roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!]!
-                                    .font,
-
-                         fontStyle:
-                                    hackathonTextPropertiesProvider.textFieldPropertiesMap[roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!]!.italics
-                                        ? FontStyle.italic
-                                        : FontStyle.normal,
-                                decoration: TextDecoration.combine([
-                                  hackathonTextPropertiesProvider
-                                          .textFieldPropertiesMap[
-                                              roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!]!
-                                          .strikethrogh
-                                      ? TextDecoration.lineThrough
-                                      : TextDecoration.none,
-                                  hackathonTextPropertiesProvider
-                                          .textFieldPropertiesMap[
-                                              roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!]!
-                                          .underline
-                                      ? TextDecoration.underline
-                                      : TextDecoration.none,
-                                ]),
-                        fontSize: defaultEditScaleHeight(
-                                    widget.containerHeight,
-                                    hackathonTextPropertiesProvider.textFieldPropertiesMap[roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!]!.size
-                                        .toDouble()),
-                        color: hackathonTextPropertiesProvider
-                                    .stringToColor(roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!),
-                        fontWeight: hackathonTextPropertiesProvider
-                                    .getSelectedTextFieldFontWeight(
-                                        roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!),
-                        height: lineHeight(27, 
-                        hackathonTextPropertiesProvider
-                                      .textFieldPropertiesMap[
-                                          roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!]!
-                                      .size
-                                      .toDouble(),
-                        )),
-                    enabledBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    errorBorder: InputBorder.none,
-                    focusedErrorBorder: InputBorder.none,
-                    counterText: "",
-                  ),
-
-                   inputFormatters: [
-                            UpperCaseTextFormatter(
-                                hackathonTextPropertiesProvider,
-                                roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!),
-                          ],
+                  containerHeight: widget.containerHeight,
                   maxLength: 580,
                   maxLines: 9,
-                  keyboardType: TextInputType.text,
-                  style: GoogleFonts.getFont(
-
-                     hackathonTextPropertiesProvider
-                                  .textFieldPropertiesMap[roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!]!
-                                  .font,
-                              fontSize: defaultEditScaleHeight(
-                                  widget.containerHeight,
-                                  hackathonTextPropertiesProvider
-                                      .textFieldPropertiesMap[roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!]!
-                                      .size
-                                      .toDouble()),
-                      decoration: TextDecoration.combine([
-                                hackathonTextPropertiesProvider
-                                        .textFieldPropertiesMap[
-                                            roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!]!
-                                        .strikethrogh
-                                    ? TextDecoration.lineThrough
-                                    : TextDecoration.none,
-                                hackathonTextPropertiesProvider
-                                        .textFieldPropertiesMap[
-                                            roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!]!
-                                        .underline
-                                    ? TextDecoration.underline
-                                    : TextDecoration.none,
-                              ]),
-                     color: hackathonTextPropertiesProvider.stringToColor(
-                                  roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!), //greyish1
-                              fontWeight: hackathonTextPropertiesProvider.getSelectedTextFieldFontWeight(
-                                  roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!),
-                      height: lineHeight(27, hackathonTextPropertiesProvider.textFieldPropertiesMap[roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!]!.size.toDouble())),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return '';
-                    }
-                    return null;
-                  },
-                   onTap: () {
-                            hackathonTextPropertiesProvider
-                                    .selectedTextFieldKey =
-                                roundGlobalKeysMap[ rulesProvider.editSelectedIndex]!['roundDescription']!;
-                            hackathonTextPropertiesProvider
-                                .updateSelectedFontFromTextField();
-                          },
-                 
+                  height: 27,
                   onSaved: (value) {
                     hackathonDetailsProvider.updateRoundDescription(
                         rulesProvider.editSelectedIndex, value.toString());

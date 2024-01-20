@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
-import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/views/Components/customGrid.dart';
-import 'package:provider/provider.dart';
+import 'package:major_project__widget_testing/views/Components/defaultTemplate_text.dart';
 
 class ContactUsAndFooterSection extends StatefulWidget {
-  const ContactUsAndFooterSection({super.key, required this.defaultTemplateModel});
-    final DefaultTemplateApiResponse? defaultTemplateModel;
+  const ContactUsAndFooterSection(
+      {super.key, required this.defaultTemplateModel});
+  final DefaultTemplateApiResponse? defaultTemplateModel;
 
   @override
   State<ContactUsAndFooterSection> createState() =>
@@ -30,8 +30,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
   ];
   @override
   Widget build(BuildContext context) {
-    final hackathonDetailsProvider =
-        Provider.of<HackathonDetailsProvider>(context);
+  
     return Column(
       key: contactUs,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,25 +78,20 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                widget.defaultTemplateModel!.hackathons.contact1Name,
-                                // hackathonDetailsProvider.hackathonContactName1,
-                                  style: GoogleFonts.getFont(fontFamily2,
-                                      fontSize: scaleHeight(context, 18),
-                                      color: black1,
-                                      fontWeight: FontWeight.w400,
-                                      height: lineHeight(29, 18))),
+                              DefaultTemplateText(
+                                name: widget.defaultTemplateModel!.hackathons.contact1Name,
+                                textProperties: widget.defaultTemplateModel!.fields[9].textProperties,
+                                height: 29,
+                              ),
                               SizedBox(
                                 height: scaleHeight(context, 5),
                               ),
-                              Text(
-                                widget.defaultTemplateModel!.hackathons.contact1Number.toString(),
-                                // hackathonDetailsProvider.hackathonContactNumber1,
-                                  style: GoogleFonts.getFont(fontFamily2,
-                                      fontSize: scaleHeight(context, 16),
-                                      color: black5,
-                                      fontWeight: FontWeight.w400,
-                                      height: lineHeight(5, 16))),
+                              DefaultTemplateText(
+                                name: widget.defaultTemplateModel!.hackathons.contact1Number,
+                                textProperties: widget.defaultTemplateModel!.fields[10].textProperties,
+                                height: 5,
+                              ),
+                              
                             ],
                           ),
                         ],
@@ -120,26 +114,22 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                
-                                widget.defaultTemplateModel!.hackathons.contact2Name,
-                                // hackathonDetailsProvider.hackathonContactName2,
-                                  style: GoogleFonts.getFont(fontFamily2,
-                                      fontSize: scaleHeight(context, 18),
-                                      color: black1,
-                                      fontWeight: FontWeight.w400,
-                                      height: lineHeight(29, 18))),
+                              DefaultTemplateText(
+                                name: widget.defaultTemplateModel!.hackathons.contact2Name,
+                                textProperties: widget.defaultTemplateModel!.fields[11].textProperties,
+                                height: 29,
+                              ),
+                              
                               SizedBox(
                                 height: scaleHeight(context, 5),
                               ),
-                              Text(
-                                widget.defaultTemplateModel!.hackathons.contact2Number.toString(),
-                                // hackathonDetailsProvider.hackathonContactNumber2,
-                                  style: GoogleFonts.getFont(fontFamily2,
-                                      fontSize: scaleHeight(context, 16),
-                                      color: black5,
-                                      fontWeight: FontWeight.w400,
-                                      height: lineHeight(5, 16))),
+
+                               DefaultTemplateText(
+                                name: widget.defaultTemplateModel!.hackathons.contact2Number,
+                                textProperties: widget.defaultTemplateModel!.fields[12].textProperties,
+                                height: 5,
+                              ),
+                              
                             ],
                           ),
                         ],

@@ -6,22 +6,27 @@ import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/utils/upperCaseTextFormatter.dart';
 import 'package:provider/provider.dart';
 
-class CustomTextFormField extends StatelessWidget {
-  const CustomTextFormField({
+class DefaultTemplateTextFormField extends StatelessWidget {
+  const DefaultTemplateTextFormField({
     Key? key,
     required this.fieldKey,
     this.controller,
     required this.containerHeight,
      required this.hintText,
     this.onSaved,
-    
+    this.cursorHeight,
     this.maxLength,
+     this.contentPadding,
     TextInputType? keyboardType,
     int? maxLines, 
-    double? height,
+    double? height, 
+    Color? cursorColor,
+    bool? isDense,
   })   : keyboardType = keyboardType ??  TextInputType.text, // Set default hint text if user doesn't provide any input
-        maxLines = maxLines ?? 1, // Set maxLines to 1 if user doesn't provide any input
+        maxLines = maxLines == 0 ? null : (maxLines ?? 1), // Set maxLines to 1 if user doesn't provide any input
         height = height ?? 22.4,
+        cursorColor= cursorColor?? Colors.black,
+        isDense= isDense?? false,
         super(key: key);
 
   final GlobalKey<State<StatefulWidget>> fieldKey;
@@ -29,10 +34,14 @@ class CustomTextFormField extends StatelessWidget {
   final double containerHeight;
   final void Function(String?)? onSaved;
   final String hintText;
-  final int maxLines;
+  final int? maxLines;
   final TextInputType keyboardType;
   final int? maxLength;
   final double height;//for now only
+  final double? cursorHeight;
+  final Color cursorColor;
+  final bool isDense;
+  final EdgeInsetsGeometry? contentPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +56,11 @@ class CustomTextFormField extends StatelessWidget {
                 .textFieldPropertiesMap[fieldKey]!.align),
         textAlignVertical: TextAlignVertical.center,
         controller: controller,
-        //  cursorHeight: defaultEditScaleHeight(
-        //      widget.containerHeight, 20),
+         cursorHeight: cursorHeight,
         cursorColor: Colors.black,
         decoration: InputDecoration(
+          isDense: isDense,
+          contentPadding: contentPadding,
           hintText: hintText,
           hintStyle: GoogleFonts.getFont(
               hackathonTextPropertiesProvider

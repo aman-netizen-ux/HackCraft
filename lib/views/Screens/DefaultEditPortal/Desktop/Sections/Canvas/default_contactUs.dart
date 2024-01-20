@@ -8,7 +8,7 @@ import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
-import 'package:major_project__widget_testing/views/Components/custom_textField.dart';
+import 'package:major_project__widget_testing/views/Components/defaultTemplate_textFormField.dart';
 import 'package:provider/provider.dart';
 
 class DefaultEditContactUsAndFooterSection extends StatefulWidget {
@@ -236,13 +236,13 @@ hackathonTextPropertiesProvider.textFieldPropertiesMap[contactName2Key] =
                                 height: 30,
                                 width: defaultEditScaleWidth(
                                     widget.containerWidth, 300),
-                                child: CustomTextFormField(
+                                child: DefaultTemplateTextFormField(
                                   hintText:'Contact Member Name',
                                   containerHeight: widget.containerHeight,
                                   fieldKey: contactName1Key,
                                   controller: contactMemberName1Controller,
                                  onSaved: (value) {
-                                hackathonDetailsProvider.contact1Number =
+                                hackathonDetailsProvider.contact1Name =
                                     value.toString();
                                   },
                                 ),
@@ -262,7 +262,7 @@ hackathonTextPropertiesProvider.textFieldPropertiesMap[contactName2Key] =
                                 height: 30,
                                 width: defaultEditScaleWidth(
                                     widget.containerWidth, 300),
-                                child:CustomTextFormField(
+                                child:DefaultTemplateTextFormField(
                                   hintText:'Contact Number',
                                   fieldKey:  contactNumber1Key,
                                   controller: contactMemberNumber1Controller,
@@ -315,7 +315,7 @@ hackathonTextPropertiesProvider.textFieldPropertiesMap[contactName2Key] =
                                 height: 30,
                                 width: defaultEditScaleWidth(
                                     widget.containerWidth, 300),
-                                child:  CustomTextFormField(
+                                child:  DefaultTemplateTextFormField(
                                   hintText:'Contact Member Name',
                                   fieldKey: contactName2Key,
                                   controller: contactMemberName2Controller,
@@ -346,7 +346,7 @@ hackathonTextPropertiesProvider.textFieldPropertiesMap[contactName2Key] =
                                 height: 30,
                                 width: defaultEditScaleWidth(
                                     widget.containerWidth, 300),
-                                child: CustomTextFormField(
+                                child: DefaultTemplateTextFormField(
                                   hintText:'Contact Number',
                                   fieldKey:  contactNumber2Key,
                                   controller: contactMemberNumber2Controller,

@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
-import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
-import 'package:major_project__widget_testing/state/defaulttemplateProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
-import 'package:major_project__widget_testing/utils/text_lineheight.dart';
-import 'package:provider/provider.dart';
+import 'package:major_project__widget_testing/views/Components/defaultTemplate_text.dart';
 
 class RoundsDescription extends StatelessWidget {
   final String description;
@@ -18,8 +14,7 @@ class RoundsDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultTemplateProvider =
-        Provider.of<DefaultTemplateProvider>(context);
+   
     return Container(
         width: scaleWidth(context, 550),
         height: scaleHeight(context, 453),
@@ -60,27 +55,10 @@ class RoundsDescription extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)),
                 ),
-                child: Text(
-                  description,
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.getFont(
-                    decriptionProperties.font, //fontFamily2,
-                    fontSize: scaleHeight(
-                        context, decriptionProperties.size.toDouble()), //15
-                    decoration: decriptionProperties.underline
-                        ? TextDecoration.underline
-                        : TextDecoration.none,
-                    fontStyle: decriptionProperties.italics
-                        ? FontStyle.italic
-                        : FontStyle.normal,
-
-                    color: defaultTemplateProvider.stringToColor(
-                        decriptionProperties.textColor), //greyish1,
-                    height: lineHeight(
-                        22.4, decriptionProperties.size.toDouble()), //18
-                    fontWeight: defaultTemplateProvider.fontWeightFromInt(
-                        decriptionProperties.fontWeight), //w400
-                  ),
+                child: DefaultTemplateText(
+                  name: description,
+                  textProperties: decriptionProperties,
+                  height: 22.4,
                 ),
               )),
           Positioned(
