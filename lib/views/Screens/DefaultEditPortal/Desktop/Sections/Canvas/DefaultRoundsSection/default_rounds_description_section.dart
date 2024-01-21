@@ -158,19 +158,10 @@ class _DefaultRoundsDescriptionState extends State<DefaultRoundsDescription> {
                       hackathonDetailsProvider.updateRoundDescription(
                         i, rulesProvider.descriptionControllers[i].text);
                     }
-                    // hackathonDetailsProvider.updateRoundDescription(
-                    //     rulesProvider.editSelectedIndex, value.toString());
                   },
                 ),
               )),
 
-          // Text('Welcome to the electrifying first round of Velocity Vista - the "UX Face-Off!" Here, we separate design champions from budding creators as they embark on a quest to showcase their UI/UX design skills. Your mission: craft a dazzling UI/UX design for a website or app, and this is your moment to shine. The submission window is open from October 21st, 2023, at 12:00 AM to October 23rd, 2023, at midnight. Brace yourself; it''s an elimination round, so bring your absolute best! The submission form awaits, with the label "Submit Your Design" and PDF as the only accepted format',
-          // textAlign: TextAlign.center,
-          //  style: GoogleFonts.getFont(fontFamily2,
-          // fontSize: defaultEditScaleWidth(containerWidth, 15),
-          // color: greyish1,
-          // fontWeight: FontWeight.w400,
-          // height: lineHeight(27, 18))))),
           Positioned(
               left: defaultEditScaleWidth(widget.containerWidth, 229),
               top: defaultEditScaleHeight(widget.containerHeight, 339),
