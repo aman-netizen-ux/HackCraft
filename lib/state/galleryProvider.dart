@@ -8,8 +8,8 @@ class GalleryProvider with ChangeNotifier{
     'assets/images/defaultTemplate/GalleryImage.png',
     'assets/images/defaultTemplate/GalleryImage.png',
     'assets/images/defaultTemplate/GalleryImage.png',
-     'assets/images/defaultTemplate/GalleryImage.png',
-      'assets/images/defaultTemplate/GalleryImage.png'
+    'assets/images/defaultTemplate/GalleryImage.png',
+    'assets/images/defaultTemplate/GalleryImage.png'
   ];
 
   List<String> get galleryImages => _galleryImages;
