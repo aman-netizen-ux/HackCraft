@@ -212,13 +212,13 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
                       ),
                       //Title of the round
                       child: Container(
-                        // height: defaultEditScaleHeight(widget.containerHeight, 30),
+                        height: defaultEditScaleHeight(widget.containerHeight, 20),
                         width:
                             defaultEditScaleWidth(widget.containerWidth, 150),
                         alignment: Alignment.topLeft,
                         margin: EdgeInsets.only(
                             top: defaultEditScaleHeight(
-                                widget.containerHeight, 28)),
+                                widget.containerHeight, 20)),
 
                         // color: Colors.amberAccent[100],
                         child: DefaultTemplateTextFormField(
@@ -231,10 +231,6 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
                           maxLength: 10,
                           height:
                               22.4, //Line Height is changed because of cursor size, initial line height was 22.4
-                          // onChanged: (value){
-                          //  hackathonDetailsProvider.updateRoundTitle(
-                          //       index, value.toString());
-                          // },
                           onSaved: (value) {
                             hackathonDetailsProvider.updateRoundTitle(
                                 widget.index, value.toString());
@@ -252,11 +248,12 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
                         hackathonDetailsProvider
                             .deleteTextPropertiesOfRoundsFromFields(
                                 widget.index);
+                        rulesProvider.deleteDescriptionControllers(widget.index);
                         // hackathonDetailsProvider.deleteTemproraryRound(index, context);
                       }
                     },
                     child: Container(
-                      width: defaultEditScaleWidth(widget.containerWidth, 130),
+                      width: defaultEditScaleWidth(widget.containerWidth, 133),
                       height:
                           defaultEditScaleHeight(widget.containerHeight, 30),
                       padding: EdgeInsets.symmetric(

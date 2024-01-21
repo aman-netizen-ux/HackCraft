@@ -307,7 +307,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                         height:
                             defaultEditScaleHeight(widget.containerHeight, 50),
                         child: DefaultTemplateTextFormField(
-                          hintText: 'Organisation name',
+                          hintText: 'Your Organisation Name',
                           fieldKey: organisationKey,
                           controller: hackathonOrganisationController,
                           containerHeight: widget.containerHeight,

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
@@ -15,6 +17,21 @@ class RulesProvider with ChangeNotifier {
 
   int get selectedIndex => _selectedIndex;
   int get editSelectedIndex => _editSelectedIndex;
+
+  List<TextEditingController> descriptionControllers = [TextEditingController()];
+
+  void addDescriptionControllers(){
+    descriptionControllers.add(TextEditingController());
+    notifyListeners();
+  }
+
+  void deleteDescriptionControllers(int index){
+    if(index < descriptionControllers.length){
+      descriptionControllers.removeRange(index, min(index, descriptionControllers.length));
+    }
+    notifyListeners();
+  }
+
 
   void setSelectedIndex(int index) {
     _selectedIndex = index;

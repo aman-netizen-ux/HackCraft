@@ -34,13 +34,13 @@ class _DefaultRoundsDescriptionState extends State<DefaultRoundsDescription> {
 
     roundDescriptionController = TextEditingController();
 
-    final hackathonTextPropertiesProvider =
-        Provider.of<HackathonTextPropertiesProvider>(context, listen: false);
+    // final hackathonTextPropertiesProvider =
+    //     Provider.of<HackathonTextPropertiesProvider>(context, listen: false);
 
-    final hackathonDetailsProvider =
-        Provider.of<HackathonDetailsProvider>(context, listen: false);
+    // final hackathonDetailsProvider =
+    //     Provider.of<HackathonDetailsProvider>(context, listen: false);
 
-    final rulesProvider = Provider.of<RulesProvider>(context, listen: false);
+    // final rulesProvider = Provider.of<RulesProvider>(context, listen: false);
 
     // commented becaiuse initiallization of description is shifted in round card
     // hackathonTextPropertiesProvider.textFieldPropertiesMap[
@@ -80,20 +80,17 @@ class _DefaultRoundsDescriptionState extends State<DefaultRoundsDescription> {
     final hackathonDetailsProvider =
         Provider.of<HackathonDetailsProvider>(context);
 
-    print(hackathonDetailsProvider
-        .roundsList[rulesProvider.editSelectedIndex].description);
-
     final hackathonTextPropertiesProvider =
         Provider.of<HackathonTextPropertiesProvider>(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       hackathonTextPropertiesProvider.convertAndRevertBackFromUpperCase(
-          roundDescriptionController,
+          rulesProvider.descriptionControllers[rulesProvider.editSelectedIndex],
           roundGlobalKeysMap[rulesProvider.editSelectedIndex]![
               'roundDescription']!);
       if (hackathonDetailsProvider
           .roundsList[rulesProvider.editSelectedIndex].description.isNotEmpty) {
-        roundDescriptionController.text = hackathonDetailsProvider
+        rulesProvider.descriptionControllers[rulesProvider.editSelectedIndex].text = hackathonDetailsProvider
             .roundsList[rulesProvider.editSelectedIndex].description;
       }
     });
@@ -151,14 +148,18 @@ class _DefaultRoundsDescriptionState extends State<DefaultRoundsDescription> {
                 child: DefaultTemplateTextFormField(
                   hintText: 'Type your Description here...',
                   fieldKey: roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!,
-                  controller: roundDescriptionController,
+                  controller: rulesProvider.descriptionControllers[rulesProvider.editSelectedIndex],
                   containerHeight: widget.containerHeight,
                   maxLength: 580,
                   maxLines: 9,
                   height: 27,
                   onSaved: (value) {
-                    hackathonDetailsProvider.updateRoundDescription(
-                        rulesProvider.editSelectedIndex, value.toString());
+                    for(int i = 0; i < rulesProvider.descriptionControllers.length; i++){
+                      hackathonDetailsProvider.updateRoundDescription(
+                        i, rulesProvider.descriptionControllers[i].text);
+                    }
+                    // hackathonDetailsProvider.updateRoundDescription(
+                    //     rulesProvider.editSelectedIndex, value.toString());
                   },
                 ),
               )),

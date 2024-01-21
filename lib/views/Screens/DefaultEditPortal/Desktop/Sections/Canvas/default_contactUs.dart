@@ -214,13 +214,15 @@ hackathonTextPropertiesProvider.textFieldPropertiesMap[contactName2Key] =
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
                             height: defaultEditScaleWidth(
                                 widget.containerWidth, 40),
                             width: defaultEditScaleWidth(
                                 widget.containerWidth, 40),
+                            margin: EdgeInsets.only(top: scaleHeight(context, 10)),
                             decoration: BoxDecoration(
                                 color: lavender,
                                 borderRadius: BorderRadius.circular(50)),
@@ -237,7 +239,8 @@ hackathonTextPropertiesProvider.textFieldPropertiesMap[contactName2Key] =
                                 width: defaultEditScaleWidth(
                                     widget.containerWidth, 300),
                                 child: DefaultTemplateTextFormField(
-                                  hintText:'Contact Member Name',
+                                  isDense: true,
+                                  hintText:'Contact Member Name 1',
                                   containerHeight: widget.containerHeight,
                                   fieldKey: contactName1Key,
                                   controller: contactMemberName1Controller,
@@ -247,12 +250,6 @@ hackathonTextPropertiesProvider.textFieldPropertiesMap[contactName2Key] =
                                   },
                                 ),
                               ),
-                              // Text('Contact Member Name ',
-                              //     style: GoogleFonts.getFont(fontFamily2,
-                              //         fontSize: defaultEditScaleHeight(widget.containerHeight, 18),
-                              //         color: black1,
-                              //         fontWeight: FontWeight.w400,
-                              //         height: lineHeight(29, 18))),
                               SizedBox(
                                 height: defaultEditScaleHeight(
                                     widget.containerHeight, 5),
@@ -263,7 +260,8 @@ hackathonTextPropertiesProvider.textFieldPropertiesMap[contactName2Key] =
                                 width: defaultEditScaleWidth(
                                     widget.containerWidth, 300),
                                 child:DefaultTemplateTextFormField(
-                                  hintText:'Contact Number',
+                                  isDense: true,
+                                  hintText:'Contact Number 1',
                                   fieldKey:  contactNumber1Key,
                                   controller: contactMemberNumber1Controller,
                                   containerHeight: widget.containerHeight,
@@ -273,18 +271,8 @@ hackathonTextPropertiesProvider.textFieldPropertiesMap[contactName2Key] =
                                     hackathonDetailsProvider.contact1Number =
                                         value.toString();
                                   },
-                                ),
-                                
-                                
-                                 
+                                ),                             
                               ),
-                              // Text('Contact Number',
-                              //     style: GoogleFonts.getFont(fontFamily2,
-                              //         fontSize: defaultEditScaleHeight(
-                              //             widget.containerHeight, 16),
-                              //         color: black5,
-                              //         fontWeight: FontWeight.w400,
-                              //         height: lineHeight(5, 16))),
                             ],
                           ),
                         ],
@@ -294,12 +282,15 @@ hackathonTextPropertiesProvider.textFieldPropertiesMap[contactName2Key] =
                             defaultEditScaleHeight(widget.containerHeight, 27),
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
                             height: defaultEditScaleWidth(
                                 widget.containerWidth, 40),
                             width: defaultEditScaleWidth(
                                 widget.containerWidth, 40),
+                            margin: EdgeInsets.only(top: scaleHeight(context, 10)),
                             decoration: BoxDecoration(
                                 color: lavender,
                                 borderRadius: BorderRadius.circular(50)),
@@ -316,27 +307,19 @@ hackathonTextPropertiesProvider.textFieldPropertiesMap[contactName2Key] =
                                 width: defaultEditScaleWidth(
                                     widget.containerWidth, 300),
                                 child:  DefaultTemplateTextFormField(
-                                  hintText:'Contact Member Name',
+                                  isDense: true,
+                                  hintText:'Contact Member Name 2',
                                   fieldKey: contactName2Key,
                                   controller: contactMemberName2Controller,
                                   containerHeight: widget.containerHeight,
                                   maxLength: 30,                          
-                                  height: 10,        
+                                  //height: 10,        
                                  onSaved: (value) {
                                     hackathonDetailsProvider.contact2Name =
                                         value.toString();
                                   },
                                 ),
-                                
-                                
                               ),
-                              // Text('Contact Member Name ',
-                              //     style: GoogleFonts.getFont(fontFamily2,
-                              //         fontSize: defaultEditScaleHeight(
-                              //             widget.containerHeight, 18),
-                              //         color: black1,
-                              //         fontWeight: FontWeight.w400,
-                              //         height: lineHeight(29, 18))),
                               SizedBox(
                                 height: defaultEditScaleHeight(
                                     widget.containerHeight, 5),
@@ -347,28 +330,19 @@ hackathonTextPropertiesProvider.textFieldPropertiesMap[contactName2Key] =
                                 width: defaultEditScaleWidth(
                                     widget.containerWidth, 300),
                                 child: DefaultTemplateTextFormField(
-                                  hintText:'Contact Number',
+                                  isDense: true,
+                                  hintText:'Contact Number 2',
                                   fieldKey:  contactNumber2Key,
                                   controller: contactMemberNumber2Controller,
                                   containerHeight: widget.containerHeight,
                                   maxLength: 30,                      
-                                  height: 29,            
+                                  height: 5,            
                                  onSaved: (value) {
                                     hackathonDetailsProvider.contact2Number =
                                         value.toString();
                                   },
                                 ),
-                                
-                                
-                                
                               ),
-                              // Text('Contact Number',
-                              //     style: GoogleFonts.getFont(fontFamily2,
-                              //         fontSize: defaultEditScaleHeight(
-                              //             widget.containerHeight, 16),
-                              //         color: black5,
-                              //         fontWeight: FontWeight.w400,
-                              //         height: lineHeight(5, 16))),
                             ],
                           ),
                         ],
