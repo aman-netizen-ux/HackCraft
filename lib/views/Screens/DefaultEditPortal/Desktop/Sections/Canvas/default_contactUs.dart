@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
+import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
+import 'package:major_project__widget_testing/views/Components/defaultTemplate_textFormField.dart';
 import 'package:provider/provider.dart';
 
 class DefaultEditContactUsAndFooterSection extends StatefulWidget {
@@ -37,6 +41,102 @@ late TextEditingController contactMemberNumber2Controller;
     contactMemberNumber1Controller = TextEditingController();
     contactMemberNumber2Controller = TextEditingController();
 
+    final hackathonTextPropertiesProvider =
+        Provider.of<HackathonTextPropertiesProvider>(context, listen: false);
+
+    final hackathonDetailsProvider =
+        Provider.of<HackathonDetailsProvider>(context, listen: false);
+
+     hackathonTextPropertiesProvider.textFieldPropertiesMap[contactName1Key] =
+        TextFieldProperties(
+       size: 18,
+      //size: hackathonDetailsProvider.hackathonDetails.fields[0].textProperties.size,
+      align: 'left',
+      font: 'Fira Sans',
+      fontWeight: 400,
+      italics: false,
+      letterSpacing: 0,
+      strikethrogh: false,
+      textColor: 'Color(0xFF1A202C)',
+      underline: false,
+      upperCase: false,
+    );
+
+
+
+
+hackathonTextPropertiesProvider.textFieldPropertiesMap[contactName2Key] =
+        TextFieldProperties(
+      size: 18,
+      //size: hackathonDetailsProvider.hackathonDetails.fields[0].textProperties.size,
+      align: 'left',
+      font: 'Fira Sans',
+      fontWeight: 400,
+      italics: false,
+      letterSpacing: 0,
+      strikethrogh: false,
+      textColor: 'Color(0xFF1A202C)',
+      underline: false,
+      upperCase: false,
+    );
+
+
+
+
+    hackathonTextPropertiesProvider.textFieldPropertiesMap[contactNumber1Key] =
+        TextFieldProperties(
+      size: 16,
+      //size: hackathonDetailsProvider.hackathonDetails.fields[0].textProperties.size,
+      align: 'left',
+      font: 'Fira Sans',
+      fontWeight: 400,
+      italics: false,
+      letterSpacing: 0,
+      strikethrogh: false,
+      textColor: 'Color(0xFF1A202C)',
+      underline: false,
+      upperCase: false,
+    );
+
+
+
+    hackathonTextPropertiesProvider.textFieldPropertiesMap[contactNumber2Key] =
+        TextFieldProperties(
+      size: 16,
+      //size: hackathonDetailsProvider.hackathonDetails.fields[0].textProperties.size,
+      align: 'left',
+      font: 'Fira Sans',
+      fontWeight: 400,
+      italics: false,
+      letterSpacing: 0,
+      strikethrogh: false,
+      textColor: 'Color(0xFF1A202C)',
+      underline: false,
+      upperCase: false,
+    );
+
+
+
+    if (hackathonDetailsProvider.contact1Name.isNotEmpty) {
+      contactMemberName1Controller.text = hackathonDetailsProvider.contact1Name;
+    }
+
+    if (hackathonDetailsProvider.contact1Number.isNotEmpty) {
+      contactMemberNumber1Controller.text =
+          hackathonDetailsProvider.contact1Number;
+    }
+
+    if (hackathonDetailsProvider.contact2Name.isNotEmpty) {
+      contactMemberName2Controller.text = hackathonDetailsProvider.contact2Name;
+    }
+
+    if (hackathonDetailsProvider.contact2Number.isNotEmpty) {
+      contactMemberNumber2Controller.text =
+          hackathonDetailsProvider.contact2Number;
+    }
+
+
+
   }
 
   @override
@@ -64,23 +164,23 @@ late TextEditingController contactMemberNumber2Controller;
   Widget build(BuildContext context) {
     final hackathonDetailsProvider =
         Provider.of<HackathonDetailsProvider>(context);
-    if (hackathonDetailsProvider.contact1Name.isNotEmpty) {
-      contactMemberName1Controller.text = hackathonDetailsProvider.contact1Name;
-    }
+      
+      final hackathonTextPropertiesProvider =
+        Provider.of<HackathonTextPropertiesProvider>(context);
 
-    if (hackathonDetailsProvider.contact1Number.isNotEmpty) {
-      contactMemberNumber1Controller.text =
-          hackathonDetailsProvider.contact1Number;
-    }
 
-    if (hackathonDetailsProvider.contact2Name.isNotEmpty) {
-      contactMemberName2Controller.text = hackathonDetailsProvider.contact2Name;
-    }
-
-    if (hackathonDetailsProvider.contact2Number.isNotEmpty) {
-      contactMemberNumber2Controller.text =
-          hackathonDetailsProvider.contact2Number;
-    }
+     WidgetsBinding.instance.addPostFrameCallback((_) {
+      hackathonTextPropertiesProvider.convertAndRevertBackFromUpperCase(
+          contactMemberName1Controller, contactName1Key);
+      hackathonTextPropertiesProvider.convertAndRevertBackFromUpperCase(
+          contactMemberName2Controller, contactName2Key);
+      hackathonTextPropertiesProvider.convertAndRevertBackFromUpperCase(
+          contactMemberNumber1Controller, contactNumber1Key);
+      hackathonTextPropertiesProvider.convertAndRevertBackFromUpperCase(
+          contactMemberNumber2Controller, contactNumber2Key);
+     
+    });
+    
     return Column(
       
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,13 +214,15 @@ late TextEditingController contactMemberNumber2Controller;
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
                             height: defaultEditScaleWidth(
                                 widget.containerWidth, 40),
                             width: defaultEditScaleWidth(
                                 widget.containerWidth, 40),
+                            margin: EdgeInsets.only(top: scaleHeight(context, 10)),
                             decoration: BoxDecoration(
                                 color: lavender,
                                 borderRadius: BorderRadius.circular(50)),
@@ -136,49 +238,18 @@ late TextEditingController contactMemberNumber2Controller;
                                 height: 30,
                                 width: defaultEditScaleWidth(
                                     widget.containerWidth, 300),
-                                child: TextFormField(
+                                child: DefaultTemplateTextFormField(
+                                  isDense: true,
+                                  hintText:'Contact Member Name 1',
+                                  containerHeight: widget.containerHeight,
+                                  fieldKey: contactName1Key,
                                   controller: contactMemberName1Controller,
-                                  cursorColor: Colors.black,
-                                  decoration: InputDecoration(
-                                    hintText: 'Contact Member Name',
-                                    hintStyle: GoogleFonts.getFont(fontFamily2,
-                                        fontSize: defaultEditScaleHeight(
-                                            widget.containerHeight, 18),
-                                        color: black1,
-                                        fontWeight: FontWeight.w400,
-                                        height: lineHeight(29, 18)), //22.4
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    errorBorder: InputBorder.none,
-                                    focusedErrorBorder: InputBorder.none,
-                                    counterText: "",
-                                  ),
-                                  maxLength: 30,
-                                  keyboardType: TextInputType.text,
-                                  style: GoogleFonts.getFont(fontFamily2,
-                                      fontSize: defaultEditScaleHeight(
-                                          widget.containerHeight, 18),
-                                      color: black1,
-                                      fontWeight: FontWeight.w400,
-                                      height: lineHeight(29, 18)),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return '';
-                                    }
-                                    return null;
-                                  },
-                                  onSaved: (value) {
-                                    hackathonDetailsProvider.contact1Name =
-                                        value.toString();
+                                 onSaved: (value) {
+                                hackathonDetailsProvider.contact1Name =
+                                    value.toString();
                                   },
                                 ),
                               ),
-                              // Text('Contact Member Name ',
-                              //     style: GoogleFonts.getFont(fontFamily2,
-                              //         fontSize: defaultEditScaleHeight(widget.containerHeight, 18),
-                              //         color: black1,
-                              //         fontWeight: FontWeight.w400,
-                              //         height: lineHeight(29, 18))),
                               SizedBox(
                                 height: defaultEditScaleHeight(
                                     widget.containerHeight, 5),
@@ -188,50 +259,20 @@ late TextEditingController contactMemberNumber2Controller;
                                 height: 30,
                                 width: defaultEditScaleWidth(
                                     widget.containerWidth, 300),
-                                child: TextFormField(
+                                child:DefaultTemplateTextFormField(
+                                  isDense: true,
+                                  hintText:'Contact Number 1',
+                                  fieldKey:  contactNumber1Key,
                                   controller: contactMemberNumber1Controller,
-                                  cursorColor: Colors.black,
-                                  decoration: InputDecoration(
-                                    hintText: 'Contact Number',
-                                    hintStyle: GoogleFonts.getFont(fontFamily2,
-                                        fontSize: defaultEditScaleHeight(
-                                            widget.containerHeight, 16),
-                                        color: black5,
-                                        fontWeight: FontWeight.w400,
-                                        height: lineHeight(10, 16)), //22.4
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    errorBorder: InputBorder.none,
-                                    focusedErrorBorder: InputBorder.none,
-                                    counterText: "",
-                                  ),
-                                  maxLength: 30,
-                                  keyboardType: TextInputType.text,
-                                  style: GoogleFonts.getFont(fontFamily2,
-                                      fontSize: defaultEditScaleHeight(
-                                          widget.containerHeight, 16),
-                                      color: black5,
-                                      fontWeight: FontWeight.w400,
-                                      height: lineHeight(5, 16)),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return '';
-                                    }
-                                    return null;
-                                  },
+                                  containerHeight: widget.containerHeight,
+                                  maxLength: 30,                      
+                                  height: 5,            
                                   onSaved: (value) {
                                     hackathonDetailsProvider.contact1Number =
                                         value.toString();
                                   },
-                                ),
+                                ),                             
                               ),
-                              // Text('Contact Number',
-                              //     style: GoogleFonts.getFont(fontFamily2,
-                              //         fontSize: defaultEditScaleHeight(
-                              //             widget.containerHeight, 16),
-                              //         color: black5,
-                              //         fontWeight: FontWeight.w400,
-                              //         height: lineHeight(5, 16))),
                             ],
                           ),
                         ],
@@ -241,12 +282,15 @@ late TextEditingController contactMemberNumber2Controller;
                             defaultEditScaleHeight(widget.containerHeight, 27),
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
                             height: defaultEditScaleWidth(
                                 widget.containerWidth, 40),
                             width: defaultEditScaleWidth(
                                 widget.containerWidth, 40),
+                            margin: EdgeInsets.only(top: scaleHeight(context, 10)),
                             decoration: BoxDecoration(
                                 color: lavender,
                                 borderRadius: BorderRadius.circular(50)),
@@ -262,50 +306,20 @@ late TextEditingController contactMemberNumber2Controller;
                                 height: 30,
                                 width: defaultEditScaleWidth(
                                     widget.containerWidth, 300),
-                                child: TextFormField(
+                                child:  DefaultTemplateTextFormField(
+                                  isDense: true,
+                                  hintText:'Contact Member Name 2',
+                                  fieldKey: contactName2Key,
                                   controller: contactMemberName2Controller,
-                                  cursorColor: Colors.black,
-                                  decoration: InputDecoration(
-                                    hintText: 'Contact Member Name',
-                                    hintStyle: GoogleFonts.getFont(fontFamily2,
-                                        fontSize: defaultEditScaleHeight(
-                                            widget.containerHeight, 18),
-                                        color: black1,
-                                        fontWeight: FontWeight.w400,
-                                        height: lineHeight(29, 18)), //22.4
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    errorBorder: InputBorder.none,
-                                    focusedErrorBorder: InputBorder.none,
-                                    counterText: "",
-                                  ),
-                                  maxLength: 30,
-                                  keyboardType: TextInputType.text,
-                                  style: GoogleFonts.getFont(fontFamily2,
-                                      fontSize: defaultEditScaleHeight(
-                                          widget.containerHeight, 18),
-                                      color: black1,
-                                      fontWeight: FontWeight.w400,
-                                      height: lineHeight(29, 18)),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return '';
-                                    }
-                                    return null;
-                                  },
-                                  onSaved: (value) {
+                                  containerHeight: widget.containerHeight,
+                                  maxLength: 30,                          
+                                  //height: 10,        
+                                 onSaved: (value) {
                                     hackathonDetailsProvider.contact2Name =
                                         value.toString();
                                   },
                                 ),
                               ),
-                              // Text('Contact Member Name ',
-                              //     style: GoogleFonts.getFont(fontFamily2,
-                              //         fontSize: defaultEditScaleHeight(
-                              //             widget.containerHeight, 18),
-                              //         color: black1,
-                              //         fontWeight: FontWeight.w400,
-                              //         height: lineHeight(29, 18))),
                               SizedBox(
                                 height: defaultEditScaleHeight(
                                     widget.containerHeight, 5),
@@ -315,50 +329,20 @@ late TextEditingController contactMemberNumber2Controller;
                                 height: 30,
                                 width: defaultEditScaleWidth(
                                     widget.containerWidth, 300),
-                                child: TextFormField(
+                                child: DefaultTemplateTextFormField(
+                                  isDense: true,
+                                  hintText:'Contact Number 2',
+                                  fieldKey:  contactNumber2Key,
                                   controller: contactMemberNumber2Controller,
-                                  cursorColor: Colors.black,
-                                  decoration: InputDecoration(
-                                    hintText: 'Contact Number',
-                                    hintStyle: GoogleFonts.getFont(fontFamily2,
-                                        fontSize: defaultEditScaleHeight(
-                                            widget.containerHeight, 16),
-                                        color: black1,
-                                        fontWeight: FontWeight.w400,
-                                        height: lineHeight(10, 16)), //22.4
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    errorBorder: InputBorder.none,
-                                    focusedErrorBorder: InputBorder.none,
-                                    counterText: "",
-                                  ),
-                                  maxLength: 30,
-                                  keyboardType: TextInputType.text,
-                                  style: GoogleFonts.getFont(fontFamily2,
-                                      fontSize: defaultEditScaleHeight(
-                                          widget.containerHeight, 16),
-                                      color: black1,
-                                      fontWeight: FontWeight.w400,
-                                      height: lineHeight(10, 16)),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return '';
-                                    }
-                                    return null;
-                                  },
-                                  onSaved: (value) {
+                                  containerHeight: widget.containerHeight,
+                                  maxLength: 30,                      
+                                  height: 5,            
+                                 onSaved: (value) {
                                     hackathonDetailsProvider.contact2Number =
                                         value.toString();
                                   },
                                 ),
                               ),
-                              // Text('Contact Number',
-                              //     style: GoogleFonts.getFont(fontFamily2,
-                              //         fontSize: defaultEditScaleHeight(
-                              //             widget.containerHeight, 16),
-                              //         color: black5,
-                              //         fontWeight: FontWeight.w400,
-                              //         height: lineHeight(5, 16))),
                             ],
                           ),
                         ],

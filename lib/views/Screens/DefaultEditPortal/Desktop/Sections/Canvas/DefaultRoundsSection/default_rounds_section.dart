@@ -95,7 +95,7 @@ class DefaultRoundsAndRules extends StatelessWidget {
                   hackathonDetailsProvider.increaseRoundsCount();
                   addGlobalKeys(hackathonDetailsProvider.roundsList.length - 1);
                   hackathonDetailsProvider.addTextPropertiesInFields();
-                  // hackathonDetailsProvider.increaseTemproraryRoundsCount();
+                  rulesProvider.addDescriptionControllers();
                 },
                 child: DottedBorder(
                     borderType: BorderType.Circle,

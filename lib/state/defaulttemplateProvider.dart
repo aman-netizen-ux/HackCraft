@@ -57,4 +57,37 @@ class DefaultTemplateProvider with ChangeNotifier {
         return FontWeight.normal;
     }
   }
+
+
+  //Convert the string alignment coming from the API to TextAlign
+  TextAlign getTextAlign(String align){
+    switch(align){
+      case 'left':
+        return TextAlign.left;
+      case 'right':
+        return TextAlign.right;
+      case 'center':
+        return TextAlign.center;
+      case 'justify':
+        return TextAlign.justify;
+      default:
+        return TextAlign.center;
+    }
+  }
+
+
+  AlignmentGeometry getTextAlignForContainer(String align){
+    switch(align){
+      case 'left':
+        return Alignment.centerLeft;
+      case 'right':
+        return Alignment.centerRight;
+      case 'center':
+        return Alignment.center;
+      case 'justify':
+        return Alignment.centerLeft;
+      default:
+        return Alignment.center;
+    }
+  }
 }

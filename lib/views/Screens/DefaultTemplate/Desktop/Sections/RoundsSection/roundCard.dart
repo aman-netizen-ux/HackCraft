@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
-import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
-import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
-import 'package:major_project__widget_testing/state/defaulttemplateProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
-import 'package:major_project__widget_testing/utils/text_lineheight.dart';
+import 'package:major_project__widget_testing/views/Components/defaultTemplate_text.dart';
 import 'package:provider/provider.dart';
 
 // This file was created in order to create the card for the rounds section.
@@ -18,8 +14,8 @@ class RoundCard extends StatelessWidget {
   final int index;
   final void Function()? onTap;
   final String enddate;
-   final String startDate;
-  final TextFieldProperties endDateTextProperties; 
+  final String startDate;
+  final TextFieldProperties endDateTextProperties;
   final TextFieldProperties startDateTextProperties;
   const RoundCard(
       {super.key,
@@ -35,8 +31,7 @@ class RoundCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rulesProvider = Provider.of<RulesProvider>(context);
-    final defaultTemplateProvider =
-        Provider.of<DefaultTemplateProvider>(context);
+    
 
     return InkWell(
       hoverColor: Colors.white,
@@ -73,25 +68,10 @@ class RoundCard extends StatelessWidget {
                     left: scaleWidth(context, 25),
                     top: scaleHeight(context, 15)),
                 //Title of the round
-                child: Text(
-                  title,
-                  style: GoogleFonts.getFont(
-                    titleTextProperties.font, //fontFamily2,
-                    fontSize: scaleHeight(
-                        context, titleTextProperties.size.toDouble()), //20
-                    decoration: titleTextProperties.underline
-                        ? TextDecoration.underline
-                        : TextDecoration.none,
-                    fontStyle: titleTextProperties.italics
-                        ? FontStyle.italic
-                        : FontStyle.normal,
-                    color: defaultTemplateProvider
-                        .stringToColor(titleTextProperties.textColor), //black1,
-                    height:
-                        lineHeight(22.4, titleTextProperties.size.toDouble()),
-                    fontWeight: defaultTemplateProvider
-                        .fontWeightFromInt(titleTextProperties.fontWeight),
-                  ),
+                child: DefaultTemplateText(
+                  name: title,
+                  textProperties: titleTextProperties,
+                  height: 22.4,
                 ),
               ),
               //Timeline i.e Start date and End date of the round
@@ -101,48 +81,17 @@ class RoundCard extends StatelessWidget {
                     bottom: scaleHeight(context, 6)),
                 child: Row(
                   children: [
-                    Text(
-                      '$startDate - ',
-                      style: GoogleFonts.getFont(
-                        startDateTextProperties.font, //fontFamily2,
-                        fontSize: scaleHeight(context,
-                            startDateTextProperties.size.toDouble()), //18
-                        decoration: startDateTextProperties.underline
-                            ? TextDecoration.underline
-                            : TextDecoration.none,
-                        fontStyle: startDateTextProperties.italics
-                            ? FontStyle.italic
-                            : FontStyle.normal,
-
-                        color: defaultTemplateProvider.stringToColor(
-                            startDateTextProperties.textColor), //black1,
-                        height: lineHeight(
-                            22.4, startDateTextProperties.size.toDouble()),
-                        fontWeight: defaultTemplateProvider.fontWeightFromInt(
-                            startDateTextProperties.fontWeight),
-                      ),
+                    DefaultTemplateText(
+                      name: '$startDate - ',
+                      textProperties: startDateTextProperties,
+                      height: 22.4,
                     ),
-                    Text(
-                      enddate,
-                      style: GoogleFonts.getFont(
-                        endDateTextProperties.font, //fontFamily2,
-                        fontSize: scaleHeight(context,
-                            endDateTextProperties.size.toDouble()), //18
-                        decoration: endDateTextProperties.underline
-                            ? TextDecoration.underline
-                            : TextDecoration.none,
-                        fontStyle: endDateTextProperties.italics
-                            ? FontStyle.italic
-                            : FontStyle.normal,
-
-                        color: defaultTemplateProvider.stringToColor(
-                            endDateTextProperties.textColor), //black1,
-                        height: lineHeight(
-                            22.4, endDateTextProperties.size.toDouble()),
-                        fontWeight: defaultTemplateProvider.fontWeightFromInt(
-                            endDateTextProperties.fontWeight),
-                      ),
+                    DefaultTemplateText(
+                      name: enddate,
+                      textProperties: endDateTextProperties,
+                      height: 22.4,
                     ),
+                    
                   ],
                 ),
               )

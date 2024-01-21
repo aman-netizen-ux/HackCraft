@@ -3,10 +3,15 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
+import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
+import 'package:major_project__widget_testing/utils/upperCaseTextFormatter.dart';
+import 'package:major_project__widget_testing/views/Components/defaultTemplate_textFormField.dart';
 import 'package:provider/provider.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
+import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
 
 class DefaultEditAboutus extends StatefulWidget {
   final double containerHeight;
@@ -19,7 +24,6 @@ class DefaultEditAboutus extends StatefulWidget {
 }
 
 class _DefaultEditAboutusState extends State<DefaultEditAboutus> {
-
   late TextEditingController hackathonAboutController;
 
   @override
@@ -28,6 +32,32 @@ class _DefaultEditAboutusState extends State<DefaultEditAboutus> {
     super.initState();
 
     hackathonAboutController = TextEditingController();
+
+    // HackathonTextPropertiesProvider is for text Field Properties and its methods
+    final hackathonTextPropertiesProvider =
+        Provider.of<HackathonTextPropertiesProvider>(context, listen: false);
+
+    final hackathonDetailsProvider =
+        Provider.of<HackathonDetailsProvider>(context, listen: false);
+
+    hackathonTextPropertiesProvider.textFieldPropertiesMap[descriptionKey] =
+        TextFieldProperties(
+      size: 20,
+      //size: hackathonDetailsProvider.hackathonDetails.fields[0].textProperties.size,
+      align: 'center',
+      font: 'Fira Sans',
+      fontWeight: 400,
+      italics: false,
+      letterSpacing: 0,
+      strikethrogh: false,
+      textColor: 'Color(0xFF000100)',
+      underline: false,
+      upperCase: false,
+    );
+
+    if (hackathonDetailsProvider.about.isNotEmpty) {
+      hackathonAboutController.text = hackathonDetailsProvider.about;
+    }
   }
 
   @override
@@ -38,19 +68,22 @@ class _DefaultEditAboutusState extends State<DefaultEditAboutus> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     final hackathonDetailsProvider =
         Provider.of<HackathonDetailsProvider>(context);
-    if (hackathonDetailsProvider.about.isNotEmpty) {
-      hackathonAboutController.text = hackathonDetailsProvider.about;
-    }
+
+    final hackathonTextPropertiesProvider =
+        Provider.of<HackathonTextPropertiesProvider>(context);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      hackathonTextPropertiesProvider.convertAndRevertBackFromUpperCase(
+          hackathonAboutController, descriptionKey);
+    });
 
     return Padding(
-      
-      padding:
-          EdgeInsets.only(top: defaultEditScaleHeight(widget.containerHeight, 67)),
+      padding: EdgeInsets.only(
+          top: defaultEditScaleHeight(widget.containerHeight, 67)),
       child: Column(
         children: [
           Stack(clipBehavior: Clip.none, children: [
@@ -66,53 +99,32 @@ class _DefaultEditAboutusState extends State<DefaultEditAboutus> {
                 Container(
                     width: double.infinity,
                     margin: EdgeInsets.symmetric(
-                        horizontal: defaultEditScaleWidth(widget.containerWidth, 37)),
+                        horizontal:
+                            defaultEditScaleWidth(widget.containerWidth, 37)),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         border: Border.all(
                             color: black3,
-                            width: defaultEditScaleWidth(widget.containerWidth, 1))),
+                            width: defaultEditScaleWidth(
+                                widget.containerWidth, 1))),
                     child: Padding(
                       padding: EdgeInsets.only(
-                          left: defaultEditScaleWidth(widget.containerWidth, 44),
-                          right: defaultEditScaleWidth(widget.containerWidth, 44),
-                          top: defaultEditScaleHeight(widget.containerHeight, 59),
-                          bottom: defaultEditScaleHeight(widget.containerHeight, 165)),
-                      child: TextFormField(
+                          left:
+                              defaultEditScaleWidth(widget.containerWidth, 44),
+                          right:
+                              defaultEditScaleWidth(widget.containerWidth, 44),
+                          top: defaultEditScaleHeight(
+                              widget.containerHeight, 59),
+                          bottom: defaultEditScaleHeight(
+                              widget.containerHeight, 165)),
+                      child: DefaultTemplateTextFormField(
+                        hintText: 'Give a detail description of your hackathon',
+                        fieldKey: descriptionKey,
                         controller: hackathonAboutController,
-                        textAlignVertical: TextAlignVertical.center,
-                        textAlign: TextAlign.center,
-                        cursorColor: Colors.black,
-                        decoration: InputDecoration(
-                          hintText:
-                              'Give a detail description of your hahathon',
-                          hintStyle: GoogleFonts.getFont(fontFamily2,
-                              fontSize:
-                                  defaultEditScaleHeight(widget.containerHeight, 18),
-                              color: black2,
-                              fontWeight: FontWeight.w400,
-                              height: lineHeight(22.4, 18)),
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          focusedErrorBorder: InputBorder.none,
-                          counterText: "",
-                        ),
-                        // maxLength: 1900,//commented so user can type any no. of characters as he wants 
-                          maxLines: null,//null so user can add any no. of lines as he want(will work together with  keyboardType: TextInputType.multiline)
-                        keyboardType: TextInputType.multiline,//null so user can add any no. of lines as he want(will work together with maxline: null)
-                        style: GoogleFonts.getFont(fontFamily2,
-                            fontSize:
-                                defaultEditScaleHeight(widget.containerHeight, 18),
-                            color: black2,
-                            fontWeight: FontWeight.w400,
-                            height: lineHeight(22.4, 18)),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return '';
-                          }
-                          return null;
-                        },
+                        containerHeight: widget.containerHeight,
+                        maxLength: null,
+                        maxLines: 0,
+                        keyboardType: TextInputType.multiline,
                         onSaved: (value) {
                           hackathonDetailsProvider.about = value.toString();
                         },
@@ -129,8 +141,7 @@ class _DefaultEditAboutusState extends State<DefaultEditAboutus> {
                       //   ),
                       // ),
                     )),
-
-                    Container(
+                Container(
                   width: double.infinity,
                   height: defaultEditScaleHeight(widget.containerWidth, 125),
                   // color: Colors.blue,
@@ -143,7 +154,8 @@ class _DefaultEditAboutusState extends State<DefaultEditAboutus> {
                 // top: -defaultEditScaleWidth(containerWidth, 29),
                 child: Container(
               margin: EdgeInsets.symmetric(
-                  horizontal: defaultEditScaleWidth(widget.containerWidth, 512)),
+                  horizontal:
+                      defaultEditScaleWidth(widget.containerWidth, 512)),
               height: defaultEditScaleHeight(widget.containerHeight, 58),
               width: defaultEditScaleWidth(widget.containerWidth, 256),
               decoration: BoxDecoration(
@@ -160,7 +172,8 @@ class _DefaultEditAboutusState extends State<DefaultEditAboutus> {
                   child: Text("Get Registered",
                       style: GoogleFonts.getFont(fontFamily2,
                           fontWeight: FontWeight.w600,
-                          fontSize: defaultEditScaleWidth(widget.containerWidth, 21),
+                          fontSize:
+                              defaultEditScaleWidth(widget.containerWidth, 21),
                           height: lineHeight(22.4, 21),
                           color: black1))),
             )),
@@ -168,20 +181,23 @@ class _DefaultEditAboutusState extends State<DefaultEditAboutus> {
             //but the difference is that the above one was positioned from the top and this one was positioned from the bottom.
             //Run the code once, and you'll understand.
             Positioned(
-              bottom:defaultEditScaleHeight(widget.containerWidth, 0),//120
+              bottom: defaultEditScaleHeight(widget.containerWidth, 0), //120
               child: Container(
                   color: lavender,
-                  height: defaultEditScaleHeight(widget.containerHeight, 400), //240
+                  height:
+                      defaultEditScaleHeight(widget.containerHeight, 400), //240
                   width: defaultEditScaleWidth(widget.containerWidth, 1118),
                   margin: EdgeInsets.symmetric(
-                      horizontal: defaultEditScaleWidth(widget.containerWidth, 81)),
+                      horizontal:
+                          defaultEditScaleWidth(widget.containerWidth, 81)),
                   child: SvgPicture.asset(
                       'assets/icons/defaultEditPortal/about.svg',
                       fit: BoxFit.fill)),
             ),
           ]),
           SizedBox(
-            height: defaultEditScaleHeight(widget.containerHeight, 0), //153 //233
+            height:
+                defaultEditScaleHeight(widget.containerHeight, 0), //153 //233
           )
         ],
       ),
