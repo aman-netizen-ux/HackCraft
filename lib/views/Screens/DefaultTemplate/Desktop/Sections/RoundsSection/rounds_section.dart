@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
+import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
@@ -11,13 +13,22 @@ import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desk
 import 'package:provider/provider.dart';
 
 class RoundsAndRules extends StatelessWidget {
-  const RoundsAndRules({super.key});
+  const RoundsAndRules({super.key, this.defaultTemplateModel});
+   final DefaultTemplateApiResponse? defaultTemplateModel;
+
 
   @override
   Widget build(BuildContext context) {
     // Retrieve the RulesProvider instance from the nearest ancestor
     // in the widget tree, using the Provider package.
     final rulesProvider = Provider.of<RulesProvider>(context);
+
+    String extractDate(String dateTimeString) {
+  DateTime dateTime = DateTime.parse(dateTimeString);
+  // Construct the date string
+  String date = "${dateTime.year.toString().padLeft(4, '0')}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}";
+  return date;
+}
     return Padding(
       key: rulesAndRounds,
       padding: EdgeInsets.symmetric(
@@ -56,27 +67,30 @@ class RoundsAndRules extends StatelessWidget {
                     //just the list that will be used will come from the API.
                     child: ListView(
                         shrinkWrap: true,
-                        children: List.generate(rulesProvider.roundsList.length,
+                        children: List.generate(defaultTemplateModel!.rounds.length,
                             (index) {
                               //Generates the round card along with the timeline
                           return CustomTimelineTile(
                             cardIndex: index,
                             isFirst: index == 0,
                             isLast:
-                                rulesProvider.roundsList.length - 1 == index,
-                            roundTitle: rulesProvider.roundsList[index]
-                                ['roundTitle']!,
-                            roundDescription: rulesProvider.roundsList[index]
-                                ['roundDescription']!,
-                            endDate: rulesProvider.roundsList[index]
-                                ['endDate']!,
-                            startDate: rulesProvider.roundsList[index]
-                                ['startDate']!,
+                               defaultTemplateModel!.rounds.length - 1 == index,
+                            roundTitle:  defaultTemplateModel!.rounds[index].name,
+                             roundTitleTextProperties: defaultTemplateModel!.fields[4*index+13].textProperties,//4*index+13
+                            roundDescription: defaultTemplateModel!.rounds[index].description,
+                            endDate:defaultTemplateModel!.rounds[index].endTimeline==''
+                          ? ''
+                          :extractDate(defaultTemplateModel!.rounds[index].endTimeline),
+                            startDate:defaultTemplateModel!.rounds[index].startTimeline==''
+                          ? ''
+                          :extractDate(defaultTemplateModel!.rounds[index].startTimeline),  
+                          endDateTextProperties: defaultTemplateModel!.fields[4*index+16].textProperties,//4*index+16
+                          startDateTextProperties: defaultTemplateModel!.fields[4*index+15].textProperties,//4*index+15                         
                             onTap: () {
                               rulesProvider.setSelectedIndex(index);
                               rulesProvider.setDescriptionWidget(roundDetails(
-                                  rulesProvider.roundsList[index]
-                                      ['roundDescription']!,
+                                  defaultTemplateModel!.rounds[index].description,
+                                   defaultTemplateModel!.fields[4*index+14].textProperties,//4*index+14
                                   context));
                             },
                           );
@@ -89,11 +103,12 @@ class RoundsAndRules extends StatelessWidget {
         ],
       ),
     );
+    
   }
 
 
 //This widget was created in order to show the description of the round after clicking on any round card.
-  Widget roundDetails(String roundDetails, BuildContext context) {
-    return RoundsDescription(description : roundDetails);
+  Widget roundDetails(String roundDetails, TextFieldProperties decriptionProperties, BuildContext context) {
+    return RoundsDescription(description : roundDetails, decriptionProperties: decriptionProperties,);
   }
 }

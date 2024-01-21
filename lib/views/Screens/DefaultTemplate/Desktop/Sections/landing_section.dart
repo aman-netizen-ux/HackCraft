@@ -1,220 +1,151 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
+import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
+// import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
+import 'package:major_project__widget_testing/state/defaulttemplateProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
-import 'package:major_project__widget_testing/utils/text_lineheight.dart';
-import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
-import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/RoundsSection/rounds_section.dart';
-import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/aboutUs_section.dart';
-import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/contactUsAndFooter_section.dart';
-import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/gallerySection.dart';
+import 'package:major_project__widget_testing/views/Components/defaultTemplate_text.dart';
+import 'package:provider/provider.dart';
 
 class LandingSection extends StatelessWidget {
-  const LandingSection({super.key});
+  const LandingSection({super.key, required this.defaultTemplateModel});
+  final DefaultTemplateApiResponse? defaultTemplateModel;
 
   @override
   Widget build(BuildContext context) {
+    // final hackathonDetailsProvider =
+    //     Provider.of<HackathonDetailsProvider>(context);
+    
     return Padding(
       key: home,
-      padding: EdgeInsets.symmetric(
-          horizontal: scaleWidth(context, 81),
-          vertical: scaleHeight(context, 39)),
+      padding: EdgeInsets.only(
+          right: scaleWidth(context, 81),
+          left: scaleWidth(context, 81),
+          bottom: scaleHeight(context, 39)),
       child: Column(
         children: [
           //NavBar
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  //container to be updated with image logic
-                  Container(
-                    height: scaleHeight(context, 44),
-                    width: scaleHeight(context, 44),
-                    color:Colors.black.withOpacity(0.3)
-                  ),
-                  SizedBox(width: scaleWidth(context, 6),),
-                  Text(
-                    'Your Hackathon',
-                    style: GoogleFonts.getFont(
-                      fontFamily2,fontSize: scaleHeight(context, 20),
-                      color: black1,
-                      fontWeight: FontWeight.w400,
-                      height: lineHeight(22.4, 20)
-                    )
-                  ),
-                 
-                ],
-              ),
-              Row(
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      scrollToItem(home);
-                    },
-                    child: Text(
-                      'Home',
-                      style: GoogleFonts.getFont(
-                        fontFamily2,fontSize: scaleHeight(context, 14),
-                        color: black1,
-                        fontWeight: FontWeight.w400,
-                        height: lineHeight(22.4, 14)
-                      )
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      scrollToItem(rulesAndRounds);
-                    },
-                    child: Text(
-                      'Rounds',
-                      style: GoogleFonts.getFont(
-                        fontFamily2,fontSize: scaleHeight(context, 14),
-                        color: black1,
-                        fontWeight: FontWeight.w400,
-                        height: lineHeight(22.4, 14)
-                      )
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      scrollToItem(aboutUs);
-                    },
-                    child: Text(
-                      'About Us',
-                      style: GoogleFonts.getFont(
-                        fontFamily2,fontSize: scaleHeight(context, 14),
-                        color: black1,
-                        fontWeight: FontWeight.w400,
-                        height: lineHeight(22.4, 14)
-                      )
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      scrollToItem(gallery);
-                    },
-                    child: Text(
-                      'Gallery',
-                      style: GoogleFonts.getFont(
-                        fontFamily2,fontSize: scaleHeight(context, 14),
-                        color: black1,
-                        fontWeight: FontWeight.w400,
-                        height: lineHeight(22.4, 14)
-                      )
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                     scrollToItem(contactUs);
-                    },
-                    child: Text(
-                      'Contact Us',
-                      style: GoogleFonts.getFont(
-                        fontFamily2,fontSize: scaleHeight(context, 14),
-                        color: black1,
-                        fontWeight: FontWeight.w400,
-                        height: lineHeight(22.4, 14)
-                      )
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
+
           SizedBox(
             height: scaleHeight(context, 70),
           ),
 
-        //Landing Section
-        Stack(
-          
-          clipBehavior: Clip.none,
-          children: [
-            
-            Container(
-              height: scaleHeight(context, 523),
-              width: scaleWidth(context, 1108),  
-              alignment: Alignment.center,            
-              decoration: const BoxDecoration(
-                color: lavender,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(rad5_6)
-                )
-              ),
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                     Text(
-                        'Organisation name presents',
-                        style: GoogleFonts.getFont(
-                          fontFamily2,
-                          fontSize: scaleHeight(context, 20),
-                          color: greyish1,
-                          fontWeight: FontWeight.w500,
-                          height: lineHeight(22.4, 20)
-                        )
+          //Landing Section
+          Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                height: scaleHeight(context, 523),
+                width: scaleWidth(context, 1108),
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(
+                    color: lavender,
+                    borderRadius: BorderRadius.all(Radius.circular(rad5_6))),
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                          width: scaleWidth(context, 700),
+                          height: scaleHeight(context, 50),
+                          child: DefaultTemplateText(
+                            name:
+                                '${defaultTemplateModel!.hackathons.organisationName} presents',
+                            textProperties:
+                                defaultTemplateModel!.fields[0].textProperties,
+                            height: 22.4,
+                          )),
+                      SizedBox(
+                        height: scaleHeight(context, 42),
                       ),
-              
-                      SizedBox(height: scaleHeight(context, 42),),
-              
-                       Text(
-                        'Your Hackathon Name',
-                        style: GoogleFonts.getFont(
-                          fontFamily2,
-                          fontSize: scaleHeight(context, 54),
-                          color: black2,
-                          fontWeight: FontWeight.w600,
-                          height: lineHeight(22.4, 54)
-                        )
+                      SizedBox(
+                        width: scaleWidth(context, 700),
+                        height: scaleHeight(context, 54),
+                        child: DefaultTemplateText(
+                          name: defaultTemplateModel!.hackathons.name,
+                          textProperties:
+                              defaultTemplateModel!.fields[1].textProperties,
+                          height: 22.4,
+                        ),
                       ),
-              
-                      SizedBox(height: scaleHeight(context, 11),),
-              
-                       Text(
-                        'Give us brief about your hackathon (60 words)',
-                        style: GoogleFonts.getFont(
-                          fontFamily2,
-                          fontSize: scaleHeight(context, 18),
-                          color: greyish1,
-                          fontWeight: FontWeight.w400,
-                          height: lineHeight(22.4, 18)
-                        )
+                      SizedBox(
+                        height: scaleHeight(context, 11),
                       ),
-                  ],
+                      SizedBox(
+                        height: scaleHeight(context, 95),
+                        width: scaleWidth(context, 700),
+                        child: DefaultTemplateText(
+                          name: defaultTemplateModel!.hackathons.brief,
+                          textProperties:
+                              defaultTemplateModel!.fields[2].textProperties,
+                          maxLines: 4,
+                          height: 22.4,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-
-            Positioned(
-              bottom: -scaleHeight(context, 51),
-              child: Container(
-                width: scaleWidth(context, 1108),
-                // padding: EdgeInsets.symmetric(horizontal: scaleWidth(context, 68.5)),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                  hackathonDetailContainer(detail: 'Date'),
-                  hackathonDetailContainer(detail: 'Mode of Conduct'),
-                  hackathonDetailContainer(detail: 'Participation fee'),
-                  hackathonDetailContainer(detail: 'Team Size'),
-                  hackathonDetailContainer(detail: 'Venue'),
-                ],),
+              Positioned(
+                bottom: -scaleHeight(context, 51),
+                child: Container(
+                  width: scaleWidth(context, 1108),
+                  // padding: EdgeInsets.symmetric(horizontal: scaleWidth(context, 68.5)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      hackathonDetailContainer(
+                          detail:
+                              defaultTemplateModel!.hackathons.startDateTime ==
+                                      ''
+                                  ? ''
+                                  : extractDate(defaultTemplateModel!
+                                      .hackathons.startDateTime),
+                          textProperties:
+                              defaultTemplateModel!.fields[3].textProperties),
+                      hackathonDetailContainer(
+                          detail:
+                              defaultTemplateModel!.hackathons.modeOfConduct,
+                          textProperties:
+                              defaultTemplateModel!.fields[4].textProperties),
+                      hackathonDetailContainer(
+                          detail: defaultTemplateModel!.hackathons.fee,
+                          textProperties:
+                              defaultTemplateModel!.fields[5].textProperties),
+                      hackathonDetailContainer(
+                          detail: defaultTemplateModel!.hackathons.teamSize,
+                          textProperties:
+                              defaultTemplateModel!.fields[6].textProperties),
+                      hackathonDetailContainer(
+                          detail: defaultTemplateModel!.hackathons.venue,
+                          textProperties:
+                              defaultTemplateModel!.fields[7].textProperties),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ],
-        ),
-        
-        //spacing
-        SizedBox(height: scaleHeight(context,90),)
+            ],
+          ),
+
+          //spacing
+          SizedBox(
+            height: scaleHeight(context, 90),
+          )
         ],
       ),
     );
+  }
+
+  String extractDate(String dateTimeString) {
+    DateTime dateTime = DateTime.parse(dateTimeString);
+    // Construct the date string
+    String date =
+        "${dateTime.year.toString().padLeft(4, '0')}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}";
+    return date;
   }
 }
 
@@ -222,34 +153,34 @@ class hackathonDetailContainer extends StatelessWidget {
   const hackathonDetailContainer({
     super.key,
     required this.detail,
+    required this.textProperties,
   });
 
   final String detail;
+  final TextFieldProperties textProperties;
 
   @override
   Widget build(BuildContext context) {
+    
+    final defaultTemplateProvider =
+        Provider.of<DefaultTemplateProvider>(context);
+
     return Container(
-    height: scaleHeight(context, 102),
-    width: scaleWidth(context, 159),     
-    alignment: Alignment.center,        
-    padding: EdgeInsets.symmetric(horizontal: scaleWidth(context, 5),vertical: scaleHeight(context, 5)), 
-    decoration: const BoxDecoration(
-      color: black1,
-      borderRadius: BorderRadius.all(
-        Radius.circular(rad5_3)
-      )
-    ),
-    child: Text(
-                        detail,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.getFont(
-                          fontFamily2,
-                          fontSize: scaleHeight(context, 20),
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          height: lineHeight(22.4, 20)
-                        )
-                      ),
-            );
+      height: scaleHeight(context, 102),
+      width: scaleWidth(context, 159),
+      alignment:
+          defaultTemplateProvider.getTextAlignForContainer(textProperties.align),
+      padding: EdgeInsets.symmetric(
+          horizontal: scaleWidth(context, 5),
+          vertical: scaleHeight(context, 5)),
+      decoration: const BoxDecoration(
+          color: black1,
+          borderRadius: BorderRadius.all(Radius.circular(rad5_3))),
+      child: DefaultTemplateText(
+        name: detail,
+        textProperties: textProperties,
+        height: 22.4,
+      ),
+    );
   }
 }
