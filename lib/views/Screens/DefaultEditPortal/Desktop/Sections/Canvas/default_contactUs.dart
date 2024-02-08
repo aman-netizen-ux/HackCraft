@@ -231,49 +231,59 @@ hackathonTextPropertiesProvider.textFieldPropertiesMap[contactName2Key] =
                             width: defaultEditScaleWidth(
                                 widget.containerWidth, 15),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 30,
-                                width: defaultEditScaleWidth(
-                                    widget.containerWidth, 300),
-                                child: DefaultTemplateTextFormField(
-                                  isDense: true,
-                                  hintText:'Contact Member Name 1',
-                                  containerHeight: widget.containerHeight,
-                                  fieldKey: contactName1Key,
-                                  controller: contactMemberName1Controller,
-                                 onSaved: (value) {
-                                hackathonDetailsProvider.contact1Name =
-                                    value.toString();
-                                  },
+                          // flexible is used to get the rest of space of expanded
+                          Flexible(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // DefaultTemplateTextFormField is wrapped inside sizedbox for height and 
+                                // inside column so that alignment can work with respect to size of expanded
+                                Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 30,                                
+                                      child: DefaultTemplateTextFormField(
+                                        isDense: true,
+                                        hintText:'Contact Member Name 1',
+                                        containerHeight: widget.containerHeight,
+                                        containerWidth: widget.containerWidth,
+                                        editContainerMaxWidth: 400,
+                                        maxLength: 30,  
+                                        fieldKey: contactName1Key,
+                                        controller: contactMemberName1Controller,
+                                       onSaved: (value) {
+                                      hackathonDetailsProvider.contact1Name =
+                                          value.toString();
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              SizedBox(
-                                height: defaultEditScaleHeight(
-                                    widget.containerHeight, 5),
-                              ),
-
-                              SizedBox(
-                                height: 30,
-                                width: defaultEditScaleWidth(
-                                    widget.containerWidth, 300),
-                                child:DefaultTemplateTextFormField(
-                                  isDense: true,
-                                  hintText:'Contact Number 1',
-                                  fieldKey:  contactNumber1Key,
-                                  controller: contactMemberNumber1Controller,
-                                  containerHeight: widget.containerHeight,
-                                  maxLength: 30,                      
-                                  height: 5,            
-                                  onSaved: (value) {
-                                    hackathonDetailsProvider.contact1Number =
-                                        value.toString();
-                                  },
-                                ),                             
-                              ),
-                            ],
+                                
+                          
+                                Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 30,                               
+                                      child:DefaultTemplateTextFormField(
+                                        isDense: true,
+                                        hintText:'Contact Number 1',
+                                        fieldKey:  contactNumber1Key,
+                                        controller: contactMemberNumber1Controller,
+                                        containerHeight: widget.containerHeight,
+                                        containerWidth: widget.containerWidth,
+                                        editContainerMaxWidth: 400,
+                                        maxLength: 30,                      
+                                        onSaved: (value) {
+                                          hackathonDetailsProvider.contact1Number =
+                                              value.toString();
+                                        },
+                                      ),                             
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -299,51 +309,61 @@ hackathonTextPropertiesProvider.textFieldPropertiesMap[contactName2Key] =
                             width: defaultEditScaleWidth(
                                 widget.containerWidth, 15),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 30,
-                                width: defaultEditScaleWidth(
-                                    widget.containerWidth, 300),
-                                child:  DefaultTemplateTextFormField(
-                                  isDense: true,
-                                  hintText:'Contact Member Name 2',
-                                  fieldKey: contactName2Key,
-                                  controller: contactMemberName2Controller,
-                                  containerHeight: widget.containerHeight,
-                                  maxLength: 30,                          
-                                  //height: 10,        
-                                 onSaved: (value) {
-                                    hackathonDetailsProvider.contact2Name =
-                                        value.toString();
-                                  },
+                          Flexible(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 30,
+                                      // width: defaultEditScaleWidth(
+                                      //     widget.containerWidth, 300),
+                                      child:  DefaultTemplateTextFormField(
+                                        isDense: true,
+                                        hintText:'Contact Member Name 2',
+                                        fieldKey: contactName2Key,
+                                        controller: contactMemberName2Controller,
+                                        containerHeight: widget.containerHeight,
+                                        containerWidth: widget.containerWidth,
+                                        editContainerMaxWidth:400,
+                                        maxLength: 30,                          
+                                        //height: 10,        
+                                       onSaved: (value) {
+                                          hackathonDetailsProvider.contact2Name =
+                                              value.toString();
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              SizedBox(
-                                height: defaultEditScaleHeight(
-                                    widget.containerHeight, 5),
-                              ),
-
-                              SizedBox(
-                                height: 30,
-                                width: defaultEditScaleWidth(
-                                    widget.containerWidth, 300),
-                                child: DefaultTemplateTextFormField(
-                                  isDense: true,
-                                  hintText:'Contact Number 2',
-                                  fieldKey:  contactNumber2Key,
-                                  controller: contactMemberNumber2Controller,
-                                  containerHeight: widget.containerHeight,
-                                  maxLength: 30,                      
-                                  height: 5,            
-                                 onSaved: (value) {
-                                    hackathonDetailsProvider.contact2Number =
-                                        value.toString();
-                                  },
+                                
+                          
+                                Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 30,
+                                      // width: defaultEditScaleWidth(
+                                      //     widget.containerWidth, 300),
+                                      child: DefaultTemplateTextFormField(
+                                        isDense: true,
+                                        hintText:'Contact Number 2',
+                                        fieldKey:  contactNumber2Key,
+                                        controller: contactMemberNumber2Controller,
+                                        containerHeight: widget.containerHeight,
+                                        containerWidth: widget.containerWidth,
+                                        editContainerMaxWidth: 400,
+                                        maxLength: 30,                      
+                                       onSaved: (value) {
+                                          hackathonDetailsProvider.contact2Number =
+                                              value.toString();
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ],
                       )

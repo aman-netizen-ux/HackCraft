@@ -145,20 +145,28 @@ class _DefaultRoundsDescriptionState extends State<DefaultRoundsDescription> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)),
                 ),
-                child: DefaultTemplateTextFormField(
-                  hintText: 'Type your Description here...',
-                  fieldKey: roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!,
-                  controller: rulesProvider.descriptionControllers[rulesProvider.editSelectedIndex],
-                  containerHeight: widget.containerHeight,
-                  maxLength: 580,
-                  maxLines: 9,
-                  height: 27,
-                  onSaved: (value) {
-                    for(int i = 0; i < rulesProvider.descriptionControllers.length; i++){
-                      hackathonDetailsProvider.updateRoundDescription(
-                        i, rulesProvider.descriptionControllers[i].text);
-                    }
-                  },
+                child: Column(
+                  children: [
+                    DefaultTemplateTextFormField(
+                      hintText: 'Type your Description here...',
+                      fieldKey: roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!,
+                      controller: rulesProvider.descriptionControllers[rulesProvider.editSelectedIndex],
+                      containerHeight: widget.containerHeight,
+                      containerWidth: widget.containerWidth,
+                      editContainerMaxWidth: double.infinity,
+                      defaultEditBoxColorSet: true,
+                      maxLength: 580,
+                      maxLines: 9,
+                      height: 27,
+                      isDense: true,
+                      onSaved: (value) {
+                        for(int i = 0; i < rulesProvider.descriptionControllers.length; i++){
+                          hackathonDetailsProvider.updateRoundDescription(
+                            i, rulesProvider.descriptionControllers[i].text);
+                        }
+                      },
+                    ),
+                  ],
                 ),
               )),
 

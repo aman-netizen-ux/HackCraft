@@ -41,53 +41,41 @@ class LandingSection extends StatelessWidget {
                 height: scaleHeight(context, 523),
                 width: scaleWidth(context, 1108),
                 alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(horizontal: scaleWidth(context, 100)),
                 decoration: const BoxDecoration(
                     color: lavender,
                     borderRadius: BorderRadius.all(Radius.circular(rad5_6))),
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                          width: scaleWidth(context, 700),
-                          height: scaleHeight(context, 50),
-                          child: DefaultTemplateText(
-                            name:
-                                '${defaultTemplateModel!.hackathons.organisationName} presents',
-                            textProperties:
-                                defaultTemplateModel!.fields[0].textProperties,
-                            height: 22.4,
-                          )),
-                      SizedBox(
-                        height: scaleHeight(context, 42),
-                      ),
-                      SizedBox(
-                        width: scaleWidth(context, 700),
-                        height: scaleHeight(context, 54),
-                        child: DefaultTemplateText(
-                          name: defaultTemplateModel!.hackathons.name,
-                          textProperties:
-                              defaultTemplateModel!.fields[1].textProperties,
-                          height: 22.4,
-                        ),
-                      ),
-                      SizedBox(
-                        height: scaleHeight(context, 11),
-                      ),
-                      SizedBox(
-                        height: scaleHeight(context, 95),
-                        width: scaleWidth(context, 700),
-                        child: DefaultTemplateText(
-                          name: defaultTemplateModel!.hackathons.brief,
-                          textProperties:
-                              defaultTemplateModel!.fields[2].textProperties,
-                          maxLines: 4,
-                          height: 22.4,
-                        ),
-                      ),
-                    ],
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    DefaultTemplateText(
+                      name:
+                          '${defaultTemplateModel!.hackathons.organisationName} presents',
+                      textProperties:
+                          defaultTemplateModel!.fields[0].textProperties,
+                      height: 22.4,
+                    ),
+                    SizedBox(
+                      height: scaleHeight(context, 42),
+                    ),
+                    DefaultTemplateText(
+                      name: defaultTemplateModel!.hackathons.name,
+                      textProperties:
+                          defaultTemplateModel!.fields[1].textProperties,
+                      height: 22.4,
+                    ),
+                    SizedBox(
+                      height: scaleHeight(context, 11),
+                    ),
+                    DefaultTemplateText(
+                      name: defaultTemplateModel!.hackathons.brief,
+                      textProperties:
+                          defaultTemplateModel!.fields[2].textProperties,
+                      maxLines: 4,
+                      height: 22.4,
+                    ),
+                  ],
                 ),
               ),
               Positioned(

@@ -15,11 +15,6 @@ final contactName2Key = GlobalKey();
 final contactNumber1Key = GlobalKey();
 final contactNumber2Key = GlobalKey();
 
-// final round1NameKey = GlobalKey();
-// final round1DescriptionKey = GlobalKey();
-// final round1StartDateKey = GlobalKey();
-// final round1EndDateKey = GlobalKey();
-
 
 // Define the nested map
 Map<int, Map<String, GlobalKey>> roundGlobalKeysMap = {
@@ -43,8 +38,23 @@ void addGlobalKeys(int key) {
 }
 
 void deleteGlobalKeys(int key) {
-  roundGlobalKeysMap.remove(key);
+  // Check if the map contains the key to be deleted.
+  if (roundGlobalKeysMap.containsKey(key)) {
+    // Remove the key-value pair.
+    roundGlobalKeysMap.remove(key);
+
+    // Iterate over the map to shift the keys of the elements after the removed key.
+    for (int i = key + 1; i <= roundGlobalKeysMap.length + key; i++) {
+      // If the next key exists, move its value to the previous key.
+      if (roundGlobalKeysMap.containsKey(i)) {
+        roundGlobalKeysMap[i - 1] = roundGlobalKeysMap[i]!;
+        // Remove the current key after its value has been moved.
+        roundGlobalKeysMap.remove(i);
+      }
+    }
+  }
 }
+
  
 
 

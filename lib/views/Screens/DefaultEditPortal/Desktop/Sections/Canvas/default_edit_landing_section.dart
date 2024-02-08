@@ -292,89 +292,80 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
               Container(
                 height: defaultEditScaleHeight(widget.containerHeight, 523),
                 width: defaultEditScaleWidth(widget.containerWidth, 1108),
+                padding: EdgeInsets.symmetric(horizontal: defaultEditScaleWidth(widget.containerWidth, 100)),
                 alignment: Alignment.center,
                 decoration: const BoxDecoration(
                     color: lavender,
                     borderRadius: BorderRadius.all(Radius.circular(rad5_6))),
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width:
-                            defaultEditScaleWidth(widget.containerWidth, 700),
-                        height:
-                            defaultEditScaleHeight(widget.containerHeight, 50),
-                        child: DefaultTemplateTextFormField(
-                          hintText: 'Your Organisation Name',
-                          fieldKey: organisationKey,
-                          controller: hackathonOrganisationController,
-                          containerHeight: widget.containerHeight,
-                          maxLength: 300,
-                          height: 22.4,
-                          maxLines: 4,
-                          cursorHeight: defaultEditScaleHeight(
-                              widget.containerHeight, 20),
-                          onSaved: (value) {
-                            hackathonDetailsProvider.organisationName =
-                                value.toString();
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: defaultEditScaleHeight(
-                            widget.containerHeight, 30), //42
-                      ),
-                      SizedBox(
-                        width:
-                            defaultEditScaleWidth(widget.containerWidth, 700),
-                        height:
-                            defaultEditScaleHeight(widget.containerHeight, 54),
-                        child: DefaultTemplateTextFormField(
-                          hintText: 'Your Hackathon Name ',
-                          fieldKey: hackathonNameKey,
-                          controller: landingHackathonNameController,
-                          containerHeight: widget.containerHeight,
-                          maxLength: 30,
-                          height:
-                              50.4, //54 //Line Height is changed because of cursor size, initial line height was 22.4
-                          cursorHeight: defaultEditScaleHeight(
-                              widget.containerHeight, 49),
-                          onSaved: (value) {
-                            hackathonDetailsProvider.hackathonName =
-                                value.toString();
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height:
-                            defaultEditScaleHeight(widget.containerHeight, 11),
-                      ),
-                      SizedBox(
-                        width:
-                            defaultEditScaleWidth(widget.containerWidth, 700),
-                        height:
-                            defaultEditScaleHeight(widget.containerHeight, 95),
-                        child: DefaultTemplateTextFormField(
-                          hintText:
-                              'Give us brief about your hackathon (60 words)',
-                          fieldKey: briefKey,
-                          controller: hackathonDescriptionController,
-                          containerHeight: widget.containerHeight,
-                          maxLength: 300,
-                          maxLines: 4,
-                          height:
-                              22.4, //Line Height is changed because of cursor size, initial line height was 22.4
-                          cursorHeight: defaultEditScaleHeight(
-                              widget.containerHeight, 20),
-                          onSaved: (value) {
-                            hackathonDetailsProvider.brief = value.toString();
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    DefaultTemplateTextFormField(
+                      hintText: 'Your Organisation Name',
+                      fieldKey: organisationKey,
+                      controller: hackathonOrganisationController,
+                      containerHeight: widget.containerHeight,
+                      containerWidth: widget.containerWidth,
+                      maxLength: 30,
+                      editContainerMaxWidth: 400,
+                      height: 22.4,
+                      isDense: true,
+                      defaultEditBoxColorSet: true,
+                      cursorHeight: defaultEditScaleHeight(
+                          widget.containerHeight, 20),
+                      onSaved: (value) {
+                        hackathonDetailsProvider.organisationName =
+                            value.toString();
+                      },
+                    ),
+                    SizedBox(
+                      height: defaultEditScaleHeight(
+                          widget.containerHeight, 15), //42
+                    ),
+                    DefaultTemplateTextFormField(
+                      hintText: 'Your Hackathon Name ',
+                      fieldKey: hackathonNameKey,
+                      controller: landingHackathonNameController,
+                      containerHeight: widget.containerHeight,
+                      containerWidth: widget.containerWidth,
+                      maxLength: 30,
+                      editContainerMaxWidth: 700,
+                      defaultEditBoxColorSet: true,
+                      height:
+                          50.4, //54 //Line Height is changed because of cursor size, initial line height was 22.4
+                      cursorHeight: defaultEditScaleHeight(
+                          widget.containerHeight, 49),
+                      onSaved: (value) {
+                        hackathonDetailsProvider.hackathonName =
+                            value.toString();
+                      },
+                    ),
+                    SizedBox(
+                      height:
+                          defaultEditScaleHeight(widget.containerHeight, 11),
+                    ),
+                    DefaultTemplateTextFormField(
+                      hintText:
+                          'Give us brief about your hackathon (60 words)',
+                      fieldKey: briefKey,
+                      controller: hackathonDescriptionController,
+                      containerHeight: widget.containerHeight,
+                      containerWidth: widget.containerWidth,
+                      editContainerMaxWidth: 700,
+                      maxLength: 300,
+                      maxLines: 4,
+                      isDense: true,
+                      defaultEditBoxColorSet: true,
+                      height:
+                          22.4, //Line Height is changed because of cursor size, initial line height was 22.4
+                      cursorHeight: defaultEditScaleHeight(
+                          widget.containerHeight, 20),
+                      onSaved: (value) {
+                        hackathonDetailsProvider.brief = value.toString();
+                      },
+                    ),
+                  ],
                 ),
               ),
               Positioned(
@@ -494,7 +485,7 @@ class hackathonDetailContainer extends StatelessWidget {
     return Container(
       height: defaultEditScaleHeight(containerHeight, 102),
       width: defaultEditScaleWidth(containerWidth, 159),
-      //alignment: Alignment.center,
+      alignment: Alignment.center,
       padding: EdgeInsets.symmetric(
           horizontal: defaultEditScaleWidth(containerWidth, 5),
           vertical: defaultEditScaleHeight(containerHeight, 5)),
@@ -506,9 +497,12 @@ class hackathonDetailContainer extends StatelessWidget {
         fieldKey: textKey,
         controller: controller,
         containerHeight: containerHeight,
+        containerWidth: containerWidth,
         maxLength: 15,
         height: 22.4, //Line Height is changed because of cursor size, initial line height was 22.4
         cursorHeight: defaultEditScaleHeight(containerHeight, 17),
+        isDense: true,
+        defaultEditBoxColorSet: true,
         onSaved: onSaved,
         cursorColor: Color(0xFFFFFFFF),
         keyboardType: type,

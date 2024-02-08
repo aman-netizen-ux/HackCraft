@@ -18,13 +18,17 @@ class DefaultTemplateText extends StatelessWidget {
   Widget build(BuildContext context) {
     final defaultTemplateProvider =
         Provider.of<DefaultTemplateProvider>(context);
-    return Text(
-        textProperties.upperCase
-            ? name.toUpperCase()
-            : name,
-
-        textAlign: defaultTemplateProvider
-            .getTextAlign(textProperties.align),
+    return Align(
+      alignment: defaultTemplateProvider
+            .getContainerAlign(textProperties.align), 
+      child: Text(
+          textProperties.upperCase
+              ? name.toUpperCase()
+              : name,
+    
+          textAlign: defaultTemplateProvider
+            .getTextAlign(textProperties.align), 
+     
 
         maxLines: maxLines,
         style: GoogleFonts.getFont(
@@ -54,6 +58,6 @@ class DefaultTemplateText extends StatelessWidget {
             height: lineHeight(
                 height,
                 textProperties.size
-                    .toDouble())));
+                    .toDouble()))));
   }
 }

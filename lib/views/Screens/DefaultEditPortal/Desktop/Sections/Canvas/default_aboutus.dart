@@ -117,17 +117,24 @@ class _DefaultEditAboutusState extends State<DefaultEditAboutus> {
                               widget.containerHeight, 59),
                           bottom: defaultEditScaleHeight(
                               widget.containerHeight, 165)),
-                      child: DefaultTemplateTextFormField(
-                        hintText: 'Give a detail description of your hackathon',
-                        fieldKey: descriptionKey,
-                        controller: hackathonAboutController,
-                        containerHeight: widget.containerHeight,
-                        maxLength: null,
-                        maxLines: 0,
-                        keyboardType: TextInputType.multiline,
-                        onSaved: (value) {
-                          hackathonDetailsProvider.about = value.toString();
-                        },
+                      child: Column(
+                        children: [
+                          DefaultTemplateTextFormField(
+                            hintText: 'Give a detail description of your hackathon',
+                            fieldKey: descriptionKey,
+                            controller: hackathonAboutController,
+                            containerHeight: widget.containerHeight,
+                            containerWidth: widget.containerWidth,
+                            editContainerMaxWidth: double.infinity,
+                            isDense: true,
+                            maxLength: null,
+                            maxLines: 0,
+                            keyboardType: TextInputType.multiline,
+                            onSaved: (value) {
+                              hackathonDetailsProvider.about = value.toString();
+                            },
+                          ),
+                        ],
                       ),
 
                       //  Text(

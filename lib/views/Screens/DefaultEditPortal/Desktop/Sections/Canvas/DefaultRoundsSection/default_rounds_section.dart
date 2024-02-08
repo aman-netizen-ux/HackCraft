@@ -57,7 +57,7 @@ class DefaultRoundsAndRules extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                    flex: 47,
+                    flex: 50,
                     //This list generates all the rounds coming from the list made in the provider file.
                     //Later on, integration with APIs will remain the same;
                     //just the list that will be used will come from the API.
@@ -89,26 +89,26 @@ class DefaultRoundsAndRules extends StatelessWidget {
                             containerWidth: containerWidth,
                           );
                         }))),
-                Expanded(flex: 03, child: 
-                 InkWell(
-                onTap: (){
-                  hackathonDetailsProvider.increaseRoundsCount();
-                  addGlobalKeys(hackathonDetailsProvider.roundsList.length - 1);
-                  hackathonDetailsProvider.addTextPropertiesInFields();
-                  rulesProvider.addDescriptionControllers();
-                },
-                child: DottedBorder(
-                    borderType: BorderType.Circle,
-                    dashPattern: const [3, 7],
-                    color: yellow2,
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 20,
-                      width: 20,
-                      decoration: const BoxDecoration(shape: BoxShape.circle),
-                      child: const Center(child:  Icon(Icons.add, size: 12,color: yellow2,)),
-                    )),
-              )),
+              //   Expanded(flex: 03, child: 
+              //    InkWell(
+              //   onTap: (){
+              //     hackathonDetailsProvider.increaseRoundsCount();
+              //     addGlobalKeys(hackathonDetailsProvider.roundsList.length - 1);
+              //     hackathonDetailsProvider.addTextPropertiesInFields();
+              //     rulesProvider.addDescriptionControllers();
+              //   },
+              //   child: DottedBorder(
+              //       borderType: BorderType.Circle,
+              //       dashPattern: const [3, 7],
+              //       color: yellow2,
+              //       child: Container(
+              //         alignment: Alignment.center,
+              //         height: 20,
+              //         width: 20,
+              //         decoration: const BoxDecoration(shape: BoxShape.circle),
+              //         child: const Center(child:  Icon(Icons.add, size: 12,color: yellow2,)),
+              //       )),
+              // )),
                 Expanded(flex: 50, child: rulesProvider.editDescriptionWidget),
               ],
             ),
