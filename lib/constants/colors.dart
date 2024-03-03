@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-const black1 = Color.fromARGB(255, 26, 32, 44);
+const black1 = Color(0xFF1A202C);
 const black1_75 = Color.fromARGB(75, 26, 32, 44);
 const black1_100 = Color.fromARGB(100, 26, 32, 44);
-const black2 = Color.fromARGB(255, 0, 1, 0);
+const black2 = Color(0xFF000100);
 const black3 = Color.fromARGB(255, 83, 70, 70);
 const black4 = Color.fromARGB(255, 158, 147, 147);
 const black5 = Color.fromARGB(255, 98, 95, 95);
@@ -32,7 +32,7 @@ const grey3 = Color.fromARGB(255, 44, 44, 44);
 const grey4 = Color.fromARGB(255, 30, 30, 30);
 const grey5 = Color.fromARGB(255, 217, 217, 217);
 
-const lavender = Color.fromARGB(255, 226, 204, 255);
+const lavender = Color(0xFFE2CCFF);
 
 const defaultTemplateCardTitle= Color.fromARGB(255, 150, 102, 197);
 const defaultTemplateCardBorder= Color.fromARGB(255, 217, 179, 255);
@@ -49,5 +49,5 @@ const green= Color.fromARGB(255, 134, 221, 153);
 const green2= Color.fromARGB(255, 81, 199, 122);
 const red = Color.fromARGB(255, 240, 86, 86);
 const red2 = Color.fromARGB(255, 255, 72, 72);
-const yellow = Color.fromARGB(255, 254, 200, 60);
+const yellow = Color(0xFFFEC83C);
 const yellow2 = Color.fromARGB(255, 231, 166, 2);

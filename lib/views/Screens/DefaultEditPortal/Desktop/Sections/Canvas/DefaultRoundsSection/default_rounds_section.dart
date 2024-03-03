@@ -49,46 +49,50 @@ class DefaultRoundsAndRules extends StatelessWidget {
                   color: greyish1,
                   fontWeight: FontWeight.w400,
                   height: lineHeight(22.4, 18))),
+          // SizedBox(
+          //   height: defaultEditScaleHeight(containerHeight, 58),
+          // ),
           SizedBox(
-            height: defaultEditScaleHeight(containerHeight, 58),
-          ),
-          SizedBox(
-            height: defaultEditScaleHeight(containerHeight, 500),
+            height: defaultEditScaleHeight(containerHeight, 558),
             child: Row(
               children: [
                 Expanded(
-                    flex: 50,
+                    flex: 47,
                     //This list generates all the rounds coming from the list made in the provider file.
                     //Later on, integration with APIs will remain the same;
                     //just the list that will be used will come from the API.
-                    child: ListView(
-                        shrinkWrap: true,
-                        children: List.generate(hackathonDetailsProvider.roundsList.length,
-                            (index) {
-                          //Generates the round card along with the timeline
-                          return DefaultCustomTimelineTile(
-                            cardIndex: index,
-                            isFirst: index == 0,
-                            isLast:
-                                hackathonDetailsProvider.roundsList.length - 1 == index,
-                            roundTitle: hackathonDetailsProvider.roundsList[index].name,                                
-                            roundDescription: hackathonDetailsProvider.roundsList[index].description,
-                            endDate: hackathonDetailsProvider.roundsList[index].endTimeline,
-                            startDate: hackathonDetailsProvider.roundsList[index].startTimeline,
-                            onTap: () {
-                              rulesProvider.setEditSelectedIndex(index);
-                              rulesProvider.setEditDescriptionWidget(
-                                  defaultRoundDetails(
-                                      hackathonDetailsProvider.roundsList[index].description,
-                                      context,
-                                      containerHeight,
-                                      containerWidth,
-                                      ));
-                            },
-                            containerHeight: containerHeight,
-                            containerWidth: containerWidth,
-                          );
-                        }))),
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      height:defaultEditScaleHeight(containerHeight, 500),
+                      child: ListView(
+                          shrinkWrap: true,
+                          children: List.generate(hackathonDetailsProvider.roundsList.length,
+                              (index) {
+                            //Generates the round card along with the timeline
+                            return DefaultCustomTimelineTile(
+                              cardIndex: index,
+                              isFirst: index == 0,
+                              isLast:
+                                  hackathonDetailsProvider.roundsList.length - 1 == index,
+                              roundTitle: hackathonDetailsProvider.roundsList[index].name,                                
+                              roundDescription: hackathonDetailsProvider.roundsList[index].description,
+                              endDate: hackathonDetailsProvider.roundsList[index].endTimeline,
+                              startDate: hackathonDetailsProvider.roundsList[index].startTimeline,
+                              onTap: () {
+                                rulesProvider.setEditSelectedIndex(index);
+                                rulesProvider.setEditDescriptionWidget(
+                                    defaultRoundDetails(
+                                        hackathonDetailsProvider.roundsList[index].description,
+                                        context,
+                                        containerHeight,
+                                        containerWidth,
+                                        ));
+                              },
+                              containerHeight: containerHeight,
+                              containerWidth: containerWidth,
+                            );
+                          })),
+                    )),
               //   Expanded(flex: 03, child: 
               //    InkWell(
               //   onTap: (){
@@ -109,6 +113,7 @@ class DefaultRoundsAndRules extends StatelessWidget {
               //         child: const Center(child:  Icon(Icons.add, size: 12,color: yellow2,)),
               //       )),
               // )),
+                const Expanded(flex: 03, child: SizedBox()),
                 Expanded(flex: 50, child: rulesProvider.editDescriptionWidget),
               ],
             ),

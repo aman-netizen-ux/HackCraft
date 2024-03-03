@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonContainerPropertiesProvider.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
@@ -42,7 +43,7 @@ class DefaultTemplateTextFormField extends StatelessWidget {
         isDense = isDense ?? false,
         defaultEditBoxColorSet = defaultEditBoxColorSet ?? false,
         editContainerMaxWidth = editContainerMaxWidth ?? 150,
-        alignmentRequired= alignmentRequired?? true,
+        alignmentRequired = alignmentRequired ?? true,
         super(key: key);
 
   final GlobalKey<State<StatefulWidget>> fieldKey;
@@ -69,15 +70,19 @@ class DefaultTemplateTextFormField extends StatelessWidget {
     final hackathonTextPropertiesProvider =
         Provider.of<HackathonTextPropertiesProvider>(context);
 
+    final hackathonContainerPropertiesProvider =
+        Provider.of<HackathonContainerPropertiesProvider>(context);
+
     return Align(
       alignment: alignmentRequired
-      ?hackathonTextPropertiesProvider.getContainerAlign(
-          hackathonTextPropertiesProvider
-              .textFieldPropertiesMap[fieldKey]!.align)
-      : Alignment.center,
+          ? hackathonTextPropertiesProvider.getContainerAlign(
+              hackathonTextPropertiesProvider
+                  .textFieldPropertiesMap[fieldKey]!.align)
+          : Alignment.center,
       child: Container(
         decoration:
-            hackathonTextPropertiesProvider.selectedTextFieldKey == fieldKey&& alignmentRequired
+            hackathonTextPropertiesProvider.selectedTextFieldKey == fieldKey &&
+                    alignmentRequired
                 ? CircleCornerBoxDecoration(
                     circleBorder: defaultEditBoxColorSet ? blue : Colors.white,
                     circleFill: defaultEditBoxColorSet ? Colors.white : blue,
@@ -93,7 +98,7 @@ class DefaultTemplateTextFormField extends StatelessWidget {
             child: TextFormField(
                 // the key is passed to fetch the properties of the text form field mapped against this key
                 key: fieldKey,
-                textAlign:hackathonTextPropertiesProvider.getTextAlign(
+                textAlign: hackathonTextPropertiesProvider.getTextAlign(
                     hackathonTextPropertiesProvider
                         .textFieldPropertiesMap[fieldKey]!.align),
                 // textAlign: TextAlign.center,
@@ -199,6 +204,24 @@ class DefaultTemplateTextFormField extends StatelessWidget {
                 onTap: () {
                   hackathonTextPropertiesProvider.selectedTextFieldKey =
                       fieldKey;
+                  if (hackathonContainerPropertiesProvider
+                          .selectedContainerKey != null) {
+                    hackathonContainerPropertiesProvider.selectedContainerKey = null;
+                  }
+
+                  print("in textform :P ${hackathonContainerPropertiesProvider.activeIndex}");
+
+                  if (hackathonContainerPropertiesProvider.activeIndex > -1) {
+                    hackathonContainerPropertiesProvider.colorIndex = -1;
+                    hackathonContainerPropertiesProvider.setActiveIndex(-1);
+                  } 
+
+                  // if (hackathonContainerPropertiesProvider.activeIndex ) {
+                  //     hackathonContainerPropertiesProvider.setIsContainerColorSelected();
+                  // }
+
+                  
+
                   hackathonTextPropertiesProvider
                       .updateSelectedFontFromTextField();
                   hackathonTextPropertiesProvider.getLetterSpacing();
