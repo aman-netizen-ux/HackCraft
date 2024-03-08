@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "612624420617",
-    "project_id": "hackcraft-53ad1",
-    "storage_bucket": "hackcraft-53ad1.appspot.com"
+    "project_number": "998411997560",
+    "project_id": "hackcraft-d7ed8",
+    "storage_bucket": "hackcraft-d7ed8.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:612624420617:android:1e10693db59f6cb1fa0dd8",
+        "mobilesdk_app_id": "1:998411997560:android:a2521a10a822d86f74788d",
         "android_client_info": {
           "package_name": "com.example.major_project__widget_testing"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDFPSG_iOxHr317njXYJ1tLmD2pzeDGwxw"
+          "current_key": "AIzaSyDt0R5XoyySE5-AzOkquVkcH9vF0oid1XM"
         }
       ],
       "services": {
