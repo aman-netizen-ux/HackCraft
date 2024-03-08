@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:logger/logger.dart';
 import 'package:major_project__widget_testing/api/post_default_hackathon.dart';
+import 'package:major_project__widget_testing/api/upload_cloudinary.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
 import 'package:major_project__widget_testing/state/defaulttemplateProvider.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
+import 'package:major_project__widget_testing/state/galleryProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
@@ -61,7 +63,7 @@ class _SidePanelState extends State<SidePanel> {
         children: [
           PopupMenuButton<String>(
               offset: Offset(scaleWidth(context, 50), 0),
-              onSelected: (String result) {
+              onSelected: (String result) async {
                 var logger = Logger();
                 logger.i(result);
                 if (result == 'SavePreview') {
@@ -80,7 +82,24 @@ class _SidePanelState extends State<SidePanel> {
                     hostHackathon(rulesProvider, hackathonDetailsProvider,
                         hackathonTextPropertiesProvider);
                   }
-                } else {
+                } else if(result=='Upload Image'){
+                          final galleryProvider = Provider.of<GalleryProvider>(context, listen: false);
+                          if(galleryProvider.galleryImagesFile.isNotEmpty){
+                            final imageResponse = await UploadImageToCloudinary().uploadImage(galleryProvider.galleryImagesFile);
+                            print(imageResponse);
+                          }
+                          
+                          final logoResponse= await UploadImageToCloudinary().uploadLogo(galleryProvider.logoFile[0]);                          
+                          print(logoResponse);
+
+                } 
+                // else if(result=='Upload Preset'){
+                //           final galleryProvider = Provider.of<GalleryProvider>(context, listen: false);
+                //           galleryProvider.createCloudinaryPreset();
+
+                // }
+                
+                else {
                   Navigator.pop(context);
                 }
               },
@@ -101,6 +120,14 @@ class _SidePanelState extends State<SidePanel> {
                       value: 'Host',
                       child: Text('Host Hackathon'),
                     ),
+                    const PopupMenuItem<String>(
+                      value: 'Upload Image',
+                      child: Text('Upload Image'),
+                    ),
+                    // const PopupMenuItem<String>(
+                    //   value: 'Upload Preset',
+                    //   child: Text('Upload Preset'),
+                    // ),
                   ],
               icon: const Icon(
                 Icons.menu,

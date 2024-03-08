@@ -14,7 +14,9 @@ import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart'
 import 'package:major_project__widget_testing/state/templateSelectionprovider.dart';
 import 'package:provider/provider.dart';
 
+
 void main() async {
+ 
   await dotenv.load();
   runApp(const MyApp());
 }
