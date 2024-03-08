@@ -1,14 +1,17 @@
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/state/getAllHackathons/getAllHackathonsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:provider/provider.dart';
+import 'package:major_project__widget_testing/views/Screens/LoginScreen/login.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -72,13 +75,47 @@ class _ProfileState extends State<Profile> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Icon(Icons.arrow_back)),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Icon(Icons.arrow_back)),
+                ),
+                ElevatedButton(
+                    onPressed: () async {
+                      // Sign out from Firebase Authentication
+                      //  await FirebaseAuth.instance.signOut();
+
+                      // Sign out from Google Sign-In
+                       await GoogleSignIn().disconnect();
+                      //await GoogleSignIn().signOut();
+                      await FirebaseAuth.instance.signOut();
+                      
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginPage(),
+                        ),
+                      );
+                      // FirebaseAuth.instance
+                      //     .authStateChanges()
+                      //     .listen((User? user) {
+                      //   if (user == null) {
+                      //     // Navigate to login page only if the user is not authenticated
+                      //     Navigator.pushReplacement(
+                      //       context,
+                      //       MaterialPageRoute(
+                      //           builder: (context) => LoginPage()),
+                      //     );
+                      //   }
+                      // });
+                    },
+                    child: const Text("Logout"))
+              ],
             ),
             Container(
               width: double.infinity,
@@ -172,7 +209,8 @@ class _ProfileState extends State<Profile> {
                                   children: [
                                     //Hackathon Name is there
                                     Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Text(hackathon.name,
                                             style: GoogleFonts.getFont(
@@ -181,24 +219,21 @@ class _ProfileState extends State<Profile> {
                                                     context, 30),
                                                 color: black1,
                                                 height: lineHeight(25, 40),
-                                                fontWeight:
-                                                    FontWeight.w700)),
+                                                fontWeight: FontWeight.w700)),
                                         SizedBox(
-                                            height:
-                                                scaleHeight(context, 15)),
+                                            height: scaleHeight(context, 15)),
                                         Padding(
-                                          padding: EdgeInsets.only( right : scaleWidth(context, 44)),
+                                          padding: EdgeInsets.only(
+                                              right: scaleWidth(context, 44)),
                                           child: Text(
                                               hackathon.organisationName,
                                               style: GoogleFonts.getFont(
                                                   fontFamily2,
-                                                  fontSize: scaleHeight(
-                                                      context, 18),
+                                                  fontSize:
+                                                      scaleHeight(context, 18),
                                                   color: black1,
-                                                  height:
-                                                      lineHeight(22.4, 18),
-                                                  fontWeight:
-                                                      FontWeight.w500)),
+                                                  height: lineHeight(22.4, 18),
+                                                  fontWeight: FontWeight.w500)),
                                         ),
                                       ],
                                     ),
@@ -211,8 +246,8 @@ class _ProfileState extends State<Profile> {
                                         Text('Start Date :',
                                             style: GoogleFonts.getFont(
                                                 fontFamily2,
-                                                fontSize: scaleHeight(
-                                                    context, 18),
+                                                fontSize:
+                                                    scaleHeight(context, 18),
                                                 color: black1,
                                                 height:
                                                     lineHeight(22.4, 18),
@@ -222,13 +257,11 @@ class _ProfileState extends State<Profile> {
                                                     hackathon.startDate),
                                             style: GoogleFonts.getFont(
                                                 fontFamily2,
-                                                fontSize: scaleHeight(
-                                                    context, 18),
+                                                fontSize:
+                                                    scaleHeight(context, 18),
                                                 color: black1,
-                                                height:
-                                                    lineHeight(22.4, 18),
-                                                fontWeight:
-                                                    FontWeight.w500)),
+                                                height: lineHeight(22.4, 18),
+                                                fontWeight: FontWeight.w500)),
                                       ],
                                     ),
 

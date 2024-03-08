@@ -9,6 +9,7 @@ import 'package:major_project__widget_testing/state/getAllHackathons/getAllHacka
 import 'package:major_project__widget_testing/state/getHackathon/getSingleHackathonProvider.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/state/hostNavigationProvider.dart';
+import 'package:major_project__widget_testing/state/loginProvider.dart';
 import 'package:major_project__widget_testing/state/mainNavigationProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/state/templateSelectionprovider.dart';
@@ -18,6 +19,16 @@ import 'package:provider/provider.dart';
 void main() async {
  
   await dotenv.load();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+      options: const FirebaseOptions(
+    apiKey: "AIzaSyBAoD5TbwV5B88rj7iYud1Afd-PcpC6xvI",
+    appId: "1:675171732151:web:28ed551a8eb636b56adb32",
+    messagingSenderId: "675171732151",
+    projectId: "hackk-c6b72",
+    authDomain: "hackk-c6b72.firebaseapp.com",
+    storageBucket: "hackk-c6b72.appspot.com",
+  ));
   runApp(const MyApp());
 }
 
@@ -43,6 +54,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
             create: (context) => DefaultTemplateProvider()),
          ChangeNotifierProvider(create: (context) => HackathonTextPropertiesProvider()),
+            ChangeNotifierProvider(
+            create: (context) => LoginProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

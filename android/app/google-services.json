@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "998411997560",
+    "project_id": "hackcraft-d7ed8",
+    "storage_bucket": "hackcraft-d7ed8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:998411997560:android:a2521a10a822d86f74788d",
+        "android_client_info": {
+          "package_name": "com.example.major_project__widget_testing"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt0R5XoyySE5-AzOkquVkcH9vF0oid1XM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

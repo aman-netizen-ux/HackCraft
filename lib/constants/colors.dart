@@ -51,3 +51,6 @@ const red = Color.fromARGB(255, 240, 86, 86);
 const red2 = Color.fromARGB(255, 255, 72, 72);
 const yellow = Color.fromARGB(255, 254, 200, 60);
 const yellow2 = Color.fromARGB(255, 231, 166, 2);
+const darkCharcoal = Color(0xff1a202c);
+const salmonRed = Color(0xfff05656);
+const concreteGrey = Color(0xff828282);
