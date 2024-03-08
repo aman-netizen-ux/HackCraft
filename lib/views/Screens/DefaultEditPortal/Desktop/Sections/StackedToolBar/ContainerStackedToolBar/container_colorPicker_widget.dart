@@ -3,26 +3,31 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
-import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonContainerPropertiesProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Components/color_tools_button.dart';
 import 'package:major_project__widget_testing/views/Components/custom_colorPicker.dart';
 import 'package:major_project__widget_testing/views/Components/custom_swatchPicker.dart';
 import 'package:provider/provider.dart';
 
-class ColorPickerWidget extends StatefulWidget {
-  const ColorPickerWidget({super.key});
+class ContainerColorPickerWidget extends StatefulWidget {
+  const ContainerColorPickerWidget({super.key});
+
 
   @override
-  State<ColorPickerWidget> createState() => _ColorPickerWidgetState();
+  State<ContainerColorPickerWidget> createState() => _ContainerColorPickerWidgetState();
 }
 
-class _ColorPickerWidgetState extends State<ColorPickerWidget> {
+class _ContainerColorPickerWidgetState extends State<ContainerColorPickerWidget> {
   //Need to reset _isColorPickerSelected, _selectedColorTool, isColorDropperSelected
   @override
   Widget build(BuildContext context) {
-    final hackathonTextProvider =
-        Provider.of<HackathonTextPropertiesProvider>(context);
+    final hackathonContainerPropertiesProvider =
+        Provider.of<HackathonContainerPropertiesProvider>(context);
+
+    // final hackathonTextProvider =
+    //     Provider.of<HackathonTextPropertiesProvider>(context);
+
     return Container(
       width: scaleWidth(context, 480 + 75),
       child: Column(
@@ -55,7 +60,7 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
                               child: SvgPicture.asset(
                                   "assets/icons/defaultEditPortal/color_palette.svg"),
                               onTap: () {
-                                hackathonTextProvider.setSelectedColorTool(1);
+                                hackathonContainerPropertiesProvider.setSelectedContainerColorTool(1);
                               },
                             ),
                           ),
@@ -67,7 +72,7 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
                               child: SvgPicture.asset(
                                   "assets/icons/defaultEditPortal/swatches.svg"),
                               onTap: () {
-                                hackathonTextProvider.setSelectedColorTool(2);
+                                 hackathonContainerPropertiesProvider.setSelectedContainerColorTool(2);
                               },
                             ),
                           )
@@ -84,39 +89,39 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
                         height: scaleHeight(context, 40),
                         width: scaleWidth(context, 425),
                         alignment: Alignment.center,
-                        child: hackathonTextProvider.selectedColorTool == 2
+                        child: hackathonContainerPropertiesProvider.selectedContainerColorTool == 2
                             ? CustomSwatchesPicker(
                                 height: scaleHeight(context, 40),
                                 width: scaleWidth(context, 425),
-                                selectedColor: hackathonTextProvider
-                                            .selectedTextFieldKey ==
+                                selectedColor: hackathonContainerPropertiesProvider
+                                            .selectedContainerKey ==
                                         null
                                     ? Colors.transparent
-                                    : hackathonTextProvider.stringToColor(
-                                        hackathonTextProvider
-                                            .selectedTextFieldKey!),
+                                    : hackathonContainerPropertiesProvider.stringToColor(
+                                        hackathonContainerPropertiesProvider
+                                            .selectedContainerKey!, hackathonContainerPropertiesProvider.colorIndex, hackathonContainerPropertiesProvider.type),
                                 onChanged: (value) {
-                                  Color primaryColor = hackathonTextProvider
-                                      .getPrimaryColor(value);
-                                  hackathonTextProvider
-                                      .textColorChange(primaryColor.toString());
+                                  Color primaryColor = hackathonContainerPropertiesProvider
+                                      .getContainerPrimaryColor(value);
+                                  hackathonContainerPropertiesProvider
+                                      .containerColorChange(primaryColor.toString(), hackathonContainerPropertiesProvider.colorIndex, hackathonContainerPropertiesProvider.type);
                                 })
                             : CustomSwatchesPicker(
                                 height: scaleHeight(context, 40),
                                 width: scaleWidth(context, 425),
-                                recentColors: hackathonTextProvider.colors,
-                                selectedColor: hackathonTextProvider
-                                            .selectedTextFieldKey ==
+                                recentColors: hackathonContainerPropertiesProvider.colors,
+                                selectedColor: hackathonContainerPropertiesProvider
+                                            .selectedContainerKey ==
                                         null
                                     ? Colors.transparent
-                                    : hackathonTextProvider.stringToColor(
-                                        hackathonTextProvider
-                                            .selectedTextFieldKey!),
+                                    : hackathonContainerPropertiesProvider.stringToColor(
+                                        hackathonContainerPropertiesProvider
+                                            .selectedContainerKey!,  hackathonContainerPropertiesProvider.colorIndex, hackathonContainerPropertiesProvider.type),
                                 onChanged: (value) {
-                                  Color primaryColor = hackathonTextProvider
-                                      .getPrimaryColor(value);
-                                  hackathonTextProvider
-                                      .textColorChange(primaryColor.toString());
+                                  Color primaryColor = hackathonContainerPropertiesProvider
+                                      .getContainerPrimaryColor(value);
+                                  hackathonContainerPropertiesProvider
+                                      .containerColorChange(primaryColor.toString(), hackathonContainerPropertiesProvider.colorIndex, hackathonContainerPropertiesProvider.type);
                                 })),
 
                     const VerticalDivider(
@@ -147,18 +152,18 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
                                 tabIndex: 4,
                                 side: ColorToolsButtonSide.bottomright,
                                 onTap: () {
-                                  hackathonTextProvider
-                                      .setIsColorPickerSelected();
+                                  hackathonContainerPropertiesProvider
+                                      .setIsContainerColorPickerSelected();
                                 },
-                                child: hackathonTextProvider
-                                            .selectedTextFieldKey ==
+                                child: hackathonContainerPropertiesProvider
+                                            .selectedContainerKey ==
                                         null
                                     ? SvgPicture.asset(
                                             "assets/icons/defaultEditPortal/color_picker.svg")
-                                    : hackathonTextProvider.isColorsInSwatchList(
-                                            hackathonTextProvider.stringToColor(
-                                                hackathonTextProvider
-                                                    .selectedTextFieldKey!))
+                                    : hackathonContainerPropertiesProvider.isContainersColorsInSwatchList(
+                                            hackathonContainerPropertiesProvider.stringToColor(
+                                                hackathonContainerPropertiesProvider
+                                                    .selectedContainerKey!, hackathonContainerPropertiesProvider.colorIndex, hackathonContainerPropertiesProvider.type), context)
                                         ? SvgPicture.asset(
                                             "assets/icons/defaultEditPortal/color_picker.svg")
                                         : Container(
@@ -166,10 +171,10 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
                                             height: scaleWidth(context, 22),
                                             decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
-                                                color: hackathonTextProvider
+                                                color: hackathonContainerPropertiesProvider
                                                     .stringToColor(
-                                                        hackathonTextProvider
-                                                            .selectedTextFieldKey!)),
+                                                        hackathonContainerPropertiesProvider
+                                                            .selectedContainerKey!, hackathonContainerPropertiesProvider.colorIndex, hackathonContainerPropertiesProvider.type)),
                                           )),
                           )
                         ],
@@ -179,8 +184,8 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
                 )),
           ),
           Visibility(
-              visible: hackathonTextProvider.isColorPickerSelected,
-              child: const ColoPickerCard()),
+              visible: hackathonContainerPropertiesProvider.isContainerColorPickerSelected,
+              child: ColoPickerCard(index: hackathonContainerPropertiesProvider.colorIndex)),
         ],
       ),
     );
@@ -188,7 +193,9 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
 }
 
 class ColoPickerCard extends StatefulWidget {
-  const ColoPickerCard({super.key});
+  const ColoPickerCard({super.key, required this.index});
+
+  final int index;
 
   @override
   State<ColoPickerCard> createState() => _ColoPickerCardState();
@@ -197,13 +204,16 @@ class ColoPickerCard extends StatefulWidget {
 class _ColoPickerCardState extends State<ColoPickerCard> {
   @override
   Widget build(BuildContext context) {
-    final hackathonTextProvider =
-        Provider.of<HackathonTextPropertiesProvider>(context);
+    // final hackathonTextProvider =
+    //     Provider.of<HackathonTextPropertiesProvider>(context);
+    final hackathonContainerPropertiesProvider =
+        Provider.of<HackathonContainerPropertiesProvider>(context);
+
     final _colorNotifier = ValueNotifier(
-      hackathonTextProvider.selectedTextFieldKey ==null
+      hackathonContainerPropertiesProvider.selectedContainerKey ==null
       ? Colors.transparent
-      :hackathonTextProvider
-        .stringToColor(hackathonTextProvider.selectedTextFieldKey!));
+      :hackathonContainerPropertiesProvider
+        .stringToColor(hackathonContainerPropertiesProvider.selectedContainerKey!, widget.index, hackathonContainerPropertiesProvider.type));
     return Container(
         height: scaleHeight(context, 275),
         width: scaleWidth(context, 150),
@@ -229,9 +239,8 @@ class _ColoPickerCardState extends State<ColoPickerCard> {
                   paletteType: PaletteType.hslWithHue, // have to think
                   pickerAreaHeightPercent: 0.8,
                   onColorChanged: (value) {
-                    hackathonTextProvider.addColor(value);
-                    
-                    hackathonTextProvider.textColorChange(value.toString());
+                    hackathonContainerPropertiesProvider.addColor(value);
+                    hackathonContainerPropertiesProvider.containerColorChange(value.toString(), hackathonContainerPropertiesProvider.colorIndex, hackathonContainerPropertiesProvider.type);
                   });
             }));
   }

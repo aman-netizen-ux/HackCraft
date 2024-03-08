@@ -3,9 +3,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonContainerPropertiesProvider.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/ContainerToolbar/container_toolbar.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/TextToolbar/text_toolbar.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +23,8 @@ class _ToolBarState extends State<ToolBar> {
   Widget build(BuildContext context) {
     final hackathonTextProvider =
         Provider.of<HackathonTextPropertiesProvider>(context);
+    final hackathonContainerPropertiesProvider =
+        Provider.of<HackathonContainerPropertiesProvider>(context);
     return Expanded(
       flex: 0774,
       child: Container(
@@ -34,8 +38,8 @@ class _ToolBarState extends State<ToolBar> {
               borderRadius: BorderRadius.circular(rad5_2),
               border: Border.all(color: greyish3)),
           child: hackathonTextProvider.selectedTextFieldKey!=null
-          ?TextPropertiesPanelWidget(hackathonTextProvider: hackathonTextProvider)
-          : null),
+          ? TextPropertiesPanelWidget(hackathonTextProvider: hackathonTextProvider)
+          : hackathonContainerPropertiesProvider.selectedContainerKey != null ? ContainerPropertiesPanelWidget(hackathonContainerProvider: hackathonContainerPropertiesProvider,) : null),
     );
   }
 }

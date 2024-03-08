@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonContainerPropertiesProvider.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/right_panel.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/side_panel.dart';
@@ -23,9 +24,13 @@ class _DefaultEditPortalDesktopBodyState
       onTap: () {
         final hackathonTextProvider =
         Provider.of<HackathonTextPropertiesProvider>(context, listen: false);
+        final hackathonContainerPropertiesProvider =
+        Provider.of<HackathonContainerPropertiesProvider>(context, listen : false);
 
         hackathonTextProvider.selectedTextFieldKey=null;
+        hackathonContainerPropertiesProvider.selectedContainerKey= null;
 
+        //FOR TEXTFIELD
         if (hackathonTextProvider.isTextColorSelected) {
           hackathonTextProvider.setIsTextColorSelected();
         }
@@ -34,6 +39,15 @@ class _DefaultEditPortalDesktopBodyState
         }
         if (hackathonTextProvider.isBoldSelected) {
           hackathonTextProvider.setBoldSelection();
+        }
+
+        //FOR CONTAINER
+        if (hackathonContainerPropertiesProvider.activeIndex > -1) {
+          hackathonContainerPropertiesProvider.setActiveIndex(-1);
+          hackathonContainerPropertiesProvider.colorIndex = -1;
+        }
+        if (hackathonContainerPropertiesProvider.isContainerColorPickerSelected) {
+          hackathonContainerPropertiesProvider.setIsContainerColorPickerSelected();
         }
       },
       child: Row(

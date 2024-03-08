@@ -137,6 +137,8 @@ class Round {
   }
 }
 
+/////// TEXT PROPERTIES PART IS THERE 
+
 class TextFieldProperties {
   String font;
   int size;
@@ -216,13 +218,87 @@ class TextFieldPropertiesArray {
   }
 }
 
-class ContainerPropertiesArray {
-  ContainerPropertiesArray();
-  factory ContainerPropertiesArray.fromJson(Map<String, dynamic> json) {
-    return ContainerPropertiesArray();
+
+/////// CONTAINER PROPERTIES PART IS THERE 
+
+class ContainerProperties {
+  String borderColor;
+  int height;
+  int borderWidth;
+  String color;
+  String focusedBorderColor;
+  int borderRadius;
+  int blurRadius;
+  String boxShadowColor;
+  //border_radius is remaining
+
+  ContainerProperties(
+      {
+        required this.borderColor,
+        required this.focusedBorderColor,
+      required this.height,
+      required this.color,
+      required this.borderWidth,
+      required this.borderRadius,
+      required this.blurRadius,
+      required this.boxShadowColor
+      });
+
+  factory ContainerProperties.fromJson(Map<String, dynamic> json) {
+    return ContainerProperties(
+      borderColor: json['border_color'],
+      height: json['height'],
+      color: json['Color'],
+      borderWidth: json['border_width'], focusedBorderColor: json['focused_color'],
+      blurRadius: json['blur_radius'],
+      borderRadius: json['border_radius'],
+      boxShadowColor: json['box_shadow_color']
+    );
   }
 
   Map<String, dynamic> toJson() {
-    return {};
+    return {
+      'border_color': borderColor,
+      'height': height,
+      'Color': color,
+      'border_width': borderWidth,
+      'focused_color': focusedBorderColor,
+      'blur_radius': blurRadius,
+      'border_radius': borderRadius,
+      'box_shadow_color': boxShadowColor
+    };
   }
+}
+
+
+
+class ContainerPropertiesArray {
+  String type;
+  String name;
+  ContainerProperties containerProperties;
+  ContainerPropertiesArray({
+    required this.type,
+    required this.containerProperties,
+    required this.name
+  });
+  factory ContainerPropertiesArray.fromJson(Map<String, dynamic> json) {
+    return ContainerPropertiesArray(
+      containerProperties: ContainerProperties.fromJson(json['properties']),
+        name: json['name'],
+        type: json['type']
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'type': type,
+    'name': name, 'properties': containerProperties.toJson()};
+  }
+}
+
+class LimitContainerHeight{
+  int minHeight;
+  int maxHeight;
+
+  LimitContainerHeight({required this.minHeight, required this.maxHeight});
+  
 }
