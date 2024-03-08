@@ -30,16 +30,22 @@ class _LoginPageDesktopState extends State<LoginPageDesktop>
       vsync: this,
     );
 
-    _positionAnimation = Tween<double>(
-      begin: 520.0,
-      end: 930.0,
+    
+  }
+
+@override
+void didChangeDependencies() {
+  super.didChangeDependencies();
+  _positionAnimation = Tween<double>(
+      begin: widthScaler(context, 861),
+      end:widthScaler(context, 489),
     ).animate(
       CurvedAnimation(
         parent: _animationController,
         curve: Curves.easeOut,
       ),
     );
-  }
+}
 
   void _tabChanged() {
     if (_tabController.index == 1) {

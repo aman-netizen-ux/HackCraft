@@ -265,93 +265,94 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                         children: [
                           SizedBox(
                             width: double.infinity,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  width: widthScaler(context, 206),
-                                  height: heightScaler(context, 40),
-                                  child: TextFormField(
-                                    cursorColor: darkCharcoal,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: const BorderSide(
-                                          color: Colors.black,
-                                          width: 2,
+                            child: SizedBox(
+                              height: heightScaler(context, 40),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                   flex:488,
+                                    child: TextFormField(
+                                      cursorColor: darkCharcoal,
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                            color: Colors.black,
+                                            width: 2,
+                                          ),
                                         ),
-                                      ),
-                                      filled: true,
-                                      fillColor: white,
-                                      hintStyle: GoogleFonts.firaSans(
-                                        fontSize: heightScaler(context, 14),
-                                        fontWeight: FontWeight.w500,
-                                        color: concreteGrey,
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: const BorderSide(
-                                          color: darkCharcoal,
-                                          width: 1,
+                                        filled: true,
+                                        fillColor: white,
+                                        hintStyle: GoogleFonts.firaSans(
+                                          fontSize: heightScaler(context, 14),
+                                          fontWeight: FontWeight.w500,
+                                          color: concreteGrey,
                                         ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                            color: darkCharcoal,
+                                            width: 1,
+                                          ),
+                                        ),
+                                        hintText: 'First name',
+                                        contentPadding:
+                                            const EdgeInsets.only(left: 15),
                                       ),
-                                      hintText: 'First name',
-                                      contentPadding:
-                                          const EdgeInsets.only(left: 15),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter a name';
+                                        }
+                                        return null;
+                                      },
+                                      onSaved: (value) {},
                                     ),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter a name';
-                                      }
-                                      return null;
-                                    },
-                                    onSaved: (value) {},
                                   ),
-                                ),
-                                SizedBox(
-                                  width: widthScaler(context, 10),
-                                ),
-                                SizedBox(
-                                  width: widthScaler(context, 206),
-                                  height: heightScaler(context, 40),
-                                  child: TextFormField(
-                                    cursorColor: darkCharcoal,
-                                    decoration: InputDecoration(
-                                      filled: true,
-                                      fillColor: white,
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: const BorderSide(
-                                          color: Colors.black,
-                                          width: 3,
+                                  const Expanded(
+                                    flex: 24,child: SizedBox()
+                                  ),
+                                  Expanded(
+                                   flex:488,
+                                    child: TextFormField(
+                                      cursorColor: darkCharcoal,
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: white,
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                            color: Colors.black,
+                                            width: 3,
+                                          ),
+                                        ),
+                                        hintStyle: GoogleFonts.firaSans(
+                                          fontSize: heightScaler(context, 14),
+                                          fontWeight: FontWeight.w500,
+                                          color: concreteGrey,
+                                        ),
+                                        hintText: 'Last name',
+                                        contentPadding: EdgeInsets.only(
+                                            left: widthScaler(context, 15)),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                            color: darkCharcoal,
+                                            width: 1,
+                                          ),
                                         ),
                                       ),
-                                      hintStyle: GoogleFonts.firaSans(
-                                        fontSize: heightScaler(context, 14),
-                                        fontWeight: FontWeight.w500,
-                                        color: concreteGrey,
-                                      ),
-                                      hintText: 'Last name',
-                                      contentPadding: EdgeInsets.only(
-                                          left: widthScaler(context, 15)),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: const BorderSide(
-                                          color: darkCharcoal,
-                                          width: 1,
-                                        ),
-                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter a name';
+                                        }
+                                        return null;
+                                      },
+                                      onSaved: (value) {},
                                     ),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter a name';
-                                      }
-                                      return null;
-                                    },
-                                    onSaved: (value) {},
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                           Padding(
