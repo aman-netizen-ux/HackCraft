@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 class RoundCard extends StatelessWidget {
   final String title;
   final TextFieldProperties titleTextProperties;
+  final ContainerProperties containerProperties;
   final int index;
   final void Function()? onTap;
   final String enddate;
@@ -27,7 +28,8 @@ class RoundCard extends StatelessWidget {
       required this.index,
       required this.titleTextProperties,
       required this.endDateTextProperties,
-      required this.startDateTextProperties});
+      required this.startDateTextProperties,
+      required this.containerProperties});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,7 @@ class RoundCard extends StatelessWidget {
       hoverColor: Colors.white,
       onTap: onTap,
       child: Container(
-          // height: scaleHeight(context, 67),
+          height: scaleHeight(context, containerProperties.height.toDouble()),
           width: double.infinity,
           margin: EdgeInsets.only(
               bottom: scaleHeight(context, 23),
@@ -47,23 +49,25 @@ class RoundCard extends StatelessWidget {
               right: scaleWidth(context, 26),
               top: scaleHeight(context, 23)),
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(rad5_3),
+              color: defaultTemplateProvider.stringToColor(containerProperties.color),
+              borderRadius: BorderRadius.circular(containerProperties.borderRadius.toDouble()),
               border: Border.all(
+                width: containerProperties.borderWidth.toDouble()/100 *10,
                   color: rulesProvider.selectedIndex == index
-                      ? black1
-                      : Colors.transparent),
-              boxShadow: const [
+                      ? defaultTemplateProvider.stringToColor(containerProperties.focusedBorderColor)
+                      : defaultTemplateProvider.stringToColor(containerProperties.borderColor),
+                      strokeAlign: BorderSide.strokeAlignCenter),
+              boxShadow: [
                 BoxShadow(
-                  color: Color(0x3F000000),
-                  blurRadius: 10,
-                  offset: Offset(0, 4),
+                  color: defaultTemplateProvider.stringToColor(containerProperties.boxShadowColor),
+                  blurRadius: containerProperties.blurRadius.toDouble(),
+                  offset: const Offset(0, 4),
                   spreadRadius: 0,
                 )
               ]),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
                 padding: EdgeInsets.only(

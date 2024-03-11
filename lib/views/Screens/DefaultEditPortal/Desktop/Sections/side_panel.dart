@@ -6,6 +6,7 @@ import 'package:major_project__widget_testing/api/upload_cloudinary.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonContainerPropertiesProvider.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
 import 'package:major_project__widget_testing/state/defaulttemplateProvider.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
@@ -41,6 +42,8 @@ class _SidePanelState extends State<SidePanel> {
     final rulesProvider = Provider.of<RulesProvider>(context);
     final hackathonTextPropertiesProvider =
         Provider.of<HackathonTextPropertiesProvider>(context);
+    final hackathonContainerPropertiesProvider =
+        Provider.of<HackathonContainerPropertiesProvider>(context);
 
     List<GlobalKey<State<StatefulWidget>>> keyValues = [
       homeEdit,
@@ -71,7 +74,7 @@ class _SidePanelState extends State<SidePanel> {
                   widget.formKey.currentState!.save();
 
                   previewFunction(rulesProvider, hackathonDetailsProvider,
-                      hackathonTextPropertiesProvider);
+                      hackathonTextPropertiesProvider, hackathonContainerPropertiesProvider);
                   // }
                 } else if (result == 'Save') {
                   //TODO
@@ -80,7 +83,7 @@ class _SidePanelState extends State<SidePanel> {
                     widget.formKey.currentState!.save();
 
                     hostHackathon(rulesProvider, hackathonDetailsProvider,
-                        hackathonTextPropertiesProvider);
+                        hackathonTextPropertiesProvider, hackathonContainerPropertiesProvider);
                   }
                 } else if(result=='Upload Image'){
                           final galleryProvider = Provider.of<GalleryProvider>(context, listen: false);
@@ -159,7 +162,8 @@ class _SidePanelState extends State<SidePanel> {
   void previewFunction(
       RulesProvider rulesProvider,
       HackathonDetailsProvider hackathonDetailsProvider,
-      HackathonTextPropertiesProvider hackathonTextPropertiesProvider) {
+      HackathonTextPropertiesProvider hackathonTextPropertiesProvider,
+      HackathonContainerPropertiesProvider hackathonContainerPropertiesProvider) {
     rulesProvider.setSelectedIndex(-1);
     rulesProvider.setDescriptionWidget(
         SvgPicture.asset('assets/images/defaultTemplate/clickme.svg'));
@@ -170,6 +174,11 @@ class _SidePanelState extends State<SidePanel> {
     fields = hackathonTextPropertiesProvider.addRoundsTextProperties(fields);
 
     hackathonDetailsProvider.textFields = fields;
+
+    List<ContainerPropertiesArray> containers = hackathonContainerPropertiesProvider.getContainerProperties();
+    containers = hackathonContainerPropertiesProvider.addRoundsContainerProperties(containers);
+
+    hackathonDetailsProvider.containersProperties = containers;
 
     Navigator.push(
       context,
@@ -184,7 +193,8 @@ class _SidePanelState extends State<SidePanel> {
   void hostHackathon(
       RulesProvider rulesProvider,
       HackathonDetailsProvider hackathonDetailsProvider,
-      HackathonTextPropertiesProvider hackathonTextPropertiesProvider) async {
+      HackathonTextPropertiesProvider hackathonTextPropertiesProvider, 
+      HackathonContainerPropertiesProvider hackathonContainerPropertiesProvider) async {
     setState(() {
       _isLoading = true;
     });
@@ -202,6 +212,8 @@ class _SidePanelState extends State<SidePanel> {
 
     List<TextFieldPropertiesArray> fields =
         hackathonTextPropertiesProvider.getTextProperties();
+        List<ContainerPropertiesArray> containers =
+        hackathonContainerPropertiesProvider.getContainerProperties();
     //  following is to add roundsTextProperties according to their key in the above defined fields list
     fields = hackathonTextPropertiesProvider.addRoundsTextProperties(fields);
 
@@ -227,7 +239,7 @@ class _SidePanelState extends State<SidePanel> {
       },
       "round": rounds,
       "fields": fields,
-      "containers": []
+      "containers": containers
     }, context);
 
     if (hackathonId.isNotEmpty) {

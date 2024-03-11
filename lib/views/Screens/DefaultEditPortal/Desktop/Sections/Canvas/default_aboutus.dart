@@ -174,12 +174,10 @@ class _DefaultEditAboutusState extends State<DefaultEditAboutus> {
                           horizontal:
                               defaultEditScaleWidth(widget.containerWidth, 37)),
                       decoration: BoxDecoration(
-                          color:
-                              hackathonContainerPropertiesProvider.stringToColor(
-                                  aboutContainerKey,
-                                  0,
-                                  ContainerColorProperties.containerColor),
-                                  
+                          color: hackathonContainerPropertiesProvider.stringToColor(
+                              aboutContainerKey,
+                              0,
+                              ContainerColorProperties.containerColor),
                           borderRadius: BorderRadius.circular(
                               hackathonContainerPropertiesProvider
                                   .containerPropertiesMap[aboutContainerKey]!
@@ -194,16 +192,17 @@ class _DefaultEditAboutusState extends State<DefaultEditAboutus> {
                                 offset: const Offset(0, 0),
                                 spreadRadius: 0,
                                 color: hackathonContainerPropertiesProvider
-                              .stringToColor(aboutContainerKey, 0, ContainerColorProperties.boxShadowColor))
+                                    .stringToColor(
+                                        aboutContainerKey,
+                                        0,
+                                        ContainerColorProperties
+                                            .boxShadowColor))
                           ],
                           border: Border.all(
                               color: hackathonContainerPropertiesProvider
-                              .stringToColor(aboutContainerKey, 0, ContainerColorProperties.containerBorderColor),
-                              width: defaultEditScaleWidth(
-                                  widget.containerWidth,
-                                  hackathonContainerPropertiesProvider.containerPropertiesMap[aboutContainerKey]!.borderWidth.toDouble() /
-                                      100 *
-                                      40),
+                                  .stringToColor(aboutContainerKey, 0,
+                                      ContainerColorProperties.containerBorderColor),
+                              width: defaultEditScaleWidth(widget.containerWidth, hackathonContainerPropertiesProvider.containerPropertiesMap[aboutContainerKey]!.borderWidth.toDouble() / 100 * 40),
                               strokeAlign: BorderSide.strokeAlignOutside)),
                       child: Padding(
                         padding: EdgeInsets.only(
@@ -308,23 +307,25 @@ class _DefaultEditAboutusState extends State<DefaultEditAboutus> {
                             .toDouble()),
                     boxShadow: [
                       BoxShadow(
-                          blurRadius: hackathonContainerPropertiesProvider
-                              .containerPropertiesMap[
-                                  getRegisteredContainerKey]!
-                              .blurRadius
-                              .toDouble(),
-                          offset: const Offset(0, 0),
-                          spreadRadius: 0,
-                          color: hackathonContainerPropertiesProvider.stringToColor(
-                        getRegisteredContainerKey,
-                        0,
-                        ContainerColorProperties.boxShadowColor),)
+                        blurRadius: hackathonContainerPropertiesProvider
+                            .containerPropertiesMap[getRegisteredContainerKey]!
+                            .blurRadius
+                            .toDouble(),
+                        offset: const Offset(0, 0),
+                        spreadRadius: 0,
+                        color:
+                            hackathonContainerPropertiesProvider.stringToColor(
+                                getRegisteredContainerKey,
+                                0,
+                                ContainerColorProperties.boxShadowColor),
+                      )
                     ],
                     border: Border.all(
-                        color: hackathonContainerPropertiesProvider.stringToColor(
-                        getRegisteredContainerKey,
-                        0,
-                        ContainerColorProperties.containerBorderColor),
+                        color:
+                            hackathonContainerPropertiesProvider.stringToColor(
+                                getRegisteredContainerKey,
+                                0,
+                                ContainerColorProperties.containerBorderColor),
                         width: hackathonContainerPropertiesProvider
                             .containerPropertiesMap[getRegisteredContainerKey]!
                             .borderWidth

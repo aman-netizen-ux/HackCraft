@@ -58,6 +58,7 @@ class _SignUpDetailsState extends State<SignUpDetails> {
             width: widthScaler(context, 502),
             height: heightScaler(context, 292),
             child: Card(
+              surfaceTintColor: Colors.transparent,
               elevation: 20,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -500,6 +501,7 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                 child: Text(
                   "Next ",
                   style: TextStyle(
+                    color: Colors.white,
                       fontSize: heightScaler(context, 18),
                       fontWeight: FontWeight.w500),
                 ))),

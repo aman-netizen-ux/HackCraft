@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:major_project__widget_testing/constants/enums.dart';
@@ -188,7 +190,7 @@ class HackathonContainerPropertiesProvider with ChangeNotifier {
         }
       } catch (e) {
         var logger = Logger();
-        logger.e('Error converting string to color: $e');
+        logger.e('Error converting string to color: $colorList , $colorString');
         // Return a default color in case of an error
         return Colors.black; // Default color
       }
@@ -201,6 +203,7 @@ class HackathonContainerPropertiesProvider with ChangeNotifier {
 
 
   String getColorBasedOnType(ContainerColorProperties type, GlobalKey key){
+    print('type : $type, key : $key');
     switch(type) {
       case ContainerColorProperties.containerBorderColor :
         return containerPropertiesMap[key]!.borderColor;
@@ -371,7 +374,7 @@ class HackathonContainerPropertiesProvider with ChangeNotifier {
 
   List<ContainerPropertiesArray> addRoundsContainerProperties(
       List<ContainerPropertiesArray> fields) {
-    roundGlobalKeysMap.forEach((key, value) {
+    roundContainerGlobalKeysMap.forEach((key, value) {
       fields.addAll([
         ContainerPropertiesArray(
           name: 'round${key + 1}NameContainer',

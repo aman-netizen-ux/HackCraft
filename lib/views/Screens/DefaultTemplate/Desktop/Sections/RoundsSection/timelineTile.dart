@@ -11,6 +11,7 @@ class CustomTimelineTile extends StatelessWidget {
   //final bool isPast;
   final String roundTitle;
   final TextFieldProperties roundTitleTextProperties;
+  final ContainerProperties roundTitleContainerProperties;
   final int cardIndex;
   final String roundDescription;
   final String endDate;
@@ -27,7 +28,7 @@ class CustomTimelineTile extends StatelessWidget {
       required this.roundDescription,
       required this.endDate,
       required this.startDate,
-      this.onTap, required this.cardIndex, required this.roundTitleTextProperties, required this.endDateTextProperties, required this.startDateTextProperties});
+      this.onTap, required this.cardIndex, required this.roundTitleTextProperties, required this.endDateTextProperties, required this.startDateTextProperties, required this.roundTitleContainerProperties});
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +48,7 @@ class CustomTimelineTile extends StatelessWidget {
         index: cardIndex,
           title: roundTitle,
           titleTextProperties: roundTitleTextProperties,
+          containerProperties: roundTitleContainerProperties,
           enddate: endDate,
           startDate: startDate,
           endDateTextProperties: endDateTextProperties,
