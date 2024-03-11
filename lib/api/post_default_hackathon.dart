@@ -9,6 +9,7 @@ class CreateHackathon {
   var logger = Logger();
   //Get All the Hackathons
   postSingleHackathon(Map<String, dynamic> params, BuildContext context) async {
+    print(params);
     try {
       final String baseUrl = dotenv.get('postHackathon');
       final String id;
