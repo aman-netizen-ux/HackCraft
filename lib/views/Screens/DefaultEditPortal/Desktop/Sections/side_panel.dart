@@ -239,7 +239,7 @@ class _SidePanelState extends State<SidePanel> {
       },
       "round": rounds,
       "fields": fields,
-      "containers": containers
+      "containers": []
     }, context);
 
     if (hackathonId.isNotEmpty) {
