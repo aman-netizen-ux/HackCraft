@@ -274,8 +274,8 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
                   hackathonTextPropertiesProvider.setIsTextColorSelected();
                 }
               },
-              //This container is added to solve the problem of increasing the height of the yellow container while
-              // increasing the borderWidth of the round container.
+              //This container is added to solve the problem of increasing the height of the yellow container 
+              //while increasing the borderWidth of the round container.
               //For more details : remove this container and see yourself 👍
               //Main purpose of this container is to provide border to our round card 👀
               child: Container(
