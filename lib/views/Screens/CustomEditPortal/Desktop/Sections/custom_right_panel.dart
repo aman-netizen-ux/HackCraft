@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/state/custom_template_providers/custom_edit_template_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:collection/collection.dart';
 
 class CustomRightPanel extends StatefulWidget {
   const CustomRightPanel({super.key});
@@ -18,6 +19,11 @@ class _CustomRightPanelState extends State<CustomRightPanel> {
         child: SingleChildScrollView(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: customEditProvider.customWidgetList)));
+                children: [
+                  ...customEditProvider.customWidgetList.mapIndexed((index,widget) => InkWell(
+                    onTap: (){
+                      print(index);                    },
+                    child: widget)).toList()
+                ])));
   }
 }

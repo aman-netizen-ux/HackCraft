@@ -22,17 +22,12 @@ class _CustomSidePanelState extends State<CustomSidePanel> {
               onPressed: () {
                  print('containerlength before: ${customWidgetsGlobalKeysMap.length}');
                 addCustomGlobalKeys(customEditProvider.customWidgetList.length);
-                customEditProvider.updateWidgetList(InkWell(
-                  onTap: (){
-                    customWidgetsGlobalKeysMap[customEditProvider.customWidgetList.length];
-                  },
-                  child: Container(
-                      key: customWidgetsGlobalKeysMap[
-                          customEditProvider.customWidgetList.length],
-                      height: 300,
-                      width: 300,
-                      color: Colors.amberAccent),
-                ));
+                customEditProvider.updateWidgetList(Container(
+                    key: customWidgetsGlobalKeysMap[
+                        customEditProvider.customWidgetList.length],
+                    height: 300,
+                    width: 300,
+                    color: Colors.amberAccent));
                   print('containerlength after : ${customWidgetsGlobalKeysMap.length}');
               },
               child: const Text('Container')),
