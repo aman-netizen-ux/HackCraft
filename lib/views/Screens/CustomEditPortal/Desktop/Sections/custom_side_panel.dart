@@ -20,21 +20,60 @@ class _CustomSidePanelState extends State<CustomSidePanel> {
         children: [
           ElevatedButton(
               onPressed: () {
-                 print('containerlength before: ${customWidgetsGlobalKeysMap.length}');
+                print(
+                    'containerlength before: ${customWidgetsGlobalKeysMap.length}');
                 addCustomGlobalKeys(customEditProvider.customWidgetList.length);
+
                 customEditProvider.updateWidgetList(Container(
                     key: customWidgetsGlobalKeysMap[
                         customEditProvider.customWidgetList.length],
                     height: 300,
                     width: 300,
                     color: Colors.amberAccent));
-                  print('containerlength after : ${customWidgetsGlobalKeysMap.length}');
+
+                print(
+                    " global key  ${customWidgetsGlobalKeysMap[customEditProvider.customWidgetList.length - 1]!}");
+
+                // customEditProvider.addChild(
+                //     45 + 2 * customEditProvider.customWidgetList.length,
+                //     customWidgetsGlobalKeysMap[
+                //         customEditProvider.customWidgetList.length-1]!);
+
+                print(
+                    " customEditProvider.selectedWidgetKey.toString() ${customEditProvider.selectedWidgetKey.toString()}");
+
+                customEditProvider.addOrCheckChildByKey(
+                    customWidgetsGlobalKeysMap[
+                            customEditProvider.customWidgetList.length - 1]!
+                        .toString(),
+                    45 + 2 * customEditProvider.customWidgetList.length,
+                    customEditProvider.selectedWidgetKey == null
+                        ? customColumnKey.toString()
+                        : customEditProvider.selectedWidgetKey.toString(),
+                    "Container");
+
+                print(customEditProvider.jsonObject);
+                print(
+                    'containerlength after : ${customWidgetsGlobalKeysMap.length}');
               },
               child: const Text('Container')),
           ElevatedButton(
               onPressed: () {
-                customEditProvider
-                    .updateWidgetList(const Text('Custom Edit text is here'));
+                addCustomGlobalKeys(customEditProvider.customWidgetList.length);
+                customEditProvider.updateWidgetList(Text(
+                    key: customWidgetsGlobalKeysMap[
+                        customEditProvider.customWidgetList.length],
+                    'Custom Edit text is here'));
+
+                customEditProvider.addOrCheckChildByKey(
+                    customWidgetsGlobalKeysMap[
+                            customEditProvider.customWidgetList.length - 1]!
+                        .toString(),
+                    45 + 2 * customEditProvider.customWidgetList.length,
+                    customEditProvider.selectedWidgetKey == null
+                        ? customColumnKey.toString()
+                        : customEditProvider.selectedWidgetKey.toString(),
+                    "Text");
               },
               child: const Text('Text'))
         ],
