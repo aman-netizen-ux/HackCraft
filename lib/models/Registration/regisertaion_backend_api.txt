@@ -6,7 +6,11 @@
 
 
 
-
+// points to be discussd regarding form api
+// sections(already discussed j  make this final)
+// team 3 questions
+// different fields
+//  and their validations
 
 {
     "form": [
@@ -139,7 +143,8 @@ in frontend we are disabling other users fields for a user and checking the user
 his user id in member array.
     {
         team name:hh
-        num of mem: 4
+        num of mem: 4,
+        paid: "",
         member:[
             member1:{
                 email
@@ -147,6 +152,7 @@ his user id in member array.
                 name
                 address
                 gender
+                ....
             }
             member2:{
                 email
@@ -154,6 +160,7 @@ his user id in member array.
                 name
                 address
                 gender
+                ,....
             }
             member3:{
                 email

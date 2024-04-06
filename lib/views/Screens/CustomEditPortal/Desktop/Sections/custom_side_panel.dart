@@ -22,31 +22,19 @@ class _CustomSidePanelState extends State<CustomSidePanel> {
               onPressed: () {
                 print(
                     'containerlength before: ${customWidgetsGlobalKeysMap.length}');
-                addCustomGlobalKeys(customEditProvider.customWidgetList.length);
-
-                customEditProvider.updateWidgetList(Container(
-                    key: customWidgetsGlobalKeysMap[
-                        customEditProvider.customWidgetList.length],
-                    height: 300,
-                    width: 300,
-                    color: Colors.amberAccent));
+                addCustomGlobalKeys(customWidgetsGlobalKeysMap.length);
 
                 print(
-                    " global key  ${customWidgetsGlobalKeysMap[customEditProvider.customWidgetList.length - 1]!}");
-
-                // customEditProvider.addChild(
-                //     45 + 2 * customEditProvider.customWidgetList.length,
-                //     customWidgetsGlobalKeysMap[
-                //         customEditProvider.customWidgetList.length-1]!);
+                    " global key  ${customWidgetsGlobalKeysMap[customWidgetsGlobalKeysMap.length - 1]!}");
 
                 print(
                     " customEditProvider.selectedWidgetKey.toString() ${customEditProvider.selectedWidgetKey.toString()}");
 
                 customEditProvider.addOrCheckChildByKey(
                     customWidgetsGlobalKeysMap[
-                            customEditProvider.customWidgetList.length - 1]!
+                            customWidgetsGlobalKeysMap.length - 1]!
                         .toString(),
-                    45 + 2 * customEditProvider.customWidgetList.length,
+                    customWidgetsGlobalKeysMap.length - 1,
                     customEditProvider.selectedWidgetKey == null
                         ? customColumnKey.toString()
                         : customEditProvider.selectedWidgetKey.toString(),
@@ -55,25 +43,37 @@ class _CustomSidePanelState extends State<CustomSidePanel> {
                 print(customEditProvider.jsonObject);
                 print(
                     'containerlength after : ${customWidgetsGlobalKeysMap.length}');
+                print(
+                    " customWidgetsGlobalKeysMap length ${customWidgetsGlobalKeysMap.length}");
+
+                print("customWidgetsGlobalKeysMap $customWidgetsGlobalKeysMap");
+
+                customEditProvider.dynamicWidgets = customEditProvider
+                    .buildWidgetsFromJson(customEditProvider.jsonObject);
               },
               child: const Text('Container')),
           ElevatedButton(
               onPressed: () {
-                addCustomGlobalKeys(customEditProvider.customWidgetList.length);
-                customEditProvider.updateWidgetList(Text(
-                    key: customWidgetsGlobalKeysMap[
-                        customEditProvider.customWidgetList.length],
-                    'Custom Edit text is here'));
+                addCustomGlobalKeys(customWidgetsGlobalKeysMap.length);
 
-                customEditProvider.addOrCheckChildByKey(
+                final isChildAdded = customEditProvider.addOrCheckChildByKey(
                     customWidgetsGlobalKeysMap[
-                            customEditProvider.customWidgetList.length - 1]!
+                            customWidgetsGlobalKeysMap.length - 1]!
                         .toString(),
-                    45 + 2 * customEditProvider.customWidgetList.length,
+                    customWidgetsGlobalKeysMap.length - 1,
                     customEditProvider.selectedWidgetKey == null
                         ? customColumnKey.toString()
                         : customEditProvider.selectedWidgetKey.toString(),
                     "Text");
+                customEditProvider.dynamicWidgets = customEditProvider
+                    .buildWidgetsFromJson(customEditProvider.jsonObject);
+                print(isChildAdded);
+
+                print(
+                    " customWidgetsGlobalKeysMap length ${customWidgetsGlobalKeysMap.length}");
+                print("customWidgetsGlobalKeysMap $customWidgetsGlobalKeysMap");
+
+                print(customEditProvider.jsonObject);
               },
               child: const Text('Text'))
         ],
