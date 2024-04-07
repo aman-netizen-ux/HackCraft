@@ -1,6 +1,7 @@
-import 'dart:math';
-
+import 'dart:math' as math;
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:major_project__widget_testing/utils/customTemplate_widget_keys.dart';
 
 //TODO: clean up the code
@@ -32,7 +33,7 @@ class CustomEditPortal extends ChangeNotifier {
 
   bool addOrCheckChildByKey(
       String newglobalKey, int id, String globalKey, String type) {
-    print('hi globalkey $globalKey');
+    log('hi globalkey $globalKey');
     // Map<String, dynamic> containerChild = {
     //   newglobalKey.toString(): {
     //     "id": id,
@@ -53,7 +54,7 @@ class CustomEditPortal extends ChangeNotifier {
     Map<String, dynamic> newChild = {};
 
     Color generateRandomColor() {
-      final Random random = Random();
+      final math.Random random = math.Random();
       // Generate ARGB values
       int a = random.nextInt(256); // Alpha value
       int r = random.nextInt(256); // Red value
@@ -74,11 +75,11 @@ class CustomEditPortal extends ChangeNotifier {
       // Determine the height and width based on depth
       int margin = (depth * 10);
       // margin = margin < 0 ? 0 : margin; // Ensure size does not become negative
-      print(" Im in search with depth $depth");
+      log(" Im in search with depth $depth");
 
       if (globalKey == customColumnKey.toString()) {
         if (type == "Container") {
-          print("Im printing first container");
+          log("Im loging first container");
           newChild = {
             newglobalKey.toString(): {
               "id": id,
@@ -117,12 +118,12 @@ class CustomEditPortal extends ChangeNotifier {
         return true;
       } else if (node is Map) {
         // If the node is a Map and contains the key directly
-        print("Im in map");
+        log("Im in map");
 
         if (node.containsKey(key)) {
           // Check if 'child' related to this key is empty
 
-          print("Hellllllllllllllllllo contaqins key : ${node[key]['type']}");
+          log("Hellllllllllllllllllo contaqins key : ${node[key]['type']}");
           String parentType = node[key]['type'];
           if (type == "Container") {
             childToAdd = {
@@ -159,56 +160,56 @@ class CustomEditPortal extends ChangeNotifier {
               }
             };
           }
-          print("type : $type");
-          print("${node[key]['child'].isEmpty}   ${childToAdd}");
+          log("type : $type");
+          log("${node[key]['child'].isEmpty}   ${childToAdd}");
           if (node[key]['child'].isEmpty && childToAdd != null) {
             // The 'child' list is empty, and we have a new child to add
             node[key]['child'].add(childToAdd);
-            print("IM here 1");
+            log("IM here 1");
             return true; // Indicating that a child was added
           } else if ((parentType == "Row" || parentType == "Column") &&
               node[key]['child'].isNotEmpty &&
               childToAdd != null) {
             node[key]['child'].add(childToAdd);
           }
-          print("im here 5");
+          log("im here 5");
           return node[key]['child']
               .isEmpty; // Return true if empty, even if no child was added
         } else {
-          print(" doesn't contained key");
+          log(" doesn't contained key");
           // Recursively search each value if the key is not found at this level
           for (var value in node.values) {
-            print(" value : $value");
-            print("***********");
+            log(" value : $value");
+            log("***********");
             if (_searchAndAdd(
               value,
               key,
               childToAdd,
               depth + 1,
             )) {
-              print("IM here 2");
+              log("IM here 2");
               return true; // Indicating that a child was added or found empty
             }
           }
         }
       } else if (node is List) {
         // If the node is a List, iterate and search each element
-        print(" im list");
+        log(" im list");
         for (var element in node) {
-          print(" elemet: $element");
+          log(" elemet: $element");
           if (_searchAndAdd(
             element,
             key,
             childToAdd,
             depth + 1,
           )) {
-            print("IM here 3");
+            log("IM here 3");
             return true; // Indicating that a child was added or found empty
           }
         }
       }
       // Key not found in the current path, or no action was taken
-      print("IM here 4");
+      log("IM here 4");
       return false;
     }
 
@@ -250,7 +251,7 @@ class CustomEditPortal extends ChangeNotifier {
       if (!node.containsKey('type')) return SizedBox();
 
       Widget currentWidget;
-      print(node['type']);
+      log(node['type']);
 
       switch (node['type']) {
         case 'Container':
@@ -267,14 +268,13 @@ class CustomEditPortal extends ChangeNotifier {
           currentWidget = InkWell(
             onTap: () {
               int? index = node['id'];
-              print(index);
+              log('index : $index');
 
               final currentKey = customWidgetsGlobalKeysMap[index];
-              print('currentkey in provider: $currentKey');
+              log('currentkey in provider: $currentKey');
               _selectedWidgetKey = currentKey;
               notifyListeners();
-              print(
-                  "*******${node['properties']['height']}**************${node['properties']['width']}***************");
+              log("*******${node['properties']['height']}**************${node['properties']['width']}***************");
             },
             child: Container(
               height: node['properties']['height'],
@@ -293,7 +293,7 @@ class CustomEditPortal extends ChangeNotifier {
         case 'Text':
           currentWidget = InkWell(
               onTap: () {
-                print("hi");
+                log("hi");
               },
               child: Text(
                   "Dynamic Text")); // Example: Set a default text, customize as needed
@@ -311,11 +311,11 @@ class CustomEditPortal extends ChangeNotifier {
           currentWidget = InkWell(
             onTap: () {
               int? index = node['id'];
-              print(index);
+              log(' index at 315 : $index');
 
               final currentKey = customWidgetsGlobalKeysMap[index];
-              print('currentkey in provider: $currentKey');
-              print("Row");
+              log('currentkey in provider: $currentKey');
+              log("Row");
               _selectedWidgetKey = currentKey;
               notifyListeners();
             },
@@ -324,12 +324,15 @@ class CustomEditPortal extends ChangeNotifier {
               width: double.infinity,
               decoration:
                   BoxDecoration(border: Border.all(color: Colors.black)),
-              child: Row(
-                mainAxisAlignment:
-                    MainAxisAlignment.center, // Customize as needed
-                crossAxisAlignment:
-                    CrossAxisAlignment.center, // Customize as needed
-                children: childWidgets,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: const NeverScrollableScrollPhysics(),
+                clipBehavior: Clip.hardEdge,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: childWidgets,
+                ),
               ),
             ),
           );
@@ -347,11 +350,11 @@ class CustomEditPortal extends ChangeNotifier {
           currentWidget = InkWell(
             onTap: () {
               int? index = node['id'];
-              print(index);
+              log(' index at 356 : $index');
 
               final currentKey = customWidgetsGlobalKeysMap[index];
-              print('currentkey in provider: $currentKey');
-              print("Column");
+              log('currentkey in provider: $currentKey');
+              log("Column");
               _selectedWidgetKey = currentKey;
               notifyListeners();
             },
@@ -360,12 +363,17 @@ class CustomEditPortal extends ChangeNotifier {
               width: double.infinity,
               decoration:
                   BoxDecoration(border: Border.all(color: Colors.black)),
-              child: Column(
-                mainAxisAlignment:
-                    MainAxisAlignment.center, // Customize as needed
-                crossAxisAlignment:
-                    CrossAxisAlignment.center, // Customize as needed
-                children: childWidgets,
+              child: SingleChildScrollView(  // TODO : Hide the scroll bar 
+                scrollDirection: Axis.vertical,
+                physics: const NeverScrollableScrollPhysics(),
+                clipBehavior: Clip.hardEdge,
+                child: Column(
+                  mainAxisAlignment:
+                      MainAxisAlignment.start, // Customize as needed
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start, // Customize as needed
+                  children: childWidgets,
+                ),
               ),
             ),
           );
@@ -393,7 +401,7 @@ class CustomEditPortal extends ChangeNotifier {
   }
 
 //    void addChild(int id, GlobalKey globalKey) {
-//   print('Global key in add child: $globalKey');
+//   log('Global key in add child: $globalKey');
 //   Map<String, dynamic> newChild = {
 //     globalKey.toString(): {
 //       "id": id,

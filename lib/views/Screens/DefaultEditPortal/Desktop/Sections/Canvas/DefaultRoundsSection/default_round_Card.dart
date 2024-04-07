@@ -72,7 +72,7 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
       italics: false,
       letterSpacing: 0,
       strikethrogh: false,
-      textColor: 'Color(0xFF1A202C)',
+      textColor: 'Color(0xFF1A202C);',
       underline: false,
       upperCase: false,
     );
@@ -88,7 +88,7 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
       italics: false,
       letterSpacing: 0,
       strikethrogh: false,
-      textColor: 'Color(0xFF1A202C)',
+      textColor: 'Color(0xFF1A202C);',
       underline: false,
       upperCase: false,
     );
@@ -104,7 +104,7 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
       italics: false,
       letterSpacing: 0,
       strikethrogh: false,
-      textColor: 'Color(0xFF1A202C)',
+      textColor: 'Color(0xFF1A202C);',
       underline: false,
       upperCase: false,
     );
@@ -122,7 +122,7 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
       italics: false,
       letterSpacing: 0,
       strikethrogh: false,
-      textColor: 'Color(0xFF564A4A)',
+      textColor: 'Color(0xFF564A4A);',
       underline: false,
       upperCase: false,
     );

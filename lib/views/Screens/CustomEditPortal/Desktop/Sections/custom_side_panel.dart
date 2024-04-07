@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/state/custom_template_providers/custom_edit_template_provider.dart';
 import 'package:major_project__widget_testing/utils/customTemplate_widget_keys.dart';
@@ -20,14 +22,14 @@ class _CustomSidePanelState extends State<CustomSidePanel> {
         children: [
           ElevatedButton(
               onPressed: () {
-                print(
+                log(
                     'containerlength before: ${customWidgetsGlobalKeysMap.length}');
                 addCustomGlobalKeys(customWidgetsGlobalKeysMap.length);
 
-                print(
+                log(
                     " global key  ${customWidgetsGlobalKeysMap[customWidgetsGlobalKeysMap.length - 1]!}");
 
-                print(
+                log(
                     " customEditProvider.selectedWidgetKey.toString() ${customEditProvider.selectedWidgetKey.toString()}");
 
                 customEditProvider.addOrCheckChildByKey(
@@ -40,16 +42,17 @@ class _CustomSidePanelState extends State<CustomSidePanel> {
                         : customEditProvider.selectedWidgetKey.toString(),
                     "Container");
 
-                print(customEditProvider.jsonObject);
-                print(
+                log('json opbject : ${customEditProvider.jsonObject}');
+                log(
                     'containerlength after : ${customWidgetsGlobalKeysMap.length}');
-                print(
+                log(
                     " customWidgetsGlobalKeysMap length ${customWidgetsGlobalKeysMap.length}");
 
-                print("customWidgetsGlobalKeysMap $customWidgetsGlobalKeysMap");
+                log("customWidgetsGlobalKeysMap $customWidgetsGlobalKeysMap");
 
                 customEditProvider.dynamicWidgets = customEditProvider
                     .buildWidgetsFromJson(customEditProvider.jsonObject);
+             
               },
               child: const Text('Container')),
           ElevatedButton(
@@ -67,13 +70,13 @@ class _CustomSidePanelState extends State<CustomSidePanel> {
                     "Text");
                 customEditProvider.dynamicWidgets = customEditProvider
                     .buildWidgetsFromJson(customEditProvider.jsonObject);
-                print(isChildAdded);
+                log(' child added ? $isChildAdded}');
 
-                print(
+                log(
                     " customWidgetsGlobalKeysMap length ${customWidgetsGlobalKeysMap.length}");
-                print("customWidgetsGlobalKeysMap $customWidgetsGlobalKeysMap");
+                log("customWidgetsGlobalKeysMap $customWidgetsGlobalKeysMap");
 
-                print(customEditProvider.jsonObject);
+                log(' json at 85 in side panel : ${customEditProvider.jsonObject}');
               },
               child: const Text('Text'))
         ],
