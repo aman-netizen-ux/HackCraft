@@ -71,7 +71,6 @@ class CustomEditPortal extends ChangeNotifier {
       Map<String, dynamic>? childToAdd,
       int depth,
     ) {
-      
       // Determine the height and width based on depth
       int margin = (depth * 10);
       // margin = margin < 0 ? 0 : margin; // Ensure size does not become negative
@@ -95,6 +94,24 @@ class CustomEditPortal extends ChangeNotifier {
           };
         } else if (type == "Text") {
           newChild = textChild;
+        } else if (type == "Row") {
+          newChild = {
+            newglobalKey.toString(): {
+              "id": id,
+              "type": type,
+              "properties": {},
+              "child": [] // Using a list for potential multiple children
+            }
+          };
+        } else if (type == "Column") {
+          newChild = {
+            newglobalKey.toString(): {
+              "id": id,
+              "type": type,
+              "properties": {},
+              "child": [] // Using a list for potential multiple children
+            }
+          };
         }
         _jsonObject["children"].add(newChild);
         return true;
@@ -104,16 +121,18 @@ class CustomEditPortal extends ChangeNotifier {
 
         if (node.containsKey(key)) {
           // Check if 'child' related to this key is empty
-          print("Hellllllllllllllllllo contaqins key");
+
+          print("Hellllllllllllllllllo contaqins key : ${node[key]['type']}");
+          String parentType = node[key]['type'];
           if (type == "Container") {
             childToAdd = {
               newglobalKey.toString(): {
                 "id": id,
                 "type": type,
                 "properties": {
-                  "height": 300,
+                  "height": 100,
                   "color": generateRandomColor().toString(),
-                  "width": 300,
+                  "width": 100,
                   "margin": 20
                 },
                 "child": [] // Using a list for potential multiple children
@@ -121,19 +140,41 @@ class CustomEditPortal extends ChangeNotifier {
             };
           } else if (type == "Text") {
             childToAdd = textChild;
+          } else if (type == "Row") {
+            childToAdd = {
+              newglobalKey.toString(): {
+                "id": id,
+                "type": type,
+                "properties": {},
+                "child": [] // Using a list for potential multiple children
+              }
+            };
+          } else if (type == "Column") {
+            childToAdd = {
+              newglobalKey.toString(): {
+                "id": id,
+                "type": type,
+                "properties": {},
+                "child": [] // Using a list for potential multiple children
+              }
+            };
           }
-
+          print("type : $type");
+          print("${node[key]['child'].isEmpty}   ${childToAdd}");
           if (node[key]['child'].isEmpty && childToAdd != null) {
             // The 'child' list is empty, and we have a new child to add
             node[key]['child'].add(childToAdd);
             print("IM here 1");
             return true; // Indicating that a child was added
+          } else if ((parentType == "Row" || parentType == "Column") &&
+              node[key]['child'].isNotEmpty &&
+              childToAdd != null) {
+            node[key]['child'].add(childToAdd);
           }
           print("im here 5");
           return node[key]['child']
               .isEmpty; // Return true if empty, even if no child was added
         } else {
-
           print(" doesn't contained key");
           // Recursively search each value if the key is not found at this level
           for (var value in node.values) {
@@ -209,6 +250,7 @@ class CustomEditPortal extends ChangeNotifier {
       if (!node.containsKey('type')) return SizedBox();
 
       Widget currentWidget;
+      print(node['type']);
 
       switch (node['type']) {
         case 'Container':
@@ -256,6 +298,79 @@ class CustomEditPortal extends ChangeNotifier {
               child: Text(
                   "Dynamic Text")); // Example: Set a default text, customize as needed
           break;
+
+        case 'Row':
+          List<Widget> childWidgets = [];
+          if (node.containsKey('child') && node['child'] is List) {
+            node['child'].forEach((childNode) {
+              for (var entry in childNode.entries) {
+                childWidgets.add(buildWidget(entry.value));
+              }
+            });
+          }
+          currentWidget = InkWell(
+            onTap: () {
+              int? index = node['id'];
+              print(index);
+
+              final currentKey = customWidgetsGlobalKeysMap[index];
+              print('currentkey in provider: $currentKey');
+              print("Row");
+              _selectedWidgetKey = currentKey;
+              notifyListeners();
+            },
+            child: Container(
+              height: 300,
+              width: double.infinity,
+              decoration:
+                  BoxDecoration(border: Border.all(color: Colors.black)),
+              child: Row(
+                mainAxisAlignment:
+                    MainAxisAlignment.center, // Customize as needed
+                crossAxisAlignment:
+                    CrossAxisAlignment.center, // Customize as needed
+                children: childWidgets,
+              ),
+            ),
+          );
+          break;
+
+        case 'Column':
+          List<Widget> childWidgets = [];
+          if (node.containsKey('child') && node['child'] is List) {
+            node['child'].forEach((childNode) {
+              for (var entry in childNode.entries) {
+                childWidgets.add(buildWidget(entry.value));
+              }
+            });
+          }
+          currentWidget = InkWell(
+            onTap: () {
+              int? index = node['id'];
+              print(index);
+
+              final currentKey = customWidgetsGlobalKeysMap[index];
+              print('currentkey in provider: $currentKey');
+              print("Column");
+              _selectedWidgetKey = currentKey;
+              notifyListeners();
+            },
+            child: Container(
+              height: 300,
+              width: double.infinity,
+              decoration:
+                  BoxDecoration(border: Border.all(color: Colors.black)),
+              child: Column(
+                mainAxisAlignment:
+                    MainAxisAlignment.center, // Customize as needed
+                crossAxisAlignment:
+                    CrossAxisAlignment.center, // Customize as needed
+                children: childWidgets,
+              ),
+            ),
+          );
+          break;
+
         default:
           currentWidget = SizedBox(); // Fallback for unrecognized types
       }

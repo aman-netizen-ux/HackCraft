@@ -82,8 +82,35 @@ class _CustomSidePanelState extends State<CustomSidePanel> {
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          ElevatedButton(onPressed: () {}, child: const Text('Row')),
-          ElevatedButton(onPressed: () {}, child: const Text('Column'))
+          ElevatedButton(onPressed: () {
+            addCustomGlobalKeys(customWidgetsGlobalKeysMap.length);
+            customEditProvider.addOrCheckChildByKey(
+                    customWidgetsGlobalKeysMap[
+                            customWidgetsGlobalKeysMap.length - 1]!
+                        .toString(),
+                    customWidgetsGlobalKeysMap.length - 1,
+                    customEditProvider.selectedWidgetKey == null
+                        ? customColumnKey.toString()
+                        : customEditProvider.selectedWidgetKey.toString(),
+                    "Row");
+                    customEditProvider.dynamicWidgets = customEditProvider
+                    .buildWidgetsFromJson(customEditProvider.jsonObject);
+          }, child: const Text('Row')),
+          ElevatedButton(onPressed: () {
+
+             addCustomGlobalKeys(customWidgetsGlobalKeysMap.length);
+            customEditProvider.addOrCheckChildByKey(
+                    customWidgetsGlobalKeysMap[
+                            customWidgetsGlobalKeysMap.length - 1]!
+                        .toString(),
+                    customWidgetsGlobalKeysMap.length - 1,
+                    customEditProvider.selectedWidgetKey == null
+                        ? customColumnKey.toString()
+                        : customEditProvider.selectedWidgetKey.toString(),
+                    "Column");
+                    customEditProvider.dynamicWidgets = customEditProvider
+                    .buildWidgetsFromJson(customEditProvider.jsonObject);
+          }, child: const Text('Column'))
         ],
       )
     ]);
