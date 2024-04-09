@@ -86,6 +86,7 @@ flutter:
     - assets/images/host/
     - assets/images/home/
     - assets/images/login/
+    - assets/images/profile/
     - assets/icons/defaultEditPortal/
     - assets/icons/defaultEditPortal/boldIcons/
     - .env
