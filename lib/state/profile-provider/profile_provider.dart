@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/views/Screens/MainNavigation/Desktop/Sections/Profile/referral.dart';
 import 'package:major_project__widget_testing/views/Screens/MainNavigation/Desktop/Sections/Profile/registration.dart';
 import 'package:major_project__widget_testing/views/Screens/MainNavigation/Desktop/Sections/Profile/settings.dart';
-import 'package:major_project__widget_testing/views/Screens/MainNavigation/Desktop/Sections/Profile/user_profile.dart';
+import 'package:major_project__widget_testing/views/Screens/MainNavigation/Desktop/Sections/Profile/User%20Profile/user_profile.dart';
 
 class ProfileProvider extends ChangeNotifier{
 
