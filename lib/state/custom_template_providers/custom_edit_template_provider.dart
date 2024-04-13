@@ -131,6 +131,26 @@ class CustomEditPortal extends ChangeNotifier {
               "child": [] // Using a list for potential multiple children
             }
           };
+          }else if(type=="Icon"){
+            newChild = {
+            newglobalKey.toString(): {
+              "id": id,
+              "type": type,
+              "properties": {},
+              "child": [] // Using a list for potential multiple children
+            }
+          };
+          }else if(type=="Wrap"){
+            newChild = {
+            newglobalKey.toString(): {
+              "id": id,
+              "type": type,
+              "properties": {
+                "height": 150,
+              },
+              "child": [] // Using a list for potential multiple children
+            }
+          };
           }
         _jsonObject["children"].add(newChild);
         return true;
@@ -195,6 +215,26 @@ class CustomEditPortal extends ChangeNotifier {
               "child": [] // Using a list for potential multiple children
             }
           };
+          }else if(type=="Icon"){
+            childToAdd = {
+            newglobalKey.toString(): {
+              "id": id,
+              "type": type,
+              "properties": {},
+              "child": [] // Using a list for potential multiple children
+            }
+          };
+          }else if(type=="Wrap"){
+            childToAdd = {
+            newglobalKey.toString(): {
+              "id": id,
+              "type": type,
+              "properties": {
+                "height": null,
+              },
+              "child": [] // Using a list for potential multiple children
+            }
+          };
           }
           log("type : $type");
           log(" ${node[key]['child']}  ${node[key]['child'].isEmpty}   ${childToAdd}");
@@ -203,7 +243,7 @@ class CustomEditPortal extends ChangeNotifier {
             node[key]['child'].add(childToAdd);
             log("IM here 1");
             return true; // Indicating that a child was added
-          } else if ((parentType == "Row" || parentType == "Column") &&
+          } else if ((parentType == "Row" || parentType == "Column"|| parentType == "Wrap") &&
               node[key]['child'].isNotEmpty &&
               childToAdd != null) {
             node[key]['child'].add(childToAdd);
@@ -414,7 +454,8 @@ class CustomEditPortal extends ChangeNotifier {
             ),
           );
           break;
-//TODO: = divider is not visible when it is the direct child of any row we add
+//TODO: divider is not visible when it is the direct child of any row we add
+
           case "Divider":
           currentWidget = InkWell(
               onTap: () {
@@ -435,6 +476,53 @@ class CustomEditPortal extends ChangeNotifier {
                 color: Colors.grey,
                 thickness: 1,
               )); // Example: Set a default text, customize as needed
+          break;
+
+          case "Icon":
+          currentWidget = InkWell(
+              onTap: () {
+                log("Hey icon");
+              },
+              child: const Icon(
+
+                Icons.forest_outlined
+                            )); // Example: Set a default text, customize as needed
+          break;
+//TODO: what to do with widgets jo wrap k bahaar aa hrhe
+//TODO: row inside wrap case
+// Vertical divider inside wrap case
+          case "Wrap":
+              List<Widget> childWidgets = [];
+          if (node.containsKey('child') && node['child'] is List) {
+            node['child'].forEach((childNode) {
+              for (var entry in childNode.entries) {
+                childWidgets.add(buildWidget(entry.value));
+              }
+            });
+          }
+          currentWidget = InkWell(
+            onTap: () {
+              int? index = node['id'];
+              log(' index at 315 : $index');
+
+              final currentKey = customWidgetsGlobalKeysMap[index];
+              log('currentkey in provider: $currentKey');
+              log("You got Wrappppped");
+              _selectedWidgetKey = currentKey;
+              notifyListeners();
+            },
+            child:Container(
+              height:node['properties']['height'],
+              width: double.infinity,
+              decoration:
+                  BoxDecoration(border: Border.all(color: Colors.black)),
+              child: Wrap(
+                    
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: childWidgets,
+                  ),
+            ),
+          );
           break;
         default:
           currentWidget = SizedBox(); // Fallback for unrecognized types
