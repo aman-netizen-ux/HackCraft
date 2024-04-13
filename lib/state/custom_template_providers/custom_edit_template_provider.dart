@@ -113,7 +113,25 @@ class CustomEditPortal extends ChangeNotifier {
               "child": [] // Using a list for potential multiple children
             }
           };
-        }
+        } else if(type=="Divider"){
+          newChild = {
+            newglobalKey.toString(): {
+              "id": id,
+              "type": type,
+              "properties": {},
+              "child": [] 
+            }
+          };
+        }else if(type=="VerticalDivider"){
+            newChild = {
+            newglobalKey.toString(): {
+              "id": id,
+              "type": type,
+              "properties": {},
+              "child": [] // Using a list for potential multiple children
+            }
+          };
+          }
         _jsonObject["children"].add(newChild);
         return true;
       } else if (node is Map) {
@@ -159,9 +177,27 @@ class CustomEditPortal extends ChangeNotifier {
                 "child": [] // Using a list for potential multiple children
               }
             };
+          }else if(type=="Divider"){
+            childToAdd = {
+            newglobalKey.toString(): {
+              "id": id,
+              "type": type,
+              "properties": {},
+              "child": [] // Using a list for potential multiple children
+            }
+          };
+          }else if(type=="VerticalDivider"){
+            childToAdd = {
+            newglobalKey.toString(): {
+              "id": id,
+              "type": type,
+              "properties": {},
+              "child": [] // Using a list for potential multiple children
+            }
+          };
           }
           log("type : $type");
-          log("${node[key]['child'].isEmpty}   ${childToAdd}");
+          log(" ${node[key]['child']}  ${node[key]['child'].isEmpty}   ${childToAdd}");
           if (node[key]['child'].isEmpty && childToAdd != null) {
             // The 'child' list is empty, and we have a new child to add
             node[key]['child'].add(childToAdd);
@@ -320,7 +356,7 @@ class CustomEditPortal extends ChangeNotifier {
               notifyListeners();
             },
             child: Container(
-              height: 300,
+              height: 150,
               width: double.infinity,
               decoration:
                   BoxDecoration(border: Border.all(color: Colors.black)),
@@ -378,7 +414,28 @@ class CustomEditPortal extends ChangeNotifier {
             ),
           );
           break;
-
+//TODO: = divider is not visible when it is the direct child of any row we add
+          case "Divider":
+          currentWidget = InkWell(
+              onTap: () {
+                log("divideddddddddddd");
+              },
+              child:const  Divider(
+                color: Colors.grey,
+                thickness: 1,
+              )); // Example: Set a default text, customize as needed
+          break;
+//TODO: vertical divider is not visible when it is the direct child of default column
+           case "VerticalDivider":
+          currentWidget = InkWell(
+              onTap: () {
+                log("verically divideddddddddddd");
+              },
+              child: const VerticalDivider(
+                color: Colors.grey,
+                thickness: 1,
+              )); // Example: Set a default text, customize as needed
+          break;
         default:
           currentWidget = SizedBox(); // Fallback for unrecognized types
       }

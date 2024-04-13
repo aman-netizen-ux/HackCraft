@@ -115,7 +115,47 @@ class _CustomSidePanelState extends State<CustomSidePanel> {
                     .buildWidgetsFromJson(customEditProvider.jsonObject);
           }, child: const Text('Column'))
         ],
-      )
+      ),
+const SizedBox(height: 10),
+
+       Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ElevatedButton(onPressed: () {
+            addCustomGlobalKeys(customWidgetsGlobalKeysMap.length);
+            customEditProvider.addOrCheckChildByKey(
+                    customWidgetsGlobalKeysMap[
+                            customWidgetsGlobalKeysMap.length - 1]!
+                        .toString(),
+                    customWidgetsGlobalKeysMap.length - 1,
+                    customEditProvider.selectedWidgetKey == null
+                        ? customColumnKey.toString()
+                        : customEditProvider.selectedWidgetKey.toString(),
+                    "Divider");
+                    customEditProvider.dynamicWidgets = customEditProvider
+                    .buildWidgetsFromJson(customEditProvider.jsonObject);
+          }, child: const Text('Divider')),
+          ElevatedButton(onPressed: () {
+
+             addCustomGlobalKeys(customWidgetsGlobalKeysMap.length);
+            customEditProvider.addOrCheckChildByKey(
+                    customWidgetsGlobalKeysMap[
+                            customWidgetsGlobalKeysMap.length - 1]!
+                        .toString(),
+                    customWidgetsGlobalKeysMap.length - 1,
+                    customEditProvider.selectedWidgetKey == null
+                        ? customColumnKey.toString()
+                        : customEditProvider.selectedWidgetKey.toString(),
+                    "VerticalDivider");
+                    customEditProvider.dynamicWidgets = customEditProvider
+                    .buildWidgetsFromJson(customEditProvider.jsonObject);
+          }, child: const Text('VerticalDivider'))
+        ],
+      ),
+
+      const SizedBox(height: 10),
+
+      Text(customEditProvider.jsonObject.toString())
     ]);
   }
 }
