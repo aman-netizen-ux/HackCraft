@@ -1,8 +1,12 @@
 import 'dart:math' as math;
 import 'dart:developer';
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/utils/customTemplate_widget_keys.dart';
+import 'package:timeline_tile/timeline_tile.dart';
 
 //TODO: clean up the code
 
@@ -52,6 +56,7 @@ class CustomEditPortal extends ChangeNotifier {
       }
     };
     Map<String, dynamic> newChild = {};
+    Map<String, dynamic> defaultChild={};
 
     Color generateRandomColor() {
       final math.Random random = math.Random();
@@ -113,17 +118,17 @@ class CustomEditPortal extends ChangeNotifier {
               "child": [] // Using a list for potential multiple children
             }
           };
-        } else if(type=="Divider"){
+        } else if (type == "Divider") {
           newChild = {
             newglobalKey.toString(): {
               "id": id,
               "type": type,
               "properties": {},
-              "child": [] 
+              "child": []
             }
           };
-        }else if(type=="VerticalDivider"){
-            newChild = {
+        } else if (type == "VerticalDivider") {
+          newChild = {
             newglobalKey.toString(): {
               "id": id,
               "type": type,
@@ -131,8 +136,8 @@ class CustomEditPortal extends ChangeNotifier {
               "child": [] // Using a list for potential multiple children
             }
           };
-          }else if(type=="Icon"){
-            newChild = {
+        } else if (type == "Icon") {
+          newChild = {
             newglobalKey.toString(): {
               "id": id,
               "type": type,
@@ -140,8 +145,8 @@ class CustomEditPortal extends ChangeNotifier {
               "child": [] // Using a list for potential multiple children
             }
           };
-          }else if(type=="Wrap"){
-            newChild = {
+        } else if (type == "Wrap") {
+          newChild = {
             newglobalKey.toString(): {
               "id": id,
               "type": type,
@@ -151,7 +156,143 @@ class CustomEditPortal extends ChangeNotifier {
               "child": [] // Using a list for potential multiple children
             }
           };
-          }
+        } else if (type == "Spacer") {
+          newChild = {
+            newglobalKey.toString(): {
+              "id": id,
+              "type": type,
+              "properties": {},
+              "child": [] // Using a list for potential multiple children
+            }
+          };
+        } else if (type == "Image") {
+          newChild = {
+            newglobalKey.toString(): {
+              "id": id,
+              "type": type,
+              "properties": {},
+              "child": [] // Using a list for potential multiple children
+            }
+          };
+        } else if (type == "CircleImage") {
+          newChild = {
+            newglobalKey.toString(): {
+              "id": id,
+              "type": type,
+              "properties": {},
+              "child": [] // Using a list for potential multiple children
+            }
+          };
+        } else if (type == "SvgPicture") {
+          newChild = {
+            newglobalKey.toString(): {
+              "id": id,
+              "type": type,
+              "properties": {},
+              "child": [] // Using a list for potential multiple children
+            }
+          };
+        } else if (type == "Timeline") {
+          addCustomGlobalKeys(customWidgetsGlobalKeysMap.length);
+          newChild = {
+            newglobalKey.toString(): {
+              "id": id,
+              "type": type,
+              "properties": {},
+              "child": [
+               
+                    
+              ] // Using a list for potential multiple children
+            }
+          };
+          defaultChild={
+             customWidgetsGlobalKeysMap[
+                          customWidgetsGlobalKeysMap.length - 1]!.toString(): {
+              "id": id+1,
+              "type": "Container",
+              "properties": {
+                "height": 300,
+                "color": generateRandomColor().toString(),
+                "width": 300,
+                "margin": 0
+              },
+              "child": [] // Using a list for potential multiple children
+            }
+          };
+
+           newChild[newglobalKey.toString()]['child'].add(defaultChild);
+
+         // TODO: make it like above timeline
+        } else if (type == "FlippableCard") {
+          addCustomGlobalKeys(customWidgetsGlobalKeysMap.length);
+          addCustomGlobalKeys(customWidgetsGlobalKeysMap.length);
+          newChild = {
+            newglobalKey.toString(): {
+              "id": id,
+              "type": type,
+              "properties": {},
+              "child": [
+                {
+                  customWidgetsGlobalKeysMap[
+                          customWidgetsGlobalKeysMap.length - 2]!
+                      .toString(): {
+                    "id": id + 1,
+                    "type": "Container",
+                    "properties": {
+                      "height": 100,
+                      "color": generateRandomColor().toString(),
+                      "width": 100,
+                      "margin": 20
+                    },
+                    "child": [] // Using a list for potential multiple children
+                  }
+                },
+                {
+                  customWidgetsGlobalKeysMap[
+                          customWidgetsGlobalKeysMap.length - 1]!
+                      .toString(): {
+                    "id": id + 2,
+                    "type": "Container",
+                    "properties": {
+                      "height": 100,
+                      "color": generateRandomColor().toString(),
+                      "width": 100,
+                      "margin": 20
+                    },
+                    "child": [] // Using a list for potential multiple children
+                  }
+                }
+              ] // Using a list for potential multiple children
+            }
+          };
+        } else if (type == "VideoPlayer") {
+          newChild = {
+            newglobalKey.toString(): {
+              "id": id,
+              "type": type,
+              "properties": {},
+              "child": [] // Using a list for potential multiple children
+            }
+          };
+        } else if (type == "PDFViewer") {
+          newChild = {
+            newglobalKey.toString(): {
+              "id": id,
+              "type": type,
+              "properties": {},
+              "child": [] // Using a list for potential multiple children
+            }
+          };
+        } else if (type == "Tabbar") {
+          newChild = {
+            newglobalKey.toString(): {
+              "id": id,
+              "type": type,
+              "properties": {},
+              "child": [] // Using a list for potential multiple children
+            }
+          };
+        }
         _jsonObject["children"].add(newChild);
         return true;
       } else if (node is Map) {
@@ -197,56 +338,202 @@ class CustomEditPortal extends ChangeNotifier {
                 "child": [] // Using a list for potential multiple children
               }
             };
-          }else if(type=="Divider"){
+          } else if (type == "Divider") {
             childToAdd = {
-            newglobalKey.toString(): {
-              "id": id,
-              "type": type,
-              "properties": {},
-              "child": [] // Using a list for potential multiple children
-            }
-          };
-          }else if(type=="VerticalDivider"){
+              newglobalKey.toString(): {
+                "id": id,
+                "type": type,
+                "properties": {},
+                "child": [] // Using a list for potential multiple children
+              }
+            };
+          } else if (type == "VerticalDivider") {
             childToAdd = {
-            newglobalKey.toString(): {
-              "id": id,
-              "type": type,
-              "properties": {},
-              "child": [] // Using a list for potential multiple children
-            }
-          };
-          }else if(type=="Icon"){
+              newglobalKey.toString(): {
+                "id": id,
+                "type": type,
+                "properties": {},
+                "child": [] // Using a list for potential multiple children
+              }
+            };
+          } else if (type == "Icon") {
             childToAdd = {
-            newglobalKey.toString(): {
-              "id": id,
-              "type": type,
-              "properties": {},
-              "child": [] // Using a list for potential multiple children
-            }
-          };
-          }else if(type=="Wrap"){
+              newglobalKey.toString(): {
+                "id": id,
+                "type": type,
+                "properties": {},
+                "child": [] // Using a list for potential multiple children
+              }
+            };
+          } else if (type == "Wrap") {
             childToAdd = {
-            newglobalKey.toString(): {
-              "id": id,
-              "type": type,
+              newglobalKey.toString(): {
+                "id": id,
+                "type": type,
+                "properties": {
+                  "height": null,
+                },
+                "child": [] // Using a list for potential multiple children
+              }
+            };
+          } else if (type == "Spacer") {
+            childToAdd = {
+              newglobalKey.toString(): {
+                "id": id,
+                "type": type,
+                "properties": {},
+                "child": [] // Using a list for potential multiple children
+              }
+            };
+          } else if (type == "Image") {
+            childToAdd = {
+              newglobalKey.toString(): {
+                "id": id,
+                "type": type,
+                "properties": {},
+                "child": [] // Using a list for potential multiple children
+              }
+            };
+          } else if (type == "CircleImage") {
+            childToAdd = {
+              newglobalKey.toString(): {
+                "id": id,
+                "type": type,
+                "properties": {},
+                "child": [] // Using a list for potential multiple children
+              }
+            };
+          } else if (type == "SvgPicture") {
+            childToAdd = {
+              newglobalKey.toString(): {
+                "id": id,
+                "type": type,
+                "properties": {},
+                "child": [] // Using a list for potential multiple children
+              }
+            };
+          } else if (type == "Timeline") {
+            addCustomGlobalKeys(customWidgetsGlobalKeysMap.length);
+            childToAdd = {
+              newglobalKey.toString(): {
+                "id": id,
+                "type": type,
+                "properties": {},
+                "child": [
+                   
+                ] // Using a list for potential multiple children
+              }
+            };
+
+             defaultChild={
+             customWidgetsGlobalKeysMap[
+                          customWidgetsGlobalKeysMap.length - 1]!.toString(): {
+              "id": id+1,
+              "type": "Container",
               "properties": {
-                "height": null,
+                "height": 300,
+                "color": generateRandomColor().toString(),
+                "width": 300,
+                "margin": 0
               },
               "child": [] // Using a list for potential multiple children
             }
           };
+
+           childToAdd[newglobalKey.toString()]['child'].add(defaultChild);
+          } else if (type == "FlippableCard") {
+            addCustomGlobalKeys(customWidgetsGlobalKeysMap.length);
+            addCustomGlobalKeys(customWidgetsGlobalKeysMap.length);
+            childToAdd = {
+              newglobalKey.toString(): {
+                "id": id,
+                "type": type,
+                "properties": {},
+                "child": [
+                  {
+                    customWidgetsGlobalKeysMap[
+                            customWidgetsGlobalKeysMap.length - 2]!
+                        .toString(): {
+                      "id": id + 1,
+                      "type": "Container",
+                      "properties": {
+                        "height": 100,
+                        "color": generateRandomColor().toString(),
+                        "width": 100,
+                        "margin": 20
+                      },
+                      "child":
+                          [] // Using a list for potential multiple children
+                    }
+                  },
+                  {
+                    customWidgetsGlobalKeysMap[
+                            customWidgetsGlobalKeysMap.length - 1]!
+                        .toString(): {
+                      "id": id + 2,
+                      "type": "Container",
+                      "properties": {
+                        "height": 100,
+                        "color": generateRandomColor().toString(),
+                        "width": 100,
+                        "margin": 20
+                      },
+                      "child":
+                          [] // Using a list for potential multiple children
+                    }
+                  }
+                ] // Using a list for potential multiple children
+              }
+            };
+          } else if (type == "VideoPlayer") {
+            childToAdd = {
+              newglobalKey.toString(): {
+                "id": id,
+                "type": type,
+                "properties": {},
+                "child": [] // Using a list for potential multiple children
+              }
+            };
+          } else if (type == "PDFViewer") {
+            childToAdd = {
+              newglobalKey.toString(): {
+                "id": id,
+                "type": type,
+                "properties": {},
+                "child": [] // Using a list for potential multiple children
+              }
+            };
+          } else if (type == "Tabbar") {
+            childToAdd = {
+              newglobalKey.toString(): {
+                "id": id,
+                "type": type,
+                "properties": {},
+                "child": [] // Using a list for potential multiple children
+              }
+            };
           }
           log("type : $type");
-          log(" ${node[key]['child']}  ${node[key]['child'].isEmpty}   ${childToAdd}");
+          log(" demn ${node[key]['child']} ");
+                    log(" ohh $childToAdd   ");
+
+          log(" mad  ${node[key]['child'].isEmpty}  ");
+
           if (node[key]['child'].isEmpty && childToAdd != null) {
             // The 'child' list is empty, and we have a new child to add
+             log("IM here 1");
             node[key]['child'].add(childToAdd);
-            log("IM here 1");
+           
             return true; // Indicating that a child was added
-          } else if ((parentType == "Row" || parentType == "Column"|| parentType == "Wrap") &&
+          } else if ((parentType == "Row" ||
+                  parentType == "Column" ||
+                  parentType == "Wrap" ||
+                  parentType == "Timeline") &&
               node[key]['child'].isNotEmpty &&
               childToAdd != null) {
+                log("Plssssssssssssssss rescue me");
             node[key]['child'].add(childToAdd);
+            log("Am i rescued");
           }
           log("im here 5");
           return node[key]['child']
@@ -439,7 +726,8 @@ class CustomEditPortal extends ChangeNotifier {
               width: double.infinity,
               decoration:
                   BoxDecoration(border: Border.all(color: Colors.black)),
-              child: SingleChildScrollView(  // TODO : Hide the scroll bar 
+              child: SingleChildScrollView(
+                // TODO : Hide the scroll bar
                 scrollDirection: Axis.vertical,
                 physics: const NeverScrollableScrollPhysics(),
                 clipBehavior: Clip.hardEdge,
@@ -456,18 +744,18 @@ class CustomEditPortal extends ChangeNotifier {
           break;
 //TODO: divider is not visible when it is the direct child of any row we add
 
-          case "Divider":
+        case "Divider":
           currentWidget = InkWell(
               onTap: () {
                 log("divideddddddddddd");
               },
-              child:const  Divider(
+              child: const Divider(
                 color: Colors.grey,
                 thickness: 1,
               )); // Example: Set a default text, customize as needed
           break;
 //TODO: vertical divider is not visible when it is the direct child of default column
-           case "VerticalDivider":
+        case "VerticalDivider":
           currentWidget = InkWell(
               onTap: () {
                 log("verically divideddddddddddd");
@@ -478,21 +766,19 @@ class CustomEditPortal extends ChangeNotifier {
               )); // Example: Set a default text, customize as needed
           break;
 
-          case "Icon":
+        case "Icon":
           currentWidget = InkWell(
               onTap: () {
                 log("Hey icon");
               },
-              child: const Icon(
-
-                Icons.forest_outlined
-                            )); // Example: Set a default text, customize as needed
+              child: const Icon(Icons
+                  .forest_outlined)); // Example: Set a default text, customize as needed
           break;
 //TODO: what to do with widgets jo wrap k bahaar aa hrhe
 //TODO: row inside wrap case
 // Vertical divider inside wrap case
-          case "Wrap":
-              List<Widget> childWidgets = [];
+        case "Wrap":
+          List<Widget> childWidgets = [];
           if (node.containsKey('child') && node['child'] is List) {
             node['child'].forEach((childNode) {
               for (var entry in childNode.entries) {
@@ -511,21 +797,208 @@ class CustomEditPortal extends ChangeNotifier {
               _selectedWidgetKey = currentKey;
               notifyListeners();
             },
-            child:Container(
-              height:node['properties']['height'],
+            child: Container(
+              height: node['properties']['height'],
               width: double.infinity,
               decoration:
                   BoxDecoration(border: Border.all(color: Colors.black)),
               child: Wrap(
-                    
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: childWidgets,
-                  ),
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: childWidgets,
+              ),
             ),
           );
           break;
+//TODO: spacer has problem(problem with row , column, wrap so completely)
+        case "Spacer":
+          currentWidget = InkWell(
+              onTap: () {
+                log("I need some space");
+              },
+              child:
+                  const Spacer()); // Example: Set a default text, customize as needed
+          break;
+        case "Image":
+          currentWidget = InkWell(
+              onTap: () {
+                log("have a look at me");
+              },
+              child: Image.asset(
+                  "assets/images/defaultTemplate/GalleryImage.png"));
+          break;
+
+        case "CircleImage":
+          currentWidget = InkWell(
+              onTap: () {
+                log("have a look at me");
+              },
+              child: const CircleAvatar(
+                radius: 60.0,
+                backgroundImage: AssetImage(
+                    "assets/images/defaultTemplate/GalleryImage.png"), // Assuming the path is a constant
+              ));
+
+          break;
+        case "SvgPicture":
+          currentWidget = InkWell(
+              onTap: () {
+                log("have a look at me");
+              },
+              child: SvgPicture.asset(
+                  "assets/images/defaultTemplate/clickme.svg"));
+
+          break;
+          //TODO: overflow in case of timeline more than round in container, 
+          //TODO: try timeline in others
+        case 'Timeline':
+         List<Widget> childWidgets = [];
+          if (node.containsKey('child') && node['child'] is List) {
+            node['child'].forEach((childNode) {
+              for (var entry in childNode.entries) {
+                childWidgets.add(buildWidget(entry.value));
+              }
+            });
+          }
+          List<Widget> timelineChildren = [];
+          if (node.containsKey('child') && node['child'] is List) {
+            var children = node['child'];
+            
+            int childCount = children.length;
+            log("childCount ${childCount}");
+            for (int i = 0; i < childCount ; i++) {
+                            log("index $i");
+
+              log("length ${children.length}");
+              //  log("childrenn at 832: ${children.length>0? children : ""}");
+              //    log("childrenn[i] at 832: ${children.length>0? children[i] : ""}");
+              // log("childrennnnnnnnnnn: ${children.length>0? children[i].values: ""}");
+              // log("childrennnnnnnnnnn at 837: ${children.length>0? children[i].values.first: ""}");
+
+              timelineChildren.add(TimelineTile(
+                isFirst: i == 0,
+                isLast: i == childCount-1,
+                beforeLineStyle: const LineStyle(
+                  color: Colors.grey,
+                  thickness: 2,
+                ),
+                indicatorStyle: const IndicatorStyle(
+                  width: 30,
+                  color: Colors.blue,
+                  padding: EdgeInsets.all(8),
+                ),
+                endChild:  buildWidget(children[i].values.first)
+                    // Recursively build children widgets
+              ));
+            }
+          }
+          currentWidget = InkWell(
+              onTap: () {
+                int? index = node['id'];
+
+                final currentKey = customWidgetsGlobalKeysMap[index];
+                log('currentkey in provider: $currentKey');
+                log("timeline");
+                _selectedWidgetKey = currentKey;
+                notifyListeners();
+              },
+              child: Column(children: timelineChildren));
+          break;
+//TODO: flip conflict with container inkwell
+        case 'FlippableCard':
+          var frontChild, backChild;
+          if (node.containsKey('child') && node['child'] is List) {
+            // Since 'child' is a list with two elements for front and back
+            var frontData = node['child'][0]
+                .values
+                .first; // Access the first element's value
+            var backData = node['child'][1]
+                .values
+                .first; // Access the second element's value
+
+            frontChild = buildWidget(frontData);
+            backChild = buildWidget(backData);
+          }
+          currentWidget = InkWell(
+            onTap: () {
+              log("hi");
+            },
+            child: FlipCard(
+                fill: Fill.fillBack,
+                direction: FlipDirection.HORIZONTAL,
+                speed: 400,
+                front: frontChild,
+                back: backChild
+                // front: Container(
+                //   width: 100,
+                //   height: 100,
+                //   decoration: BoxDecoration(
+                //     color: Colors.purple.shade300,
+                //     borderRadius:const  BorderRadius.only(
+                //       bottomLeft: Radius.circular(12),
+                //       bottomRight: Radius.circular(12),
+                //       topLeft: Radius.circular(12),
+                //       topRight: Radius.circular(12),
+                //     ),
+                //   ),
+                //   child: const Align(
+                //     alignment: AlignmentDirectional(0, 0),
+                //     child: Text(
+                //       'Front',
+                //     ),
+                //   ),
+                // ),
+                // back: Container(
+                //   width: 100,
+                //   height: 100,
+                //   decoration: BoxDecoration(
+                //     color: Colors.purple.shade300,
+                //     borderRadius: BorderRadius.only(
+                //       bottomLeft: Radius.circular(12),
+                //       bottomRight: Radius.circular(12),
+                //       topLeft: Radius.circular(12),
+                //       topRight: Radius.circular(12),
+                //     ),
+                //   ),
+                //   child: const Align(
+                //     alignment: AlignmentDirectional(0, 0),
+                //     child: Text(
+                //       'Back',
+                //     ),
+                //   ),
+                // ),
+                ),
+          ); // Example: Set a default text, customize as needed
+          break;
+
+        case 'VideoPlayer':
+          currentWidget = InkWell(
+              onTap: () {
+                log("hi");
+              },
+              child: Text(
+                  "VideoPlayer")); // Example: Set a default text, customize as needed
+          break;
+
+        case 'PDFViewer':
+          currentWidget = InkWell(
+              onTap: () {
+                log("hi");
+              },
+              child: Text(
+                  "PDFViewer")); // Example: Set a default text, customize as needed
+          break;
+
+        case 'Tabbar':
+          currentWidget = InkWell(
+              onTap: () {
+                log("hi");
+              },
+              child: Text(
+                  "Tabbar")); // Example: Set a default text, customize as needed
+          break;
+
         default:
-          currentWidget = SizedBox(); // Fallback for unrecognized types
+          currentWidget = const SizedBox(); // Fallback for unrecognized types
       }
 
       return currentWidget;

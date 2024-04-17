@@ -54,6 +54,11 @@ dependencies:
   google_sign_in: ^6.1.6
   toastification: ^1.2.1
   dropdown_below: ^1.0.3
+  syncfusion_flutter_datepicker: ^22.2.12
+  flip_card: ^0.7.0
+  appinio_video_player: ^1.3.0
+  intl: ^0.18.1
+  
 
 dev_dependencies:
   flutter_test:
