@@ -15,6 +15,7 @@ import 'package:major_project__widget_testing/state/hostNavigationProvider.dart'
 import 'package:major_project__widget_testing/state/loginProvider.dart';
 import 'package:major_project__widget_testing/state/mainNavigationProvider.dart';
 import 'package:major_project__widget_testing/state/profile-provider/profile_provider.dart';
+import 'package:major_project__widget_testing/state/profile-provider/profile_registration_provider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/state/templateSelectionprovider.dart';
 import 'package:provider/provider.dart';
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
          ChangeNotifierProvider(create: (context) => HackathonContainerPropertiesProvider()),
          ChangeNotifierProvider(create: (context) => CustomEditPortal()),
          ChangeNotifierProvider(create: (context) => ProfileProvider()),
+         ChangeNotifierProvider(create: (context) => ProfileRegProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
