@@ -13,18 +13,20 @@ class ScreenChange extends StatefulWidget {
 }
 
 class _ScreenChangeState extends State<ScreenChange> {
-  late List<Widget> options_widget;
+  late List<Widget> options_widget; // List to hold different screen options
 
   @override
   void initState() {
-    // TODO: implement initState
+    // Initializing the list of screen options
     super.initState();
     options_widget = <Widget>[SignUpDetails(), OTPFile(), RegisterUser()];
   }
 
   @override
   Widget build(BuildContext context) {
+    // Accessing the current state of LoginProvider using Provider
     final loginProvider = Provider.of<LoginProvider>(context);
+    // Returning the widget based on the currentIndex from LoginProvider
     return options_widget.elementAt(loginProvider.currentIndex);
   }
 }

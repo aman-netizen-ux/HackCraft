@@ -17,15 +17,13 @@ class _RegistrationFormState extends State<RegistrationForm> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: ResponsiveLayout(
-            mobileBody: RegistrationFormDesktopBody(
-                hackathonId: widget.hackathonId), //TODO: Add mobile body
-            desktopBody:
-                RegistrationFormDesktopBody(hackathonId: widget.hackathonId),
-            tabletBody: RegistrationFormDesktopBody(
-                hackathonId: widget.hackathonId), //TODO: Add tablet body
-          ),
+        body: ResponsiveLayout(
+          mobileBody: RegistrationFormDesktopBody(
+              hackathonId: widget.hackathonId), //TODO: Add mobile body
+          desktopBody:
+              RegistrationFormDesktopBody(hackathonId: widget.hackathonId),
+          tabletBody: RegistrationFormDesktopBody(
+              hackathonId: widget.hackathonId), //TODO: Add tablet body
         ),
       ),
     );

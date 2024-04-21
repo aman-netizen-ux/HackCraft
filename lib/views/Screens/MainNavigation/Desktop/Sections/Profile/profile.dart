@@ -95,12 +95,15 @@ class _ProfileState extends State<Profile> {
                       //await GoogleSignIn().signOut();
                       await FirebaseAuth.instance.signOut();
                       
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LoginPage(),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => LoginPage(),
+                      //   ),
+                      // );
+                        Navigator.pushNamedAndRemoveUntil(context,
+                                          '/', (route) => false);
+                      //  Navigator.pushNamed(context, '/');
                       // FirebaseAuth.instance
                       //     .authStateChanges()
                       //     .listen((User? user) {

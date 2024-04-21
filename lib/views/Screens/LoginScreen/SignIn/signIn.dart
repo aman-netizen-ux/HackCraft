@@ -2,9 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
+import 'package:major_project__widget_testing/state/loginProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/snackBar.dart';
 import 'package:major_project__widget_testing/views/Screens/LoginScreen/SignIn/githubSignIn.dart';
+import 'package:major_project__widget_testing/views/Screens/LoginScreen/desktop_login.dart';
+import 'package:major_project__widget_testing/views/Screens/LoginScreen/registerCheck.dart';
+import 'package:major_project__widget_testing/views/Screens/LoginScreen/screenChange.dart';
+import 'package:provider/provider.dart';
 import 'googleSignIn.dart';
 
 class SignIn extends StatefulWidget {
@@ -21,7 +26,7 @@ class _SignInState extends State<SignIn> {
   final TextEditingController _passwordText = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-
+  // Function to handle sign-in using email and password
   static Future<User?> loginUsingEmailPassword(
       {required String email,
       required String password,
@@ -33,6 +38,7 @@ class _SignInState extends State<SignIn> {
           email: email, password: password);
       user = userCredential.user;
     } on FirebaseAuthException catch (e) {
+      // Handling errors during sign-in
       if (e.code == " user-not found") {
         showSnackBar("No user found on that email", red2,
             const Icon(Icons.report_gmailerrorred_outlined), context);
@@ -42,9 +48,9 @@ class _SignInState extends State<SignIn> {
     return user;
   }
 
- 
   @override
   Widget build(BuildContext context) {
+    final loginProvider = Provider.of<LoginProvider>(context, listen: false);
     return Column(
       children: [
         Padding(
@@ -64,6 +70,7 @@ class _SignInState extends State<SignIn> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    // Title for the sign-in card
                     Padding(
                       padding: EdgeInsets.only(
                           top: heightScaler(context, 18),
@@ -84,8 +91,28 @@ class _SignInState extends State<SignIn> {
                           width: widthScaler(context, 130),
                           child: ElevatedButton(
                             onPressed: () async {
-                              UserCredential user = await handleGoogleSignIn();
-                              if (user.additionalUserInfo!.isNewUser == true) {
+                              // Handling Google sign-in
+                              UserCredential userCredential =
+                                  await handleGoogleSignIn();
+                              User? user = userCredential.user;
+                              if (user != null) {
+                                String firebaseUUID = user.uid;
+                                String _email = user.email!;
+                                loginProvider.setUuid(firebaseUUID);
+                                final status = await registerCheck(_email);
+                                if (status) {
+                                  // ignore: use_build_context_synchronously
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/mainNavigation',
+                                  );
+                                } else {
+                                 
+                                  loginProvider.setCurrentIndex(2);
+                                  tabController.animateTo(1);
+                                }
+                              } else {
+                                // Handle sign-in failure
                                 debugPrint(
                                   'No user found for this Gmail.',
                                 );
@@ -97,15 +124,10 @@ class _SignInState extends State<SignIn> {
                                         Icons.report_gmailerrorred_outlined),
                                     context);
                                 FirebaseAuth.instance.signOut();
-                                user.user!.delete();
-                              } else {
-                                // ignore: use_build_context_synchronously
-                                Navigator.pushNamed(
-                                  context,
-                                  '/mainNavigation',
-                                );
+                                user!.delete();
                               }
                             },
+
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   Colors.white),
@@ -121,16 +143,18 @@ class _SignInState extends State<SignIn> {
                                 ),
                               ),
                             ),
+                            // Sign-in buttons for Google and GitHub
                             child: Row(
                               children: [
+                                // Google sign-in button
                                 Image.asset(
                                   'assets/images/login/google 1.png',
                                   height: heightScaler(context, 17),
                                   width: widthScaler(context, 17),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: widthScaler(context, 10)),
                                   child: Text(
                                     "Google",
                                     style: GoogleFonts.firaSans(
@@ -148,12 +172,30 @@ class _SignInState extends State<SignIn> {
                           height: heightScaler(context, 35),
                           width: widthScaler(context, 130),
                           child: ElevatedButton(
+                            // Handling GitHub sign-in
                             onPressed: () async {
-                              UserCredential user = await signInWithGitHub();
-                              if (user.additionalUserInfo!.isNewUser == true) {
-                                debugPrint(
-                                  'No user found for this Gmail.',
-                                );
+                              UserCredential userCredential =
+                                  await signInWithGitHub();
+                              User? user = userCredential.user;
+                              if (user != null) {
+                                String firebaseUUID = user.uid;
+                                String _email = user.email!;
+                                loginProvider.setUuid(firebaseUUID);
+                                final status = await registerCheck(_email);
+                                if (status) {
+                                  // ignore: use_build_context_synchronously
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/mainNavigation',
+                                  );
+                                } else {
+                                  // moves on to register screen
+                                
+                                  loginProvider.setCurrentIndex(2);
+                                  tabController.animateTo(1);
+                                }
+                              } else {
+                                // Handle sign-in failure
                                 // ignore: use_build_context_synchronously
                                 showSnackBar(
                                     "No user found for this Gmail.",
@@ -162,13 +204,7 @@ class _SignInState extends State<SignIn> {
                                         Icons.report_gmailerrorred_outlined),
                                     context);
                                 FirebaseAuth.instance.signOut();
-                                user.user!.delete();
-                              } else {
-                                // ignore: use_build_context_synchronously
-                                Navigator.pushNamed(
-                                  context,
-                                  '/mainNavigation',
-                                );
+                                user!.delete();
                               }
                             },
                             style: ButtonStyle(
@@ -194,8 +230,8 @@ class _SignInState extends State<SignIn> {
                                   width: widthScaler(context, 17),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: widthScaler(context, 10)),
                                   child: Text(
                                     "Git Hub",
                                     style: GoogleFonts.firaSans(
@@ -243,6 +279,7 @@ class _SignInState extends State<SignIn> {
                         ],
                       ),
                     ),
+                    // Email and password input fields
                     Form(
                         key: _formKey,
                         child: SizedBox(
@@ -363,6 +400,7 @@ class _SignInState extends State<SignIn> {
             ),
           ),
         ),
+        // Sign-in button
         Padding(
           padding: EdgeInsets.symmetric(vertical: heightScaler(context, 15)),
           child: SizedBox(
@@ -370,6 +408,7 @@ class _SignInState extends State<SignIn> {
               height: widthScaler(context, 40),
               child: ElevatedButton(
                   onPressed: () async {
+                    // Handling sign-in with email and password
                     String email = _emailText.text;
                     String password = _passwordText.text;
                     if (email.isEmpty) {
@@ -401,11 +440,20 @@ class _SignInState extends State<SignIn> {
                         context: context,
                       );
                       if (user != null) {
-                        // ignore: use_build_context_synchronously
-                        Navigator.pushNamed(
-                          context,
-                          '/mainNavigation',
-                        );
+                        String firebaseUUID = user.uid;
+                        loginProvider.setUuid(firebaseUUID);
+                        final status = await registerCheck(email);
+                        if (status) {
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushNamed(
+                            context,
+                            '/mainNavigation',
+                          );
+                        } else {
+                          //moves to register screen
+                          loginProvider.setCurrentIndex(2);
+                          tabController.animateTo(1);
+                        }
                       }
                     }
                   },

@@ -54,6 +54,8 @@ dependencies:
   google_sign_in: ^6.1.6
   toastification: ^1.2.1
   dropdown_below: ^1.0.3
+  quiver: ^3.2.1
+  drag_and_drop_lists: ^0.3.3
 
 dev_dependencies:
   flutter_test:
