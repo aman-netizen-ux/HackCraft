@@ -6,10 +6,10 @@ import 'package:major_project__widget_testing/state/loginProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/snackBar.dart';
 import 'package:major_project__widget_testing/views/Screens/LoginScreen/Registation/sendUserProfile.dart';
-import 'package:major_project__widget_testing/views/Screens/LoginScreen/SignIn/check.dart';
 import 'package:major_project__widget_testing/views/Screens/LoginScreen/SignIn/githubSignIn.dart';
 import 'package:major_project__widget_testing/views/Screens/LoginScreen/SignIn/googleSignIn.dart';
 import 'package:major_project__widget_testing/views/Screens/LoginScreen/Verification/sendOtpFunction.dart';
+import 'package:major_project__widget_testing/views/Screens/LoginScreen/registerCheck.dart';
 import 'package:provider/provider.dart';
 
 class SignUpDetails extends StatefulWidget {
@@ -41,6 +41,7 @@ class _SignUpDetailsState extends State<SignUpDetails> {
             width: widthScaler(context, 502),
             height: heightScaler(context, 292),
             child: Card(
+              surfaceTintColor: Colors.transparent,
               elevation: 20,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -85,7 +86,7 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                     context);
                                 FirebaseAuth.instance.signOut();
                               } else {
-  //                             
+                                //
                                 String? displayName = user.user!.displayName;
                                 loginProvider.setEmail(user.user!.email!);
                                 if (displayName != null &&
@@ -143,7 +144,7 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: widthScaler(context, 10)),
+                                      horizontal: widthScaler(context, 8)),
                                   child: Text(
                                     "Google",
                                     style: GoogleFonts.firaSans(
@@ -246,7 +247,7 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: widthScaler(context, 7)),
                                   child: Text(
-                                    "Git Hub",
+                                    "GitHub",
                                     style: GoogleFonts.firaSans(
                                         fontSize: heightScaler(context, 16),
                                         color: darkCharcoal,
@@ -540,23 +541,21 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                     showSnackBar('Password is weak', red2,
                         const Icon(Icons.warning, color: white), context);
                   } else {
-                    
-                    final bool emailRegistered = await isEmailRegistered(email);
+                    final bool emailRegistered = await registerCheck(email);
                     if (emailRegistered) {
                       print('Email is already registered');
                       // Show error message or handle accordingly
                     } else {
                       final otpId = await triggerOTP(email);
-                    debugPrint('Received OTPid: $otpId');
-                    final loginProvider =
-                        Provider.of<LoginProvider>(context, listen: false);
-                    loginProvider.setOtpId(otpId);
-                    loginProvider.setEmail(email);
-                    loginProvider.setPassword(password);
-                    loginProvider.getFirstName(firstName);
-                    loginProvider.getLastName(lastName);
-                    loginProvider.setCurrentIndex(1);
-
+                      debugPrint('Received OTPid: $otpId');
+                      final loginProvider =
+                          Provider.of<LoginProvider>(context, listen: false);
+                      loginProvider.setOtpId(otpId);
+                      loginProvider.setEmail(email);
+                      loginProvider.setPassword(password);
+                      loginProvider.getFirstName(firstName);
+                      loginProvider.getLastName(lastName);
+                      loginProvider.setCurrentIndex(1);
                     }
                   }
                 },
@@ -576,6 +575,7 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                 child: Text(
                   "Next ",
                   style: GoogleFonts.firaSans(
+                      color: white,
                       fontSize: heightScaler(context, 18),
                       fontWeight: FontWeight.w500),
                 ))),

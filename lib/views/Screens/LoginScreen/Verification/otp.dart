@@ -94,6 +94,7 @@ class _OTPFileState extends State<OTPFile> {
             width: widthScaler(context, 502),
             height: heightScaler(context, 292),
             child: Card(
+              surfaceTintColor: Colors.transparent,
               elevation: 20,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -268,9 +269,6 @@ class _OTPFileState extends State<OTPFile> {
                     loginProvider.setOtpId(0);
                     loginProvider.setCurrentIndex(2);
                   } else {
-                    // ignore: use_build_context_synchronously
-                    // showSnackBar('Invalid  OTP', red2,
-                    //     const Icon(Icons.warning, color: white), context);
                     setState(() {
                       otpCheck = true;
                     });
@@ -292,7 +290,11 @@ class _OTPFileState extends State<OTPFile> {
                 ),
                 child: const Text(
                   "Next ",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    color: white,
+                  ),
                 )))
       ],
     );

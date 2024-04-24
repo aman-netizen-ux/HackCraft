@@ -35,6 +35,7 @@ class _RegisterUserState extends State<RegisterUser> {
             width: widthScaler(context, 502),
             height: heightScaler(context, 292),
             child: Card(
+              surfaceTintColor: Colors.transparent,
               elevation: 20,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -333,7 +334,7 @@ class _RegisterUserState extends State<RegisterUser> {
             ),
             child: const Text(
               "Next ",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              style: TextStyle( color: white, fontSize: 20, fontWeight: FontWeight.w500),
             ),
           ),
         ),

@@ -153,37 +153,39 @@ class _DefaultRoundsDescriptionState extends State<DefaultRoundsDescription> {
                 color: hackathonContainerPropertiesProvider.stringToColor(
                     roundContainerGlobalKeysMap[rulesProvider
                         .editSelectedIndex]!['roundDescriptionContainer']!,
-                    1, ContainerColorProperties.containerColor),
+                    1,
+                    ContainerColorProperties.containerColor),
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(hackathonContainerPropertiesProvider
-                              .containerPropertiesMap[roundContainerGlobalKeysMap[
-                  rulesProvider.editSelectedIndex]!['roundDescriptionContainer']]!.borderRadius.toDouble() ),
+                    borderRadius: BorderRadius.circular(
+                        hackathonContainerPropertiesProvider.containerPropertiesMap[roundContainerGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescriptionContainer']]!.borderRadius
+                            .toDouble()),
                     side: BorderSide(
-                        width: hackathonContainerPropertiesProvider
-                                .containerPropertiesMap[
-                                    roundContainerGlobalKeysMap[
-                                            rulesProvider.editSelectedIndex]![
-                                        'roundDescriptionContainer']]!
-                                .borderWidth
-                                .toDouble() /
-                            100 *
-                            10,
+                        width:
+                            hackathonContainerPropertiesProvider.containerPropertiesMap[roundContainerGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescriptionContainer']]!.borderWidth
+                                    .toDouble() /
+                                100 *
+                                10,
                         color: hackathonContainerPropertiesProvider.stringToColor(
-                    roundContainerGlobalKeysMap[rulesProvider
-                        .editSelectedIndex]!['roundDescriptionContainer']!,
-                    1, ContainerColorProperties.containerBorderColor),
+                            roundContainerGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescriptionContainer']!,
+                            1,
+                            ContainerColorProperties.containerBorderColor),
                         strokeAlign: BorderSide.strokeAlignInside)),
                 shadows: [
                   BoxShadow(
                       blurRadius: hackathonContainerPropertiesProvider
-                              .containerPropertiesMap[roundContainerGlobalKeysMap[
-                  rulesProvider.editSelectedIndex]!['roundDescriptionContainer']]!.blurRadius.toDouble(),
+                          .containerPropertiesMap[roundContainerGlobalKeysMap[
+                                  rulesProvider.editSelectedIndex]![
+                              'roundDescriptionContainer']]!
+                          .blurRadius
+                          .toDouble(),
                       offset: const Offset(0, -4),
                       spreadRadius: 0,
                       color: hackathonContainerPropertiesProvider.stringToColor(
-                    roundContainerGlobalKeysMap[rulesProvider
-                        .editSelectedIndex]!['roundDescriptionContainer']!,
-                    1, ContainerColorProperties.boxShadowColor))
+                          roundContainerGlobalKeysMap[
+                                  rulesProvider.editSelectedIndex]![
+                              'roundDescriptionContainer']!,
+                          1,
+                          ContainerColorProperties.boxShadowColor))
                 ]),
           ),
         ),
@@ -220,25 +222,25 @@ class _DefaultRoundsDescriptionState extends State<DefaultRoundsDescription> {
                   color: hackathonContainerPropertiesProvider.stringToColor(
                       roundContainerGlobalKeysMap[rulesProvider
                           .editSelectedIndex]!['roundDescriptionContainer']!,
-                      0,ContainerColorProperties.containerColor),
+                      0,
+                      ContainerColorProperties.containerColor),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(hackathonContainerPropertiesProvider
-                              .containerPropertiesMap[roundContainerGlobalKeysMap[
-                  rulesProvider.editSelectedIndex]!['roundDescriptionContainer']]!.borderRadius.toDouble()),
+                      borderRadius: BorderRadius.circular(
+                          hackathonContainerPropertiesProvider.containerPropertiesMap[roundContainerGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescriptionContainer']]!.borderRadius
+                              .toDouble()),
                       side: BorderSide(
                           width: hackathonContainerPropertiesProvider
                                   .containerPropertiesMap[
-                                      roundContainerGlobalKeysMap[
-                                              rulesProvider.editSelectedIndex]![
+                                      roundContainerGlobalKeysMap[rulesProvider.editSelectedIndex]![
                                           'roundDescriptionContainer']]!
                                   .borderWidth
                                   .toDouble() /
                               100 *
                               10,
                           color: hackathonContainerPropertiesProvider.stringToColor(
-                      roundContainerGlobalKeysMap[rulesProvider
-                          .editSelectedIndex]!['roundDescriptionContainer']!,
-                      0,ContainerColorProperties.containerBorderColor),
+                              roundContainerGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescriptionContainer']!,
+                              0,
+                              ContainerColorProperties.containerBorderColor),
                           strokeAlign: BorderSide.strokeAlignInside)),
                 ),
                 child: Column(
@@ -296,22 +298,22 @@ class _DefaultRoundsDescriptionState extends State<DefaultRoundsDescription> {
                   color: hackathonContainerPropertiesProvider.stringToColor(
                       roundContainerGlobalKeysMap[rulesProvider
                           .editSelectedIndex]!['roundDescriptionContainer']!,
-                      2, ContainerColorProperties.containerColor),
+                      2,
+                      ContainerColorProperties.containerColor),
                   shape: CircleBorder(
                       side: BorderSide(
                           width: hackathonContainerPropertiesProvider
                                   .containerPropertiesMap[
-                                      roundContainerGlobalKeysMap[
-                                              rulesProvider.editSelectedIndex]![
+                                      roundContainerGlobalKeysMap[rulesProvider.editSelectedIndex]![
                                           'roundDescriptionContainer']]!
                                   .borderWidth
                                   .toDouble() /
                               100 *
                               10,
                           color: hackathonContainerPropertiesProvider.stringToColor(
-                      roundContainerGlobalKeysMap[rulesProvider
-                          .editSelectedIndex]!['roundDescriptionContainer']!,
-                      2, ContainerColorProperties.containerBorderColor),
+                              roundContainerGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescriptionContainer']!,
+                              2,
+                              ContainerColorProperties.containerBorderColor),
                           strokeAlign: BorderSide.strokeAlignInside))),
             ))
       ]),

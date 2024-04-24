@@ -343,6 +343,15 @@ class HackathonDetailsProvider with ChangeNotifier {
   }
 
   // Container
+
+  List<ContainerPropertiesArray> get containersProperties => _hackathonDetails.containers;
+
+  set containersProperties(List<ContainerPropertiesArray> value) {
+    _hackathonDetails.containers = value;
+    notifyListeners();
+  }
+
+
   void addContainerPropertiesInFields() {
     _hackathonDetails.containers.addAll(List.generate(
       2,

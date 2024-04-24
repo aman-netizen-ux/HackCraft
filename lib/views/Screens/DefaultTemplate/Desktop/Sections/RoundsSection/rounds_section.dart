@@ -77,6 +77,7 @@ class RoundsAndRules extends StatelessWidget {
                                defaultTemplateModel!.rounds.length - 1 == index,
                             roundTitle:  defaultTemplateModel!.rounds[index].name,
                              roundTitleTextProperties: defaultTemplateModel!.fields[4*index+13].textProperties,//4*index+13
+                             roundTitleContainerProperties: defaultTemplateModel!.containers[2*index + 8].containerProperties,
                             roundDescription: defaultTemplateModel!.rounds[index].description,
                             endDate:defaultTemplateModel!.rounds[index].endTimeline==''
                           ? ''
@@ -91,6 +92,7 @@ class RoundsAndRules extends StatelessWidget {
                               rulesProvider.setDescriptionWidget(roundDetails(
                                   defaultTemplateModel!.rounds[index].description,
                                    defaultTemplateModel!.fields[4*index+14].textProperties,//4*index+14
+                                   defaultTemplateModel!.containers[2*index + 9].containerProperties,
                                   context));
                             },
                           );
@@ -108,7 +110,7 @@ class RoundsAndRules extends StatelessWidget {
 
 
 //This widget was created in order to show the description of the round after clicking on any round card.
-  Widget roundDetails(String roundDetails, TextFieldProperties decriptionProperties, BuildContext context) {
-    return RoundsDescription(description : roundDetails, decriptionProperties: decriptionProperties,);
+  Widget roundDetails(String roundDetails, TextFieldProperties decriptionProperties, ContainerProperties descriptionContainerProperties, BuildContext context) {
+    return RoundsDescription(description : roundDetails, decriptionProperties: decriptionProperties, descriptionContainerProperties: descriptionContainerProperties,);
   }
 }

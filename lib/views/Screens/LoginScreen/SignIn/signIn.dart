@@ -59,6 +59,7 @@ class _SignInState extends State<SignIn> {
             width: widthScaler(context, 502),
             height: heightScaler(context, 292),
             child: Card(
+              surfaceTintColor: Colors.transparent,
               elevation: 20,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -154,7 +155,7 @@ class _SignInState extends State<SignIn> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: widthScaler(context, 10)),
+                                      horizontal: widthScaler(context, 8)),
                                   child: Text(
                                     "Google",
                                     style: GoogleFonts.firaSans(
@@ -231,9 +232,9 @@ class _SignInState extends State<SignIn> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: widthScaler(context, 10)),
+                                      horizontal: widthScaler(context, 8)),
                                   child: Text(
-                                    "Git Hub",
+                                    "GitHub",
                                     style: GoogleFonts.firaSans(
                                         fontSize: heightScaler(context, 16),
                                         color: darkCharcoal,
@@ -473,6 +474,7 @@ class _SignInState extends State<SignIn> {
                   child: Text(
                     "Login",
                     style: TextStyle(
+                      color: Colors.white,
                         fontSize: heightScaler(context, 18),
                         fontWeight: FontWeight.w500),
                   ))),
