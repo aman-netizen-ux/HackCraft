@@ -62,3 +62,8 @@ const concreteGrey = Color(0xff828282);
 const navbarGrey = Color(0xff4e4e4e);
 const lightGrey = Color(0xfff5f5f5);
 const skyBlue = Color(0xff518afa);
+const indicatorblue = Color(0xff4a6fcf);
+const blueishGray = Color(0xFFD6DDF1);
+const midnigthBlue = Color(0xff2F394F);
+const goldenYellow = Color(0xffE5BB27);
+

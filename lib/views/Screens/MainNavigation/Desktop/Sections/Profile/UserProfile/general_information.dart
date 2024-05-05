@@ -29,9 +29,7 @@ class _GeneralInfoState extends State<GeneralInfo> {
           buildContainer('City', widget.user.city, context, false),
           buildContainer(
               'Date Of Birth',
-              widget.user.dateOfBirth == null
-                  ? "Add your date of birth"
-                  : widget.user.dateOfBirth,
+              widget.user.dateOfBirth ?? "Add your date of birth",
               context,
               widget.user.dateOfBirth == null),
           Container(

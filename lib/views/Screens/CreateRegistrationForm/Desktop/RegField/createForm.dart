@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/RegFieldsCollection/long_ans.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/sampleTab.dart';
 
 late TabController formtabController;
@@ -279,7 +280,7 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                                     setState(() {});
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color(0xFFD9D9D9),
+                                    backgroundColor: lightSilver,
                                   ),
                                   child: Text(
                                     "Previous",
@@ -308,7 +309,7 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                                     setState(() {});
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color(0xFFD9D9D9),
+                                    backgroundColor: lightSilver,
                                   ),
                                   child: Text(
                                     "Next",
@@ -328,7 +329,7 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                           child: ElevatedButton(
                             onPressed: () {},
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFFD9D9D9),
+                              backgroundColor: lightSilver,
                             ),
                             child: Text(
                               "Submit",

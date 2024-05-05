@@ -23,6 +23,10 @@ class _AddFieldSectionState extends State<AddFieldSection>
     {'title': 'Linear Scale', 'icon': Icons.linear_scale_outlined},
     {'title': 'Slider', 'icon': Icons.slideshow},
     {'title': 'Range Slider', 'icon': Icons.tune},
+     {'title': 'Stepper', 'icon': Icons.exposure_plus_1}, 
+  {'title': 'Toggle', 'icon': Icons.toggle_on}, 
+  {'title': 'Tags', 'icon': Icons.tag}, 
+  {'title': 'Date', 'icon': Icons.date_range},
   ];
 
   @override
@@ -33,7 +37,7 @@ class _AddFieldSectionState extends State<AddFieldSection>
     return SingleChildScrollView(
       child: Container(
         width: scaleWidth(context, 204),
-        height: scaleHeight(context, 539),
+        height: scaleHeight(context, 692),
         color:  lightGrey,
         child: Column(children: [
           ...List.generate(count, (index) {
@@ -42,7 +46,7 @@ class _AddFieldSectionState extends State<AddFieldSection>
                 FieldsRowButon(
                     fields: fields, index1: 2 * index, index2: 2 * index + 1),
                 fields.length % 2 == 0 && index == count - 1
-                    ? SizedBox()
+                    ? const SizedBox()
                     : Container(
                         height: scaleHeight(context, 2),
                         color: Color(0xffcfcfcf),
@@ -55,7 +59,7 @@ class _AddFieldSectionState extends State<AddFieldSection>
               ? SizedBox(
                   height: scaleHeight(context, 97),
                   child: FieldsButton(fields: fields, index: fields.length - 1))
-              : SizedBox()
+              : const SizedBox()
         ]),
       ),
     );
@@ -116,7 +120,7 @@ class FieldsRowButon extends StatelessWidget {
           Expanded(
               flex: 495, child: FieldsButton(fields: fields, index: index1)),
           Expanded(
-            flex: 10, // Changed from 010 to 10
+            flex: 10, 
             child: Container(
               width: 1,
               color: const Color(0xffcfcfcf),

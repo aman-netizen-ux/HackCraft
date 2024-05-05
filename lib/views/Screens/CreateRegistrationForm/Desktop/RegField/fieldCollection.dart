@@ -17,8 +17,7 @@ class FieldsCollection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Color(0xf5f5f5f5), borderRadius: BorderRadius.circular(5)),
-      //  height: scaleHeight(context, 672),
+          color: const Color(0xf5f5f5f5), borderRadius: BorderRadius.circular(5)),
       width: double.infinity,
       child: Padding(
         padding: EdgeInsets.only(
@@ -31,7 +30,7 @@ class FieldsCollection extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(bottom: scaleHeight(context, 14)),
               child: SizedBox(
-                height: scaleHeight(context, 62),
+                height: scaleHeight(context, 68),
                 width: scaleWidth(context, 180),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +43,7 @@ class FieldsCollection extends StatelessWidget {
                           color: darkCharcoal),
                     ),
                     SizedBox(
-                      height: scaleHeight(context, 5),
+                      height: scaleHeight(context, 3),
                     ),
                     Text(
                       "Lorem ipsum dolor sit amet,  consectetur adipiscing elit.",
@@ -67,7 +66,7 @@ class FieldsCollection extends StatelessWidget {
                         vertical: scaleHeight(context, 6),
                         horizontal: scaleWidth(context, 8)),
                     decoration: BoxDecoration(
-                        color: Color(0xffd9d9d9),
+                        color: lightSilver,
                         borderRadius: BorderRadius.circular(5)),
                     height: scaleHeight(context, 33),
                     width: widthScaler(context, 200),
@@ -76,7 +75,7 @@ class FieldsCollection extends StatelessWidget {
                       labelPadding: EdgeInsets.zero,
                       indicator: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: Color(0xfff5f5f5),
+                        color:const  Color(0xfff5f5f5),
                       ),
                       tabs: [
                         Tab(
@@ -107,7 +106,7 @@ class FieldsCollection extends StatelessWidget {
                     height: scaleHeight(context, 480),
                     child: TabBarView(
                       controller: fieldtabController,
-                      children: [
+                      children: const [
                         AddFieldSection(),
                         Templates(),
                       ],
@@ -125,7 +124,7 @@ class FieldsCollection extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFD9D9D9),
+                  backgroundColor: lightSilver,
                 ),
                 child: Text(
                   "New Section",

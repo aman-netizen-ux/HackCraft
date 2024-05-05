@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/state/profile-provider/profile_registration_provider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
@@ -213,7 +214,7 @@ class _RegistrationsState extends State<Registrations> {
             width: scaleWidth(context, 65),
             decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
-                color: Color(0xffd9d9d9)),
+                color: lightSilver),
           ),
           SizedBox(width: scaleWidth(context, 13)),
           Expanded(
@@ -264,12 +265,12 @@ class _RegistrationsState extends State<Registrations> {
                                     top: scaleHeight(context, 5)),
                                 width: scaleWidth(context, 180),
                                 height: scaleHeight(context, 13),
-                                child: const LinearProgressIndicator(     
+                                child: const LinearProgressIndicator(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(50)),
                                   backgroundColor: Colors.transparent,
                                   valueColor: AlwaysStoppedAnimation<Color>(
-                                      Color(0xffd9d9d9)),
+                                      lightSilver),
                                   value: 1,
                                 ),
                               ),

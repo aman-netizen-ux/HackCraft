@@ -168,7 +168,7 @@ class _ProfileState extends State<Profile> {
                           SizedBox(width: scaleWidth(context, 12)),
                           InkWell(
                             onTap: () async {
-                               await GoogleSignIn().disconnect();
+                              await GoogleSignIn().disconnect();
                               await FirebaseAuth.instance.signOut();
 
                               Navigator.push(
@@ -215,7 +215,7 @@ class _ProfileState extends State<Profile> {
           padding: EdgeInsets.all(scaleWidth(context, 4)),
           decoration: profileProvider.selectedIndex == index
               ? const BoxDecoration(
-                  color: Color(0xffD9D9D9),
+                  color: lightSilver,
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 )
               : null,

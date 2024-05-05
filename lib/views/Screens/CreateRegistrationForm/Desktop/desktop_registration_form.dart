@@ -7,15 +7,10 @@ import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/models/Registration/questionModel.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
-import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/addFieldSection.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/regFormField.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/template.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/addQuestion.dart';
-import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/createForm.dart';
-import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/formQuestion.dart';
-import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/multipleChoice.dart';
-import 'package:major_project__widget_testing/views/Screens/MainNavigation/mainNavigation.dart';
-import 'package:provider/provider.dart';
+
 
 class RegistrationFormDesktopBody extends StatefulWidget {
   final String hackathonId;
@@ -210,7 +205,7 @@ class _RegistrationFormDesktopBodyState
                       height: scaleHeight(context, 35),
                       width: scaleWidth(context, 490),
                       decoration: BoxDecoration(
-                          color: Color(0xff626262),
+                          color:const Color(0xff626262),
                           borderRadius: BorderRadius.circular(5)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -226,7 +221,7 @@ class _RegistrationFormDesktopBodyState
                                 width: scaleWidth(context, 150),
                                 decoration: regTab == 0
                                     ? BoxDecoration(
-                                        color: Color(0xff4e4e4e),
+                                        color: navbarGrey,
                                         borderRadius: BorderRadius.circular(5))
                                     : null,
                                 child: Text(
@@ -248,7 +243,7 @@ class _RegistrationFormDesktopBodyState
                                 width: scaleWidth(context, 150),
                                 decoration: regTab == 1
                                     ? BoxDecoration(
-                                        color: Color(0xff4e4e4e),
+                                        color: navbarGrey,
                                         borderRadius: BorderRadius.circular(5))
                                     : null,
                                 child: Text(
@@ -270,7 +265,7 @@ class _RegistrationFormDesktopBodyState
                                 width: scaleWidth(context, 150),
                                 decoration: regTab == 2
                                     ? BoxDecoration(
-                                        color: Color(0xff4e4e4e),
+                                        color: navbarGrey,
                                         borderRadius: BorderRadius.circular(5))
                                     : null,
                                 child: Text(
@@ -290,10 +285,10 @@ class _RegistrationFormDesktopBodyState
                   child: Padding(
                     padding: EdgeInsets.only(top: scaleHeight(context, 25)),
                     child: regTab == 0
-                        ? Templates()
+                        ?const  Templates()
                         : regTab == 1
                             ? RegFormFields(fieldtabController: fieldtabController)
-                            : Templates(),
+                            :const Templates(),
                   ),
                 )
               ],

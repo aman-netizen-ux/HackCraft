@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
+import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 
 class ShortAnsField extends StatefulWidget {
@@ -8,84 +10,128 @@ class ShortAnsField extends StatefulWidget {
       {super.key,
       required this.question,
       required this.create,
-      required this.hint});
+      required this.hint,
+      required this.required});
   final String question;
   final String hint;
   final bool create;
+  final bool required;
   @override
   State<ShortAnsField> createState() => _ShortAnsFieldState();
 }
 
 class _ShortAnsFieldState extends State<ShortAnsField> {
-  late TextEditingController questionController;
-  late TextEditingController hintController;
-  @override
-  void initState() {
-    super.initState();
-    questionController = TextEditingController(text: widget.question);
-    hintController = TextEditingController(text: widget.hint);
-  }
-
-  @override
-  void dispose() {
-    hintController.dispose();
-    questionController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: scaleHeight(context, 70),
-      width: scaleWidth(context, 400),
-      child: Column(
-        children: [
-          Expanded(
-            flex: 40,
-            child: SizedBox(
-              child: TextField(
-                controller: questionController,
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                ),
-                enabled: !widget.create,
-              ),
-            ),
+    return Expanded(
+      child: SizedBox(
+        width: double.infinity,
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: widget.create ? scaleWidth(context, 10) : 0,
           ),
-          Expanded(
-            flex: 60,
-            child: Container(
-              padding: EdgeInsets.only(top: scaleHeight(context, 15)),
-              child: TextField(
-                
-                style: GoogleFonts.firaSans(
-                  fontSize: heightScaler(context, 14),
-                  fontWeight: FontWeight.w500,
-                  color: concreteGrey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: EdgeInsets.only(
+                    top: scaleHeight(context, 20),
+                    bottom: scaleHeight(context, 10)),
+                child: Text(
+                  widget.question,
+                  style: GoogleFonts.getFont(
+                    fontFamily2,
+                    fontSize: scaleHeight(context, 14),
+                    fontWeight: FontWeight.w500,
+                    color: black1,
+                  ),
                 ),
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: widthScaler(context, 10),
-                  ),
-                  hintStyle: GoogleFonts.firaSans(
-                    fontSize: heightScaler(context, 16),
-                    fontWeight: FontWeight.w400,
-                    color: concreteGrey,
-                  ),
-                  hintText: widget.hint,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(2),
-                    borderSide: const BorderSide(
-                      color: black1,
-                      width: 1,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      height: scaleHeight(context, 37),
+                      child: FormBuilderTextField(
+                        name: "short_ans",
+                        style: GoogleFonts.firaSans(
+                          fontSize: scaleHeight(context, 14),
+                          fontWeight: FontWeight.w400,
+                          color: black1,
+                        ),
+                         cursorColor: darkCharcoal,
+                        decoration: InputDecoration(
+                          isDense: true,
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: scaleHeight(context, 20),
+                              vertical: 10),
+                          hintStyle: GoogleFonts.firaSans(
+                            fontSize: scaleHeight(context, 14),
+                            fontWeight: FontWeight.w400,
+                            color: concreteGrey,
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(2),
+                            borderSide: const BorderSide(
+                              color: red,
+                              width: 1,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(2),
+                            borderSide: const BorderSide(
+                              color: black1,
+                              width: 0.5,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(2),
+                            borderSide: const BorderSide(
+                              color: black1,
+                              width: 1,
+                            ),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(2),
+                            borderSide: const BorderSide(
+                              color: black1,
+                              width: 0.5,
+                            ),
+                          ),
+                          hintText: widget.hint,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(2),
+                            borderSide: const BorderSide(
+                              color: black1,
+                              width: 1,
+                            ),
+                          ),
+                        ),
+                        enabled: !widget.create,
+                      ),
                     ),
                   ),
-                ),
-                enabled: widget.create,
+                  SizedBox(
+                    width: scaleWidth(context, 16),
+                  ),
+                  widget.required
+                      ? Text(
+                          "REQUIRED",
+                          style: GoogleFonts.getFont(fontFamily2,
+                              fontSize: scaleHeight(context, 16),
+                              color: midnigthBlue,
+                              fontWeight: FontWeight.w500),
+                        )
+                      : Container(),
+                  SizedBox(
+                    width: widget.create ? scaleWidth(context, 50) : 0,
+                  )
+                ],
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
