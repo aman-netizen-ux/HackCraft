@@ -5,20 +5,22 @@ import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 
 class RangeSliderField extends StatefulWidget {
-  final String question, startLabel, endLabel;
+  final String question , error;
   final bool create, required;
-  final int min;
-  final int max;
+  final double min;
+  final double max;
+  final List<String> labels ;
 
   const RangeSliderField({
     Key? key,
     required this.create,
-    required this.startLabel,
-    required this.endLabel,
+  
     required this.required,
     required this.max,
     required this.min,
     required this.question,
+    required this.error,
+    required this.labels
   }) : super(key: key);
 
   @override
@@ -28,6 +30,12 @@ class RangeSliderField extends StatefulWidget {
 class _RangeSliderFieldState extends State<RangeSliderField> {
   double _startValue = 20;
   double _endValue = 50;
+  void initState() {
+    super.initState();
+    // Initialize _startValue and _endValue within the specified range
+    _startValue = widget.min;
+    _endValue = widget.max;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +74,7 @@ class _RangeSliderFieldState extends State<RangeSliderField> {
                           SliderTheme(
                             data: SliderTheme.of(context).copyWith(
                                 activeTrackColor: goldenYellow,
-                                inactiveTrackColor: Color(0xffAFAFAF),
+                                inactiveTrackColor:const Color(0xffAFAFAF),
                                 thumbColor: indicatorblue,
                                 overlayColor: indicatorblue.withOpacity(0.2),
                                 trackHeight: 3),
@@ -89,7 +97,7 @@ class _RangeSliderFieldState extends State<RangeSliderField> {
                             left: scaleWidth(context, 18),
                             bottom: 0 - 5,
                             child: Text(
-                              widget.startLabel,
+                              "${widget.labels[0]} (${widget.min.toDouble()})",
                               style: GoogleFonts.getFont(
                                 fontFamily2,
                                 fontSize: heightScaler(context, 14),
@@ -102,7 +110,7 @@ class _RangeSliderFieldState extends State<RangeSliderField> {
                             right: scaleWidth(context, 18),
                             bottom: 0 - 5,
                             child: Text(
-                              widget.endLabel,
+                              "${widget.labels[1]} (${ widget.max.toDouble()})",
                               style: GoogleFonts.getFont(
                                 fontFamily2,
                                 fontSize: heightScaler(context, 14),

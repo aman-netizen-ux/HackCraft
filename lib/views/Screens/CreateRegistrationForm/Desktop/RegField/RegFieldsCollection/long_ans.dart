@@ -12,9 +12,10 @@ class LongAnsField extends StatefulWidget {
       required this.create,
       required this.hint,
       required this.required,
+      required this.error,
       required this.limit});
   final String question;
-  final String hint;
+  final String hint , error;
   final bool required;
   final bool create;
   final int limit;

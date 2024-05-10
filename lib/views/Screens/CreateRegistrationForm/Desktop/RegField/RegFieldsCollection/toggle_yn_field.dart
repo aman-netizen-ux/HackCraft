@@ -4,11 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
-// TODO:if possible improve the properties of Toggle  
+
+// TODO:if possible improve the properties of Toggle
 class ToogleYNField extends StatefulWidget {
   final bool binary;
-  final bool create ;
-  final String question;
+  final bool create;
+  final String question , error;
   final bool required;
 
   const ToogleYNField(
@@ -16,6 +17,7 @@ class ToogleYNField extends StatefulWidget {
       this.binary = true,
       required this.create,
       required this.required,
+      required this.error,
       required this.question})
       : super(key: key);
 
@@ -58,7 +60,6 @@ class _ToogleYNFieldState extends State<ToogleYNField> {
                           padding: const EdgeInsets.only(left: 8),
                           child: FormBuilderSwitch(
                               name: 'toggle_switch',
-                              
                               activeTrackColor: indicatorblue,
                               enabled: !widget.create,
                               activeColor: Colors.transparent,
@@ -101,7 +102,5 @@ class _ToogleYNFieldState extends State<ToogleYNField> {
             ),
           )),
     );
-
-   
   }
 }

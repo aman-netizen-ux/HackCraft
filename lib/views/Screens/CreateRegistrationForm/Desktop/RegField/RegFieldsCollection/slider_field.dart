@@ -8,16 +8,18 @@ class SliderField extends StatefulWidget {
   final double min;
   final double max;
   final bool create, required;
-  final String question, startLabel, endLabel;
+  final String question, error;
+  final List<String> labels;
+
   const SliderField(
       {Key? key,
       required this.create,
       required this.max,
       required this.min,
-      required this.startLabel,
-      required this.endLabel,
       required this.required,
-      required this.question})
+      required this.error,
+      required this.question,
+      required this.labels})
       : super(key: key);
 
   @override
@@ -25,10 +27,32 @@ class SliderField extends StatefulWidget {
 }
 
 class _SliderFieldState extends State<SliderField> {
-  double _value = 0.0;
+  double _value = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("max ${widget.max} min ${widget.min}");
+    setState(() {
+      _value = (widget.max + widget.min) / 2;
+      print("value in set $_value");
+    });
+    print("value outside set $_value");
+  }
+  @override
+void didUpdateWidget(covariant SliderField oldWidget) {
+  super.didUpdateWidget(oldWidget);
+  if (widget.min != oldWidget.min || widget.max != oldWidget.max) {
+    setState(() {
+      _value = (widget.max + widget.min) / 2;
+    });
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
+    print("max ${widget.max} min ${widget.min}");
     return Expanded(
       child: SizedBox(
         width: double.infinity,
@@ -85,7 +109,7 @@ class _SliderFieldState extends State<SliderField> {
                             left: scaleWidth(context, 18),
                             bottom: 0 - 5,
                             child: Text(
-                              widget.startLabel,
+                              "${widget.labels[0]} (${widget.min.toDouble()})",
                               style: GoogleFonts.getFont(
                                 fontFamily2,
                                 fontSize: heightScaler(context, 14),
@@ -98,7 +122,7 @@ class _SliderFieldState extends State<SliderField> {
                             right: scaleWidth(context, 18),
                             bottom: 0 - 5,
                             child: Text(
-                              widget.endLabel,
+                              " ${widget.labels[1]} (${widget.max.toDouble()})",
                               style: GoogleFonts.getFont(
                                 fontFamily2,
                                 fontSize: heightScaler(context, 14),
@@ -143,7 +167,6 @@ class _SliderFieldState extends State<SliderField> {
                   )
                 ],
               ),
-           
             ],
           ),
         ),

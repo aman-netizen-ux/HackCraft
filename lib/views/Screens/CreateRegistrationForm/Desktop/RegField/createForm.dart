@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
+import 'package:major_project__widget_testing/state/Registration.dart/createRegistrationProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
-import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/RegFieldsCollection/long_ans.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/sampleTab.dart';
-
-late TabController formtabController;
+import 'package:provider/provider.dart';
 
 class CreateForm extends StatefulWidget {
   const CreateForm({super.key});
@@ -15,44 +14,35 @@ class CreateForm extends StatefulWidget {
 }
 
 class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
-  TextEditingController tab1 = TextEditingController(text: "Tab1");
-  TextEditingController tab2 = TextEditingController(text: "Tab2");
-  TextEditingController tab3 = TextEditingController(text: "Tab3");
-  TextEditingController tab4 = TextEditingController(text: "Tab4");
-  TextEditingController tab5 = TextEditingController(text: "tab5");
-  bool edit1 = false;
-  bool edit2 = false;
-  bool edit3 = false;
-  bool edit4 = false;
-  bool edit5 = false;
-
   @override
   void initState() {
     super.initState();
-    formtabController = TabController(length: 5, vsync: this);
-  }
-
-  // Add a function to reset editing state for all tabs except the specified index
-  void resetEditingState(int currentIndex) {
-    setState(() {
-      edit1 = currentIndex != 0 ? false : edit1;
-      edit2 = currentIndex != 1 ? false : edit2;
-      edit3 = currentIndex != 2 ? false : edit3;
-      edit4 = currentIndex != 3 ? false : edit4;
-      edit5 = currentIndex != 4 ? false : edit5;
-    });
-  }
-
-  @override
-  void dispose() {
-    formtabController.dispose();
-    super.dispose();
+    final createRegistrationProvider =
+        Provider.of<CreateRegistrationProvider>(context, listen: false);
+    List<String> keys = createRegistrationProvider.tabField.keys.toList();
+    for (int i = 0; i < createRegistrationProvider.tabField.length; i++) {
+      createRegistrationProvider.edit.add(false);
+      createRegistrationProvider.tab.add(TextEditingController(text: keys[i]));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final createRegistrationProvider =
+        Provider.of<CreateRegistrationProvider>(context, listen: true);
+    if (createRegistrationProvider.edit.length !=
+        createRegistrationProvider.tabField.length) {
+      createRegistrationProvider.edit.clear();
+      createRegistrationProvider.tab.clear();
+      for (int i = 0; i < createRegistrationProvider.tabField.length; i++) {
+        createRegistrationProvider.edit.add(false);
+
+        createRegistrationProvider.tab.add(TextEditingController(
+            text: createRegistrationProvider.tabField.keys.toList()[i]));
+      }
+    }
+
     return Container(
-      //   height: scaleHeight(context, 672),
       margin: EdgeInsets.only(
           left: scaleWidth(context, 27),
           right: scaleWidth(context, 27),
@@ -93,189 +83,84 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                 children: [
                   SizedBox(
                     height: scaleHeight(context, 37),
-                    width: scaleWidth(context, 450),
                     child: TabBar(
-                      indicatorColor: black1,
-                      controller: formtabController,
-                      tabs: [
-                        GestureDetector(
-                          onTap: () {
-                            formtabController.animateTo(0);
-                            resetEditingState(1);
-                          },
-                          onDoubleTap: () {
-                            setState(() {
-                              edit1 = true;
-                            });
-                          },
-                          child: Tab(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: scaleHeight(context, 10),
-                                  left: scaleHeight(context, 5)),
-                              child: TextField(
-                                controller: tab1,
-                                decoration: const InputDecoration(
-                                    border: InputBorder.none),
-                                style: GoogleFonts.firaSans(
-                                  color: const Color(0xff000000),
-                                  fontSize: heightScaler(context, 14),
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                enabled: edit1,
-                              ),
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            formtabController.animateTo(1);
-                            resetEditingState(2);
-                          },
-                          onDoubleTap: () {
-                            setState(() {
-                              edit2 = true;
-                            });
-                          },
-                          child: Tab(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: scaleHeight(context, 10),
-                                  left: scaleHeight(context, 5)),
-                              child: TextField(
-                                controller: tab2,
-                                decoration: const InputDecoration(
-                                    border: InputBorder.none),
-                                style: GoogleFonts.firaSans(
-                                  color: const Color(0xff000000),
-                                  fontSize: heightScaler(context, 14),
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                enabled: edit2,
-                              ),
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            formtabController.animateTo(2);
-                            resetEditingState(3);
-                          },
-                          onDoubleTap: () {
-                            setState(() {
-                              edit3 = true;
-                            });
-                          },
-                          child: Tab(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: scaleHeight(context, 10),
-                                  left: scaleHeight(context, 5)),
-                              child: TextField(
-                                controller: tab3,
-                                decoration: const InputDecoration(
-                                    border: InputBorder.none),
-                                style: GoogleFonts.firaSans(
-                                  color: const Color(0xff000000),
-                                  fontSize: heightScaler(context, 14),
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                enabled: edit3,
-                              ),
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            formtabController.animateTo(3);
-                            resetEditingState(4);
-                          },
-                          onDoubleTap: () {
-                            setState(() {
-                              edit4 = true;
-                            });
-                          },
-                          child: Tab(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: scaleHeight(context, 10),
-                                  left: scaleHeight(context, 5)),
-                              child: Center(
-                                child: TextField(
-                                  controller: tab4,
-                                  decoration: const InputDecoration(
-                                      border: InputBorder.none),
-                                  style: GoogleFonts.firaSans(
-                                    color: const Color(0xff000000),
-                                    fontSize: heightScaler(context, 14),
-                                    fontWeight: FontWeight.w400,
+                        isScrollable: true,
+                        tabAlignment: TabAlignment.start,
+                        indicatorColor: black1,
+                        controller: createRegistrationProvider.formcontroller,
+                        tabs: List.generate(
+                            createRegistrationProvider.tabField.length,
+                            (index) {
+                          return GestureDetector(
+                            onTap: () {
+                              createRegistrationProvider.formcontroller
+                                  .animateTo(0);
+                              createRegistrationProvider.resetEditingState(1);
+                            },
+                            onDoubleTap: () {
+                              setState(() {
+                                createRegistrationProvider.edit[index] = true;
+                              });
+                            },
+                            child: Tab(
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: scaleHeight(context, 10),
+                                    left: scaleHeight(context, 5)),
+                                child: SizedBox(
+                                  width: 100,
+                                  child: TextField(
+                                    controller:
+                                        createRegistrationProvider.tab[index],
+                                    decoration: const InputDecoration(
+                                        border: InputBorder.none),
+                                    style: GoogleFonts.firaSans(
+                                      color: const Color(0xff000000),
+                                      fontSize: heightScaler(context, 14),
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    enabled:
+                                        createRegistrationProvider.edit[index],
                                   ),
-                                  enabled: edit4,
                                 ),
                               ),
                             ),
-                          ),
+                          );
+                        })
+                       
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            formtabController.animateTo(4);
-                            resetEditingState(5);
-                          },
-                          onDoubleTap: () {
-                            setState(() {
-                              edit5 = true;
-                            });
-                          },
-                          child: Tab(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: scaleHeight(context, 10),
-                                  left: scaleHeight(context, 5)),
-                              child: TextField(
-                                controller: tab5,
-                                decoration: const InputDecoration(
-                                    border: InputBorder.none),
-                                style: GoogleFonts.firaSans(
-                                  color: const Color(0xff000000),
-                                  fontSize: heightScaler(context, 14),
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                enabled: edit5,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
                   Expanded(
                     child: TabBarView(
-                      controller: formtabController,
-                      children: const [
-                        SampleTab(i: 0),
-                        SampleTab(i: 1),
-                        SampleTab(i: 2),
-                        SampleTab(i: 3),
-                        SampleTab(i: 4),
-                      ],
-                    ),
+                        controller: createRegistrationProvider.formcontroller,
+                        children: List.generate(
+                            createRegistrationProvider.tabField.length,
+                            (index) {
+                          List<List> values = createRegistrationProvider
+                              .tabField.values
+                              .toList();
+                          return SampleTab(
+                            fieldsList: values[index],
+                          );
+                        })),
                   ),
                   Padding(
                     padding: EdgeInsets.only(bottom: scaleHeight(context, 30)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        formtabController.index == 0
+                        createRegistrationProvider.formcontroller.index == 0
                             ? Container()
                             : SizedBox(
                                 height: scaleHeight(context, 38),
                                 width: scaleWidth(context, 104),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    int i = formtabController.index;
-
+                                    int i = createRegistrationProvider
+                                        .formcontroller.index;
                                     if (i != 0) {
-                                      formtabController.animateTo(i - 1);
+                                      createRegistrationProvider.formcontroller
+                                          .animateTo(i - 1);
                                     }
                                     setState(() {});
                                   },
@@ -292,7 +177,8 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                                   ),
                                 ),
                               ),
-                        formtabController.index == 4
+                        createRegistrationProvider.formcontroller.index ==
+                                createRegistrationProvider.tabField.length - 1
                             ? Container()
                             : Container(
                                 margin: EdgeInsets.only(
@@ -301,10 +187,14 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                                 width: scaleWidth(context, 104),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    int i = formtabController.index;
+                                    int i = createRegistrationProvider
+                                        .formcontroller.index;
 
-                                    if (i != 4) {
-                                      formtabController.animateTo(i + 1);
+                                    if (i !=
+                                        createRegistrationProvider
+                                            .tabField.length) {
+                                      createRegistrationProvider.formcontroller
+                                          .animateTo(i + 1);
                                     }
                                     setState(() {});
                                   },
@@ -327,7 +217,19 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                           height: scaleHeight(context, 38),
                           width: scaleWidth(context, 104),
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              final singleHackathonProvider =
+                                  Provider.of<CreateRegistrationProvider>(
+                                      context,
+                                      listen: false);
+
+                              await singleHackathonProvider
+                                  .getSingleHackathonsList(
+                                      "d3ae95c1-0eee-4745-8b56-259ae9404867");
+
+                              print(singleHackathonProvider
+                                  .singleForm.fields[0].minDate);
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: lightSilver,
                             ),

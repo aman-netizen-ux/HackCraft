@@ -2,14 +2,17 @@ import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
+import 'package:major_project__widget_testing/constants/enums.dart';
+import 'package:major_project__widget_testing/state/Registration.dart/createRegistrationProvider.dart';
 
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/RegFieldsCollection/short_ans.dart';
 
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/RegFieldsCollection/stepper_field.dart';
+import 'package:provider/provider.dart';
 
 class SampleTab extends StatefulWidget {
-  const SampleTab({super.key, required this.i});
-  final int i;
+  const SampleTab({super.key, required this.fieldsList});
+  final List<dynamic> fieldsList;
   @override
   State<SampleTab> createState() => _SampleTabState();
 }
@@ -17,126 +20,49 @@ class SampleTab extends StatefulWidget {
 class _SampleTabState extends State<SampleTab> {
   late List<DragAndDropList> _contents;
 
-
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
+    final createRegistrationProvider =
+        Provider.of<CreateRegistrationProvider>(context, listen: true);
 
     _contents = List.generate(1, (index) {
       return DragAndDropList(
-        children: [
-          DragAndDropItem(
-            child: const Row(
-              children: [
-                FormBuilder(
-                    child:
-                        //  DropDownField(
-                        //   create: true,
-                        //   hint: "Selct any option",
-                        //   question: ' favorite color ?',
-                        //   options: ['Red', 'Green', 'Blue'],
-                        //   required: false,
-                        // )
-                       
+          children: List.generate(widget.fieldsList.length, (index) {
+            print("tab ${createRegistrationProvider.tabField}");
+          print(widget.fieldsList[index]);
+        try {
+          var fieldWidget = createRegistrationProvider.getField(
+              widget.fieldsList[index].type, widget.fieldsList[index]);
+          
 
-                        //     LongAnsField(
-                        //       limit: 100,
-                        //   create: true,
-                        //   hint: "sample hai ",
-                        //   question: "hellooq quest",
-                        //   required: true,
-                        // )
-                //         ToogleYNField(
-                //   create: true,
-                //   question: "question is imp",
-                //   required: true,
-                // )
-                    // MultipleChoiceField(
-                    //     question: "ques",
-                    //     hint: "hin",
-                    //     create: true,
-                    //     options: ["jj", "ll ", "kk", "oo ", "ui", "ip" , "jj", "ll ", "kk", "oo ", "ui", "ip"],
-                    //     required: true)
+          return DragAndDropItem(
+              child: InkWell(
+            onTap: () {
+              List<String> keys =
+                  createRegistrationProvider.tabField.keys.toList();
 
-                    //         CheckBoxField(
-                    //   create: true,
-                    //   required: true,
-                    //   hint: "question",
-                    //   question: "ki",
-                    //   options: ["jj" ,"kk" ,"ui"],
-                    // )
-                   StepperField(question: "question", create: true, required: true)
-                    // PhoneField(
-                    //   create: false,
-                    //   question: "question",
-                    //   required: true,
-                    // )
-                    // TagField(
-                    //   options: ["red" , "blue"],
-                    //   create: true,
-                    //   required: true,
-                    //   hint: "write something",
-                    //   question: "color ??",
-                    // )
-                 // LinearScaleField(create: true, division: 5, max: 100, min: 0, question: "question" , labels: ["red" , " blue " , "white " , "green" ,"pink"], required: true,)
-                  //  StepperField()
-                    // SliderField(
-                    //  required: true,
-                    //   create: false,
-                    //   endLabel: "yes",
-                    //   startLabel: "no",
-                    //   max: 100,
-                    //   min: 0,
-                    //   question: "hih",
-                    // ),
-                   // FileUploadField(question: "question", create: true, required: true)
-                    // RangeSliderField(create: false, min: 0, max: 100, question: "hey ", required:  true,  startLabel: "good",endLabel:  "bad"),
-                    //MultipleChoiceField()
+              int currentKeyIndex =
+                  createRegistrationProvider.formcontroller.index;
+              String currentKey = keys[currentKeyIndex];
+              createRegistrationProvider.currentKey = currentKey;
+              createRegistrationProvider.currentIndex = index;
 
-                    // Column(
-                    //   crossAxisAlignment: CrossAxisAlignment.start,
-                    //   children: [
-                    //     SizedBox(
-                    //       height: 30,
-                    //       child: Text("First Field")),
-                    //     Container(
-                    //         padding: EdgeInsets.only(top: 10),
-                    //         height: 30,
-                    //         width: 300,
-                    //         child: TextFormField(
-                    //           decoration: InputDecoration(
-                    //             border: OutlineInputBorder(
-                    //               borderRadius: BorderRadius.circular(2),
-                    //               borderSide: const BorderSide(
-                    //                 color: black1,
-                    //                 width: 1,
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ))
-                    //   ],
-                    ),
-              ],
-            ),
-          ),
-          DragAndDropItem(
-              child: const Row(children: [
-            FormBuilder(
-                child: ShortAnsField(
-                    question: "short",
-                    create: true,
-                    hint: "hint",
-                    required: true))
-          ]))
-        ],
-      );
+              FieldTypes fieldType =
+                  createRegistrationProvider.tabField[currentKey]![index].type;
+              print(fieldType);
+            },
+            child: Row(children: [fieldWidget]),
+          ));
+        } catch (e) {
+          print("error $e");
+          return DragAndDropItem(
+            child: Text('Error in field creation at index $index'),
+          );
+        }
+      }));
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Container(
-      color:  lightGrey,
+      color: lightGrey,
       child: DragAndDropLists(
         children: _contents,
         onItemReorder: _onItemReorder,
@@ -159,7 +85,7 @@ class _SampleTabState extends State<SampleTab> {
           ],
         ),
         listInnerDecoration: const BoxDecoration(
-          color:  lightGrey,
+          color: lightGrey,
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
         ),
         lastItemTargetHeight: 8,

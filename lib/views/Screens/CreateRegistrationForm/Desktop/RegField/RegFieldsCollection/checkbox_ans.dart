@@ -9,14 +9,14 @@ import 'package:major_project__widget_testing/views/Screens/CreateRegistrationFo
 
 class CheckBoxField extends StatefulWidget {
   final String question;
-  final String hint;
+  final String error;
   final List<String> options;
   final bool create, required;
 
   const CheckBoxField(
       {super.key,
       required this.question,
-      required this.hint,
+      required this.error,
       required this.create,
       required this.options,
       required this.required});

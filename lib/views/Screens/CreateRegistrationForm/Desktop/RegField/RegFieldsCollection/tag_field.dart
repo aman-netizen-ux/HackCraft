@@ -7,13 +7,17 @@ import 'package:major_project__widget_testing/utils/scaling.dart';
 
 class TagField extends StatefulWidget {
   final List<String> options;
- final bool create, required;
-   final String question;
-  final String hint;
+  final bool create, required;
+  final String question;
+  final String error;
 
-
-  const TagField({Key? key,  required this.question,
-      required this.hint, required this.options, required this.create , required this.required})
+  const TagField(
+      {Key? key,
+      required this.question,
+      required this.options,
+      required this.create,
+      required this.error,
+      required this.required})
       : super(key: key);
 
   @override
@@ -28,7 +32,6 @@ class _TagFieldState extends State<TagField> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-
       child: SizedBox(
         width: double.infinity,
         child: Padding(
@@ -38,7 +41,7 @@ class _TagFieldState extends State<TagField> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-               Container(
+              Container(
                 padding: EdgeInsets.only(
                     top: scaleHeight(context, 20),
                     bottom: scaleHeight(context, 10)),
@@ -52,54 +55,53 @@ class _TagFieldState extends State<TagField> {
                   ),
                 ),
               ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         Wrap(
-                  spacing: 8.0,
-                  runSpacing: 4.0,
-                  children: _buildTagChips(),
-                                ),
-                                if (widget.create) 
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: _controller,
-                          decoration: InputDecoration(
-                            hintText: 'Add a tag',
-                          ),
-                          onSubmitted: (tag) {
-                            setState(() {
-                              _tags.add(tag);
-                              _controller.clear();
-                            });
-                          },
+                          spacing: 8.0,
+                          runSpacing: 4.0,
+                          children: _buildTagChips(),
                         ),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.add),
-                        onPressed: () {
-                          String tag = _controller.text.trim();
-                          if (tag.isNotEmpty) {
-                            setState(() {
-                              _tags.add(tag);
-                              _controller.clear();
-                            });
-                          }
-                        },
-                      ),
-                    ],
+                        if (widget.create)
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TextField(
+                                  controller: _controller,
+                                  decoration: InputDecoration(
+                                    hintText: 'Add a tag',
+                                  ),
+                                  onSubmitted: (tag) {
+                                    setState(() {
+                                      _tags.add(tag);
+                                      _controller.clear();
+                                    });
+                                  },
+                                ),
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.add),
+                                onPressed: () {
+                                  String tag = _controller.text.trim();
+                                  if (tag.isNotEmpty) {
+                                    setState(() {
+                                      _tags.add(tag);
+                                      _controller.clear();
+                                    });
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
+                      ],
+                    ),
                   ),
-                    ],
-                  ),
-                ),
-                
-                 SizedBox(
+                  SizedBox(
                     width: scaleWidth(context, 16),
                   ),
                   widget.required
@@ -114,8 +116,8 @@ class _TagFieldState extends State<TagField> {
                   SizedBox(
                     width: widget.create ? scaleWidth(context, 50) : 0,
                   )
-              ],
-            )
+                ],
+              )
             ],
           ),
         ),

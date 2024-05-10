@@ -11,9 +11,10 @@ class ShortAnsField extends StatefulWidget {
       required this.question,
       required this.create,
       required this.hint,
-      required this.required});
+      required this.required,
+      required this.error});
   final String question;
-  final String hint;
+  final String hint, error;
   final bool create;
   final bool required;
   @override
@@ -21,6 +22,7 @@ class ShortAnsField extends StatefulWidget {
 }
 
 class _ShortAnsFieldState extends State<ShortAnsField> {
+ 
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -60,7 +62,7 @@ class _ShortAnsFieldState extends State<ShortAnsField> {
                           fontWeight: FontWeight.w400,
                           color: black1,
                         ),
-                         cursorColor: darkCharcoal,
+                        cursorColor: darkCharcoal,
                         decoration: InputDecoration(
                           isDense: true,
                           contentPadding: EdgeInsets.symmetric(

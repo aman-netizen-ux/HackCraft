@@ -20,9 +20,7 @@ import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart'
 import 'package:major_project__widget_testing/state/templateSelectionprovider.dart';
 import 'package:provider/provider.dart';
 
-
 void main() async {
- 
   await dotenv.load();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -56,15 +54,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => SingleHackathonProvider()),
         ChangeNotifierProvider(
             create: (context) => GetRegistrationFormProvider()),
+        ChangeNotifierProvider(create: (context) => DefaultTemplateProvider()),
         ChangeNotifierProvider(
-            create: (context) => DefaultTemplateProvider()),
-         ChangeNotifierProvider(create: (context) => HackathonTextPropertiesProvider()),
-            ChangeNotifierProvider(
-            create: (context) => LoginProvider()),
-         ChangeNotifierProvider(create: (context) => HackathonContainerPropertiesProvider()),
-         ChangeNotifierProvider(create: (context) => CustomEditPortal()),
-         ChangeNotifierProvider(create: (context) => ProfileProvider()),
-         ChangeNotifierProvider(create: (context) => ProfileRegProvider()),
+            create: (context) => HackathonTextPropertiesProvider()),
+        ChangeNotifierProvider(create: (context) => LoginProvider()),
+        ChangeNotifierProvider(
+            create: (context) => HackathonContainerPropertiesProvider()),
+        ChangeNotifierProvider(create: (context) => CustomEditPortal()),
+        ChangeNotifierProvider(create: (context) => ProfileProvider()),
+        ChangeNotifierProvider(create: (context) => ProfileRegProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

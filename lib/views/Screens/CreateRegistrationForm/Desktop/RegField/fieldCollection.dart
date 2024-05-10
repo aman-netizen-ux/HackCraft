@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
+import 'package:major_project__widget_testing/state/Registration.dart/createRegistrationProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/template.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/addFieldSection.dart';
+import 'package:provider/provider.dart';
 
 class FieldsCollection extends StatelessWidget {
   const FieldsCollection({
@@ -17,7 +19,8 @@ class FieldsCollection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: const Color(0xf5f5f5f5), borderRadius: BorderRadius.circular(5)),
+          color: const Color(0xf5f5f5f5),
+          borderRadius: BorderRadius.circular(5)),
       width: double.infinity,
       child: Padding(
         padding: EdgeInsets.only(
@@ -75,7 +78,7 @@ class FieldsCollection extends StatelessWidget {
                       labelPadding: EdgeInsets.zero,
                       indicator: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color:const  Color(0xfff5f5f5),
+                        color: const Color(0xfff5f5f5),
                       ),
                       tabs: [
                         Tab(
@@ -122,7 +125,17 @@ class FieldsCollection extends StatelessWidget {
               height: scaleHeight(context, 38),
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  final createRegistrationProvider =
+                      Provider.of<CreateRegistrationProvider>(context,
+                          listen: false);
+                  createRegistrationProvider.setTabField(
+                      "New Tab ${createRegistrationProvider.tabField.length + 1}");
+                  createRegistrationProvider.refreshTabs();
+                  createRegistrationProvider.formcontroller.animateTo(
+                      createRegistrationProvider.tabField.length - 1);
+                  //createRegistrationProvider.resetEditingState(createRegistrationProvider.tabField.length - 1);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: lightSilver,
                 ),

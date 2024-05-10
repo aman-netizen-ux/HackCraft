@@ -10,17 +10,32 @@ class StepperField extends StatefulWidget {
     required this.question,
     required this.create,
     required this.required,
+    required this.min,
+    required this.max,
   }) : super(key: key);
 
   final String question;
   final bool create;
   final bool required;
+  final int min, max;
   @override
   State<StepperField> createState() => _StepperFieldState();
 }
 
 class _StepperFieldState extends State<StepperField> {
-  TextEditingController stepper = TextEditingController(text: "10");
+  late TextEditingController stepper;
+
+  void initState() {
+    super.initState();
+    stepper = TextEditingController(text: widget.min.toString());
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    stepper.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,15 +110,23 @@ class _StepperFieldState extends State<StepperField> {
                                           Expanded(
                                             flex: 498,
                                             child: InkWell(
-                                                onTap:widget.create? null:
-                                                 () {
-                                                  setState(() {
-                                                    int currentValue =
-                                                        int.tryParse( stepper.text) ??0;
-                                                    stepper.text = (currentValue + 1)
-                                                            .toString();
-                                                  });
-                                                },
+                                                onTap: widget.create
+                                                    ? null
+                                                    : () {
+                                                        setState(() {
+                                                          int currentValue =
+                                                              int.tryParse(stepper
+                                                                      .text) ??
+                                                                  0;
+                                                          if (currentValue <=
+                                                              widget.max) {
+                                                            stepper.text =
+                                                                (currentValue +
+                                                                        1)
+                                                                    .toString();
+                                                          }
+                                                        });
+                                                      },
                                                 child: const Icon(Icons.add)),
                                           ),
                                           const Expanded(
@@ -114,17 +137,23 @@ class _StepperFieldState extends State<StepperField> {
                                           Expanded(
                                             flex: 498,
                                             child: InkWell(
-                                             onTap:widget.create? null:
-                                                () {
-                                                  setState(() {
-                                                    int currentValue =
-                                                        int.tryParse(
-                                                                stepper.text) ?? 0;
-                                                    stepper.text =
-                                                        (currentValue - 1)
-                                                            .toString();
-                                                  });
-                                                },
+                                                onTap: widget.create
+                                                    ? null
+                                                    : () {
+                                                        setState(() {
+                                                          int currentValue =
+                                                              int.tryParse(stepper
+                                                                      .text) ??
+                                                                  0;
+                                                          if (currentValue <=
+                                                              widget.min) {
+                                                            stepper.text =
+                                                                (currentValue -
+                                                                        1)
+                                                                    .toString();
+                                                          }
+                                                        });
+                                                      },
                                                 child:
                                                     const Icon(Icons.remove)),
                                           )

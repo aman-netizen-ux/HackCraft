@@ -1,17 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
-
+//TODO: add error
 class LinearScaleField extends StatefulWidget {
   final double min;
   final double max;
   final int division;
   final bool create, required;
-  final String question;
-  final List<String> labels;
+  final String question , error;
+  final List<String> labels ;
 
   const LinearScaleField({
     Key? key,
@@ -22,6 +22,7 @@ class LinearScaleField extends StatefulWidget {
     required this.max,
     required this.min,
     required this.question,
+    required this.error,
   }) : super(key: key);
 
   @override
@@ -73,52 +74,28 @@ class _LinearScaleFieldState extends State<LinearScaleField> {
                                     top: scaleHeight(context, 9)),
                                 child: Divider(
                                   height: scaleHeight(context, 3),
-                                  color: Color(0xffAFAFAF),
+                                  color:const Color(0xffAFAFAF),
                                 ),
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children:
-                                    List.generate(widget.division, (index) {
-                                  return indexValue == index
-                                      ? Column(
-                                          children: [
-                                            Container(
-                                              decoration: const BoxDecoration(
-                                                  color: indicatorblue,
-                                                  shape: BoxShape.circle),
-                                              width: scaleHeight(context, 20),
-                                              height: scaleHeight(context, 20),
-                                            ),
-                                            Text(
-                                              widget.labels[index],
-                                              style: GoogleFonts.getFont(
-                                                fontFamily2,
-                                                fontSize:
-                                                    heightScaler(context, 14),
-                                                fontWeight: FontWeight.w500,
-                                                color: indexValue == index
-                                                    ? indicatorblue
-                                                    : const Color(0xffc4c4c4),
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      : InkWell(
-                                          onTap: widget.create
-                                              ? null
-                                              : () {
-                                                  setState(() {
-                                                    indexValue = index;
-                                                  });
-                                                },
-                                          child: Column(
+                              
+                              Positioned(
+                                // left: 0,
+                                // right: 0,
+                              //  bottom: -2,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children:
+                                      List.generate(widget.division, (index) {
+                                    return indexValue == index
+                                        ? Column(
                                             children: [
                                               Container(
-                                                width: scaleWidth(context, 8),
-                                                height: scaleHeight(context, 3),
-                                                color:const Color(0xff6C6969),
+                                                decoration: const BoxDecoration(
+                                                    color: indicatorblue,
+                                                    shape: BoxShape.circle),
+                                                width: scaleHeight(context, 20),
+                                                height: scaleHeight(context, 20),
                                               ),
                                               Text(
                                                 widget.labels[index],
@@ -133,9 +110,42 @@ class _LinearScaleFieldState extends State<LinearScaleField> {
                                                 ),
                                               )
                                             ],
-                                          ),
-                                        );
-                                }),
+                                          )
+                                        : InkWell(
+                                            onTap: widget.create
+                                                ? null
+                                                : () {
+                                                    setState(() {
+                                                      indexValue = index;
+                                                    });
+                                                  },
+                                            child: Column(
+                                              children: [
+                                                SizedBox(
+                                                  height: scaleHeight(context, 8),
+                                                ),
+                                                Container(
+                                                  width: scaleWidth(context, 8),
+                                                  height: scaleHeight(context, 3),
+                                                  color:const Color(0xff6C6969),
+                                                ),
+                                                Text(
+                                                  widget.labels[index],
+                                                  style: GoogleFonts.getFont(
+                                                    fontFamily2,
+                                                    fontSize:
+                                                        heightScaler(context, 14),
+                                                    fontWeight: FontWeight.w500,
+                                                    color: indexValue == index
+                                                        ? indicatorblue
+                                                        : const Color(0xffc4c4c4),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          );
+                                  }),
+                                ),
                               )
                             ],
                           ),

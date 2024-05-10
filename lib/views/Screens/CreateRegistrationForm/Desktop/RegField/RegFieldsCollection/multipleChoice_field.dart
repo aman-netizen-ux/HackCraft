@@ -7,17 +7,17 @@ import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/RegFieldsCollection/customRadio.dart';
 
 class MultipleChoiceField extends StatefulWidget {
-  final String question;
-  final String hint;
+  final String question ,error;
   final List<String> options;
   final bool create, required;
+  
 
   const MultipleChoiceField(
       {Key? key,
       required this.question,
-      required this.hint,
       required this.create,
       required this.options,
+      required this.error,
       required this.required})
       : super(key: key);
 
@@ -92,7 +92,6 @@ class _MultipleChoiceFieldState extends State<MultipleChoiceField> {
                       style: GoogleFonts.getFont(fontFamily2,
                           fontSize: 14, color: indicatorblue),
                     ),
-                  
                   ],
                 ),
             ],
