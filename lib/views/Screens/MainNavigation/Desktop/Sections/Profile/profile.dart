@@ -171,11 +171,10 @@ class _ProfileState extends State<Profile> {
                               await GoogleSignIn().disconnect();
                               await FirebaseAuth.instance.signOut();
 
-                              Navigator.push(
+                              Navigator.pushNamedAndRemoveUntil(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (context) => LoginPage(),
-                                ),
+                                '/',
+                                (route) => false,
                               );
                             },
                             child: Text('Logout',
