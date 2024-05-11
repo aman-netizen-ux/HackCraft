@@ -1,16 +1,18 @@
 import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
-import 'package:major_project__widget_testing/utils/scaling.dart';
-import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/RegFieldsCollection/dropdown_ans.dart';
-import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/RegFieldsCollection/long_ans.dart';
+import 'package:major_project__widget_testing/constants/enums.dart';
+import 'package:major_project__widget_testing/state/Registration.dart/createRegistrationProvider.dart';
+
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/RegFieldsCollection/short_ans.dart';
-import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/createForm.dart';
+
+import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/RegFieldsCollection/stepper_field.dart';
+import 'package:provider/provider.dart';
 
 class SampleTab extends StatefulWidget {
-  const SampleTab({super.key, required this.i});
-  final int i;
+  const SampleTab({super.key, required this.fieldsList});
+  final List<dynamic> fieldsList;
   @override
   State<SampleTab> createState() => _SampleTabState();
 }
@@ -19,107 +21,54 @@ class _SampleTabState extends State<SampleTab> {
   late List<DragAndDropList> _contents;
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
+    final createRegistrationProvider =
+        Provider.of<CreateRegistrationProvider>(context, listen: true);
 
     _contents = List.generate(1, (index) {
       return DragAndDropList(
-        children: [
-          DragAndDropItem(
-            child: Row(
-              children: [
-                DropDownAns(
-                  create: true,
-                    hint: "Selct any option",
-                   question: ' favorite color ?',
-            options: ['Red', 'Green', 'Blue'],
+          children: List.generate(widget.fieldsList.length, (index) {
+            print("tab ${createRegistrationProvider.tabField}");
+          print(widget.fieldsList[index]);
+        try {
+          var fieldWidget = createRegistrationProvider.getField(
+              widget.fieldsList[index].type, widget.fieldsList[index]);
           
-                )
-                //  LongAnsField(
-                //   create: true,
-                //   hint: "sample hai ",
-                //   question: "hellooq quest",
-                //  ),
-                // Column(
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   children: [
-                //     SizedBox(
-                //       height: 30, 
-                //       child: Text("First Field")),
-                //     Container(
-                //         padding: EdgeInsets.only(top: 10),
-                //         height: 30,
-                //         width: 300,
-                //         child: TextFormField(
-                //           decoration: InputDecoration(
-                //             border: OutlineInputBorder(
-                //               borderRadius: BorderRadius.circular(2),
-                //               borderSide: const BorderSide(
-                //                 color: black1,
-                //                 width: 1,
-                //               ),
-                //             ),
-                //           ),
-                //         ))
-                //   ],
-                // ),
-              ],
-            ),
-          ),
-          // DragAndDropItem(
-          //   child: Row(
-          //     children: [
-          //       Padding(
-          //         padding:
-          //             const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-          //         child: Text(
-          //           'Sub $index.2',
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          // DragAndDropItem(
-          //   child: Row(
-          //     children: [
-          //       Padding(
-          //         padding:
-          //             const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-          //         child: Text(
-          //           'Sub $index.3',
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          // DragAndDropItem(
-          //   child: Row(
-          //     children: [
-          //       Padding(
-          //         padding:
-          //             const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-          //         child: Text(
-          //           'Sub $index.4',
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-        ],
-      );
-    });
-  }
 
-  @override
-  Widget build(BuildContext context) {
+          return DragAndDropItem(
+              child: InkWell(
+            onTap: () {
+              List<String> keys =
+                  createRegistrationProvider.tabField.keys.toList();
+
+              int currentKeyIndex =
+                  createRegistrationProvider.formcontroller.index;
+              String currentKey = keys[currentKeyIndex];
+              createRegistrationProvider.currentKey = currentKey;
+              createRegistrationProvider.currentIndex = index;
+
+              FieldTypes fieldType =
+                  createRegistrationProvider.tabField[currentKey]![index].type;
+              print(fieldType);
+            },
+            child: Row(children: [fieldWidget]),
+          ));
+        } catch (e) {
+          print("error $e");
+          return DragAndDropItem(
+            child: Text('Error in field creation at index $index'),
+          );
+        }
+      }));
+    });
     return Container(
       color: lightGrey,
       child: DragAndDropLists(
         children: _contents,
         onItemReorder: _onItemReorder,
         onListReorder: _onListReorder,
-        listPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        itemDivider: Divider(
+        listPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+        itemDivider: const Divider(
           thickness: 20,
           height: 20,
           color: white,
@@ -131,13 +80,13 @@ class _SampleTabState extends State<SampleTab> {
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 2,
               blurRadius: 3,
-              offset: const Offset(0, 0), 
+              offset: const Offset(0, 0),
             ),
           ],
         ),
-        listInnerDecoration: BoxDecoration(
+        listInnerDecoration: const BoxDecoration(
           color: lightGrey,
-          borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+          borderRadius: BorderRadius.all(Radius.circular(8.0)),
         ),
         lastItemTargetHeight: 8,
         addLastItemTargetHeightToTop: true,
