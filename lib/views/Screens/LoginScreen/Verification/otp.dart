@@ -11,6 +11,7 @@ import 'package:major_project__widget_testing/views/Screens/LoginScreen/Verifica
 import 'package:major_project__widget_testing/views/Screens/LoginScreen/Verification/verifyOtp.dart';
 import 'package:provider/provider.dart';
 import 'package:quiver/async.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OTPFile extends StatefulWidget {
   const OTPFile({super.key});
@@ -24,6 +25,17 @@ class _OTPFileState extends State<OTPFile> {
   int _secondsRemaining = 60;
   bool _timerActive = true;
   bool otpCheck = false;
+
+  Future<SharedPreferences> getLocalStorage() async {
+    return await SharedPreferences.getInstance();
+  }
+
+  void storeUserUid(String uid) async {
+    SharedPreferences prefs = await getLocalStorage();
+    debugPrint('set locally');
+    await prefs.setString('user_uid', uid);
+  }
+
   static Future<User?> createUserWithEmailAndPassword(
       {required String email,
       required String password,
@@ -265,6 +277,7 @@ class _OTPFileState extends State<OTPFile> {
                       "last_name": loginProvider.lastName,
                       "email": loginProvider.emailId,
                     });
+                    storeUserUid(firebaseUUID);
                     loginProvider.setUuid(firebaseUUID);
                     loginProvider.setOtpId(0);
                     loginProvider.setCurrentIndex(2);

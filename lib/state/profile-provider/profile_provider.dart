@@ -28,9 +28,15 @@ class ProfileProvider extends ChangeNotifier{
   User? get user => _user;
 
   Future<void> fetchUser( String id) async {
-    
+    debugPrint('id: $id');
+    try {
     _user = await fetchUserData(id);
-    print("user details : $_user");
+    debugPrint("User details retrieved: $_user");
+  } catch (e, stackTrace) {
+    debugPrint("Error fetching user data: $e");
+    debugPrint("Stack Trace: $stackTrace");
+    _user = null; // or provide a default object with fallback values
+  }
     notifyListeners();
   }
 

@@ -10,6 +10,7 @@ import 'package:major_project__widget_testing/views/Screens/LoginScreen/desktop_
 import 'package:major_project__widget_testing/views/Screens/LoginScreen/registerCheck.dart';
 import 'package:major_project__widget_testing/views/Screens/LoginScreen/screenChange.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'googleSignIn.dart';
 
 class SignIn extends StatefulWidget {
@@ -25,6 +26,16 @@ class _SignInState extends State<SignIn> {
   final TextEditingController _emailText = TextEditingController();
   final TextEditingController _passwordText = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  Future<SharedPreferences> getLocalStorage() async {
+    return await SharedPreferences.getInstance();
+  }
+
+  void storeUserUid(String uid) async {
+    SharedPreferences prefs = await getLocalStorage();
+    debugPrint('set locally');
+    await prefs.setString('user_uid', uid);
+  }
 
   // Function to handle sign-in using email and password
   static Future<User?> loginUsingEmailPassword(
@@ -99,6 +110,7 @@ class _SignInState extends State<SignIn> {
                               if (user != null) {
                                 String firebaseUUID = user.uid;
                                 String _email = user.email!;
+                                storeUserUid(firebaseUUID);
                                 loginProvider.setUuid(firebaseUUID);
                                 final status = await registerCheck(_email);
                                 if (status) {
@@ -108,7 +120,6 @@ class _SignInState extends State<SignIn> {
                                     '/mainNavigation',
                                   );
                                 } else {
-                                 
                                   loginProvider.setCurrentIndex(2);
                                   tabController.animateTo(1);
                                 }
@@ -181,6 +192,7 @@ class _SignInState extends State<SignIn> {
                               if (user != null) {
                                 String firebaseUUID = user.uid;
                                 String _email = user.email!;
+                                storeUserUid(firebaseUUID);
                                 loginProvider.setUuid(firebaseUUID);
                                 final status = await registerCheck(_email);
                                 if (status) {
@@ -191,7 +203,7 @@ class _SignInState extends State<SignIn> {
                                   );
                                 } else {
                                   // moves on to register screen
-                                
+
                                   loginProvider.setCurrentIndex(2);
                                   tabController.animateTo(1);
                                 }
@@ -442,6 +454,7 @@ class _SignInState extends State<SignIn> {
                       );
                       if (user != null) {
                         String firebaseUUID = user.uid;
+                        storeUserUid(firebaseUUID);
                         loginProvider.setUuid(firebaseUUID);
                         final status = await registerCheck(email);
                         if (status) {
@@ -474,7 +487,7 @@ class _SignInState extends State<SignIn> {
                   child: Text(
                     "Login",
                     style: TextStyle(
-                      color: Colors.white,
+                        color: Colors.white,
                         fontSize: heightScaler(context, 18),
                         fontWeight: FontWeight.w500),
                   ))),

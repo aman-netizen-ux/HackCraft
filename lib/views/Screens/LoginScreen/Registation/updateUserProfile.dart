@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-Future<void> updateUserPost(Map<String, dynamic> data, String uid) async {
+Future<bool> updateUserPost(Map<String, dynamic> data, String uid) async {
   try {
-    final bUrl = "https://hackcraft166.pythonanywhere.com/userput";
-   // final bUrl = dotenv.get("userput");
+   // final bUrl = "https://hackcraft166.pythonanywhere.com/userput";
+    final bUrl = dotenv.get("userput");
     final url = '$bUrl/$uid';
     print(url);
     String jsonData = jsonEncode(data);
@@ -19,14 +19,16 @@ Future<void> updateUserPost(Map<String, dynamic> data, String uid) async {
       body: jsonData,
     );
 
-    if (response.statusCode == 201) {
-      print('User Update  successful');
-      print('Response: ${response.body}');
+    if (response.statusCode == 200) {
+      debugPrint('User Update  successful');
+      debugPrint('Response: ${response.body}');
+      return true;
     } else {
-      debugPrint('PUT request failed with status: ${response.statusCode}');
-      print(response.body);
+      debugPrint(' else response : ${response.body}');
+      return false;
     }
   } catch (error) {
     debugPrint('Error sending PUT request: $error');
+    return false;
   }
 }

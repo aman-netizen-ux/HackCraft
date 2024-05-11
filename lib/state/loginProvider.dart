@@ -8,7 +8,9 @@ class LoginProvider extends ChangeNotifier {
   String password = "";
   String firstName = "";
   String lastName = "";
-  String uuid = "";
+  String _uuid = "";
+
+  String get uuid => _uuid;
 
   void setCurrentIndex(int index) {
     currentIndex = index;
@@ -38,6 +40,9 @@ class LoginProvider extends ChangeNotifier {
   }
 
   void setUuid(String id) {
-    uuid = id;
+    debugPrint('id in provider : $id');
+    _uuid = id;
+    debugPrint('uuid in provider : $_uuid');
+    notifyListeners();
   }
 }

@@ -44,36 +44,36 @@ class _EducationalState extends State<Educational> {
           children: [
             buildContainer(
                 'Qualification',
-                widget.user.educationQualification.isEmpty
+                widget.user.educationQualification.trim().isEmpty
                     ? "Add your educational qualification"
-                    : widget.user.educationQualification,
+                    : widget.user.educationQualification.toString(),
                 context,
-                widget.user.educationQualification.isEmpty),
+                widget.user.educationQualification.trim().isEmpty),
             buildContainer(
                 'Percentage',
-                widget.user.percentage > -1
+                widget.user.percentage! > -1
                     ? widget.user.percentage.toString()
                     : "Add your percentage",
                 context,
-                widget.user.percentage <= -1),
-            if (!(widget.user.educationQualification == "Senior Secondary" ||
+                widget.user.percentage! <= -1),
+            if (!(widget.user.educationQualification == "s" ||
                 widget.user.educationQualification == "Secondary")) ...[
               buildContainer(
                   'Specialization',
-                  widget.user.specialization.isEmpty
+                  widget.user.specialization!.trim().isEmpty
                       ? "Add your specialization"
-                      : widget.user.specialization,
+                      : widget.user.specialization.toString(),
                   context,
-                  widget.user.specialization.isEmpty),
+                  widget.user.specialization!.trim().isEmpty),
               buildContainer(
                   'Degree',
-                  widget.user.courseName.isEmpty &&
+                  widget.user.courseName!.trim().isEmpty &&
                           widget.user.courseEndYear < 0
                       ? 'Add your course name and year' : '${widget.user.courseName} | ${widget.user.courseEndYear}'
                     ,
                   context,
-                  widget.user.courseName.isEmpty &&
-                      widget.user.courseEndYear <= -1),
+                  widget.user.courseName!.trim().isEmpty &&
+                      widget.user.courseEndYear <= 0),
             ],
             widget.user.interest.key.isEmpty 
                 ? const SizedBox.shrink()

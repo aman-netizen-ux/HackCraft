@@ -1,20 +1,22 @@
 class User {
   final String userType;
   final String firstName;
-  final String organisationName;
+  final String? organisationName;
   final String lastName;
   final String email;
   final int courseEndYear;
-  final int percentage;
+  final String? phone;
+  final int? percentage;
   final String gender;
-  final String courseName;
+  final String? courseName;
   final String userName;
   final String city;
+  final String? degree;
   final String? dateOfBirth;
   final Interest interest;
   final String about;
   final String educationQualification;
-  final String specialization;
+  final String? specialization;
   final List<String> skills;
   final SocialLinks socialLinks;
 
@@ -28,9 +30,11 @@ class User {
     required this.userName,
     required this.gender,
     required this.city,
+    required this.degree,
     required this.organisationName,
     required this.courseName,
     required this.courseEndYear,
+    required this.phone,
     required this.dateOfBirth,
     required this.interest,
     required this.about,
@@ -51,6 +55,8 @@ class User {
       gender: json['gender'],
       city: json['city'],
       organisationName: json['organisation'],
+      degree: json['degree'],
+      phone: json['phone'],
       courseName: json['cousrse_name'], // Corrected typo
       courseEndYear: json['course_end_year'],
       dateOfBirth: json['date_of_birth'],
@@ -80,6 +86,7 @@ class Interest {
 
 class SocialLinks {
   final String facebook;
+  final String X;
   final String instagram;
   final String linkedin;
   final String github;
@@ -93,6 +100,7 @@ class SocialLinks {
 
   SocialLinks({
     required this.facebook,
+    required this.X,
     required this.instagram,
     required this.linkedin,
     required this.github,
@@ -108,6 +116,7 @@ class SocialLinks {
   factory SocialLinks.fromJson(Map<String, dynamic> json) {
     return SocialLinks(
       facebook: json['facebook'],
+      X: json['x'],
       instagram: json['instagram'],
       linkedin: json['linkedin'],
       github: json['github'],

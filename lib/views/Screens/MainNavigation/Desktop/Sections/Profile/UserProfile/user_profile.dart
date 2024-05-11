@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:major_project__widget_testing/api/UserProfile/get_user_profile.dart';
+//import 'package:major_project__widget_testing/api/UserProfile/get_user_profile.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
-import 'package:major_project__widget_testing/models/ProfileModel/getUserProfileModel.dart';
+//import 'package:major_project__widget_testing/models/ProfileModel/getUserProfileModel.dart';
 import 'package:major_project__widget_testing/state/loginProvider.dart';
 import 'package:major_project__widget_testing/state/profile-provider/profile_provider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
@@ -35,6 +35,7 @@ class _UserProfileState extends State<UserProfile> {
     try {
       final userProvider = Provider.of<ProfileProvider>(context, listen: false);
        final loginProvider = Provider.of<LoginProvider>(context, listen: false);
+       debugPrint('profile mei uid : ${loginProvider.uuid}');
       await userProvider.fetchUser(loginProvider.uuid);
     } catch (e) {
       // Optionally handle errors here
@@ -71,19 +72,6 @@ class _UserProfileState extends State<UserProfile> {
                   topLeft: Radius.circular(50),
                   bottomLeft: Radius.circular(50))),
           child:
-              // FutureBuilder<User>(
-              //   future: fetchUserData("NyrBLc7ZiGT7FtzmQqhSGBbGIUm2"),
-              // //   builder: (context, snapshot) {
-              //     if (snapshot.connectionState == ConnectionState.waiting) {
-              //       return Center(child: CircularProgressIndicator());
-              //     }
-              // else if (!snapshot.hasData || snapshot.data == null || snapshot.data?.userName == null) {
-              //   print('username at 39: ');
-              //   return Center(child: Text('Error Occured '));
-              // }
-              //else {
-              //final user = snapshot.data;
-              //return
               Row(
             children: [
               Expanded(
@@ -113,7 +101,7 @@ class _UserProfileState extends State<UserProfile> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text('Student',
+                                        Text(userProvider.user!.userType,
                                             style: GoogleFonts.getFont(
                                                 fontFamily2,
                                                 fontSize:
@@ -121,7 +109,7 @@ class _UserProfileState extends State<UserProfile> {
                                                 color: const Color(0xfff4f4f4)
                                                     .withOpacity(0.8),
                                                 height: lineHeight(19.2, 14),
-                                                fontWeight: FontWeight.w300)),
+                                               fontWeight: FontWeight.w300)),
                                         Text(
                                             'Hello ${userProvider.user?.firstName} ${userProvider.user?.lastName}',
                                             style: GoogleFonts.getFont(
@@ -175,8 +163,7 @@ class _UserProfileState extends State<UserProfile> {
                                       Row(
                                         children: [
                                           Text(
-                                              userProvider.user!.userName
-                                                  .toString(),
+                                              userProvider.user!.userName,
                                               style: GoogleFonts.getFont(
                                                   fontFamily2,
                                                   fontSize:
@@ -187,7 +174,7 @@ class _UserProfileState extends State<UserProfile> {
                                                   fontWeight: FontWeight.w400)),
                                         ],
                                       ),
-                                      Text(userProvider.user!.organisationName,
+                                      Text(userProvider.user!.organisationName.toString(),
                                           maxLines: 2,
                                           style: GoogleFonts.getFont(
                                               fontFamily2,
@@ -404,9 +391,6 @@ class _UserProfileState extends State<UserProfile> {
                   ))
             ],
           )
-          // }
-          //},
-          //)
           );
     }
   }

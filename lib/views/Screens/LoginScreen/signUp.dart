@@ -11,6 +11,7 @@ import 'package:major_project__widget_testing/views/Screens/LoginScreen/SignIn/g
 import 'package:major_project__widget_testing/views/Screens/LoginScreen/Verification/sendOtpFunction.dart';
 import 'package:major_project__widget_testing/views/Screens/LoginScreen/registerCheck.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpDetails extends StatefulWidget {
   const SignUpDetails({super.key});
@@ -29,6 +30,16 @@ class _SignUpDetailsState extends State<SignUpDetails> {
   bool passwordVisible = true;
   String otp = '';
   int otpId = 0;
+
+  Future<SharedPreferences> getLocalStorage() async {
+    return await SharedPreferences.getInstance();
+  }
+
+  void storeUserUid(String uid) async {
+    SharedPreferences prefs = await getLocalStorage();
+    debugPrint('set locally');
+    await prefs.setString('user_uid', uid);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +116,7 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                   loginProvider.getLastName(lastName);
 
                                   String firebaseUUID = user.user!.uid;
+                                  storeUserUid(firebaseUUID);
                                   loginProvider.setUuid(firebaseUUID);
                                 } else {
                                   debugPrint(
@@ -194,6 +206,7 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                   lastName = lastName.substring(0, 1) +
                                       lastName.substring(1).toLowerCase();
                                   String firebaseUUID = user.user!.uid;
+                                  storeUserUid(firebaseUUID);
                                   loginProvider.setUuid(firebaseUUID);
                                   loginProvider.getFirstName(firstName);
                                   loginProvider.getLastName(lastName);
