@@ -39,13 +39,48 @@ class _SignInState extends State<SignIn> {
       user = userCredential.user;
     } on FirebaseAuthException catch (e) {
       // Handling errors during sign-in
+
       if (e.code == " user-not found") {
-        showSnackBar("No user found on that email", red2,
-            const Icon(Icons.report_gmailerrorred_outlined), context);
+        showSnackBar(
+            "No user found on that email",
+            red2,
+            const Icon(
+              Icons.report_gmailerrorred_outlined,
+              color: white,
+            ),
+            // ignore: use_build_context_synchronously
+            context);
         debugPrint("No user found on that email");
+      } else if (e.code == "invalid-credential") {
+        showSnackBar(
+            "Invalid Credentials",
+            red2,
+            const Icon(
+              Icons.report_gmailerrorred_outlined,
+              color: white,
+            ),
+            // ignore: use_build_context_synchronously
+            context);
+        debugPrint("Invalid Credentials");
+      } else {
+        showSnackBar(
+            "Invalid ",
+            red2,
+            const Icon(
+              Icons.report_gmailerrorred_outlined,
+              color: white,
+            ),
+            // ignore: use_build_context_synchronously
+            context);
+        debugPrint("Invalid ");
       }
     }
     return user;
+  }
+
+  bool isEmailValid(String email) {
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return emailRegex.hasMatch(email);
   }
 
   @override
@@ -108,7 +143,6 @@ class _SignInState extends State<SignIn> {
                                     '/mainNavigation',
                                   );
                                 } else {
-                                 
                                   loginProvider.setCurrentIndex(2);
                                   tabController.animateTo(1);
                                 }
@@ -191,7 +225,7 @@ class _SignInState extends State<SignIn> {
                                   );
                                 } else {
                                   // moves on to register screen
-                                
+
                                   loginProvider.setCurrentIndex(2);
                                   tabController.animateTo(1);
                                 }
@@ -430,7 +464,7 @@ class _SignInState extends State<SignIn> {
                             color: white,
                           ),
                           context);
-                    } else if (email.toString().contains('@')) {
+                    } else if (!isEmailValid(email)) {
                       showSnackBar('Invalid  Email-Id', red2,
                           const Icon(Icons.warning, color: white), context);
                     } else {
@@ -474,7 +508,7 @@ class _SignInState extends State<SignIn> {
                   child: Text(
                     "Login",
                     style: TextStyle(
-                      color: Colors.white,
+                        color: Colors.white,
                         fontSize: heightScaler(context, 18),
                         fontWeight: FontWeight.w500),
                   ))),

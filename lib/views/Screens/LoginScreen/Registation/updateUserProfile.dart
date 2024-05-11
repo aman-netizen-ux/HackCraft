@@ -19,7 +19,7 @@ Future<void> updateUserPost(Map<String, dynamic> data, String uid) async {
       body: jsonData,
     );
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       print('User Update  successful');
       print('Response: ${response.body}');
     } else {
