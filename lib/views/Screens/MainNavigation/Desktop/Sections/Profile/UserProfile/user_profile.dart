@@ -162,7 +162,7 @@ class _UserProfileState extends State<UserProfile> {
                                       Row(
                                         children: [
                                           Text(
-                                              userProvider.user!.userName,
+                                             "@${userProvider.user!.userName}",
                                               style: GoogleFonts.getFont(
                                                   fontFamily2,
                                                   fontSize:
@@ -212,7 +212,7 @@ class _UserProfileState extends State<UserProfile> {
                               ),
                             ),
                           ]),
-                          userProvider.user!.about.isEmpty
+                          userProvider.user!.about==" "
                               ? InkWell(
                                 onTap: () {
                                   profileProvider.setSelectedIndex(3);

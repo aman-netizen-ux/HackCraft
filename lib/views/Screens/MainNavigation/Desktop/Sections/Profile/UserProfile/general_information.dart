@@ -37,7 +37,7 @@ class _GeneralInfoState extends State<GeneralInfo> {
               context,
               widget.user.dateOfBirth == null),
               
-        widget.user.phone!.isEmpty ?  InkWell(
+        widget.user.phone==" " ?  InkWell(
           onTap: () {
             profileProvider.setSelectedIndex(3);
           },
@@ -73,6 +73,56 @@ class _GeneralInfoState extends State<GeneralInfo> {
                   ],
                 )),
         ) : buildContainer('Mobile No.', widget.user.phone.toString(), context, widget.user.phone!.isEmpty),
+         widget.user.socialLinks.behance == " " &&
+         widget.user.socialLinks.codepen == " "&&
+          widget.user.socialLinks.dribble == " "&&
+           widget.user.socialLinks.X == " "&&
+            widget.user.socialLinks.facebook == " "&&
+             widget.user.socialLinks.figma == " "&&
+              widget.user.socialLinks.github == " "&&
+               widget.user.socialLinks.instagram == " "&&
+                widget.user.socialLinks.linkedin == " "&&
+             widget.user.socialLinks.medium == " "&&
+              widget.user.socialLinks.reddit == " "&&
+               widget.user.socialLinks.slack == " "
+
+               ? InkWell(
+          onTap: () {
+            profileProvider.setSelectedIndex(3);
+          },
+          child: Container(
+                height: scaleHeight(context, 44),
+                width: scaleWidth(context, 311),
+                padding: EdgeInsets.symmetric(
+                    horizontal: scaleWidth(context, 12),
+                    vertical: scaleHeight(context, 7)),
+                decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    border: Border.all(color: const Color(0xffc0dde3)),
+                    borderRadius: const BorderRadius.all(Radius.circular(15))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                        height: scaleHeight(context, 30),
+                        width: scaleWidth(context, 30),
+                        decoration: const BoxDecoration(
+                          color: Color(0xff44a6bb),
+                          shape: BoxShape.circle,
+                        ),
+                        child: SvgPicture.asset(
+                            'assets/icons/defaultEditPortal/add.svg')),
+                    SizedBox(width: scaleWidth(context, 12)),
+                    Text('Add Your Social Links',
+                        style: GoogleFonts.getFont(fontFamily2,
+                            fontSize: scaleWidth(context, 12),
+                            color: const Color(0xff1a202c),
+                            height: lineHeight(16.8, 12),
+                            fontWeight: FontWeight.w400)),
+                  ],
+                )),
+        ):
+         
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,

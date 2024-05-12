@@ -60,7 +60,6 @@ class _EducationalState extends State<Educational> {
                 widget.user.percentage! <= -1),
             if (!(widget.user.educationQualification == "Senior Secondary" ||
                 widget.user.educationQualification == "Secondary")) ...[
-                  
               buildContainer(
                   'Specialization',
                   widget.user.specialization!.trim().isEmpty
@@ -72,18 +71,14 @@ class _EducationalState extends State<Educational> {
                   'Degree',
                   widget.user.degree!.trim().isEmpty &&
                           widget.user.courseEndYear < 0
-                      ? 'Add your course name and year' : '${widget.user.degree} | ${widget.user.courseEndYear}'
-                    ,
+                      ? 'Add your course name and year'
+                      : '${widget.user.degree} | ${widget.user.courseEndYear}',
                   context,
                   widget.user.degree!.trim().isEmpty &&
                       widget.user.courseEndYear <= 0),
             ],
-            widget.user.interest.key.isEmpty 
-                ? const SizedBox.shrink()
-                : buildInterestChips('Interest', widget.user.interest),
-            widget.user.skills.isEmpty
-                ? const SizedBox.shrink()
-                : buildChips('Skills', widget.user.skills),
+           buildInterestChips('Interest', widget.user.interest, widget.user.interest.isEmpty(), "Add your Interest"),
+            buildChips('Skills', widget.user.skills, widget.user.skills.isEmpty, "Add your skills"),
             SizedBox(height: scaleHeight(context, 8))
           ],
         ),
@@ -93,44 +88,44 @@ class _EducationalState extends State<Educational> {
 
   Widget buildContainer(
       String key, String value, BuildContext context, bool empty) {
-          final profileProvider = Provider.of<ProfileProvider>(context);
+    final profileProvider = Provider.of<ProfileProvider>(context);
     return empty
         ? InkWell(
-          onTap: () {
-            profileProvider.setSelectedIndex(3);
-          },
-          child: Container(
-              height: scaleHeight(context, 44),
-              width: scaleWidth(context, 311),
-              padding: EdgeInsets.symmetric(
-                  horizontal: scaleWidth(context, 12),
-                  vertical: scaleHeight(context, 7)),
-              decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  border: Border.all(color: const Color(0xffc0dde3)),
-                  borderRadius: const BorderRadius.all(Radius.circular(15))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                      height: scaleHeight(context, 30),
-                      width: scaleWidth(context, 30),
-                      decoration: const BoxDecoration(
-                        color: Color(0xff44a6bb),
-                        shape: BoxShape.circle,
-                      ),
-                      child: SvgPicture.asset(
-                          'assets/icons/defaultEditPortal/add.svg')),
-                  SizedBox(width: scaleWidth(context, 12)),
-                  Text(value,
-                      style: GoogleFonts.getFont(fontFamily2,
-                          fontSize: scaleWidth(context, 12),
-                          color: const Color(0xff1a202c),
-                          height: lineHeight(16.8, 12),
-                          fontWeight: FontWeight.w400)),
-                ],
-              )),
-        )
+            onTap: () {
+              profileProvider.setSelectedIndex(3);
+            },
+            child: Container(
+                height: scaleHeight(context, 44),
+                width: scaleWidth(context, 311),
+                padding: EdgeInsets.symmetric(
+                    horizontal: scaleWidth(context, 12),
+                    vertical: scaleHeight(context, 7)),
+                decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    border: Border.all(color: const Color(0xffc0dde3)),
+                    borderRadius: const BorderRadius.all(Radius.circular(15))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                        height: scaleHeight(context, 30),
+                        width: scaleWidth(context, 30),
+                        decoration: const BoxDecoration(
+                          color: Color(0xff44a6bb),
+                          shape: BoxShape.circle,
+                        ),
+                        child: SvgPicture.asset(
+                            'assets/icons/defaultEditPortal/add.svg')),
+                    SizedBox(width: scaleWidth(context, 12)),
+                    Text(value,
+                        style: GoogleFonts.getFont(fontFamily2,
+                            fontSize: scaleWidth(context, 12),
+                            color: const Color(0xff1a202c),
+                            height: lineHeight(16.8, 12),
+                            fontWeight: FontWeight.w400)),
+                  ],
+                )),
+          )
         : Container(
             height: scaleHeight(context, 44),
             width: scaleWidth(context, 311),
@@ -167,8 +162,44 @@ class _EducationalState extends State<Educational> {
             ));
   }
 
-  SizedBox buildChips(String key, List<String> value) {
-    return SizedBox(
+  Widget buildChips(String key, List<String> value, bool isEmpty, String title) {
+      final profileProvider = Provider.of<ProfileProvider>(context);
+    return isEmpty? InkWell(
+            onTap: () {
+              profileProvider.setSelectedIndex(3);
+            },
+            child: Container(
+                height: scaleHeight(context, 44),
+                width: scaleWidth(context, 311),
+                padding: EdgeInsets.symmetric(
+                    horizontal: scaleWidth(context, 12),
+                    vertical: scaleHeight(context, 7)),
+                decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    border: Border.all(color: const Color(0xffc0dde3)),
+                    borderRadius: const BorderRadius.all(Radius.circular(15))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                        height: scaleHeight(context, 30),
+                        width: scaleWidth(context, 30),
+                        decoration: const BoxDecoration(
+                          color: Color(0xff44a6bb),
+                          shape: BoxShape.circle,
+                        ),
+                        child: SvgPicture.asset(
+                            'assets/icons/defaultEditPortal/add.svg')),
+                    SizedBox(width: scaleWidth(context, 12)),
+                    Text(title,
+                        style: GoogleFonts.getFont(fontFamily2,
+                            fontSize: scaleWidth(context, 12),
+                            color: const Color(0xff1a202c),
+                            height: lineHeight(16.8, 12),
+                            fontWeight: FontWeight.w400)),
+                  ],
+                )),
+          ):SizedBox(
       width: scaleWidth(context, 311),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -209,45 +240,84 @@ class _EducationalState extends State<Educational> {
     );
   }
 
-  SizedBox buildInterestChips(String key, Interest value) {
-    return SizedBox(
-      width: scaleWidth(context, 311),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(key,
-              style: GoogleFonts.getFont(fontFamily2,
-                  fontSize: scaleWidth(context, 14),
-                  color: const Color(0xff1a202c),
-                  height: lineHeight(19.2, 14),
-                  fontWeight: FontWeight.w300)),
-          SizedBox(height: scaleHeight(context, 10)),
-          Wrap(
-            spacing: scaleWidth(context, 9),
-            runSpacing: scaleHeight(context, 12),
-            children: [
-              for (int i = 0; i < value.key.length; i++)
-                Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: scaleWidth(context, 35),
-                      vertical: scaleHeight(context, 6)),
-                  decoration: BoxDecoration(
-                      color: chipColors[i % chipColors.length],
-                      borderRadius: const BorderRadius.all(Radius.circular(15)),
-                      border: Border.all(
-                          color:
-                              chipBorderColors[i % chipBorderColors.length])),
-                  child: Text(value.key[i],
-                      style: GoogleFonts.getFont(fontFamily2,
-                          fontSize: scaleWidth(context, 12),
-                          color: const Color(0xff1a202c),
-                          height: lineHeight(16.8, 12),
-                          fontWeight: FontWeight.w400)),
-                )
-            ],
+  Widget buildInterestChips(String key, Interest value, bool isEmpty, String title) {
+    final profileProvider = Provider.of<ProfileProvider>(context);
+    return isEmpty
+        ? InkWell(
+            onTap: () {
+              profileProvider.setSelectedIndex(3);
+            },
+            child: Container(
+                height: scaleHeight(context, 44),
+                width: scaleWidth(context, 311),
+                padding: EdgeInsets.symmetric(
+                    horizontal: scaleWidth(context, 12),
+                    vertical: scaleHeight(context, 7)),
+                decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    border: Border.all(color: const Color(0xffc0dde3)),
+                    borderRadius: const BorderRadius.all(Radius.circular(15))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                        height: scaleHeight(context, 30),
+                        width: scaleWidth(context, 30),
+                        decoration: const BoxDecoration(
+                          color: Color(0xff44a6bb),
+                          shape: BoxShape.circle,
+                        ),
+                        child: SvgPicture.asset(
+                            'assets/icons/defaultEditPortal/add.svg')),
+                    SizedBox(width: scaleWidth(context, 12)),
+                    Text(title,
+                        style: GoogleFonts.getFont(fontFamily2,
+                            fontSize: scaleWidth(context, 12),
+                            color: const Color(0xff1a202c),
+                            height: lineHeight(16.8, 12),
+                            fontWeight: FontWeight.w400)),
+                  ],
+                )),
           )
-        ],
-      ),
-    );
+        : SizedBox(
+            width: scaleWidth(context, 311),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(key,
+                    style: GoogleFonts.getFont(fontFamily2,
+                        fontSize: scaleWidth(context, 14),
+                        color: const Color(0xff1a202c),
+                        height: lineHeight(19.2, 14),
+                        fontWeight: FontWeight.w300)),
+                SizedBox(height: scaleHeight(context, 10)),
+                Wrap(
+                  spacing: scaleWidth(context, 9),
+                  runSpacing: scaleHeight(context, 12),
+                  children: [
+                    for (int i = 0; i < value.key.length; i++)
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: scaleWidth(context, 35),
+                            vertical: scaleHeight(context, 6)),
+                        decoration: BoxDecoration(
+                            color: chipColors[i % chipColors.length],
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(15)),
+                            border: Border.all(
+                                color: chipBorderColors[
+                                    i % chipBorderColors.length])),
+                        child: Text(value.key[i],
+                            style: GoogleFonts.getFont(fontFamily2,
+                                fontSize: scaleWidth(context, 12),
+                                color: const Color(0xff1a202c),
+                                height: lineHeight(16.8, 12),
+                                fontWeight: FontWeight.w400)),
+                      )
+                  ],
+                )
+              ],
+            ),
+          );
   }
 }
