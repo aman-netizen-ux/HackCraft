@@ -28,8 +28,8 @@ class AppRoutes {
   static const String mainNavigation = '/mainNavigation';
 
   static Map<String, Widget Function(BuildContext)> routes = {
-    start: (context) => LoginPageDesktop(),
-    // start: (context) =>  RegistrationForm(),
+    // start: (context) => LoginPageDesktop(),
+    start: (context) =>  RegistrationForm(),
     // start: (context) =>  RegisterUser(),
     mainNavigation: (context) => const MainNavigation(),
     hostNavigation: (context) => const HostNavigation(),

@@ -122,8 +122,14 @@ class _RigthPanelState extends State<RigthPanel> {
                                     // setState(() {
 
                                     // });
-                                  
-                                    options.add("Option ${options.length}");
+
+                                    createRegistrationProvider
+                                        .tabField[createRegistrationProvider
+                                                .currentKey]![
+                                            createRegistrationProvider
+                                                .currentIndex]
+                                        .options
+                                        .add(RegistrationOption(text: "Option ${options.length+1}", serialNumber: 1),);
                                     createRegistrationProvider.notify();
                                   },
                                   child: Container(

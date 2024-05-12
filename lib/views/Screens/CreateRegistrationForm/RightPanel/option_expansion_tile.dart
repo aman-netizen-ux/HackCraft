@@ -28,10 +28,17 @@ class _OptionExpansionTileState extends State<OptionExpansionTile> {
 
   TextEditingController ansController = TextEditingController();
 
+  // @override
+  // void didChangeDependencies() {
+  //   // TODO: implement didChangeDependencies
+  //   super.didChangeDependencies();
+
+  // }
+
   @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
+  void didUpdateWidget(covariant OptionExpansionTile oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
     final createRegistrationProvider =
         Provider.of<CreateRegistrationProvider>(context, listen: false);
     dynamic currentField = createRegistrationProvider.tabField[
@@ -39,6 +46,8 @@ class _OptionExpansionTileState extends State<OptionExpansionTile> {
             .currentKey]![createRegistrationProvider.currentIndex];
     List<RegistrationOption> registrationOptions =
         currentField.options.cast<RegistrationOption>();
+    List<String> textList =
+        registrationOptions.map((option) => option.text).toList();
     ansController.text = widget.title;
   }
 
@@ -67,24 +76,35 @@ class _OptionExpansionTileState extends State<OptionExpansionTile> {
               isExpanded = value;
             });
           },
-          trailing: isExpanded
-              ? InkWell(
-                  onTap: () {},
-                  child: Container(
-                      height: scaleHeight(context, 24),
-                      alignment: Alignment.center,
-                      color: const Color(0xffeaeaea),
-                      margin: EdgeInsets.only(
-                          left: scaleWidth(context, 8),
-                          right: scaleWidth(context, 14)),
-                      width: scaleHeight(context, 24),
-                      child: const Icon(
-                        Icons.delete,
-                        size: 18,
-                        color: white,
-                      )),
-                )
-              : const Icon(Icons.close_rounded),
+          trailing: InkWell(
+            onTap: () {
+              // int index = createRegistrationProvider.currentIndex;
+              // List<dynamic> fieldsList = createRegistrationProvider
+              //     .tabField[createRegistrationProvider.currentKey]!;
+              if (widget.index >= 0 && widget.index < currentField.options.length && currentField.options.length>2 ) {
+                currentField.options.removeAt(widget.index);
+                // createRegistrationProvider.currentIndex = -1;
+                // createRegistrationProvider.currentKey = "";
+                createRegistrationProvider.notify();
+              }
+            },
+            child:currentField.options.length<=2 ? SizedBox.shrink():
+             isExpanded
+                ? Container(
+                    height: scaleHeight(context, 24),
+                    alignment: Alignment.center,
+                    color: const Color(0xffeaeaea),
+                    margin: EdgeInsets.only(
+                        left: scaleWidth(context, 8),
+                        ),
+                    width: scaleHeight(context, 24),
+                    child: const Icon(
+                      Icons.delete,
+                      size: 18,
+                      color: white,
+                    ))
+                : const Icon(Icons.close_rounded),
+          ),
           childrenPadding: EdgeInsets.symmetric(
             horizontal: scaleHeight(context, 14),
             vertical: scaleWidth(context, 15),

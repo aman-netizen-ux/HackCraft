@@ -46,10 +46,13 @@ class _SampleTabState extends State<SampleTab> {
               String currentKey = keys[currentKeyIndex];
               createRegistrationProvider.currentKey = currentKey;
               createRegistrationProvider.currentIndex = index;
+              print("***********************$index********************************");
+             
 
               FieldTypes fieldType =
                   createRegistrationProvider.tabField[currentKey]![index].type;
               print(fieldType);
+               print(fieldType== FieldTypes.shortAnswer? "validation: ${ createRegistrationProvider.tabField[currentKey]![index].validation}":" not short ans");
             },
             child: Row(children: [fieldWidget]),
           ));

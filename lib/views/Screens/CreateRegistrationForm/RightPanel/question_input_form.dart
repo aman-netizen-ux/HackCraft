@@ -48,8 +48,10 @@ class _QuestionInputFormState extends State<QuestionInputForm> {
         .tabField[createRegistrationProvider.currentKey]![
             createRegistrationProvider.currentIndex]
         .type;
-        final RegExp integerPattern = RegExp(r'^\d+$'); 
-        bool isValidationLength = typeOfField== FieldTypes.shortAnswer ? integerPattern.hasMatch(currentField.validation) :false;
+    final RegExp integerPattern = RegExp(r'^\d+$');
+    bool isValidationLength = typeOfField == FieldTypes.shortAnswer
+        ? integerPattern.hasMatch(currentField.validation)
+        : false;
     _questionController.text = createRegistrationProvider.currentIndex == -1
         ? " "
         : createRegistrationProvider
@@ -75,16 +77,26 @@ class _QuestionInputFormState extends State<QuestionInputForm> {
             .errorText;
     selectedValidator = createRegistrationProvider.currentIndex == -1
         ? " "
-        : typeOfField == FieldTypes.shortAnswer ||
-                typeOfField == FieldTypes.phoneNumber
-            ? ["String" ,"Password" ,"Number" ,"URL" ,"Email"  ].contains(currentField.validation)
-            ?currentField.validation
-            : isValidationLength
-            ? "Length"
-            :"RegExp"
+        : typeOfField == FieldTypes.shortAnswer
+            ? ["String", "Password", "Number", "URL", "Email"]
+                    .contains(currentField.validation)
+                ? currentField.validation
+                : isValidationLength
+                    ? "Length"
+                    : "RegExp"
+            : "String";
+
+    _controller.text = createRegistrationProvider.currentIndex == -1
+        ? " "
+        : typeOfField == FieldTypes.shortAnswer
+            ? ["String", "Password", "Number", "URL", "Email"]
+                    .contains(currentField.validation)
+                ? ""
+                : currentField.validation
             : typeOfField == FieldTypes.longAnswer
-                ? "Length"
-                : "String";
+                ? currentField.wordLimit.toString()
+                : " ";
+
     _startController.text = createRegistrationProvider.currentIndex == -1
         ? " "
         : typeOfField == FieldTypes.linear ||
@@ -146,6 +158,16 @@ class _QuestionInputFormState extends State<QuestionInputForm> {
                     fontSize: scaleHeight(context, 14),
                   ),
                   onChanged: (value) {
+                    print(
+                        "//////////////    ${createRegistrationProvider.currentKey}    /////////////////");
+                    print(
+                        " current index: ${createRegistrationProvider.currentIndex}");
+                    print(
+                        "what is at current key: ${createRegistrationProvider.tabField[createRegistrationProvider.currentKey]}");
+                    print(
+                        "what is at current index: ${createRegistrationProvider.tabField[createRegistrationProvider.currentKey]![createRegistrationProvider.currentIndex]}");
+                    print(
+                        "what is at current index: ${createRegistrationProvider.tabField[createRegistrationProvider.currentKey]![createRegistrationProvider.currentIndex].label}");
                     createRegistrationProvider
                         .tabField[createRegistrationProvider.currentKey]![
                             createRegistrationProvider.currentIndex]
@@ -553,8 +575,6 @@ class _QuestionInputFormState extends State<QuestionInputForm> {
           Visibility(
             visible: [
               FieldTypes.shortAnswer,
-              FieldTypes.phoneNumber,
-              FieldTypes.longAnswer
             ].contains(createRegistrationProvider
                 .tabField[createRegistrationProvider.currentKey]![
                     createRegistrationProvider.currentIndex]
@@ -572,7 +592,8 @@ class _QuestionInputFormState extends State<QuestionInputForm> {
                   onChanged: (String? newValue) {
                     setState(() {
                       selectedValidator = newValue;
-                      if (selectedValidator == 'RegExp') {
+                      if (selectedValidator == 'RegExp' ||
+                          selectedValidator == 'Length') {
                         // currentField.validation = _controller.text;
                         // createRegistrationProvider.notify();
                         // print("regexxxx ${currentField.validation}");
@@ -588,63 +609,40 @@ class _QuestionInputFormState extends State<QuestionInputForm> {
                   ),
                   hint: const Text('Validator'),
                   elevation: 0,
-                  items: createRegistrationProvider
-                              .tabField[createRegistrationProvider.currentKey]![
-                                  createRegistrationProvider.currentIndex]
-                              .type ==
-                          FieldTypes.phoneNumber
-                      ? const [
-                          DropdownMenuItem<String>(
-                            value: 'PhoneNumber',
-                            child: Text('Phone Number'),
-                          ),
-                        ]
-                      : createRegistrationProvider
-                                  .tabField[
-                                      createRegistrationProvider.currentKey]![
-                                      createRegistrationProvider.currentIndex]
-                                  .type ==
-                              FieldTypes.longAnswer
-                          ? const [
-                              DropdownMenuItem<String>(
-                                value: 'Length',
-                                child: Text('Length'),
-                              ),
-                            ]
-                          : const [
-                              DropdownMenuItem<String>(
-                                value: 'Number',
-                                child: Text('Number'),
-                              ),
-                              DropdownMenuItem<String>(
-                                value: 'String',
-                                child: Text('String'),
-                              ),
-                              DropdownMenuItem<String>(
-                                value: 'Password',
-                                child: Text('Password'),
-                              ),
-                              DropdownMenuItem<String>(
-                                value: 'Email',
-                                child: Text('Email'),
-                              ),
-                              DropdownMenuItem<String>(
-                                value: 'URL',
-                                child: Text('URL'),
-                              ),
-                              DropdownMenuItem<String>(
-                                value: 'RegExp',
-                                child: Text('RegExp'),
-                              ),
-                              DropdownMenuItem<String>(
-                                value: 'Length',
-                                child: Text('Length'),
-                              ),
-                              DropdownMenuItem<String>(
-                                value: null,
-                                child: Text('None'),
-                              ),
-                            ],
+                  items: const [
+                    DropdownMenuItem<String>(
+                      value: 'Number',
+                      child: Text('Number'),
+                    ),
+                    DropdownMenuItem<String>(
+                      value: 'String',
+                      child: Text('String'),
+                    ),
+                    DropdownMenuItem<String>(
+                      value: 'Password',
+                      child: Text('Password'),
+                    ),
+                    DropdownMenuItem<String>(
+                      value: 'Email',
+                      child: Text('Email'),
+                    ),
+                    DropdownMenuItem<String>(
+                      value: 'URL',
+                      child: Text('URL'),
+                    ),
+                    DropdownMenuItem<String>(
+                      value: 'RegExp',
+                      child: Text('RegExp'),
+                    ),
+                    DropdownMenuItem<String>(
+                      value: 'Length',
+                      child: Text('Length'),
+                    ),
+                    DropdownMenuItem<String>(
+                      value: null,
+                      child: Text('None'),
+                    ),
+                  ],
                   isExpanded: true,
                   icon: const Icon(Icons.arrow_drop_down),
                   iconSize: 24,
@@ -653,66 +651,90 @@ class _QuestionInputFormState extends State<QuestionInputForm> {
             ),
           ),
           Visibility(
-            visible:
-                selectedValidator == "RegExp" || selectedValidator == "Length",
-            child: Container(
-              margin: EdgeInsets.only(
-                top: scaleHeight(context, 7),
-                left: scaleWidth(context, 14),
-                right: scaleWidth(context, 16),
-                bottom: scaleHeight(context, 13),
-              ),
-              height: scaleHeight(context, 55),
-              child: TextFormField(
-                controller: _controller,
-                onChanged: (value) {
-                  if (selectedValidator == "RegExp" || selectedValidator=="Length") {
-                    currentField.validation = _controller.text;
-                    createRegistrationProvider.notify();
-                    print("regexxxx ${currentField.validation}");
-                  }
-                },
-                style: GoogleFonts.getFont(
-                  fontFamily2,
-                  fontSize: scaleHeight(context, 14),
-                  fontWeight: FontWeight.w500,
-                  color: concreteGrey,
+            visible: selectedValidator == "RegExp" ||
+                selectedValidator == "Length" ||
+                currentField.type == FieldTypes.longAnswer,
+            child: Column(
+              children: [
+              currentField.type == FieldTypes.longAnswer?  SizedBox(
+                  height: scaleHeight(context, 7),
+                ): const SizedBox.shrink(),
+                 currentField.type == FieldTypes.longAnswer?Text(
+                  "Word Limit",
+                  style: GoogleFonts.firaSans(
+                    fontWeight: FontWeight.w500,
+                    color: darkCharcoal.withOpacity(0.6),
+                    fontSize: scaleHeight(context, 14),
+                  ),
+                ): const SizedBox.shrink(),
+                
+                Container(
+                  margin: EdgeInsets.only(
+                    top: scaleHeight(context, 7),
+                    left: scaleWidth(context, 14),
+                    right: scaleWidth(context, 16),
+                    bottom: scaleHeight(context, 13),
+                  ),
+                  height: scaleHeight(context, 55),
+                  child: TextFormField(
+                    controller: _controller,
+                    onChanged: (value) {
+                      if (selectedValidator == "RegExp" ||
+                          selectedValidator == "Length") {
+                        currentField.validation = value;
+                        createRegistrationProvider.notify();
+                        print("regexxxx ${currentField.validation}");
+                      } else if (currentField.type == FieldTypes.longAnswer) {
+                        
+                        currentField.wordLimit = value.isEmpty? 100: int.tryParse(value)==0? 100: int.tryParse(value);
+                        createRegistrationProvider.notify();
+                      }
+                    },
+                    style: GoogleFonts.getFont(
+                      fontFamily2,
+                      fontSize: scaleHeight(context, 14),
+                      fontWeight: FontWeight.w500,
+                      color: concreteGrey,
+                    ),
+                    cursorColor: darkCharcoal,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: scaleWidth(context, 20),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: const BorderSide(
+                          color: black1,
+                          width: 1,
+                        ),
+                      ),
+                      hintText: currentField.type == FieldTypes.longAnswer
+                          ? 'Type your Word limit'
+                          : 'Type your $selectedValidator',
+                      labelStyle: GoogleFonts.getFont(
+                        fontFamily2,
+                        fontSize: scaleHeight(context, 16),
+                        fontWeight: FontWeight.w400,
+                        color: concreteGrey,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: const BorderSide(
+                          color: black1,
+                          width: 1,
+                        ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: const BorderSide(
+                          color: Colors.red,
+                          width: 1,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-                cursorColor: darkCharcoal,
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: scaleWidth(context, 20),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5),
-                    borderSide: const BorderSide(
-                      color: black1,
-                      width: 1,
-                    ),
-                  ),
-                  hintText: 'Type your $selectedValidator',
-                  labelStyle: GoogleFonts.getFont(
-                    fontFamily2,
-                    fontSize: scaleHeight(context, 16),
-                    fontWeight: FontWeight.w400,
-                    color: concreteGrey,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5),
-                    borderSide: const BorderSide(
-                      color: black1,
-                      width: 1,
-                    ),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5),
-                    borderSide: const BorderSide(
-                      color: Colors.red,
-                      width: 1,
-                    ),
-                  ),
-                ),
-              ),
+              ],
             ),
           ),
         ],
