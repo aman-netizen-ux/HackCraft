@@ -5,9 +5,13 @@ import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/state/loginProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/snackBar.dart';
+import 'package:major_project__widget_testing/views/Screens/LoginScreen/Registation/sendUserProfile.dart';
 import 'package:major_project__widget_testing/views/Screens/LoginScreen/SignIn/githubSignIn.dart';
 import 'package:major_project__widget_testing/views/Screens/LoginScreen/SignIn/googleSignIn.dart';
+import 'package:major_project__widget_testing/views/Screens/LoginScreen/Verification/sendOtpFunction.dart';
+import 'package:major_project__widget_testing/views/Screens/LoginScreen/registerCheck.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpDetails extends StatefulWidget {
   const SignUpDetails({super.key});
@@ -19,37 +23,27 @@ class SignUpDetails extends StatefulWidget {
 class _SignUpDetailsState extends State<SignUpDetails> {
   final TextEditingController _emailText = TextEditingController();
   final TextEditingController _passwordText = TextEditingController();
+  final TextEditingController _firstNametext = TextEditingController();
+  final TextEditingController _lastNametext = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool passwordVisible = true;
-  static Future<User?> createUserWithEmailAndPassword(
-      {required String email,
-      required String password,
-      required BuildContext context}) async {
-    User? user;
-    try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      user = userCredential.user;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        showSnackBar("weak-password", red2,
-            const Icon(Icons.report_gmailerrorred_outlined), context);
-        debugPrint('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        debugPrint('The account already exists for that email.');
-      }
-    } catch (e) {
-      debugPrint(e as String?);
-    }
-    return user;
+  String otp = '';
+  int otpId = 0;
+
+  Future<SharedPreferences> getLocalStorage() async {
+    return await SharedPreferences.getInstance();
+  }
+
+  void storeUserUid(String uid) async {
+    SharedPreferences prefs = await getLocalStorage();
+    debugPrint('set locally');
+    await prefs.setString('user_uid', uid);
   }
 
   @override
   Widget build(BuildContext context) {
+    final loginProvider = Provider.of<LoginProvider>(context, listen: false);
     return Column(
       children: [
         Padding(
@@ -103,16 +97,39 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                     context);
                                 FirebaseAuth.instance.signOut();
                               } else {
-                                // ignore: use_build_context_synchronously
-                                // Navigator.pushNamed(
-                                //   context,
-                                //   '/mainNavigation',
-                                // );
-                                final loginProvider =
-                                    Provider.of<LoginProvider>(context,
-                                        listen: false);
+                                //
+                                String? displayName = user.user!.displayName;
+                                loginProvider.setEmail(user.user!.email!);
+                                if (displayName != null &&
+                                    displayName.isNotEmpty) {
+                                  List<String> nameParts =
+                                      displayName.split(" ");
+                                  String firstName = nameParts[0];
+                                  firstName = firstName.substring(0, 1) +
+                                      firstName.substring(1).toLowerCase();
+                                  String lastName = nameParts.length > 1
+                                      ? nameParts.sublist(1).join(" ")
+                                      : "";
+                                  lastName = lastName.substring(0, 1) +
+                                      lastName.substring(1).toLowerCase();
+                                  loginProvider.getFirstName(firstName);
+                                  loginProvider.getLastName(lastName);
 
-                                loginProvider.setCurrentIndex(1);
+                                  String firebaseUUID = user.user!.uid;
+                                  storeUserUid(firebaseUUID);
+                                  loginProvider.setUuid(firebaseUUID);
+                                } else {
+                                  debugPrint(
+                                      'Google User name is not available');
+                                  loginProvider.getFirstName("Netizens");
+                                }
+                                sendUserPost({
+                                  "first_name": loginProvider.firstName,
+                                  "last_name": loginProvider.lastName,
+                                  "email": loginProvider.emailId,
+                                }).then((value) {
+                                  loginProvider.setCurrentIndex(2);
+                                });
                               }
                             },
                             style: ButtonStyle(
@@ -139,7 +156,7 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: widthScaler(context, 10)),
+                                      horizontal: widthScaler(context, 8)),
                                   child: Text(
                                     "Google",
                                     style: GoogleFonts.firaSans(
@@ -174,16 +191,47 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                     context);
                                 FirebaseAuth.instance.signOut();
                               } else {
-                                // ignore: use_build_context_synchronously
-                                // Navigator.pushNamed(
-                                //   context,
-                                //   '/mainNavigation',
-                                // );
-                                final loginProvider =
-                                    Provider.of<LoginProvider>(context,
-                                        listen: false);
+                                String? displayName = user.user!.displayName;
+                                loginProvider.setEmail(user.user!.email!);
+                                if (displayName != null &&
+                                    displayName.isNotEmpty) {
+                                  List<String> nameParts =
+                                      displayName.split(" ");
+                                  String firstName = nameParts[0];
+                                  firstName = firstName.substring(0, 1) +
+                                      firstName.substring(1).toLowerCase();
+                                  String lastName = nameParts.length > 1
+                                      ? nameParts.sublist(1).join(" ")
+                                      : "";
+                                  lastName = lastName.substring(0, 1) +
+                                      lastName.substring(1).toLowerCase();
+                                  String firebaseUUID = user.user!.uid;
+                                  storeUserUid(firebaseUUID);
+                                  loginProvider.setUuid(firebaseUUID);
+                                  loginProvider.getFirstName(firstName);
+                                  loginProvider.getLastName(lastName);
+                                } else {
+                                  // If display name is not available, use GitHub username
+                                  String? userName =
+                                      user.additionalUserInfo!.username;
 
-                                loginProvider.setCurrentIndex(1);
+                                  if (userName != null && userName.isNotEmpty) {
+                                    loginProvider.getFirstName(userName);
+                                    debugPrint('github username: $userName');
+                                  } else {
+                                    debugPrint(
+                                        'Github User name is not available');
+                                    loginProvider.getFirstName("Netizens");
+                                  }
+                                }
+
+                                sendUserPost({
+                                  "first_name": loginProvider.firstName,
+                                  "last_name": loginProvider.lastName,
+                                  "email": loginProvider.emailId,
+                                }).then((value) {
+                                  loginProvider.setCurrentIndex(2);
+                                });
                               }
                             },
                             style: ButtonStyle(
@@ -212,7 +260,7 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: widthScaler(context, 7)),
                                   child: Text(
-                                    "Git Hub",
+                                    "GitHub",
                                     style: GoogleFonts.firaSans(
                                         fontSize: heightScaler(context, 16),
                                         color: darkCharcoal,
@@ -269,15 +317,18 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                             child: SizedBox(
                               height: heightScaler(context, 40),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
-                                   flex:488,
+                                    flex: 488,
                                     child: TextFormField(
                                       cursorColor: darkCharcoal,
+                                      controller: _firstNametext,
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                           borderSide: const BorderSide(
                                             color: Colors.black,
                                             width: 2,
@@ -291,7 +342,8 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                           color: concreteGrey,
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                           borderSide: const BorderSide(
                                             color: darkCharcoal,
                                             width: 1,
@@ -307,21 +359,20 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                         }
                                         return null;
                                       },
-                                      onSaved: (value) {},
                                     ),
                                   ),
-                                  const Expanded(
-                                    flex: 24,child: SizedBox()
-                                  ),
+                                  const Expanded(flex: 24, child: SizedBox()),
                                   Expanded(
-                                   flex:488,
+                                    flex: 488,
                                     child: TextFormField(
+                                      controller: _lastNametext,
                                       cursorColor: darkCharcoal,
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: white,
                                         border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                           borderSide: const BorderSide(
                                             color: Colors.black,
                                             width: 3,
@@ -336,7 +387,8 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                         contentPadding: EdgeInsets.only(
                                             left: widthScaler(context, 15)),
                                         focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                           borderSide: const BorderSide(
                                             color: darkCharcoal,
                                             width: 1,
@@ -349,7 +401,6 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                         }
                                         return null;
                                       },
-                                      onSaved: (value) {},
                                     ),
                                   ),
                                 ],
@@ -410,6 +461,7 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                             child: TextFormField(
                               cursorColor: darkCharcoal,
                               controller: _passwordText,
+                              obscureText: passwordVisible,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: white,
@@ -473,16 +525,51 @@ class _SignUpDetailsState extends State<SignUpDetails> {
             margin: const EdgeInsets.symmetric(vertical: 20),
             child: ElevatedButton(
                 onPressed: () async {
-                  User? user = await createUserWithEmailAndPassword(
-                    email: _emailText.text,
-                    password: _passwordText.text,
-                    context: context,
-                  );
-                  if (user != null) {
-                    final loginProvider =
-                        Provider.of<LoginProvider>(context, listen: false);
-
-                    loginProvider.setCurrentIndex(1);
+                  String email = _emailText.text;
+                  String password = _passwordText.text;
+                  String firstName = _firstNametext.text;
+                  String lastName = _lastNametext.text;
+                  if (email.isEmpty) {
+                    showSnackBar(
+                        'Enter your Email-id',
+                        red2,
+                        const Icon(
+                          Icons.warning,
+                          color: white,
+                        ),
+                        context);
+                  } else if (password.isEmpty) {
+                    showSnackBar(
+                        'Enter your Password',
+                        red2,
+                        const Icon(
+                          Icons.warning,
+                          color: white,
+                        ),
+                        context);
+                  } else if (!email.toString().contains('@')) {
+                    showSnackBar('Invalid  Email-Id', red2,
+                        const Icon(Icons.warning, color: white), context);
+                  } else if (password.length < 7) {
+                    showSnackBar('Password is weak', red2,
+                        const Icon(Icons.warning, color: white), context);
+                  } else {
+                    final bool emailRegistered = await registerCheck(email);
+                    if (emailRegistered) {
+                      print('Email is already registered');
+                      // Show error message or handle accordingly
+                    } else {
+                      final otpId = await triggerOTP(email);
+                      debugPrint('Received OTPid: $otpId');
+                      final loginProvider =
+                          Provider.of<LoginProvider>(context, listen: false);
+                      loginProvider.setOtpId(otpId);
+                      loginProvider.setEmail(email);
+                      loginProvider.setPassword(password);
+                      loginProvider.getFirstName(firstName);
+                      loginProvider.getLastName(lastName);
+                      loginProvider.setCurrentIndex(1);
+                    }
                   }
                 },
                 style: ButtonStyle(
@@ -500,8 +587,8 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                 ),
                 child: Text(
                   "Next ",
-                  style: TextStyle(
-                    color: Colors.white,
+                  style: GoogleFonts.firaSans(
+                      color: white,
                       fontSize: heightScaler(context, 18),
                       fontWeight: FontWeight.w500),
                 ))),

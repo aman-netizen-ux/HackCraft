@@ -25,7 +25,12 @@ const greyish3 = Color.fromARGB(255, 90, 89, 89);
 const Color greyish4 = Color.fromARGB(255, 197, 195, 195);
 const Color greyish5 = Color.fromARGB(255, 211, 202, 202);
 const Color greyish6 = Color.fromARGB(255, 160, 160, 160);
-const Color greyish7= Color.fromARGB(255, 90,91,91,);
+const Color greyish7 = Color.fromARGB(
+  255,
+  90,
+  91,
+  91,
+);
 const grey1 = Color.fromARGB(255, 243, 243, 243);
 const grey2 = Color.fromARGB(255, 227, 227, 227);
 const grey3 = Color.fromARGB(255, 44, 44, 44);
@@ -34,19 +39,19 @@ const grey5 = Color.fromARGB(255, 217, 217, 217);
 
 const lavender = Color(0xFFE2CCFF);
 
-const defaultTemplateCardTitle= Color.fromARGB(255, 150, 102, 197);
-const defaultTemplateCardBorder= Color.fromARGB(255, 217, 179, 255);
-const customTemplateCardTitle= Color.fromARGB(255, 39, 171, 183);
-const customTemplateCardBorder= Color.fromARGB(255, 108, 209, 219);
-const sectionSelection= Color.fromARGB(255, 136, 161, 199);// softblue in edit portal (default)
-
+const defaultTemplateCardTitle = Color.fromARGB(255, 150, 102, 197);
+const defaultTemplateCardBorder = Color.fromARGB(255, 217, 179, 255);
+const customTemplateCardTitle = Color.fromARGB(255, 39, 171, 183);
+const customTemplateCardBorder = Color.fromARGB(255, 108, 209, 219);
+const sectionSelection =
+    Color.fromARGB(255, 136, 161, 199); // softblue in edit portal (default)
 
 const blue = Color.fromARGB(255, 103, 74, 226);
 const darkBlue = Color.fromARGB(255, 21, 41, 104);
 const mustard = Color.fromARGB(255, 250, 186, 69);
-const lightBlue= Color.fromARGB(255, 181, 201, 255);
-const green= Color.fromARGB(255, 134, 221, 153);
-const green2= Color.fromARGB(255, 81, 199, 122);
+const lightBlue = Color.fromARGB(255, 181, 201, 255);
+const green = Color.fromARGB(255, 134, 221, 153);
+const green2 = Color.fromARGB(255, 81, 199, 122);
 const red = Color.fromARGB(255, 240, 86, 86);
 const red2 = Color.fromARGB(255, 255, 72, 72);
 const yellow = Color(0xFFFEC83C);
@@ -54,3 +59,11 @@ const yellow2 = Color.fromARGB(255, 231, 166, 2);
 const darkCharcoal = Color(0xff1a202c);
 const salmonRed = Color(0xfff05656);
 const concreteGrey = Color(0xff828282);
+const navbarGrey = Color(0xff4e4e4e);
+const lightGrey = Color(0xfff5f5f5);
+const skyBlue = Color(0xff518afa);
+const indicatorblue = Color(0xff4a6fcf);
+const blueishGray = Color(0xFFD6DDF1);
+const midnigthBlue = Color(0xff2F394F);
+const goldenYellow = Color(0xffE5BB27);
+

@@ -79,7 +79,8 @@ class _SidePanelState extends State<SidePanel> {
                 } else if (result == 'Save') {
                   //TODO
                 } else if (result == 'Host') {
-                  if (widget.formKey.currentState!.validate()) {
+                  if (widget.formKey.currentState!.validate())
+                   {
                     widget.formKey.currentState!.save();
 
                     hostHackathon(rulesProvider, hackathonDetailsProvider,
@@ -241,6 +242,36 @@ class _SidePanelState extends State<SidePanel> {
       "fields": fields,
       "containers": []
     }, context);
+    // final hackathonId = await CreateHackathon().postSingleHackathon({
+    //   "hackathon": {
+    //     "name": "albin",
+    //     "organisation_name": "ellickal",
+    //     "mode_of_conduct": 'online',
+    //     "deadline": "2024-10-10",
+    //     "team_size": 4,
+    //     "visible": "Public",
+    //     "start_date_time":
+    //         "2024-10-10T00:00:00Z",
+    //     "about": "hiiii",
+    //     "brief": "k",
+    //     "website": "https://req",
+    //     "fee": "0",
+    //     "venue": "oko",
+    //     "contact1_name": "po",
+    //     "contact1_number": "555",
+    //     "contact2_name": "yuh",
+    //     "contact2_number": "78751"
+    //   },
+    //   "round": [{
+    //     "serial_number":  1,
+    //     "name": "yu",
+    //     "description": "jj",
+    //     "start_timeline": "2024-12-15T00:00:00Z",
+    //     "end_timeline": "2024-12-15T18:00:00Z"
+    //   }],
+    //   "fields": [],
+    //   "containers": []
+    // }, context);
 
     if (hackathonId.isNotEmpty) {
       showDialog(

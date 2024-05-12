@@ -303,7 +303,7 @@ class GetRegistered extends StatelessWidget {
         ),
       );
     }
-    else  if ( field.shortAns!.isNotEmpty) {
+    else  if ( field.shortAns!.isNotEmpty ) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 15),
         child: Column(

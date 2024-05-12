@@ -7,20 +7,19 @@ var code = "";
 class PinInput extends StatelessWidget {
   PinInput({required this.first, required this.last});
   final bool first, last;
-  
+
   @override
   Widget build(BuildContext context) {
     return TextField(
       cursorColor: darkCharcoal,
-
       onChanged: (value) {
-        code = code + value;
         if (value.length == 1 && last == false) {
           FocusScope.of(context).nextFocus();
         }
         if (value.isEmpty && first == false) {
           FocusScope.of(context).previousFocus();
         }
+        code = code + value;
       },
       textAlign: TextAlign.center,
       inputFormatters: [

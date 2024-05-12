@@ -2,11 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/views/Screens/ContactSponsors/contact_sponsors.dart';
+import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/createRegistrationform.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/custom_editPortal.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/default_editPortal.dart';
 
 import 'package:major_project__widget_testing/views/Screens/GetRegistrationForm/getRegistrationForm.dart';
 import 'package:major_project__widget_testing/views/Screens/HostNavigation/hostNavigation.dart';
+import 'package:major_project__widget_testing/views/Screens/LoginScreen/Verification/registration.dart';
 import 'package:major_project__widget_testing/views/Screens/LoginScreen/desktop_login.dart';
 import 'package:major_project__widget_testing/views/Screens/MainNavigation/Desktop/Sections/Profile/profile.dart';
 import 'package:major_project__widget_testing/views/Screens/MainNavigation/mainNavigation.dart';
@@ -15,7 +17,7 @@ import 'package:major_project__widget_testing/views/Screens/TempelateSelection/t
 class AppRoutes {
   static const String start = '/';
   static const String hostNavigation = '/hostNavigation';
-static const String singleHackathon = '/singleHackathon';
+  static const String singleHackathon = '/singleHackathon';
   static const String templateSelection = '/templateSelection';
   static const String contactSponsors = '/contactSponsors';
 // static const String defaultTemplate = '/defaultTemplate';
@@ -26,8 +28,9 @@ static const String singleHackathon = '/singleHackathon';
   static const String mainNavigation = '/mainNavigation';
 
   static Map<String, Widget Function(BuildContext)> routes = {
-// start: (context) =>  Navigation(),
-    start: (context) => const LoginPageDesktop(),
+    start: (context) => LoginPageDesktop(),
+    // start: (context) =>  RegistrationForm(),
+    // start: (context) =>  RegisterUser(),
     mainNavigation: (context) => const MainNavigation(),
     hostNavigation: (context) => const HostNavigation(),
     templateSelection: (context) => const TemplateSelection(),
