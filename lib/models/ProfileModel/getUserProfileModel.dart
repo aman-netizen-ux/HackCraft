@@ -81,6 +81,10 @@ class Interest {
     return Interest(
       key: keyList,
     );
+    
+  }
+   bool isEmpty() {
+    return key.isEmpty;
   }
 }
 

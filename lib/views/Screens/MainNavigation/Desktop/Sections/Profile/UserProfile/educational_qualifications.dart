@@ -3,8 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/models/ProfileModel/getUserProfileModel.dart';
+import 'package:major_project__widget_testing/state/profile-provider/profile_provider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
+import 'package:provider/provider.dart';
 
 class Educational extends StatefulWidget {
   final User user;
@@ -56,8 +58,9 @@ class _EducationalState extends State<Educational> {
                     : "Add your percentage",
                 context,
                 widget.user.percentage! <= -1),
-            if (!(widget.user.educationQualification == "s" ||
+            if (!(widget.user.educationQualification == "Senior Secondary" ||
                 widget.user.educationQualification == "Secondary")) ...[
+                  
               buildContainer(
                   'Specialization',
                   widget.user.specialization!.trim().isEmpty
@@ -67,12 +70,12 @@ class _EducationalState extends State<Educational> {
                   widget.user.specialization!.trim().isEmpty),
               buildContainer(
                   'Degree',
-                  widget.user.courseName!.trim().isEmpty &&
+                  widget.user.degree!.trim().isEmpty &&
                           widget.user.courseEndYear < 0
-                      ? 'Add your course name and year' : '${widget.user.courseName} | ${widget.user.courseEndYear}'
+                      ? 'Add your course name and year' : '${widget.user.degree} | ${widget.user.courseEndYear}'
                     ,
                   context,
-                  widget.user.courseName!.trim().isEmpty &&
+                  widget.user.degree!.trim().isEmpty &&
                       widget.user.courseEndYear <= 0),
             ],
             widget.user.interest.key.isEmpty 
@@ -88,40 +91,46 @@ class _EducationalState extends State<Educational> {
     );
   }
 
-  Container buildContainer(
+  Widget buildContainer(
       String key, String value, BuildContext context, bool empty) {
+          final profileProvider = Provider.of<ProfileProvider>(context);
     return empty
-        ? Container(
-            height: scaleHeight(context, 44),
-            width: scaleWidth(context, 311),
-            padding: EdgeInsets.symmetric(
-                horizontal: scaleWidth(context, 12),
-                vertical: scaleHeight(context, 7)),
-            decoration: BoxDecoration(
-                color: Colors.transparent,
-                border: Border.all(color: const Color(0xffc0dde3)),
-                borderRadius: const BorderRadius.all(Radius.circular(15))),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                    height: scaleHeight(context, 30),
-                    width: scaleWidth(context, 30),
-                    decoration: const BoxDecoration(
-                      color: Color(0xff44a6bb),
-                      shape: BoxShape.circle,
-                    ),
-                    child: SvgPicture.asset(
-                        'assets/icons/defaultEditPortal/add.svg')),
-                SizedBox(width: scaleWidth(context, 12)),
-                Text(value,
-                    style: GoogleFonts.getFont(fontFamily2,
-                        fontSize: scaleWidth(context, 12),
-                        color: const Color(0xff1a202c),
-                        height: lineHeight(16.8, 12),
-                        fontWeight: FontWeight.w400)),
-              ],
-            ))
+        ? InkWell(
+          onTap: () {
+            profileProvider.setSelectedIndex(3);
+          },
+          child: Container(
+              height: scaleHeight(context, 44),
+              width: scaleWidth(context, 311),
+              padding: EdgeInsets.symmetric(
+                  horizontal: scaleWidth(context, 12),
+                  vertical: scaleHeight(context, 7)),
+              decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  border: Border.all(color: const Color(0xffc0dde3)),
+                  borderRadius: const BorderRadius.all(Radius.circular(15))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                      height: scaleHeight(context, 30),
+                      width: scaleWidth(context, 30),
+                      decoration: const BoxDecoration(
+                        color: Color(0xff44a6bb),
+                        shape: BoxShape.circle,
+                      ),
+                      child: SvgPicture.asset(
+                          'assets/icons/defaultEditPortal/add.svg')),
+                  SizedBox(width: scaleWidth(context, 12)),
+                  Text(value,
+                      style: GoogleFonts.getFont(fontFamily2,
+                          fontSize: scaleWidth(context, 12),
+                          color: const Color(0xff1a202c),
+                          height: lineHeight(16.8, 12),
+                          fontWeight: FontWeight.w400)),
+                ],
+              )),
+        )
         : Container(
             height: scaleHeight(context, 44),
             width: scaleWidth(context, 311),

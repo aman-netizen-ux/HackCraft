@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
@@ -7,6 +6,9 @@ import 'package:major_project__widget_testing/state/loginProvider.dart';
 import 'package:major_project__widget_testing/state/profile-provider/profile_provider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
+import 'package:major_project__widget_testing/views/Components/Profile/create_dropdown.dart';
+import 'package:major_project__widget_testing/views/Components/Profile/create_fields.dart';
+import 'package:major_project__widget_testing/views/Components/Profile/create_social_links.dart';
 import 'package:major_project__widget_testing/views/Screens/LoginScreen/Registation/updateUserProfile.dart';
 import 'package:provider/provider.dart';
 
@@ -54,8 +56,8 @@ class _SettingsState extends State<Settings> {
   final List<String> userTypes = ['professional', 'student'];
   final List<String> educationalQualifications = [
     'Secondary',
-    'Senior Secondary'
-        'Associate\'s Degree',
+    'Senior Secondary',
+    'Associate\'s Degree',
     'Bachelor\'s Degree',
     'Master\'s Degree',
     'Doctorate (Ph.D.)',
@@ -77,8 +79,8 @@ class _SettingsState extends State<Settings> {
     const Color(0xffff7e55),
     const Color(0xff3e7e60)
   ];
-  final List<String> skills = [];
-  final List<String> interests = [];
+  List<String> skills = [];
+  List<String> interests = [];
 
   final _formKey = GlobalKey<FormState>();
 
@@ -182,6 +184,7 @@ class _SettingsState extends State<Settings> {
       _degreeController.text = userProvider.user!.degree!;
       setState(() {
         _originalData['degree'] = userProvider.user!.degree;
+        _originalData['specialization'] = userProvider.user!.degree;
       });
     }
 
@@ -196,6 +199,7 @@ class _SettingsState extends State<Settings> {
       _courseController.text = userProvider.user!.courseName!;
       setState(() {
         _originalData['cousrse_name'] = userProvider.user!.courseName;
+        _originalData['specialization'] = userProvider.user!.courseName;
       });
     }
 
@@ -210,6 +214,21 @@ class _SettingsState extends State<Settings> {
       _XController.text = userProvider.user!.socialLinks.X;
       setState(() {
         _originalData['x'] = userProvider.user!.socialLinks.X;
+      });
+    }
+
+    if (userProvider.user!.skills.isNotEmpty) {
+      setState(() {
+        skills = List.from(userProvider.user!.skills);
+        _originalData['skill'] = userProvider.user!.skills;
+      });
+    }
+
+    if (!userProvider.user!.interest.isEmpty()) {
+      setState(() {
+        interests = List.from(userProvider.user!.interest.key);
+        List<String> temp = List.from(userProvider.user!.interest.key);
+        _originalData['interest'] = {'key': temp};
       });
     }
 
@@ -386,6 +405,7 @@ class _SettingsState extends State<Settings> {
             ? _originalData['cousrse_name']
             : '')) {
       setState(() {
+        updatedData['specialization'] = _courseController.text;
         updatedData['cousrse_name'] = _courseController.text;
       });
     }
@@ -394,7 +414,8 @@ class _SettingsState extends State<Settings> {
             ? _originalData['course_end_year']
             : '')) {
       setState(() {
-        updatedData['course_end_year'] = _durationController.text;
+        updatedData['course_end_year'] =
+            _durationController.text.isNotEmpty ? _durationController.text : -1;
       });
     }
     if (_dobController.text !=
@@ -402,7 +423,8 @@ class _SettingsState extends State<Settings> {
             ? _originalData['date_of_birth']
             : '')) {
       setState(() {
-        updatedData['date_of_birth'] = _dobController.text;
+        updatedData['date_of_birth'] =
+            _dobController.text.isNotEmpty ? _dobController : null;
       });
     }
     if (_aboutController.text !=
@@ -425,8 +447,112 @@ class _SettingsState extends State<Settings> {
             ? _originalData['percentage']
             : '')) {
       setState(() {
-        updatedData['percentage'] = _percentageController.text;
+        updatedData['percentage'] = _percentageController.text.isNotEmpty
+            ? _percentageController.text
+            : -1;
       });
+    }
+
+    if (listsAreDifferent(skills,
+        (_originalData.containsKey('skill') ? _originalData['skill'] : []))) {
+      setState(() {
+        updatedData['skill'] = skills;
+      });
+    }
+
+    if (listsAreDifferent(
+        interests,
+        (_originalData.containsKey('interest')
+            ? _originalData['interest']['key']
+            : []))) {
+      setState(() {
+        updatedData['interest'] = {'key': interests};
+      });
+    }
+
+    if (_linkedInController.text !=
+        (_originalData.containsKey('linkedin')
+            ? _originalData['linkedin']
+            : '')) {
+      setState(() {
+        updatedData['linkedin'] = _linkedInController.text;
+      });
+    }
+    if (_facebookController.text !=
+        (_originalData.containsKey('facebook')
+            ? _originalData['facebook']
+            : '')) {
+      setState(() {
+        updatedData['facebook'] = _facebookController.text;
+      });
+    }
+    if (_XController.text !=
+        (_originalData.containsKey('x') ? _originalData['x'] : '')) {
+      setState(() {
+        updatedData['x'] = _XController.text;
+      });
+    }
+    if (_instagramController.text !=
+        (_originalData.containsKey('instagram')
+            ? _originalData['instagram']
+            : '')) {
+      setState(() {
+        updatedData['instagram'] = _instagramController.text;
+      });
+    }
+    if (_githubController.text !=
+        (_originalData.containsKey('github') ? _originalData['github'] : '')) {
+      setState(() {
+        updatedData['github'] = _githubController.text;
+      });
+    }
+    if (_mediumController.text !=
+        (_originalData.containsKey('medium') ? _originalData['medium'] : '')) {
+      setState(() {
+        updatedData['medium'] = _mediumController.text;
+      });
+    }
+    if (_redditController.text !=
+        (_originalData.containsKey('reddit') ? _originalData['reddit'] : '')) {
+      setState(() {
+        updatedData['reddit'] = _redditController.text;
+      });
+    }
+    if (_slackController.text !=
+        (_originalData.containsKey('slack') ? _originalData['slack'] : '')) {
+      setState(() {
+        updatedData['slack'] = _slackController.text;
+      });
+    }
+    if (_dribbleController.text !=
+        (_originalData.containsKey('dribble')
+            ? _originalData['dribble']
+            : '')) {
+      setState(() {
+        updatedData['dribble'] = _dribbleController.text;
+      });
+      if (_behanceController.text !=
+          (_originalData.containsKey('behance')
+              ? _originalData['behance']
+              : '')) {
+        setState(() {
+          updatedData['behance'] = _behanceController.text;
+        });
+      }
+      if (_codepenController.text !=
+          (_originalData.containsKey('codepen')
+              ? _originalData['codepen']
+              : '')) {
+        setState(() {
+          updatedData['codepen'] = _codepenController.text;
+        });
+      }
+      if (_figmaController.text !=
+          (_originalData.containsKey('figma') ? _originalData['figma'] : '')) {
+        setState(() {
+          updatedData['figma'] = _figmaController.text;
+        });
+      }
     }
     if (updatedData.isNotEmpty) {
       updateUserPost(updatedData, loginProvider.uuid).then((value) {
@@ -444,6 +570,14 @@ class _SettingsState extends State<Settings> {
         _isLoading = false;
       });
     }
+  }
+
+  bool listsAreDifferent(List<String> original, List<String> current) {
+    if (original.length != current.length) return true;
+    for (int i = 0; i < original.length; i++) {
+      if (original[i] != current[i]) return true;
+    }
+    return false;
   }
 
   @override
@@ -508,6 +642,10 @@ class _SettingsState extends State<Settings> {
                 ExpansionTile(
                   collapsedBackgroundColor: const Color(0xffE2E2E2),
                   backgroundColor: const Color(0xffE2E2E2),
+                  shape: const OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.all(Radius.circular(15))
+                  ),
                   collapsedShape: const ContinuousRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15))),
                   title: Text('Edit Profile',
@@ -668,6 +806,40 @@ class _SettingsState extends State<Settings> {
                                           if (!regex.hasMatch(value)) {
                                             return 'Please enter a valid date in the format YYYY-MM-DD';
                                           }
+                                          List<String> dateParts =
+                                              value.split('-');
+                                          int year =
+                                              int.tryParse(dateParts[0]) ?? 0;
+                                          int month =
+                                              int.tryParse(dateParts[1]) ?? 0;
+                                          int day =
+                                              int.tryParse(dateParts[2]) ?? 0;
+
+                                          // Validate year, month, and day values
+                                          if (month < 1 || month > 12) {
+                                            return 'Invalid month. Please enter a valid date.';
+                                          }
+
+                                          if (day < 1 || day > 31) {
+                                            return 'Invalid day. Please enter a valid date.';
+                                          }
+
+                                          if (month == 2) {
+                                            // Check for February (considering leap years)
+                                            bool isLeapYear = (year % 4 == 0 &&
+                                                    year % 100 != 0) ||
+                                                (year % 400 == 0);
+                                            if (day > 29 ||
+                                                (day > 28 && !isLeapYear)) {
+                                              return 'Please enter a valid date.';
+                                            }
+                                          } else if ([4, 6, 9, 11]
+                                              .contains(month)) {
+                                            // Check for months with 30 days
+                                            if (day > 30) {
+                                              return 'Please enter a valid date.';
+                                            }
+                                          }
                                           return null; // Return null if validation passes
                                         })
                                       ],
@@ -747,108 +919,116 @@ class _SettingsState extends State<Settings> {
                                       ],
                                     ),
                                     SizedBox(height: scaleHeight(context, 24)),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        createDropDownFields(
-                                            'Educational Qualification',
-                                            'Select your educational qualification',
-                                            educationalQualifications,
-                                            context,
-                                            _selectedEducationalQualification,
-                                            (value) {
-                                          setState(() {
-                                            _selectedEducationalQualification =
-                                                value;
-                                          });
-                                        }),
-                                        SizedBox(
-                                            width: scaleWidth(context, 16)),
-                                        createFields(
-                                            'Percentage',
-                                            'Enter your percentage',
-                                            context,
-                                            _percentageController,
-                                            TextInputType.number,
-                                            true,
-                                            false,
-                                            false, (value) {
-                                          if (value == null || value.isEmpty) {
+                                    if (_selectedUserType == "student") ...[
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          createDropDownFields(
+                                              'Educational Qualification',
+                                              'Select your educational qualification',
+                                              educationalQualifications,
+                                              context,
+                                              _selectedEducationalQualification,
+                                              (value) {
+                                            setState(() {
+                                              _selectedEducationalQualification =
+                                                  value;
+                                            });
+                                          }),
+                                          SizedBox(
+                                              width: scaleWidth(context, 16)),
+                                          createFields(
+                                              'Percentage',
+                                              'Enter your percentage',
+                                              context,
+                                              _percentageController,
+                                              TextInputType.number,
+                                              true,
+                                              false,
+                                              false, (value) {
+                                            if (value == null ||
+                                                value.isEmpty) {
+                                              return null;
+                                            }
+                                            if (int.tryParse(value)! < 0 &&
+                                                int.tryParse(value)! > 100) {
+                                              return "Enter a valid percentage";
+                                            }
                                             return null;
-                                          }
-                                          if (int.tryParse(value)! < 0 &&
-                                              int.tryParse(value)! > 100) {
-                                            return "Enter a valid percentage";
-                                          }
-                                          return null;
-                                        })
-                                      ],
-                                    ),
-                                    SizedBox(height: scaleHeight(context, 24)),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        createFields(
-                                            'Degree',
-                                            'Enter your degree',
-                                            context,
-                                            _degreeController,
-                                            TextInputType.text,
-                                            true,
-                                            false,
-                                            false, (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return null;
-                                          }
+                                          })
+                                        ],
+                                      ),
+                                      SizedBox(
+                                          height: scaleHeight(context, 24)),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          createFields(
+                                              'Degree',
+                                              'Enter your degree',
+                                              context,
+                                              _degreeController,
+                                              TextInputType.text,
+                                              true,
+                                              false,
+                                              false, (value) {
+                                            if (value == null ||
+                                                value.isEmpty) {
+                                              return null;
+                                            }
 
-                                          return null;
-                                        }),
-                                        SizedBox(
-                                            width: scaleWidth(context, 16)),
-                                        createFields(
-                                            'Ending Year of Course',
-                                            'Enter the ending year of your course',
-                                            context,
-                                            _durationController,
-                                            TextInputType.number,
-                                            true,
-                                            false,
-                                            false, (value) {
-                                          if (value == null || value.isEmpty) {
                                             return null;
-                                          }
-                                          int? year = int.tryParse(value);
-                                          if (year! < DateTime.now().year) {
-                                            return 'Please enter a valid year';
-                                          }
-                                          return null;
-                                        }),
-                                        SizedBox(
-                                            width: scaleWidth(context, 16)),
-                                        createFields(
-                                            'Course',
-                                            'Enter your course',
-                                            context,
-                                            _courseController,
-                                            TextInputType.text,
-                                            true,
-                                            false,
-                                            false, (value) {
-                                          if (value == null || value.isEmpty) {
+                                          }),
+                                          SizedBox(
+                                              width: scaleWidth(context, 16)),
+                                          createFields(
+                                              'Ending Year of Course',
+                                              'Enter the ending year of your course',
+                                              context,
+                                              _durationController,
+                                              TextInputType.number,
+                                              true,
+                                              false,
+                                              false, (value) {
+                                            if (value == null ||
+                                                value.isEmpty) {
+                                              return null;
+                                            }
+                                            int? year = int.tryParse(value);
+                                            if (year! < DateTime.now().year) {
+                                              return 'Please enter a valid year';
+                                            }
                                             return null;
-                                          }
+                                          }),
+                                          SizedBox(
+                                              width: scaleWidth(context, 16)),
+                                          createFields(
+                                              'Course',
+                                              'Enter your course',
+                                              context,
+                                              _courseController,
+                                              TextInputType.text,
+                                              true,
+                                              false,
+                                              false, (value) {
+                                            if (value == null ||
+                                                value.isEmpty) {
+                                              return null;
+                                            }
 
-                                          return null;
-                                        }),
-                                      ],
-                                    ),
-                                    SizedBox(height: scaleHeight(context, 24)),
+                                            return null;
+                                          }),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                          height: scaleHeight(context, 24)),
+                                    ],
                                     Text('Skills',
                                         style: GoogleFonts.getFont(fontFamily2,
                                             fontSize: scaleWidth(context, 14),
@@ -1019,8 +1199,7 @@ class _SettingsState extends State<Settings> {
                                                     _interestsController,
                                                 decoration: InputDecoration(
                                                   enabled: true,
-                                                  hintText:
-                                                      "Enter your interests",
+                                                  hintText: "Enter your interests",
                                                   labelStyle:
                                                       GoogleFonts.getFont(
                                                           fontFamily2,
@@ -1143,6 +1322,7 @@ class _SettingsState extends State<Settings> {
                                           onDeleted: () {
                                             setState(() {
                                               interests.remove(option);
+                                              debugPrint('interest : $interests');
                                             });
                                           },
                                         );
@@ -1161,7 +1341,335 @@ class _SettingsState extends State<Settings> {
                                         'Enter your linkedin url',
                                         context,
                                         _linkedInController,
-                                        TextInputType.url)
+                                        TextInputType.url, (value) {
+                                      if (value == null ||
+                                          value.isEmpty ||
+                                          value == " ") {
+                                        return null;
+                                      }
+                                      if (value.isNotEmpty) {
+                                        Uri? uri =
+                                            Uri.tryParse(value.toString());
+
+                                        // Check if the Uri object is not null and is a valid URL
+                                        if (uri != null &&
+                                            uri.isAbsolute &&
+                                            (uri.scheme == 'http' ||
+                                                uri.scheme == 'https')) {
+                                          return null;
+                                        } else {
+                                          return "Invalid url";
+                                        }
+                                      }
+                                      return null;
+                                    }),
+                                    SizedBox(height: scaleHeight(context, 12)),
+                                    createSocialLinks(
+                                        'Facebook',
+                                        'Enter your facebook url',
+                                        context,
+                                        _facebookController,
+                                        TextInputType.url, (value) {
+                                      if (value == null ||
+                                          value.isEmpty ||
+                                          value == " ") {
+                                        return null;
+                                      }
+                                      if (value.isNotEmpty) {
+                                        Uri? uri =
+                                            Uri.tryParse(value.toString());
+
+                                        // Check if the Uri object is not null and is a valid URL
+                                        if (uri != null &&
+                                            uri.isAbsolute &&
+                                            (uri.scheme == 'http' ||
+                                                uri.scheme == 'https')) {
+                                          return null;
+                                        } else {
+                                          return "Invalid url";
+                                        }
+                                      }
+                                      return null;
+                                    }),
+                                    SizedBox(height: scaleHeight(context, 12)),
+                                    createSocialLinks(
+                                        'X',
+                                        'Enter your X url',
+                                        context,
+                                        _XController,
+                                        TextInputType.url, (value) {
+                                      if (value == null ||
+                                          value.isEmpty ||
+                                          value == " ") {
+                                        return null;
+                                      }
+                                      if (value.isNotEmpty) {
+                                        Uri? uri =
+                                            Uri.tryParse(value.toString());
+
+                                        // Check if the Uri object is not null and is a valid URL
+                                        if (uri != null &&
+                                            uri.isAbsolute &&
+                                            (uri.scheme == 'http' ||
+                                                uri.scheme == 'https')) {
+                                          return null;
+                                        } else {
+                                          return "Invalid url";
+                                        }
+                                      }
+                                      return null;
+                                    }),
+                                    SizedBox(height: scaleHeight(context, 12)),
+                                    createSocialLinks(
+                                        'Instagram',
+                                        'Enter your instagram url',
+                                        context,
+                                        _instagramController,
+                                        TextInputType.url, (value) {
+                                      if (value == null ||
+                                          value.isEmpty ||
+                                          value == " ") {
+                                        return null;
+                                      }
+                                      if (value.isNotEmpty) {
+                                        Uri? uri =
+                                            Uri.tryParse(value.toString());
+
+                                        // Check if the Uri object is not null and is a valid URL
+                                        if (uri != null &&
+                                            uri.isAbsolute &&
+                                            (uri.scheme == 'http' ||
+                                                uri.scheme == 'https')) {
+                                          return null;
+                                        } else {
+                                          return "Invalid url";
+                                        }
+                                      }
+                                      return null;
+                                    }),
+                                    SizedBox(height: scaleHeight(context, 12)),
+                                    createSocialLinks(
+                                        'Github',
+                                        'Enter your github url',
+                                        context,
+                                        _githubController,
+                                        TextInputType.url, (value) {
+                                      if (value == null ||
+                                          value.isEmpty ||
+                                          value == " ") {
+                                        return null;
+                                      }
+                                      if (value.isNotEmpty) {
+                                        Uri? uri =
+                                            Uri.tryParse(value.toString());
+
+                                        // Check if the Uri object is not null and is a valid URL
+                                        if (uri != null &&
+                                            uri.isAbsolute &&
+                                            (uri.scheme == 'http' ||
+                                                uri.scheme == 'https')) {
+                                          return null;
+                                        } else {
+                                          return "Invalid url";
+                                        }
+                                      }
+                                      return null;
+                                    }),
+                                    SizedBox(height: scaleHeight(context, 12)),
+                                    createSocialLinks(
+                                        'Medium',
+                                        'Enter your Medium url',
+                                        context,
+                                        _mediumController,
+                                        TextInputType.url, (value) {
+                                      if (value == null ||
+                                          value.isEmpty ||
+                                          value == " ") {
+                                        return null;
+                                      }
+                                      if (value.isNotEmpty) {
+                                        Uri? uri =
+                                            Uri.tryParse(value.toString());
+
+                                        // Check if the Uri object is not null and is a valid URL
+                                        if (uri != null &&
+                                            uri.isAbsolute &&
+                                            (uri.scheme == 'http' ||
+                                                uri.scheme == 'https')) {
+                                          return null;
+                                        } else {
+                                          return "Invalid url";
+                                        }
+                                      }
+                                      return null;
+                                    }),
+                                    SizedBox(height: scaleHeight(context, 12)),
+                                    createSocialLinks(
+                                        'Reddit',
+                                        'Enter your reddit url',
+                                        context,
+                                        _redditController,
+                                        TextInputType.url, (value) {
+                                      if (value == null ||
+                                          value.isEmpty ||
+                                          value == " ") {
+                                        return null;
+                                      }
+                                      if (value.isNotEmpty) {
+                                        Uri? uri =
+                                            Uri.tryParse(value.toString());
+
+                                        // Check if the Uri object is not null and is a valid URL
+                                        if (uri != null &&
+                                            uri.isAbsolute &&
+                                            (uri.scheme == 'http' ||
+                                                uri.scheme == 'https')) {
+                                          return null;
+                                        } else {
+                                          return "Invalid url";
+                                        }
+                                      }
+                                      return null;
+                                    }),
+                                    SizedBox(height: scaleHeight(context, 12)),
+                                    createSocialLinks(
+                                        'Slack',
+                                        'Enter your slack url',
+                                        context,
+                                        _slackController,
+                                        TextInputType.url, (value) {
+                                      if (value == null ||
+                                          value.isEmpty ||
+                                          value == " ") {
+                                        return null;
+                                      }
+
+                                      if (value.isNotEmpty) {
+                                        Uri? uri =
+                                            Uri.tryParse(value.toString());
+
+                                        // Check if the Uri object is not null and is a valid URL
+                                        if (uri != null &&
+                                            uri.isAbsolute &&
+                                            (uri.scheme == 'http' ||
+                                                uri.scheme == 'https')) {
+                                          return null;
+                                        } else {
+                                          return "Invalid url";
+                                        }
+                                      }
+                                      return null;
+                                    }),
+                                    SizedBox(height: scaleHeight(context, 12)),
+                                    createSocialLinks(
+                                        'Dribble',
+                                        'Enter your dribble url',
+                                        context,
+                                        _dribbleController,
+                                        TextInputType.url, (value) {
+                                      if (value == null ||
+                                          value.isEmpty ||
+                                          value == " ") {
+                                        return null;
+                                      }
+                                      if (value.isNotEmpty) {
+                                        Uri? uri =
+                                            Uri.tryParse(value.toString());
+
+                                        // Check if the Uri object is not null and is a valid URL
+                                        if (uri != null &&
+                                            uri.isAbsolute &&
+                                            (uri.scheme == 'http' ||
+                                                uri.scheme == 'https')) {
+                                          return null;
+                                        } else {
+                                          return "Invalid url";
+                                        }
+                                      }
+                                      return null;
+                                    }),
+                                    SizedBox(height: scaleHeight(context, 12)),
+                                    createSocialLinks(
+                                        'Behance',
+                                        'Enter your behance url',
+                                        context,
+                                        _behanceController,
+                                        TextInputType.url, (value) {
+                                      if (value == null ||
+                                          value.isEmpty ||
+                                          value == " ") {
+                                        return null;
+                                      }
+                                      if (value.isNotEmpty) {
+                                        Uri? uri =
+                                            Uri.tryParse(value.toString());
+
+                                        // Check if the Uri object is not null and is a valid URL
+                                        if (uri != null &&
+                                            uri.isAbsolute &&
+                                            (uri.scheme == 'http' ||
+                                                uri.scheme == 'https')) {
+                                          return null;
+                                        } else {
+                                          return "Invalid url";
+                                        }
+                                      }
+                                      return null;
+                                    }),
+                                    SizedBox(height: scaleHeight(context, 12)),
+                                    createSocialLinks(
+                                        'Codepen',
+                                        'Enter your codepen url',
+                                        context,
+                                        _codepenController,
+                                        TextInputType.url, (value) {
+                                      if (value == null ||
+                                          value.isEmpty ||
+                                          value == " ") {
+                                        return null;
+                                      }
+                                      if (value.isNotEmpty) {
+                                        Uri? uri =
+                                            Uri.tryParse(value.toString());
+
+                                        // Check if the Uri object is not null and is a valid URL
+                                        if (uri != null &&
+                                            uri.isAbsolute &&
+                                            (uri.scheme == 'http' ||
+                                                uri.scheme == 'https')) {
+                                          return null;
+                                        } else {
+                                          return "Invalid url";
+                                        }
+                                      }
+                                      return null;
+                                    }),
+                                    SizedBox(height: scaleHeight(context, 12)),
+                                    createSocialLinks(
+                                        'Figma',
+                                        'Enter your figma url',
+                                        context,
+                                        _figmaController,
+                                        TextInputType.url, (value) {
+                                      if (value == null ||
+                                          value.isEmpty ||
+                                          value == " ") {
+                                        return null; // No error if empty or null
+                                      }
+
+                                      // Try to parse the URL
+                                      Uri? uri = Uri.tryParse(value);
+
+                                      // Check if the Uri is valid
+                                      if (uri != null &&
+                                          uri.isAbsolute &&
+                                          (uri.scheme == 'http' ||
+                                              uri.scheme == 'https')) {
+                                        return null; // URL is valid
+                                      } else {
+                                        return "Invalid URL"; // URL is invalid
+                                      }
+                                    }),
                                   ],
                                 ),
                               ),
@@ -1172,7 +1680,21 @@ class _SettingsState extends State<Settings> {
                                     _formKey.currentState!.validate()) {
                                   // Form is valid; proceed with saving/updating the information
                                   debugPrint('Form validated successfully.');
-                                  _updateProfileData();
+                                  if (_usernameController.text.isNotEmpty &&
+                                      _firstNameController.text.isNotEmpty &&
+                                      _lastNameController.text.isNotEmpty &&
+                                      _cityController.text.isNotEmpty &&
+                                      _organizationController.text.isNotEmpty) {
+                                    _updateProfileData();
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                            'Please fill all required fields.'),
+                                        duration: Duration(seconds: 2),
+                                      ),
+                                    );
+                                  }
                                 } else {
                                   // Validation failed
                                   debugPrint('Form validation failed.');
@@ -1209,245 +1731,6 @@ class _SettingsState extends State<Settings> {
   }
 }
 
-Widget createSocialLinks(String label, String hint, BuildContext context,
-    TextEditingController controller, TextInputType widgetKeyBoardType) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: [
-      Expanded(
-          flex: 3,
-          child: Container(
-              height: scaleHeight(context, 56),
-              padding: EdgeInsets.only(left: scaleHeight(context, 15)),
-              alignment: Alignment.centerLeft,
-              decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-              child: Text(label,
-                  style: GoogleFonts.getFont(fontFamily2,
-                      fontSize: scaleWidth(context, 14),
-                      color: const Color(0xff1a202c),
-                      height: lineHeight(19.2, 14),
-                      fontWeight: FontWeight.w400)))),
-      SizedBox(width: scaleWidth(context, 20)),
-      Expanded(
-        flex: 7,
-        child: Container(
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(10))),
-            child: TextFormField(
-              controller: controller,
-              decoration: InputDecoration(
-                enabled: true,
-                hintText: hint,
-                labelStyle: GoogleFonts.getFont(fontFamily2,
-                    fontSize: scaleWidth(context, 14),
-                    color: const Color(0xff1a202c).withOpacity(0.8),
-                    height: lineHeight(19.2, 14),
-                    fontWeight: FontWeight.w400),
-                contentPadding: EdgeInsets.only(left: scaleWidth(context, 20)),
-                hintStyle: GoogleFonts.getFont(fontFamily2,
-                    fontSize: scaleWidth(context, 14),
-                    color: const Color(0xff1a202c).withOpacity(0.8),
-                    height: lineHeight(19.2, 14),
-                    fontWeight: FontWeight.w400),
-                border: InputBorder.none,
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Color(0xff484848)),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Color(0xfff05656)),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              //                     onChanged: (value) {
-              //                        Uri? uri = Uri.tryParse(value);
 
-              // // Check if the Uri object is not null and is a valid URL
-              // if (uri != null && uri.isAbsolute && (uri.scheme == 'http' || uri.scheme == 'https')) {
-              //   set
-              // } else {
-              //   return false;
-              // }
-              //},
-            )),
-      )
-    ],
-  );
-}
 
-Widget createFields(
-    String label,
-    String hint,
-    BuildContext context,
-    TextEditingController controller,
-    TextInputType widgetKeyBoardType,
-    bool isEnabled,
-    bool isDate,
-    bool isPhone,
-    FormFieldValidator<String>? validator,
-    {int flex = 1}) {
-  return Expanded(
-    flex: flex,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label,
-            style: GoogleFonts.getFont(fontFamily2,
-                fontSize: scaleWidth(context, 14),
-                color: const Color(0xff1a202c),
-                height: lineHeight(19.2, 14),
-                fontWeight: FontWeight.w400)),
-        SizedBox(height: scaleHeight(context, 9)),
-        Row(
-          children: [
-            if (isPhone) ...[
-              Expanded(
-                flex: 17,
-                child: Container(
-                  height: scaleHeight(context, 56),
-                  alignment: Alignment.center,
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Text('+91',
-                      style: GoogleFonts.getFont(fontFamily2,
-                          fontSize: scaleWidth(context, 14),
-                          color: const Color(0xff1a202c).withOpacity(0.8),
-                          height: lineHeight(19.2, 14),
-                          fontWeight: FontWeight.w400)),
-                ),
-              ),
-              Expanded(flex: 3, child: Container()),
-            ],
-            Expanded(
-              flex: isPhone ? 80 : 10,
-              child: Container(
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: TextFormField(
-                      controller: controller,
-                      // inputFormatters: isDate
-                      //     ? [
-                      //         FilteringTextInputFormatter.allow(
-                      //             RegExp(r'[\d-]')),
-                      //         LengthLimitingTextInputFormatter(10)
-                      //       ]
-                      //     : [],
-                      enabled: isEnabled,
-                      decoration: InputDecoration(
-                        enabled: true,
-                        hintText: hint,
-                        labelStyle: GoogleFonts.getFont(fontFamily2,
-                            fontSize: scaleWidth(context, 14),
-                            color: const Color(0xff1a202c).withOpacity(0.8),
-                            height: lineHeight(19.2, 14),
-                            fontWeight: FontWeight.w400),
-                        contentPadding:
-                            EdgeInsets.only(left: scaleWidth(context, 20)),
-                        hintStyle: GoogleFonts.getFont(fontFamily2,
-                            fontSize: scaleWidth(context, 14),
-                            color: const Color(0xff1a202c).withOpacity(0.8),
-                            height: lineHeight(19.2, 14),
-                            fontWeight: FontWeight.w400),
-                        border: InputBorder.none,
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Color(0xff484848)),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Color(0xfff05656)),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      validator: validator)),
-            ),
-          ],
-        )
-      ],
-    ),
-  );
-}
 
-Widget createDropDownFields(
-    String label,
-    String hint,
-    List<String> list,
-    BuildContext context,
-    String? selectedValue,
-    void Function(String?)? onChanged,
-    {int flex = 1}) {
-  final String? effectiveValue =
-      list.contains(selectedValue) ? selectedValue : hint;
-  return Expanded(
-      flex: flex,
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(label,
-            style: GoogleFonts.getFont(fontFamily2,
-                fontSize: scaleWidth(context, 14),
-                color: const Color(0xff1a202c),
-                height: lineHeight(19.2, 14),
-                fontWeight: FontWeight.w400)),
-        SizedBox(height: scaleHeight(context, 9)),
-        Container(
-          decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-              padding:
-                  EdgeInsets.symmetric(horizontal: scaleWidth(context, 20)),
-              hint: Text(hint,
-                  style: GoogleFonts.getFont(fontFamily2,
-                      fontSize: scaleWidth(context, 14),
-                      color: const Color(0xff1a202c).withOpacity(0.8),
-                      height: lineHeight(19.2, 14),
-                      fontWeight: FontWeight.w400)),
-              value: effectiveValue,
-              isExpanded: true,
-              icon: const Icon(Icons.arrow_drop_down, color: Color(0xff1a202c)),
-              items: [
-                if (selectedValue == null ||
-                    selectedValue
-                        .isEmpty) // Display hint if selectedValue is null or empty
-                  DropdownMenuItem<String>(
-                    value: hint,
-                    child: Text(
-                      hint,
-                      style: GoogleFonts.getFont(fontFamily2,
-                          fontSize: scaleWidth(context, 14),
-                          color: const Color(0xff1a202c).withOpacity(0.8),
-                          height: lineHeight(19.2, 14),
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                ...list.map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(
-                      value,
-                      style: GoogleFonts.getFont(fontFamily2,
-                          fontSize: scaleWidth(context, 14),
-                          color: const Color(0xff1a202c).withOpacity(0.8),
-                          height: lineHeight(19.2, 14),
-                          fontWeight: FontWeight.w400),
-                    ),
-                  );
-                }),
-              ],
-              onChanged: (String? newValue) {
-                // Prevent selection of the hint value
-                if (newValue != hint) {
-                  onChanged?.call(newValue);
-                }
-              },
-            ),
-          ),
-        )
-      ]));
-}

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-//import 'package:major_project__widget_testing/api/UserProfile/get_user_profile.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
-//import 'package:major_project__widget_testing/models/ProfileModel/getUserProfileModel.dart';
 import 'package:major_project__widget_testing/state/loginProvider.dart';
 import 'package:major_project__widget_testing/state/profile-provider/profile_provider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
@@ -52,6 +50,7 @@ class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<ProfileProvider>(context);
+    final profileProvider = Provider.of<ProfileProvider>(context);
     if (_isLoading) {
       return Container(
           width: double.infinity,
@@ -186,63 +185,73 @@ class _UserProfileState extends State<UserProfile> {
                                     ],
                                   ),
                                   SizedBox(width: scaleWidth(context, 150)),
-                                  Container(
-                                      height: scaleHeight(context, 40),
-                                      width: scaleWidth(context, 89),
-                                      margin: EdgeInsets.only(
-                                          bottom: scaleHeight(context, 10)),
-                                      decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(10)),
-                                          color: Colors.transparent,
-                                          border: Border.all(color: black1)),
-                                      alignment: Alignment.center,
-                                      child: Text('Edit',
-                                          style: GoogleFonts.getFont(
-                                              fontFamily2,
-                                              fontSize: scaleWidth(context, 14),
-                                              color: const Color(0xff1a202c),
-                                              height: lineHeight(19.2, 14),
-                                              fontWeight: FontWeight.w400)))
+                                  InkWell(
+                                    onTap: () {
+                                      profileProvider.setSelectedIndex(3);
+                                    },
+                                    child: Container(
+                                        height: scaleHeight(context, 40),
+                                        width: scaleWidth(context, 89),
+                                        margin: EdgeInsets.only(
+                                            bottom: scaleHeight(context, 10)),
+                                        decoration: BoxDecoration(
+                                            borderRadius: const BorderRadius.all(
+                                                Radius.circular(10)),
+                                            color: Colors.transparent,
+                                            border: Border.all(color: black1)),
+                                        alignment: Alignment.center,
+                                        child: Text('Edit',
+                                            style: GoogleFonts.getFont(
+                                                fontFamily2,
+                                                fontSize: scaleWidth(context, 14),
+                                                color: const Color(0xff1a202c),
+                                                height: lineHeight(19.2, 14),
+                                                fontWeight: FontWeight.w400))),
+                                  )
                                 ],
                               ),
                             ),
                           ]),
                           userProvider.user!.about.isEmpty
-                              ? Container(
-                                  height: scaleHeight(context, 92),
-                                  width: double.infinity,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: scaleWidth(context, 24),
-                                      vertical: scaleHeight(context, 24)),
-                                  margin: EdgeInsets.only(
-                                      top: scaleHeight(context, 28)),
-                                  decoration: const BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(15)),
-                                      color: Colors.white),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                          height: scaleHeight(context, 30),
-                                          width: scaleWidth(context, 30),
-                                          decoration: const BoxDecoration(
-                                            color: Color(0xff44a6bb),
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: SvgPicture.asset(
-                                              'assets/icons/defaultEditPortal/add.svg')),
-                                      SizedBox(width: scaleWidth(context, 12)),
-                                      Text('Add about yourself',
-                                          style: GoogleFonts.getFont(
-                                              fontFamily2,
-                                              fontSize: scaleWidth(context, 12),
-                                              color: const Color(0xff1a202c),
-                                              height: lineHeight(16.8, 12),
-                                              fontWeight: FontWeight.w400)),
-                                    ],
-                                  ))
+                              ? InkWell(
+                                onTap: () {
+                                  profileProvider.setSelectedIndex(3);
+                                },
+                                child: Container(
+                                    height: scaleHeight(context, 92),
+                                    width: double.infinity,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: scaleWidth(context, 24),
+                                        vertical: scaleHeight(context, 24)),
+                                    margin: EdgeInsets.only(
+                                        top: scaleHeight(context, 28)),
+                                    decoration: const BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(15)),
+                                        color: Colors.white),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                            height: scaleHeight(context, 30),
+                                            width: scaleWidth(context, 30),
+                                            decoration: const BoxDecoration(
+                                              color: Color(0xff44a6bb),
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: SvgPicture.asset(
+                                                'assets/icons/defaultEditPortal/add.svg')),
+                                        SizedBox(width: scaleWidth(context, 12)),
+                                        Text('Add about yourself',
+                                            style: GoogleFonts.getFont(
+                                                fontFamily2,
+                                                fontSize: scaleWidth(context, 12),
+                                                color: const Color(0xff1a202c),
+                                                height: lineHeight(16.8, 12),
+                                                fontWeight: FontWeight.w400)),
+                                      ],
+                                    )),
+                              )
                               : Container(
                                   width: double.infinity,
                                   margin: EdgeInsets.only(
