@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:logger/logger.dart';
 import 'package:major_project__widget_testing/api/post_default_hackathon.dart';
+import 'package:major_project__widget_testing/api/upload_cloudinary.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonContainerPropertiesProvider.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
 import 'package:major_project__widget_testing/state/defaulttemplateProvider.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
+import 'package:major_project__widget_testing/state/galleryProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
@@ -39,6 +42,8 @@ class _SidePanelState extends State<SidePanel> {
     final rulesProvider = Provider.of<RulesProvider>(context);
     final hackathonTextPropertiesProvider =
         Provider.of<HackathonTextPropertiesProvider>(context);
+    final hackathonContainerPropertiesProvider =
+        Provider.of<HackathonContainerPropertiesProvider>(context);
 
     List<GlobalKey<State<StatefulWidget>>> keyValues = [
       homeEdit,
@@ -61,7 +66,7 @@ class _SidePanelState extends State<SidePanel> {
         children: [
           PopupMenuButton<String>(
               offset: Offset(scaleWidth(context, 50), 0),
-              onSelected: (String result) {
+              onSelected: (String result) async {
                 var logger = Logger();
                 logger.i(result);
                 if (result == 'SavePreview') {
@@ -69,18 +74,36 @@ class _SidePanelState extends State<SidePanel> {
                   widget.formKey.currentState!.save();
 
                   previewFunction(rulesProvider, hackathonDetailsProvider,
-                      hackathonTextPropertiesProvider);
+                      hackathonTextPropertiesProvider, hackathonContainerPropertiesProvider);
                   // }
                 } else if (result == 'Save') {
                   //TODO
                 } else if (result == 'Host') {
-                  if (widget.formKey.currentState!.validate()) {
+                  if (widget.formKey.currentState!.validate())
+                   {
                     widget.formKey.currentState!.save();
 
                     hostHackathon(rulesProvider, hackathonDetailsProvider,
-                        hackathonTextPropertiesProvider);
+                        hackathonTextPropertiesProvider, hackathonContainerPropertiesProvider);
                   }
-                } else {
+                } else if(result=='Upload Image'){
+                          final galleryProvider = Provider.of<GalleryProvider>(context, listen: false);
+                          if(galleryProvider.galleryImagesFile.isNotEmpty){
+                            final imageResponse = await UploadImageToCloudinary().uploadImage(galleryProvider.galleryImagesFile);
+                            print(imageResponse);
+                          }
+                          
+                          final logoResponse= await UploadImageToCloudinary().uploadLogo(galleryProvider.logoFile[0]);                          
+                          print(logoResponse);
+
+                } 
+                // else if(result=='Upload Preset'){
+                //           final galleryProvider = Provider.of<GalleryProvider>(context, listen: false);
+                //           galleryProvider.createCloudinaryPreset();
+
+                // }
+                
+                else {
                   Navigator.pop(context);
                 }
               },
@@ -101,6 +124,14 @@ class _SidePanelState extends State<SidePanel> {
                       value: 'Host',
                       child: Text('Host Hackathon'),
                     ),
+                    const PopupMenuItem<String>(
+                      value: 'Upload Image',
+                      child: Text('Upload Image'),
+                    ),
+                    // const PopupMenuItem<String>(
+                    //   value: 'Upload Preset',
+                    //   child: Text('Upload Preset'),
+                    // ),
                   ],
               icon: const Icon(
                 Icons.menu,
@@ -132,7 +163,8 @@ class _SidePanelState extends State<SidePanel> {
   void previewFunction(
       RulesProvider rulesProvider,
       HackathonDetailsProvider hackathonDetailsProvider,
-      HackathonTextPropertiesProvider hackathonTextPropertiesProvider) {
+      HackathonTextPropertiesProvider hackathonTextPropertiesProvider,
+      HackathonContainerPropertiesProvider hackathonContainerPropertiesProvider) {
     rulesProvider.setSelectedIndex(-1);
     rulesProvider.setDescriptionWidget(
         SvgPicture.asset('assets/images/defaultTemplate/clickme.svg'));
@@ -143,6 +175,11 @@ class _SidePanelState extends State<SidePanel> {
     fields = hackathonTextPropertiesProvider.addRoundsTextProperties(fields);
 
     hackathonDetailsProvider.textFields = fields;
+
+    List<ContainerPropertiesArray> containers = hackathonContainerPropertiesProvider.getContainerProperties();
+    containers = hackathonContainerPropertiesProvider.addRoundsContainerProperties(containers);
+
+    hackathonDetailsProvider.containersProperties = containers;
 
     Navigator.push(
       context,
@@ -157,7 +194,8 @@ class _SidePanelState extends State<SidePanel> {
   void hostHackathon(
       RulesProvider rulesProvider,
       HackathonDetailsProvider hackathonDetailsProvider,
-      HackathonTextPropertiesProvider hackathonTextPropertiesProvider) async {
+      HackathonTextPropertiesProvider hackathonTextPropertiesProvider, 
+      HackathonContainerPropertiesProvider hackathonContainerPropertiesProvider) async {
     setState(() {
       _isLoading = true;
     });
@@ -175,6 +213,8 @@ class _SidePanelState extends State<SidePanel> {
 
     List<TextFieldPropertiesArray> fields =
         hackathonTextPropertiesProvider.getTextProperties();
+        List<ContainerPropertiesArray> containers =
+        hackathonContainerPropertiesProvider.getContainerProperties();
     //  following is to add roundsTextProperties according to their key in the above defined fields list
     fields = hackathonTextPropertiesProvider.addRoundsTextProperties(fields);
 
@@ -202,6 +242,36 @@ class _SidePanelState extends State<SidePanel> {
       "fields": fields,
       "containers": []
     }, context);
+    // final hackathonId = await CreateHackathon().postSingleHackathon({
+    //   "hackathon": {
+    //     "name": "albin",
+    //     "organisation_name": "ellickal",
+    //     "mode_of_conduct": 'online',
+    //     "deadline": "2024-10-10",
+    //     "team_size": 4,
+    //     "visible": "Public",
+    //     "start_date_time":
+    //         "2024-10-10T00:00:00Z",
+    //     "about": "hiiii",
+    //     "brief": "k",
+    //     "website": "https://req",
+    //     "fee": "0",
+    //     "venue": "oko",
+    //     "contact1_name": "po",
+    //     "contact1_number": "555",
+    //     "contact2_name": "yuh",
+    //     "contact2_number": "78751"
+    //   },
+    //   "round": [{
+    //     "serial_number":  1,
+    //     "name": "yu",
+    //     "description": "jj",
+    //     "start_timeline": "2024-12-15T00:00:00Z",
+    //     "end_timeline": "2024-12-15T18:00:00Z"
+    //   }],
+    //   "fields": [],
+    //   "containers": []
+    // }, context);
 
     if (hackathonId.isNotEmpty) {
       showDialog(

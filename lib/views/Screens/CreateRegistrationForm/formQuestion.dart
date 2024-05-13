@@ -51,6 +51,7 @@ class FormBuilderQuestion extends StatelessWidget {
     } else if (question.type == 'QuestionType.multipleChoice') {
       responseField = FormBuilderCheckboxGroup(
         name: '${fieldPrefix}_response_multiChoice',
+        orientation: OptionsOrientation.vertical,
         enabled: false,
         decoration: const InputDecoration(
           border: InputBorder.none,

@@ -49,8 +49,6 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
                         children: [
                           Expanded(
                             child: ColorToolsButton(
-                              hackathonTextPropertiesProvider:
-                                  hackathonTextProvider,
                               message: "Recents",
                               side: ColorToolsButtonSide.topleft,
                               tabIndex: 1,
@@ -63,8 +61,6 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
                           ),
                           Expanded(
                             child: ColorToolsButton(
-                              hackathonTextPropertiesProvider:
-                                  hackathonTextProvider,
                               message: "Swatches",
                               side: ColorToolsButtonSide.bottomleft,
                               tabIndex: 2,
@@ -147,8 +143,6 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
                           // ),
                           Expanded(
                             child: ColorToolsButton(
-                                hackathonTextPropertiesProvider:
-                                    hackathonTextProvider,
                                 message: "Color Picker",
                                 tabIndex: 4,
                                 side: ColorToolsButtonSide.bottomright,
@@ -236,7 +230,7 @@ class _ColoPickerCardState extends State<ColoPickerCard> {
                   pickerAreaHeightPercent: 0.8,
                   onColorChanged: (value) {
                     hackathonTextProvider.addColor(value);
-
+                    
                     hackathonTextProvider.textColorChange(value.toString());
                   });
             }));

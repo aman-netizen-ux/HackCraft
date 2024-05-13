@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonContainerPropertiesProvider.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Components/toolTip_custom_decoration.dart';
+import 'package:provider/provider.dart';
 
 enum ColorToolsButtonSide { topleft, bottomright, topright, bottomleft }
 
@@ -14,8 +16,7 @@ class ColorToolsButton extends StatefulWidget {
     required this.side,
     required this.message,
     this.onTap,
-    required this.tabIndex,
-    required this.hackathonTextPropertiesProvider,
+    required this.tabIndex
   });
 
   final Widget child;
@@ -23,7 +24,7 @@ class ColorToolsButton extends StatefulWidget {
   final String message;
   final void Function()? onTap;
   final int tabIndex;
-  final HackathonTextPropertiesProvider hackathonTextPropertiesProvider;
+  
 
   @override
   State<ColorToolsButton> createState() => _ColorToolsButtonState();
@@ -45,10 +46,11 @@ class _ColorToolsButtonState extends State<ColorToolsButton> {
     }
   }
 
-  Color? _determineColor() {
+  Color? _determineColor(HackathonTextPropertiesProvider textProvider, HackathonContainerPropertiesProvider containerProvider) {
     if (widget.tabIndex == 1 || widget.tabIndex == 2) {
       if (widget.tabIndex ==
-          widget.hackathonTextPropertiesProvider.selectedColorTool) {
+         textProvider.selectedColorTool || widget.tabIndex ==
+         containerProvider.selectedContainerColorTool ) {
         return grey5.withOpacity(0.2);
       } else if (isHover) {
         return grey5.withOpacity(0.1); // Color when hovered
@@ -68,6 +70,11 @@ class _ColorToolsButtonState extends State<ColorToolsButton> {
 
   @override
   Widget build(BuildContext context) {
+    final hackathonTextProvider =
+        Provider.of<HackathonTextPropertiesProvider>(context);
+
+        final hackathonContainerPropertiesProvider =
+        Provider.of<HackathonContainerPropertiesProvider>(context);
     return Tooltip(
       message: widget.message,
       verticalOffset: 0, //-20
@@ -114,7 +121,7 @@ class _ColorToolsButtonState extends State<ColorToolsButton> {
                       widget.side == ColorToolsButtonSide.bottomright
                           ? rad5_2
                           : 0)),
-              color: _determineColor(),
+              color: _determineColor(hackathonTextProvider, hackathonContainerPropertiesProvider),
             ),
             child: widget.child,
           ),

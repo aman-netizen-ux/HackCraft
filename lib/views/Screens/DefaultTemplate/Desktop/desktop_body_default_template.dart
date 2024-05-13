@@ -31,7 +31,7 @@ class _DefaultTemplateDesktopBodyState
           defaultTemplateModel: widget.defaultTemplateModel,
           isEdit: widget.isEdit,
         ),
-        GallerySection(),
+        GallerySection(isEdit: widget.isEdit),
         ContactUsAndFooterSection(
             defaultTemplateModel: widget.defaultTemplateModel)
       ],

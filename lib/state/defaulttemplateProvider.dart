@@ -75,6 +75,19 @@ class DefaultTemplateProvider with ChangeNotifier {
     }
   }
 
+  Alignment getContainerAlign(String align){
+    switch(align){
+      case 'left':
+        return Alignment.centerLeft;
+      case 'right':
+        return Alignment.centerRight;
+      case 'center':
+        return Alignment.center;
+      default:
+        return Alignment.center;
+    }
+  } 
+
 
   AlignmentGeometry getTextAlignForContainer(String align){
     switch(align){
@@ -88,6 +101,19 @@ class DefaultTemplateProvider with ChangeNotifier {
         return Alignment.centerLeft;
       default:
         return Alignment.center;
+    }
+  }
+
+  MainAxisAlignment getMainAxisAlignment(String align) {
+    switch (align) {
+      case 'left':
+        return MainAxisAlignment.start;
+      case 'right':
+        return MainAxisAlignment.end;
+      case 'center':
+        return MainAxisAlignment.center;
+      default:
+        return MainAxisAlignment.center;
     }
   }
 }

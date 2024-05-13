@@ -15,12 +15,10 @@ class _CustomEditPortalState extends State<CustomEditPortal> {
     return  SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: ResponsiveLayout(
-            mobileBody: const CustomEditPortalDesktopBody(), //TODO: Add mobile body
-            desktopBody: const CustomEditPortalDesktopBody(),
-            tabletBody: const CustomEditPortalDesktopBody(),  //TODO: Add tablet body
-          ),
+        body: ResponsiveLayout(
+          mobileBody: const CustomEditPortalDesktopBody(), //TODO: Add mobile body
+          desktopBody: const CustomEditPortalDesktopBody(),
+          tabletBody: const CustomEditPortalDesktopBody(),  //TODO: Add tablet body
         ),
       ),
     );

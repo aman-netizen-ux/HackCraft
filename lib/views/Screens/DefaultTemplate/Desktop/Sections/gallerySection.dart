@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
@@ -9,7 +11,8 @@ import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:provider/provider.dart';
 
 class GallerySection extends StatelessWidget {
-  const GallerySection({super.key});
+  const GallerySection({super.key, required this.isEdit});
+  final bool isEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,7 @@ class GallerySection extends StatelessWidget {
 
           //From here, the images will be shown in the list view using the list made in the gallery provider.
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: List.generate(
               galleryProvider.galleryImages.length,
               (index) {
@@ -133,12 +136,20 @@ class GallerySection extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
                   ),
-                  child: Image.asset(
-                    galleryProvider.galleryImages[index],
-                    fit: BoxFit.cover,
-                    height: cardHeight,
-                    width: cardWidth,
-                  ),
+                  child: isEdit
+                      ? Image.memory(
+                          base64Decode(
+                              galleryProvider.galleryImages[index]),
+                          fit: BoxFit.cover,
+                          height: cardHeight,
+                          width: cardWidth,
+                        )
+                      : Image.asset(
+                          galleryProvider.galleryImages[index],
+                          fit: BoxFit.cover,
+                          height: cardHeight,
+                          width: cardWidth,
+                        ),
                 );
               },
             ),
