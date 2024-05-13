@@ -31,10 +31,11 @@ class _SignInState extends State<SignIn> {
     return await SharedPreferences.getInstance();
   }
 
-  void storeUserUid(String uid) async {
+  void storeUserUid(String uid, String emailId) async {
     SharedPreferences prefs = await getLocalStorage();
     debugPrint('set locally');
     await prefs.setString('user_uid', uid);
+    await prefs.setString('user_email', emailId);
   }
 
   // Function to handle sign-in using email and password
@@ -145,8 +146,8 @@ class _SignInState extends State<SignIn> {
                               if (user != null) {
                                 String firebaseUUID = user.uid;
                                 String _email = user.email!;
-                                storeUserUid(firebaseUUID);
-                                loginProvider.setUuid(firebaseUUID);
+                                storeUserUid(firebaseUUID, _email);
+                                loginProvider.setUuid(firebaseUUID, _email);
                                 final status = await registerCheck(_email);
                                 if (status) {
                                   // ignore: use_build_context_synchronously
@@ -227,8 +228,8 @@ class _SignInState extends State<SignIn> {
                               if (user != null) {
                                 String firebaseUUID = user.uid;
                                 String _email = user.email!;
-                                storeUserUid(firebaseUUID);
-                                loginProvider.setUuid(firebaseUUID);
+                                storeUserUid(firebaseUUID, _email);
+                                loginProvider.setUuid(firebaseUUID, _email);
                                 final status = await registerCheck(_email);
                                 if (status) {
                                   // ignore: use_build_context_synchronously
@@ -489,8 +490,8 @@ class _SignInState extends State<SignIn> {
                       );
                       if (user != null) {
                         String firebaseUUID = user.uid;
-                        storeUserUid(firebaseUUID);
-                        loginProvider.setUuid(firebaseUUID);
+                        storeUserUid(firebaseUUID,_emailText.text);
+                        loginProvider.setUuid(firebaseUUID, _emailText.text);
                         final status = await registerCheck(email);
                         if (status) {
                           // ignore: use_build_context_synchronously

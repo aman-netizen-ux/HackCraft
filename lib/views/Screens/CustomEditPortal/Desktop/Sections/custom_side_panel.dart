@@ -396,7 +396,14 @@ class _CustomSidePanelState extends State<CustomSidePanel> {
 
         ),
 
-         Expanded(flex:1,child: SingleChildScrollView(child: SelectableText(customEditProvider.jsonObject.toString())))
+         Expanded(flex:1,child: SingleChildScrollView(child: Column(
+           children: [
+             SelectableText(customEditProvider.jsonObject.toString()),
+             ElevatedButton(onPressed: (){
+              
+             }, child: Text('UPDATE'))
+           ],
+         )))
       ],
     );
   }

@@ -152,7 +152,6 @@ class _DefaultEditAboutusState extends State<DefaultEditAboutus> {
                               .containerPropertiesMap[aboutContainerKey]!
                               .borderWidth
                               .toDouble()),
-                  // color: Colors.blue,
                 ),
                 InkWell(
                   onTap: () {

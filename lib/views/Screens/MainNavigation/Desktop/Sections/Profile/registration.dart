@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
+import 'package:major_project__widget_testing/state/loginProvider.dart';
 import 'package:major_project__widget_testing/state/profile-provider/profile_registration_provider.dart';
+import 'package:major_project__widget_testing/state/profile-provider/user_hackathons_provider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +17,30 @@ class Registrations extends StatefulWidget {
 }
 
 class _RegistrationsState extends State<Registrations> {
+  bool _isLoading = false; 
+  @override
+  void initState() {
+    super.initState();
+    _loadHackathonData();
+  }
+
+  void _loadHackathonData() async {
+    try {
+      final hackathonsProvider = Provider.of<UserHackathons>(context, listen: false);
+       final loginProvider = Provider.of<LoginProvider>(context, listen: false);
+       debugPrint('email in profile : ${loginProvider.emailId}');
+      await hackathonsProvider.fetchUserHackathons('guramrit1066@gmail.com', "open", "oldest");
+    } catch (e) {
+      debugPrint("Error fetching user: $e");
+    }
+
+    if (mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
     final hackProvider = Provider.of<ProfileRegProvider>(context);
@@ -76,7 +102,7 @@ class _RegistrationsState extends State<Registrations> {
                             onChanged: (value) {
                               hackProvider.selectValue(value!);
                             },
-                            items: <String>['Closed', 'Open', 'Live']
+                            items: <String>['All', 'Closed', 'Open', 'Live']
                                 .map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,

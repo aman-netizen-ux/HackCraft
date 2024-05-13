@@ -35,10 +35,11 @@ class _SignUpDetailsState extends State<SignUpDetails> {
     return await SharedPreferences.getInstance();
   }
 
-  void storeUserUid(String uid) async {
+  void storeUserUid(String uid, String emailId) async {
     SharedPreferences prefs = await getLocalStorage();
     debugPrint('set locally');
     await prefs.setString('user_uid', uid);
+    await prefs.setString('user_email', emailId);
   }
 
   @override
@@ -116,8 +117,8 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                   loginProvider.getLastName(lastName);
 
                                   String firebaseUUID = user.user!.uid;
-                                  storeUserUid(firebaseUUID);
-                                  loginProvider.setUuid(firebaseUUID);
+                                  storeUserUid(firebaseUUID, user.user!.email!);
+                                  loginProvider.setUuid(firebaseUUID, user.user!.email.toString());
                                 } else {
                                   debugPrint(
                                       'Google User name is not available');
@@ -206,8 +207,8 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                   lastName = lastName.substring(0, 1) +
                                       lastName.substring(1).toLowerCase();
                                   String firebaseUUID = user.user!.uid;
-                                  storeUserUid(firebaseUUID);
-                                  loginProvider.setUuid(firebaseUUID);
+                                  storeUserUid(firebaseUUID, user.user!.email!);
+                                  loginProvider.setUuid(firebaseUUID, user.user!.email!);
                                   loginProvider.getFirstName(firstName);
                                   loginProvider.getLastName(lastName);
                                 } else {
