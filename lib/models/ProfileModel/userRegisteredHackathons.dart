@@ -18,6 +18,7 @@ class RegisteredHackathon {
   final String organizationName;
   final String teamName;
   final String hackathonDeadline;
+  final String tag;
 
   RegisteredHackathon({
     required this.name,
@@ -26,6 +27,7 @@ class RegisteredHackathon {
     required this.organizationName,
     required this.teamName,
     required this.hackathonDeadline,
+    required this.tag
   });
 
   factory RegisteredHackathon.fromJson(Map<String, dynamic> json) {
@@ -36,6 +38,7 @@ class RegisteredHackathon {
       organizationName: json['organisation'],
       teamName: json['team'],
       hackathonDeadline: json['hackathon_deadline'],
+      tag: json['tag']
     );
   }
 }

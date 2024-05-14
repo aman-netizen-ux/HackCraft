@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/api/UserProfile/get_user_profile.dart';
 import 'package:major_project__widget_testing/models/ProfileModel/getUserProfileModel.dart';
 import 'package:major_project__widget_testing/views/Screens/MainNavigation/Desktop/Sections/Profile/referral.dart';
-import 'package:major_project__widget_testing/views/Screens/MainNavigation/Desktop/Sections/Profile/registration.dart';
+import 'package:major_project__widget_testing/views/Screens/MainNavigation/Desktop/Sections/Profile/user_registered_hackathons.dart';
 import 'package:major_project__widget_testing/views/Screens/MainNavigation/Desktop/Sections/Profile/settings.dart';
 import 'package:major_project__widget_testing/views/Screens/MainNavigation/Desktop/Sections/Profile/UserProfile/user_profile.dart';
 
