@@ -276,6 +276,7 @@ class _OTPFileState extends State<OTPFile> {
                       "first_name": loginProvider.firstName,
                       "last_name": loginProvider.lastName,
                       "email": loginProvider.emailId,
+                      "user_type": "",
                     });
                     storeUserUid(firebaseUUID);
                     loginProvider.setUuid(firebaseUUID);

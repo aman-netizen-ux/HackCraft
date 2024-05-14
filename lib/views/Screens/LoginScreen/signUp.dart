@@ -127,6 +127,7 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                   "first_name": loginProvider.firstName,
                                   "last_name": loginProvider.lastName,
                                   "email": loginProvider.emailId,
+                                  "user_type": ""
                                 }).then((value) {
                                   loginProvider.setCurrentIndex(2);
                                 });
@@ -229,6 +230,7 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                   "first_name": loginProvider.firstName,
                                   "last_name": loginProvider.lastName,
                                   "email": loginProvider.emailId,
+                                  "user_type": ""
                                 }).then((value) {
                                   loginProvider.setCurrentIndex(2);
                                 });
