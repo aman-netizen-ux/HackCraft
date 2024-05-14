@@ -277,11 +277,16 @@ class _OTPFileState extends State<OTPFile> {
                       "first_name": loginProvider.firstName,
                       "last_name": loginProvider.lastName,
                       "email": loginProvider.emailId,
-                    });
-                    storeUserUid(firebaseUUID, loginProvider.emailId);
+                      "user_type": ""
+                    }).then((value) {
+                      if(value){
+                        storeUserUid(firebaseUUID, loginProvider.emailId);
                     loginProvider.setUuid(firebaseUUID, loginProvider.emailId);
                     loginProvider.setOtpId(0);
                     loginProvider.setCurrentIndex(2);
+                      }
+                    });
+                    
                   } else {
                     setState(() {
                       otpCheck = true;

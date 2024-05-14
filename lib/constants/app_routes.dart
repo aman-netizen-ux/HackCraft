@@ -29,9 +29,9 @@ class AppRoutes {
 
   static Map<String, Widget Function(BuildContext)> routes = {
     //TODO: NEED TO CHANGE THE STARTING APP ROUTE 
-    start: (context) => const CustomEditPortal(),
+    //start: (context) => const CustomEditPortal(),
     
-    //start: (context) => LoginPageDesktop(),
+    start: (context) => LoginPageDesktop(),
     // start: (context) =>  RegistrationForm(),
     // start: (context) =>  RegisterUser(),
     mainNavigation: (context) => const MainNavigation(),

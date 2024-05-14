@@ -1,3 +1,4 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -128,8 +129,11 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                   "first_name": loginProvider.firstName,
                                   "last_name": loginProvider.lastName,
                                   "email": loginProvider.emailId,
+                                  "user_type": ""
                                 }).then((value) {
-                                  loginProvider.setCurrentIndex(2);
+                                  if(value){
+                                    loginProvider.setCurrentIndex(2);
+                                  }
                                 });
                               }
                             },
@@ -230,8 +234,11 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                   "first_name": loginProvider.firstName,
                                   "last_name": loginProvider.lastName,
                                   "email": loginProvider.emailId,
+                                  "user_type": ""
                                 }).then((value) {
-                                  loginProvider.setCurrentIndex(2);
+                                  if(value){
+                                    loginProvider.setCurrentIndex(2);
+                                  }
                                 });
                               }
                             },
