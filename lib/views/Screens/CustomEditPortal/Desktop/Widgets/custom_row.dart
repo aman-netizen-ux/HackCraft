@@ -23,15 +23,10 @@ class _CustomRowState extends State<CustomRow> {
         height: 150,
         width: double.infinity,
         decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          physics: const NeverScrollableScrollPhysics(),
-          clipBehavior: Clip.hardEdge,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: widget.childWidgets,
-          ),
+        child: Row(
+          mainAxisAlignment: widget.node['properties']['mainAxisAlignment'],
+          crossAxisAlignment: widget.node['properties']['crossAxisAlignment'],
+          children: [ ...List.generate(widget.childWidgets.length, (index) => widget.childWidgets[index])],
         ),
       ),
     );

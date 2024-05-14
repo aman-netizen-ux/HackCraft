@@ -400,7 +400,8 @@ class _CustomSidePanelState extends State<CustomSidePanel> {
            children: [
              SelectableText(customEditProvider.jsonObject.toString()),
              ElevatedButton(onPressed: (){
-              
+              customEditProvider.addPropertyByKey(customEditProvider.selectedWidgetKey == null ? customColumnKey.toString() : customEditProvider.selectedWidgetKey.toString(), 'mainAxisAlignment', MainAxisAlignment.center);
+              customEditProvider.dynamicWidgets = customEditProvider.buildWidgetsFromJson(customEditProvider.jsonObject);
              }, child: Text('UPDATE'))
            ],
          )))
