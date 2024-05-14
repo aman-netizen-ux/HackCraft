@@ -126,9 +126,7 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                               ),
                             ),
                           );
-                        })
-                       
-                        ),
+                        })),
                   ),
                   Expanded(
                     child: TabBarView(
@@ -151,22 +149,23 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                       children: [
                         createRegistrationProvider.formcontroller.index == 0
                             ? Container()
-                            : SizedBox(
-                                height: scaleHeight(context, 38),
-                                width: scaleWidth(context, 104),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    int i = createRegistrationProvider
-                                        .formcontroller.index;
-                                    if (i != 0) {
-                                      createRegistrationProvider.formcontroller
-                                          .animateTo(i - 1);
-                                    }
-                                    setState(() {});
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: lightSilver,
-                                  ),
+                            : InkWell(
+                                onTap: () {
+                                  int i = createRegistrationProvider
+                                      .formcontroller.index;
+                                  if (i != 0) {
+                                    createRegistrationProvider.formcontroller
+                                        .animateTo(i - 1);
+                                  }
+                                  setState(() {});
+                                },
+                                child: Container(
+                                  height: scaleHeight(context, 38),
+                                  width:scaleWidth(context, 104),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      color: lightSilver,
+                                      borderRadius: BorderRadius.circular(5)),
                                   child: Text(
                                     "Previous",
                                     style: GoogleFonts.firaSans(
@@ -180,13 +179,8 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                         createRegistrationProvider.formcontroller.index ==
                                 createRegistrationProvider.tabField.length - 1
                             ? Container()
-                            : Container(
-                                margin: EdgeInsets.only(
-                                    left: scaleWidth(context, 12)),
-                                height: scaleHeight(context, 38),
-                                width: scaleWidth(context, 104),
-                                child: ElevatedButton(
-                                  onPressed: () {
+                            : InkWell(
+                                  onTap: () {
                                     int i = createRegistrationProvider
                                         .formcontroller.index;
 
@@ -198,41 +192,51 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                                     }
                                     setState(() {});
                                   },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: lightSilver,
-                                  ),
-                                  child: Text(
-                                    "Next",
-                                    style: GoogleFonts.firaSans(
-                                      fontWeight: FontWeight.w500,
-                                      color: darkCharcoal,
-                                      fontSize: scaleHeight(context, 14),
+                                 
+                                  child: Container(
+                                     height: scaleHeight(context, 38),
+                                  width:scaleWidth(context, 104),
+                                   margin: EdgeInsets.only(
+                                    left: scaleWidth(context, 12)),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      color: lightSilver,
+                                      borderRadius: BorderRadius.circular(5)),
+                                    child: Text(
+                                      "Next",
+                                      style: GoogleFonts.firaSans(
+                                        fontWeight: FontWeight.w500,
+                                        color: darkCharcoal,
+                                        fontSize: scaleHeight(context, 14),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                        Container(
-                          margin:
-                              EdgeInsets.only(left: scaleWidth(context, 12)),
-                          height: scaleHeight(context, 38),
-                          width: scaleWidth(context, 104),
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              final singleHackathonProvider =
-                                  Provider.of<CreateRegistrationProvider>(
-                                      context,
-                                      listen: false);
-
-                              await singleHackathonProvider
-                                  .getSingleHackathonsList(
-                                      "d3ae95c1-0eee-4745-8b56-259ae9404867");
-
-                              print(singleHackathonProvider
-                                  .singleForm.fields[0].minDate);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: lightSilver,
-                            ),
+                              
+                        InkWell(
+                          onTap: () async {
+                            final singleHackathonProvider =
+                                Provider.of<CreateRegistrationProvider>(
+                                    context,
+                                    listen: false);
+                        
+                            await singleHackathonProvider
+                                .getSingleHackathonsList(
+                                    "d3ae95c1-0eee-4745-8b56-259ae9404867");
+                        
+                            print(singleHackathonProvider
+                                .singleForm.fields[0].minDate);
+                          },
+                          
+                          child: Container(
+                             height: scaleHeight(context, 38),
+                                  width:scaleWidth(context, 104),
+                                   margin: EdgeInsets.only(
+                                    left: scaleWidth(context, 12)),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      color: lightSilver,
+                                      borderRadius: BorderRadius.circular(5)),
                             child: Text(
                               "Submit",
                               style: GoogleFonts.firaSans(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/responsive/responsive_layout.dart';
 import 'package:major_project__widget_testing/views/Screens/GetRegistrationForm/Desktop/desktop_get_form.dart';
+import 'package:major_project__widget_testing/views/Screens/GetRegistrationForm/Desktop/desktop_get_registeration_form.dart';
 
 class GetRegistrationForm extends StatefulWidget {
   const GetRegistrationForm({
@@ -16,12 +17,12 @@ class _GetRegistrationFormState extends State<GetRegistrationForm> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFFEDECF2),
         body: SingleChildScrollView(
           child: ResponsiveLayout(
-            mobileBody: const GetRegistered(), //TODO: Add mobile body
-            desktopBody: const GetRegistered(),
-            tabletBody: const GetRegistered(), //TODO: Add tablet body
+            mobileBody: const DesktopGetRegisterationForm(), //TODO: Add mobile body
+            desktopBody: const DesktopGetRegisterationForm(),
+            tabletBody: const DesktopGetRegisterationForm(), //TODO: Add tablet body
           ),
         ),
       ),

@@ -110,7 +110,7 @@ class _HeaderState extends State<Header> {
                     color: lightSilver,
                   ),
                   Text(
-                    fieldTypeText,
+                    "${createRegistrationProvider.currentIndex+1}) $fieldTypeText",
                     style: GoogleFonts.firaSans(
                         fontSize: scaleHeight(context, 18),
                         color: darkCharcoal,
@@ -121,8 +121,7 @@ class _HeaderState extends State<Header> {
               Row(
                 children: [
                   CustomToggle(
-                    required:currentField
-                        .required,
+                    required: currentField.required,
                   ),
                   Container(
                     height: scaleHeight(context, 34),
@@ -133,7 +132,16 @@ class _HeaderState extends State<Header> {
                     width: scaleHeight(context, 34),
                     color: lightSilver,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        int index= createRegistrationProvider.currentIndex;
+                        List<dynamic> fieldsList= createRegistrationProvider.tabField[createRegistrationProvider.currentKey]!;
+                        if (index >= 0 && index < fieldsList.length) {
+                          fieldsList.removeAt(index);
+                          createRegistrationProvider.currentIndex=-1;
+                          createRegistrationProvider.currentKey="";
+                         createRegistrationProvider.notify();
+                        }
+                      },
                       child: const Icon(
                         Icons.delete,
                         size: 18,
@@ -148,30 +156,28 @@ class _HeaderState extends State<Header> {
           SizedBox(
             height: scaleHeight(context, 12),
           ),
-          SizedBox(
-            height: scaleHeight(context, 40),
-            width: scaleWidth(context, 289),
-            child: InkWell(
-              onTap: () {
-                
-              },
-              child: Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.only(bottom: scaleHeight(context, 10)),
-                decoration: BoxDecoration(
-                    color: lightSilver, borderRadius: BorderRadius.circular(5)),
-                child: Text(
-                  "Save",
-                  style: GoogleFonts.getFont(
-                    fontFamily2,
-                    fontWeight: FontWeight.w400,
-                    color: darkCharcoal,
-                    fontSize: scaleHeight(context, 16),
-                  ),
-                ),
-              ),
-            ),
-          )
+          // SizedBox(
+          //   height: scaleHeight(context, 40),
+          //   width: scaleWidth(context, 289),
+          //   child: InkWell(
+          //     onTap: () {},
+          //     child: Container(
+          //       alignment: Alignment.center,
+          //       margin: EdgeInsets.only(bottom: scaleHeight(context, 10)),
+          //       decoration: BoxDecoration(
+          //           color: lightSilver, borderRadius: BorderRadius.circular(5)),
+          //       child: Text(
+          //         "Save",
+          //         style: GoogleFonts.getFont(
+          //           fontFamily2,
+          //           fontWeight: FontWeight.w400,
+          //           color: darkCharcoal,
+          //           fontSize: scaleHeight(context, 16),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );
