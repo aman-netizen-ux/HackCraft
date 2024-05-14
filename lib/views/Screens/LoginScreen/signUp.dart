@@ -28,6 +28,7 @@ class _SignUpDetailsState extends State<SignUpDetails> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool passwordVisible = true;
+  bool isLoading = false;
   String otp = '';
   int otpId = 0;
 
@@ -35,10 +36,11 @@ class _SignUpDetailsState extends State<SignUpDetails> {
     return await SharedPreferences.getInstance();
   }
 
-  void storeUserUid(String uid) async {
+  void storeUserUid(String uid, String emailId) async {
     SharedPreferences prefs = await getLocalStorage();
     debugPrint('set locally');
     await prefs.setString('user_uid', uid);
+    await prefs.setString('user_email', emailId);
   }
 
   @override
@@ -83,6 +85,9 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                           width: widthScaler(context, 130),
                           child: ElevatedButton(
                             onPressed: () async {
+                              setState(() {
+                                isLoading = true;
+                              });
                               UserCredential user = await handleGoogleSignIn();
                               if (user.additionalUserInfo!.isNewUser == false) {
                                 debugPrint(
@@ -116,8 +121,9 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                   loginProvider.getLastName(lastName);
 
                                   String firebaseUUID = user.user!.uid;
-                                  storeUserUid(firebaseUUID);
-                                  loginProvider.setUuid(firebaseUUID);
+                                  storeUserUid(firebaseUUID, user.user!.email!);
+                                  loginProvider.setUuid(firebaseUUID,
+                                      user.user!.email.toString());
                                 } else {
                                   debugPrint(
                                       'Google User name is not available');
@@ -129,9 +135,23 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                   "email": loginProvider.emailId,
                                   "user_type": ""
                                 }).then((value) {
-                                  loginProvider.setCurrentIndex(2);
+                                  if (value) {
+                                    loginProvider.setCurrentIndex(2);
+                                  } else {
+                                    showSnackBar(
+                                        'User Profile not created',
+                                        red2,
+                                        const Icon(
+                                          Icons.warning,
+                                          color: white,
+                                        ),
+                                        context);
+                                  }
                                 });
                               }
+                              setState(() {
+                                isLoading = false;
+                              });
                             },
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
@@ -178,6 +198,9 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                           width: widthScaler(context, 130),
                           child: ElevatedButton(
                             onPressed: () async {
+                              setState(() {
+                                isLoading = true;
+                              });
                               UserCredential user = await signInWithGitHub();
                               if (user.additionalUserInfo!.isNewUser == false) {
                                 debugPrint(
@@ -207,8 +230,9 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                   lastName = lastName.substring(0, 1) +
                                       lastName.substring(1).toLowerCase();
                                   String firebaseUUID = user.user!.uid;
-                                  storeUserUid(firebaseUUID);
-                                  loginProvider.setUuid(firebaseUUID);
+                                  storeUserUid(firebaseUUID, user.user!.email!);
+                                  loginProvider.setUuid(
+                                      firebaseUUID, user.user!.email!);
                                   loginProvider.getFirstName(firstName);
                                   loginProvider.getLastName(lastName);
                                 } else {
@@ -232,9 +256,23 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                   "email": loginProvider.emailId,
                                   "user_type": ""
                                 }).then((value) {
-                                  loginProvider.setCurrentIndex(2);
+                                  if (value) {
+                                    loginProvider.setCurrentIndex(2);
+                                  } else {
+                                    showSnackBar(
+                                        'User Profile not created',
+                                        red2,
+                                        const Icon(
+                                          Icons.warning,
+                                          color: white,
+                                        ),
+                                        context);
+                                  }
                                 });
                               }
+                              setState(() {
+                                isLoading = false;
+                              });
                             },
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
@@ -527,6 +565,9 @@ class _SignUpDetailsState extends State<SignUpDetails> {
             margin: const EdgeInsets.symmetric(vertical: 20),
             child: ElevatedButton(
                 onPressed: () async {
+                  setState(() {
+                    isLoading = true;
+                  });
                   String email = _emailText.text;
                   String password = _passwordText.text;
                   String firstName = _firstNametext.text;
@@ -573,6 +614,9 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                       loginProvider.setCurrentIndex(1);
                     }
                   }
+                  setState(() {
+                    isLoading = false;
+                  });
                 },
                 style: ButtonStyle(
                   backgroundColor:
@@ -587,13 +631,17 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                   fixedSize:
                       MaterialStateProperty.all<Size>(const Size(160, 50)),
                 ),
-                child: Text(
-                  "Next ",
-                  style: GoogleFonts.firaSans(
-                      color: white,
-                      fontSize: heightScaler(context, 18),
-                      fontWeight: FontWeight.w500),
-                ))),
+                child: isLoading
+                    ? const CircularProgressIndicator(
+                        color: white,
+                      )
+                    : Text(
+                        "Next ",
+                        style: GoogleFonts.firaSans(
+                            color: white,
+                            fontSize: heightScaler(context, 18),
+                            fontWeight: FontWeight.w500),
+                      ))),
       ],
     );
   }

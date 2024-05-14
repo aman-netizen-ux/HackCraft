@@ -8,7 +8,6 @@ import 'package:major_project__widget_testing/utils/snackBar.dart';
 import 'package:major_project__widget_testing/views/Screens/LoginScreen/SignIn/githubSignIn.dart';
 import 'package:major_project__widget_testing/views/Screens/LoginScreen/desktop_login.dart';
 import 'package:major_project__widget_testing/views/Screens/LoginScreen/registerCheck.dart';
-import 'package:major_project__widget_testing/views/Screens/LoginScreen/screenChange.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'googleSignIn.dart';
@@ -22,6 +21,7 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   bool isError = false;
+  bool isLoading = false;
   bool passwordVisible = true;
   final TextEditingController _emailText = TextEditingController();
   final TextEditingController _passwordText = TextEditingController();
@@ -31,10 +31,11 @@ class _SignInState extends State<SignIn> {
     return await SharedPreferences.getInstance();
   }
 
-  void storeUserUid(String uid) async {
+  void storeUserUid(String uid, String emailId) async {
     SharedPreferences prefs = await getLocalStorage();
     debugPrint('set locally');
     await prefs.setString('user_uid', uid);
+    await prefs.setString('user_email', emailId);
   }
 
   // Function to handle sign-in using email and password
@@ -139,14 +140,17 @@ class _SignInState extends State<SignIn> {
                           child: ElevatedButton(
                             onPressed: () async {
                               // Handling Google sign-in
+                              setState(() {
+                                isLoading = true;
+                              });
                               UserCredential userCredential =
                                   await handleGoogleSignIn();
                               User? user = userCredential.user;
                               if (user != null) {
                                 String firebaseUUID = user.uid;
                                 String _email = user.email!;
-                                storeUserUid(firebaseUUID);
-                                loginProvider.setUuid(firebaseUUID);
+                                storeUserUid(firebaseUUID, _email);
+                                loginProvider.setUuid(firebaseUUID, _email);
                                 final status = await registerCheck(_email);
                                 if (status) {
                                   // ignore: use_build_context_synchronously
@@ -154,12 +158,21 @@ class _SignInState extends State<SignIn> {
                                     context,
                                     '/mainNavigation',
                                   );
+                                  setState(() {
+                                    isLoading = false;
+                                  });
                                 } else {
                                   loginProvider.setCurrentIndex(2);
                                   tabController.animateTo(1);
+                                  setState(() {
+                                    isLoading = false;
+                                  });
                                 }
                               } else {
                                 // Handle sign-in failure
+                                setState(() {
+                                  isLoading = false;
+                                });
                                 debugPrint(
                                   'No user found for this Gmail.',
                                 );
@@ -221,14 +234,17 @@ class _SignInState extends State<SignIn> {
                           child: ElevatedButton(
                             // Handling GitHub sign-in
                             onPressed: () async {
+                              setState(() {
+                                isLoading = true;
+                              });
                               UserCredential userCredential =
                                   await signInWithGitHub();
                               User? user = userCredential.user;
                               if (user != null) {
                                 String firebaseUUID = user.uid;
                                 String _email = user.email!;
-                                storeUserUid(firebaseUUID);
-                                loginProvider.setUuid(firebaseUUID);
+                                storeUserUid(firebaseUUID, _email);
+                                loginProvider.setUuid(firebaseUUID, _email);
                                 final status = await registerCheck(_email);
                                 if (status) {
                                   // ignore: use_build_context_synchronously
@@ -236,15 +252,24 @@ class _SignInState extends State<SignIn> {
                                     context,
                                     '/mainNavigation',
                                   );
+                                  setState(() {
+                                    isLoading = false;
+                                  });
                                 } else {
                                   // moves on to register screen
 
                                   loginProvider.setCurrentIndex(2);
                                   tabController.animateTo(1);
+                                  setState(() {
+                                    isLoading = false;
+                                  });
                                 }
                               } else {
                                 // Handle sign-in failure
                                 // ignore: use_build_context_synchronously
+                                setState(() {
+                                  isLoading = false;
+                                });
                                 showSnackBar(
                                     "No user found for this Gmail.",
                                     red2,
@@ -457,6 +482,9 @@ class _SignInState extends State<SignIn> {
               child: ElevatedButton(
                   onPressed: () async {
                     // Handling sign-in with email and password
+                    setState(() {
+                      isLoading = true;
+                    });
                     String email = _emailText.text;
                     String password = _passwordText.text;
                     if (email.isEmpty) {
@@ -489,8 +517,8 @@ class _SignInState extends State<SignIn> {
                       );
                       if (user != null) {
                         String firebaseUUID = user.uid;
-                        storeUserUid(firebaseUUID);
-                        loginProvider.setUuid(firebaseUUID);
+                        storeUserUid(firebaseUUID, _emailText.text);
+                        loginProvider.setUuid(firebaseUUID, _emailText.text);
                         final status = await registerCheck(email);
                         if (status) {
                           // ignore: use_build_context_synchronously
@@ -505,6 +533,9 @@ class _SignInState extends State<SignIn> {
                         }
                       }
                     }
+                    setState(() {
+                      isLoading = false;
+                    });
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
@@ -519,13 +550,17 @@ class _SignInState extends State<SignIn> {
                     fixedSize:
                         MaterialStateProperty.all<Size>(const Size(160, 50)),
                   ),
-                  child: Text(
-                    "Login",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: heightScaler(context, 18),
-                        fontWeight: FontWeight.w500),
-                  ))),
+                  child: isLoading
+                      ? const CircularProgressIndicator(
+                          color: white,
+                        )
+                      : Text(
+                          "Login",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: heightScaler(context, 18),
+                              fontWeight: FontWeight.w500),
+                        ))),
         ),
       ],
     );

@@ -82,7 +82,6 @@ class HackathonContainerPropertiesProvider with ChangeNotifier {
           containerPropertiesMap[_selectedContainerKey]!.height) {
         containerPropertiesMap[_selectedContainerKey!]!.height -= 1;
       }
-
       notifyListeners();
     }
   }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -9,7 +10,7 @@ class PostApiService {
   postRegistration(String hackathonId, Map<String, dynamic> params) async {
     final String baseUrl = dotenv.get("registration");
     final String url = '$baseUrl$hackathonId';
-   // print(params);
+
     final response = await http.post(
       Uri.parse(url),
       headers: <String, String>{
@@ -34,7 +35,10 @@ class PostApiService {
         return response.statusCode;
       }
     } catch (e) {
-      logger.e("Error message : $e");
+      
+      logger.e("Error message : $e, ${response.body} ");
+      print(response.body);
+      // log("*********${response.body}*********8");
       return response.statusCode;
     }
   }

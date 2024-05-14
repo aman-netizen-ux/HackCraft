@@ -39,10 +39,12 @@ class LoginProvider extends ChangeNotifier {
     lastName = nameG;
   }
 
-  void setUuid(String id) {
+  void setUuid(String id, String email) {
     debugPrint('id in provider : $id');
     _uuid = id;
+    emailId = email;
     debugPrint('uuid in provider : $_uuid');
+    debugPrint('email id : $emailId');
     notifyListeners();
   }
 }

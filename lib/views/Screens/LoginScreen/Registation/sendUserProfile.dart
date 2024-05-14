@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-Future<void> sendUserPost(Map<String, dynamic> data) async {
+Future<bool> sendUserPost(Map<String, dynamic> data) async {
   try {
    // final url = "https://hackcraft166.pythonanywhere.com/userpost";
     final url = dotenv.get("userpost");
     String jsonData = jsonEncode(data);
-    print(data);
+    debugPrint('data : $data');
     final response = await http.post(
       Uri.parse(url),
       headers: <String, String>{
@@ -19,13 +19,16 @@ Future<void> sendUserPost(Map<String, dynamic> data) async {
 
     // Check if request was successful (status code 200)
     if (response.statusCode == 201) {
-      print('User POST  successful');
-      print('Response: ${response.body}');
+      debugPrint('User POST  successful');
+      debugPrint('Response: ${response.body}');
+      return true;
     } else {
       debugPrint('POST request failed with status: ${response.statusCode}');
-      print(response.body);
+      debugPrint(response.body);
+      return false;
     }
   } catch (error) {
     debugPrint('Error sending POST request: $error');
+    return false;
   }
 }

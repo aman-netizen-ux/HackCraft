@@ -17,6 +17,7 @@ import 'package:major_project__widget_testing/state/loginProvider.dart';
 import 'package:major_project__widget_testing/state/mainNavigationProvider.dart';
 import 'package:major_project__widget_testing/state/profile-provider/profile_provider.dart';
 import 'package:major_project__widget_testing/state/profile-provider/profile_registration_provider.dart';
+import 'package:major_project__widget_testing/state/profile-provider/user_hackathons_provider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/state/templateSelectionprovider.dart';
 import 'package:provider/provider.dart';
@@ -36,9 +37,10 @@ void main() async {
   ));
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? storedUid = prefs.getString('user_uid');
+  String? storedEmailId = prefs.getString('user_email');
   final loginProvider = LoginProvider();
-  if (storedUid != null && storedUid.isNotEmpty) {
-    loginProvider.setUuid(storedUid);
+  if (storedUid != null && storedUid.isNotEmpty && storedEmailId != null && storedEmailId.isNotEmpty) {
+    loginProvider.setUuid(storedUid, storedEmailId);
   }
   runApp(MultiProvider(
     providers: [
@@ -60,6 +62,7 @@ void main() async {
           create: (context) => HackathonContainerPropertiesProvider()),
       ChangeNotifierProvider(create: (context) => CustomEditPortal()),
       ChangeNotifierProvider(create: (context) => ProfileProvider()),
+      ChangeNotifierProvider(create: (context) => UserHackathons()),
       ChangeNotifierProvider(create: (context) => ProfileRegProvider()),
       ChangeNotifierProvider(create: (context) => DashboardProvider()),
     ],
