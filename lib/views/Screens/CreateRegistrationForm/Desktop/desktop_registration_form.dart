@@ -287,7 +287,7 @@ class _RegistrationFormDesktopBodyState
                     child: regTab == 0
                         ?const  Templates()
                         : regTab == 1
-                            ? RegFormFields(fieldtabController: fieldtabController)
+                            ? RegFormFields(fieldtabController: fieldtabController, hackathonId: widget.hackathonId)
                             :const Templates(),
                   ),
                 )
