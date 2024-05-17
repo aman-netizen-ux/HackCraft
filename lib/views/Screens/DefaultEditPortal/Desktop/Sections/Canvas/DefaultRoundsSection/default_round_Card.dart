@@ -134,8 +134,8 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
         height: 480,
         color: 'Color(0xFFE2CCFF),Color(0xFF1A202C),Color(0xFF1A202C)',
         borderWidth: 0,
-        blurRadius: 3,
-        borderRadius: 15,
+        blurRadius: 3.0,
+        borderRadius: 15.0,
         boxShadowColor: 'Color(0xFF000000)',
         focusedBorderColor: '');
 
@@ -151,8 +151,8 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
             height: 85,
             color: 'Color(0xFFFFFFFF)',
             borderWidth: 0,
-            blurRadius: 10,
-            borderRadius: 10,
+            blurRadius: 10.0,
+            borderRadius: 10.0,
             boxShadowColor: 'Color(0x3F000000)',
             focusedBorderColor: '');
 

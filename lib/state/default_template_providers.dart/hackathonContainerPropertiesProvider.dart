@@ -105,7 +105,7 @@ class HackathonContainerPropertiesProvider with ChangeNotifier {
     if (_selectedContainerKey != null &&
         containerPropertiesMap.containsKey(_selectedContainerKey)) {
       if (int.tryParse(value) != null) {
-        int borderRadius = int.tryParse(value) ?? 0;      
+        double borderRadius = double.tryParse(value) ?? 0;      
           containerPropertiesMap[_selectedContainerKey!]!.borderRadius = borderRadius;
         notifyListeners();
       }
@@ -118,7 +118,7 @@ class HackathonContainerPropertiesProvider with ChangeNotifier {
     if (_selectedContainerKey != null &&
         containerPropertiesMap.containsKey(_selectedContainerKey)) {
       if (int.tryParse(value) != null) {
-        int blurRadius = int.tryParse(value) ?? 0;      
+        double blurRadius = double.tryParse(value) ?? 0;      
           containerPropertiesMap[_selectedContainerKey!]!.blurRadius = blurRadius;
         notifyListeners();
       }

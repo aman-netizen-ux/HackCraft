@@ -182,8 +182,8 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
             height: 523,
             color: 'Color(0xFFE2CCFF)',
             borderWidth: 0,
-            blurRadius: 0,
-            borderRadius: 30,
+            blurRadius: 0.0,
+            borderRadius: 30.0,
             boxShadowColor: 'Color(0xFFFFFFFF)',
             focusedBorderColor: '');
 
@@ -194,8 +194,8 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
             height: 102,
             color: 'Color(0xFF000100)',
             borderWidth: 0,
-            blurRadius: 0,
-            borderRadius: 15,
+            blurRadius: 0.0,
+            borderRadius: 15.0,
             boxShadowColor: 'Color(0xFFFFFFFF)',
             focusedBorderColor: '');
 
@@ -206,8 +206,8 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
             height: 102,
             color: 'Color(0xFF000100)',
             borderWidth: 0,
-            blurRadius: 0,
-            borderRadius: 15,
+            blurRadius: 0.0,
+            borderRadius: 15.0,
             boxShadowColor: 'Color(0xFFFFFFFF)',
             focusedBorderColor: '');
 
@@ -218,8 +218,8 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
             height: 102,
             color: 'Color(0xFF000100)',
             borderWidth: 0,
-            blurRadius: 0,
-            borderRadius: 15,
+            blurRadius: 0.0,
+            borderRadius: 15.0,
             boxShadowColor: 'Color(0xFFFFFFFF)',
             focusedBorderColor: '');
 
@@ -230,8 +230,8 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
             height: 102,
             color: 'Color(0xFF000100)',
             borderWidth: 0,
-            blurRadius: 0,
-            borderRadius: 15,
+            blurRadius: 0.0,
+            borderRadius: 15.0,
             boxShadowColor: 'Color(0xFFFFFFFF)',
             focusedBorderColor: '');
 
@@ -242,8 +242,8 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
             height: 102,
             color: 'Color(0xFF000100)',
             borderWidth: 0,
-            blurRadius: 0,
-            borderRadius: 15,
+            blurRadius: 0.0,
+            borderRadius: 15.0,
             boxShadowColor: 'Color(0xFFFFFFFF)',
             focusedBorderColor: '');
 

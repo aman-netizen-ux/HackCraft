@@ -151,6 +151,8 @@ class HackathonDetailsProvider with ChangeNotifier {
       contact1Number: '',
       contact2Name: '',
       contact2Number: '',
+      totalRounds: '',
+     // images: []
     ),
     rounds: [
       Round(
