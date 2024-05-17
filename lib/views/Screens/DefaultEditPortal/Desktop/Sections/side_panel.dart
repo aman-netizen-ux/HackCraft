@@ -90,11 +90,15 @@ class _SidePanelState extends State<SidePanel> {
                           final galleryProvider = Provider.of<GalleryProvider>(context, listen: false);
                           if(galleryProvider.galleryImagesFile.isNotEmpty){
                             final imageResponse = await UploadImageToCloudinary().uploadImage(galleryProvider.galleryImagesFile);
-                            print(imageResponse);
+                            print("imageResponse $imageResponse");
                           }
+
+                          if(galleryProvider.logoFile.isNotEmpty){
                           
                           final logoResponse= await UploadImageToCloudinary().uploadLogo(galleryProvider.logoFile[0]);                          
-                          print(logoResponse);
+                          print("logoResponse $logoResponse");
+
+                          }
 
                 } 
                 // else if(result=='Upload Preset'){

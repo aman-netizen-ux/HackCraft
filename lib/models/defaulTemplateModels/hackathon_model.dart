@@ -10,7 +10,7 @@ class Hackathon {
   String startDateTime;
   String about;
   String brief;
- // List<String> images;
+ List<String> images;
   String website;
   String fee;
   String venue;
@@ -31,7 +31,7 @@ class Hackathon {
     required this.startDateTime,
     required this.about,
     required this.brief,
- //   required this.images,
+   required this.images,
     required this.website,
     required this.fee,
     required this.venue,
@@ -54,7 +54,7 @@ class Hackathon {
         startDateTime: json['start_date_time'],
         about: json['about'],
         brief: json['brief'],
-        //images: List<String>.from(json['images']),
+        images: List<String>.from(json['images']),
         website: json['website'],
         fee: json['fee'],
         venue: json['venue'],

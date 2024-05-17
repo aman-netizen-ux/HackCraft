@@ -27,7 +27,7 @@ class SingleHackathonProvider with ChangeNotifier {
       contact2Name: '',
       contact2Number: '',
       totalRounds: '',
- //     images: []
+     images: []
     ),
     rounds: [],
     fields: [],
@@ -70,7 +70,7 @@ class SingleHackathonProvider with ChangeNotifier {
           contact2Name: '',
           contact2Number: '',
           totalRounds: '',
-   //       images: []
+         images: []
         ),
         rounds: [],
         fields: [],
