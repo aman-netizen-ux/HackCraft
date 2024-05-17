@@ -11,6 +11,7 @@ class SingleHackathonProvider with ChangeNotifier {
       // Provide default or initial values here
       id: '',
       name: '',
+      logo:"",
       organisationName: '',
       modeOfConduct: '',
       deadline: '',
@@ -54,6 +55,7 @@ class SingleHackathonProvider with ChangeNotifier {
           // Provide default or initial values here
           id: '',
           name: '',
+          logo:"",
           organisationName: '',
           modeOfConduct: '',
           deadline: '',

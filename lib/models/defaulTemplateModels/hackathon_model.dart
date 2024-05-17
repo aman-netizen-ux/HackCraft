@@ -1,6 +1,6 @@
 class Hackathon {
   String id;
-  String? logo;
+  String logo;
   String name;
   String organisationName;
   String modeOfConduct;
@@ -21,7 +21,7 @@ class Hackathon {
   String totalRounds;
   Hackathon({
     required this.id,
-    this.logo,
+   required this.logo,
     required this.name,
     required this.organisationName,
     required this.modeOfConduct,
@@ -76,7 +76,7 @@ class Hackathon {
         'start_date_time': startDateTime,
         'about': about,
         'brief': brief,
-      //  'images': images,
+       'images': images,
         'website': website,
         'fee': fee,
         'venue': venue,

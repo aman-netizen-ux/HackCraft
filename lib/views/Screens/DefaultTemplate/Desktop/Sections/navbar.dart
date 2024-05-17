@@ -15,8 +15,9 @@ import 'package:provider/provider.dart';
 
 class NavBar extends StatelessWidget {
     final DefaultTemplateApiResponse? defaultTemplateModel;
+ final bool isEdit;
 
-  const NavBar({super.key, required this.defaultTemplateModel});
+  const NavBar({super.key, required this.defaultTemplateModel, required this.isEdit});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,8 @@ class NavBar extends StatelessWidget {
                 Row(
                   children: [
                     //TODO: needs to be updated
-                    galleryProvider.logo==""
+                    isEdit
+                    ?galleryProvider.logo==""
                   ?Container(
                       height: scaleHeight(context, 44),
                       width: scaleHeight(context, 44),
@@ -43,7 +45,9 @@ class NavBar extends StatelessWidget {
                         fit: BoxFit.cover,
                         height: scaleHeight(context, 44),
                       width: scaleHeight(context, 44),
-                      ),
+                      ): Image.network(defaultTemplateModel!.hackathons.logo, fit: BoxFit.cover,
+                        height: scaleHeight(context, 44),
+                      width: scaleHeight(context, 44),),
                     SizedBox(width: scaleWidth(context, 6),),
                     Text(
                      defaultTemplateModel!.hackathons.name,

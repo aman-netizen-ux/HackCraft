@@ -135,6 +135,7 @@ class HackathonDetailsProvider with ChangeNotifier {
     hackathons: Hackathon(
       // Provide default or initial values here
       id: "",
+      logo:"",
       name: '',
       organisationName: '',
       modeOfConduct: '',
