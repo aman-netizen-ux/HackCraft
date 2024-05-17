@@ -68,7 +68,6 @@ class CreateRegistrationProvider with ChangeNotifier {
           serialNumber: 1,
           validation: "String",
           type: FieldTypes.shortAnswer),
-        
       ShortAnswerFieldModel(
           errorText: "Invalid email id",
           hint: "Enter your valid email id",
@@ -86,15 +85,16 @@ class CreateRegistrationProvider with ChangeNotifier {
           validation: "String",
           type: FieldTypes.shortAnswer),
       DropDownModel(
-          serialNumber: 4,
-          label: "Gender",
-          errorText: "errorText",
-          required: true,
-          type: FieldTypes.dropdown,
-         options: [
-            RegistrationOption(text: "Male ", serialNumber: 1),
-            RegistrationOption(text: "Female ", serialNumber: 2)
-          ],),
+        serialNumber: 4,
+        label: "Gender",
+        errorText: "errorText",
+        required: true,
+        type: FieldTypes.dropdown,
+        options: [
+          RegistrationOption(text: "Male ", serialNumber: 1),
+          RegistrationOption(text: "Female ", serialNumber: 2)
+        ],
+      ),
       PhoneNumberModel(
           serialNumber: 5,
           label: "Phone Number",
@@ -263,7 +263,7 @@ class CreateRegistrationProvider with ChangeNotifier {
             max: field.labels[field.labels.keys.last],
             question: field.label);
       case FieldTypes.dropdown:
-       List<RegistrationOption> options =
+        List<RegistrationOption> options =
             field.options.cast<RegistrationOption>();
 
         List<String> textList = options.map((option) => option.text).toList();
@@ -320,146 +320,143 @@ class CreateRegistrationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
-
- dynamic getFieldModel(FieldTypes type){
+  dynamic getFieldModel(FieldTypes type) {
     switch (type) {
       case FieldTypes.shortAnswer:
-        return  ShortAnswerFieldModel(
-          errorText: "Invalid Value",
-          hint: "Hint",
-          label: "Question",
-          required: true,
-          serialNumber: 1,
-          type: FieldTypes.shortAnswer,
-          validation: "String");
+        return ShortAnswerFieldModel(
+            errorText: "Invalid Value",
+            hint: "Hint",
+            label: "Question",
+            required: true,
+            serialNumber: 1,
+            type: FieldTypes.shortAnswer,
+            validation: "String");
       case FieldTypes.longAnswer:
         return LongAnswerFieldModel(
-          errorText: "Invalid Value",
-          label: "Question",
-          hint: "Hint",
-          required: true,
-          serialNumber: 2,
-          type: FieldTypes.longAnswer,
-          wordLimit: 500);
+            errorText: "Invalid Value",
+            label: "Question",
+            hint: "Hint",
+            required: true,
+            serialNumber: 2,
+            type: FieldTypes.longAnswer,
+            wordLimit: 500);
       case FieldTypes.radio:
-        return  RadioFieldModel(
-          errorText: "Invalid Value",
-          label: "Question",
-          options: [
-            RegistrationOption(text: "First Option", serialNumber: 1),
-            RegistrationOption(text: "Second Options", serialNumber: 2)
-          ],
-          required: true,
-          serialNumber: 1,
-          type: FieldTypes.radio);
+        return RadioFieldModel(
+            errorText: "Invalid Value",
+            label: "Question",
+            options: [
+              RegistrationOption(text: "First Option", serialNumber: 1),
+              RegistrationOption(text: "Second Options", serialNumber: 2)
+            ],
+            required: true,
+            serialNumber: 1,
+            type: FieldTypes.radio);
 
-       case FieldTypes.checkbox:
+      case FieldTypes.checkbox:
         return CheckBoxModel(
-          errorText: "Invalid Value",
-          label: "Question",
-          options: [
-            RegistrationOption(text: "First Option", serialNumber: 1),
-            RegistrationOption(text: "Second Options", serialNumber: 2)
-          ],
-          required: true,
-          serialNumber: 3,
-          type: FieldTypes.checkbox);
+            errorText: "Invalid Value",
+            label: "Question",
+            options: [
+              RegistrationOption(text: "First Option", serialNumber: 1),
+              RegistrationOption(text: "Second Options", serialNumber: 2)
+            ],
+            required: true,
+            serialNumber: 3,
+            type: FieldTypes.checkbox);
       case FieldTypes.yesNo:
         return RadioFieldModel(
-          serialNumber: 4,
-          errorText: "Invalid Value",
-          label: "Question",
-          options: [
-            RegistrationOption(text: "Yes", serialNumber: 1),
-            RegistrationOption(text: "No", serialNumber: 2)
-          ],
-          required: true,
-          type: FieldTypes.yesNo);
+            serialNumber: 4,
+            errorText: "Invalid Value",
+            label: "Question",
+            options: [
+              RegistrationOption(text: "Yes", serialNumber: 1),
+              RegistrationOption(text: "No", serialNumber: 2)
+            ],
+            required: true,
+            type: FieldTypes.yesNo);
       case FieldTypes.dropdown:
-        return  DropDownModel(
-          errorText: "Invalid Value",
-          label: "Question",
-          required: true,
-          serialNumber: 4,
-        options: [
-            RegistrationOption(text: "First Option", serialNumber: 1),
-            RegistrationOption(text: "Second Options", serialNumber: 2)
-          ],
-          type: FieldTypes.dropdown);
+        return DropDownModel(
+            errorText: "Invalid Value",
+            label: "Question",
+            required: true,
+            serialNumber: 4,
+            options: [
+              RegistrationOption(text: "First Option", serialNumber: 1),
+              RegistrationOption(text: "Second Options", serialNumber: 2)
+            ],
+            type: FieldTypes.dropdown);
 
-       case FieldTypes.file:
+      case FieldTypes.file:
         return FieldModel(
-          serialNumber: 6,
-          errorText: "Invalid Value",
-          label: "Question",
-          required: true,
-          type: FieldTypes.file);
+            serialNumber: 6,
+            errorText: "Invalid Value",
+            label: "Question",
+            required: true,
+            type: FieldTypes.file);
       case FieldTypes.linear:
         return LinearModel(
-          errorText: "Invalid Value",
-          label: "Question",
-          required: true,
-          labels: {"options": 4, "option": 5},
-          serialNumber: 6,
-          type: FieldTypes.linear);
+            errorText: "Invalid Value",
+            label: "Question",
+            required: true,
+            labels: {"options": 4, "option": 5},
+            serialNumber: 6,
+            type: FieldTypes.linear);
       case FieldTypes.slider:
         return SliderModel(
-          serialNumber: 1,
-          errorText: "Invalid Value",
-          label: "Question",
-          required: true,
-          type: FieldTypes.slider,
-          labels: {"start": 4, "end": 10});
+            serialNumber: 1,
+            errorText: "Invalid Value",
+            label: "Question",
+            required: true,
+            type: FieldTypes.slider,
+            labels: {"start": 4, "end": 10});
 
-       case FieldTypes.range:
-        return  RangeModel(
-          serialNumber: 4,
-          errorText: "Invalid Value",
-          label: "Question",
-          required: false,
-          type: FieldTypes.range,
-          labels: {"options": 4, "jjjn": 5});
+      case FieldTypes.range:
+        return RangeModel(
+            serialNumber: 4,
+            errorText: "Invalid Value",
+            label: "Question",
+            required: false,
+            type: FieldTypes.range,
+            labels: {"options": 4, "jjjn": 5});
       case FieldTypes.stepper:
-        return  StepperModel(
-          errorText: "Invalid Value",
-          label: "Question",
-          max_value: 45,
-          min_value: 10,
-          required: true,
-          serialNumber: 1,
-          type: FieldTypes.stepper);
+        return StepperModel(
+            errorText: "Invalid Value",
+            label: "Question",
+            max_value: 45,
+            min_value: 10,
+            required: true,
+            serialNumber: 1,
+            type: FieldTypes.stepper);
       case FieldTypes.toggle:
         return ToggleModel(
-          serialNumber: 3,
-          errorText: "Invalid Value",
-          label: "Question",
-          required: true,
-          type: FieldTypes.toggle);
+            serialNumber: 3,
+            errorText: "Invalid Value",
+            label: "Question",
+            required: true,
+            type: FieldTypes.toggle);
 
       case FieldTypes.tag:
         return TagModel(
-        serialNumber: 1,
-        errorText: "Invalid Value",
-        label: "Question",
-        required: true,
-        type: FieldTypes.tag,
-        options: ["option1", " options2"],
-      );
-
-      case FieldTypes.date:
-        return  DateFieldModel(
-          serialNumber: 2,
+          serialNumber: 1,
           errorText: "Invalid Value",
           label: "Question",
           required: true,
-          type: FieldTypes.date,
-          minDate: "",
-          maxDate: "");
+          type: FieldTypes.tag,
+          options: ["option1", " options2"],
+        );
 
-      
-      default: 
-      throw Exception('Invalid field type');
+      case FieldTypes.date:
+        return DateFieldModel(
+            serialNumber: 2,
+            errorText: "Invalid Value",
+            label: "Question",
+            required: true,
+            type: FieldTypes.date,
+            minDate: "",
+            maxDate: "");
+
+      default:
+        throw Exception('Invalid field type');
     }
   }
 }

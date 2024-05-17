@@ -121,25 +121,25 @@ class LandingSection extends StatelessWidget {
                               .containers[1].containerProperties),
                       hackathonDetailContainer(
                           detail:
-                              defaultTemplateModel!.hackathons.modeOfConduct,
+                              "Mode : ${defaultTemplateModel!.hackathons.modeOfConduct}",
                           textProperties:
                               defaultTemplateModel!.fields[4].textProperties,
                           containerProperties: defaultTemplateModel!
                               .containers[2].containerProperties),
                       hackathonDetailContainer(
-                          detail: defaultTemplateModel!.hackathons.fee,
+                          detail: "Fee : ${defaultTemplateModel!.hackathons.fee}",
                           textProperties:
                               defaultTemplateModel!.fields[5].textProperties,
                           containerProperties: defaultTemplateModel!
                               .containers[3].containerProperties),
                       hackathonDetailContainer(
-                          detail: defaultTemplateModel!.hackathons.teamSize,
+                          detail: "Team Size: ${defaultTemplateModel!.hackathons.teamSize}",
                           textProperties:
                               defaultTemplateModel!.fields[6].textProperties,
                           containerProperties: defaultTemplateModel!
                               .containers[4].containerProperties),
                       hackathonDetailContainer(
-                          detail: defaultTemplateModel!.hackathons.venue,
+                          detail: "Venue: ${defaultTemplateModel!.hackathons.venue}",
                           textProperties:
                               defaultTemplateModel!.fields[7].textProperties,
                           containerProperties: defaultTemplateModel!

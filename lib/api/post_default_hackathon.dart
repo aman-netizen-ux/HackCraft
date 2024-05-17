@@ -22,8 +22,12 @@ class CreateHackathon {
         body: jsonEncode(params),
       );
 
+
+
       if (response.statusCode == 201) {
-        final Map<String, dynamic> jsonResponse = json.decode(response.body);
+        final jsonResponse = json.decode(response.body);
+
+        debugPrint('response : $jsonResponse');
 
         id = jsonResponse['hackathon created']['_id'];
         logger.i('Hackathon created successfully');
@@ -36,11 +40,14 @@ class CreateHackathon {
           errorMessage += '$k: ${v.join(', ')}\n';
         });
 
+        debugPrint('error at 43 : $errorResponse');
+
         logger.e(errorMessage);
         return '';
       }
     } catch (e) {
       logger.e("Error message : $e");
+      debugPrint('error : $e');
       return null;
     }
   }

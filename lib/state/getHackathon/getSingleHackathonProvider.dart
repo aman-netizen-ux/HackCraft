@@ -26,6 +26,8 @@ class SingleHackathonProvider with ChangeNotifier {
       contact1Number: '',
       contact2Name: '',
       contact2Number: '',
+      totalRounds: '',
+ //     images: []
     ),
     rounds: [],
     fields: [],
@@ -43,6 +45,7 @@ class SingleHackathonProvider with ChangeNotifier {
 
   Future<void> getSingleHackathonsList(String id) async {
     final response = await GetSingleHackathon().getSingleHackathon(id);
+    debugPrint('response : $response');
     if (response != null && response is DefaultTemplateApiResponse) {
       _singleHackathon = response; // Directly assign the response
     } else {
@@ -66,6 +69,8 @@ class SingleHackathonProvider with ChangeNotifier {
           contact1Number: '',
           contact2Name: '',
           contact2Number: '',
+          totalRounds: '',
+   //       images: []
         ),
         rounds: [],
         fields: [],

@@ -30,10 +30,11 @@ class _OTPFileState extends State<OTPFile> {
     return await SharedPreferences.getInstance();
   }
 
-  void storeUserUid(String uid) async {
+  void storeUserUid(String uid, String emailId) async {
     SharedPreferences prefs = await getLocalStorage();
     debugPrint('set locally');
     await prefs.setString('user_uid', uid);
+    await prefs.setString('user_email', emailId);
   }
 
   static Future<User?> createUserWithEmailAndPassword(
@@ -276,11 +277,16 @@ class _OTPFileState extends State<OTPFile> {
                       "first_name": loginProvider.firstName,
                       "last_name": loginProvider.lastName,
                       "email": loginProvider.emailId,
-                    });
-                    storeUserUid(firebaseUUID);
-                    loginProvider.setUuid(firebaseUUID);
+                      "user_type": ""
+                    }).then((value) {
+                      if(value){
+                        storeUserUid(firebaseUUID, loginProvider.emailId);
+                    loginProvider.setUuid(firebaseUUID, loginProvider.emailId);
                     loginProvider.setOtpId(0);
                     loginProvider.setCurrentIndex(2);
+                      }
+                    });
+                    
                   } else {
                     setState(() {
                       otpCheck = true;

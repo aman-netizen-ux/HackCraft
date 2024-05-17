@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ProfileRegProvider extends ChangeNotifier {
-  String _dropdownValue = 'Closed';
+  String _dropdownValue = 'all';
 
   String get dropdownValue => _dropdownValue;
 
@@ -10,16 +10,16 @@ class ProfileRegProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  String _finishedDropdownValue = 'Complete';
+  // String _finishedDropdownValue = 'Complete';
 
-  String get finishedDropdownValue => _finishedDropdownValue;
+  // String get finishedDropdownValue => _finishedDropdownValue;
 
-  void selectFinishedValue(String value) {
-    _finishedDropdownValue = value;
-    notifyListeners();
-  }
+  // void selectFinishedValue(String value) {
+  //   _finishedDropdownValue = value;
+  //   notifyListeners();
+  // }
 
-  String _sortValue = 'Latest';
+  String _sortValue = 'latest';
 
   String get sortValue => _sortValue;
 

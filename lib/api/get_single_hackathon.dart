@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
@@ -15,8 +16,14 @@ class GetSingleHackathon {
         Uri.parse(url),
       );
 
+      debugPrint('response in api : ${response.body}');
+
       if (response.statusCode == 200) {
+        debugPrint('status : ${response.statusCode}');
         final Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+        debugPrint('json : $jsonResponse');
+        debugPrint('default one : ${DefaultTemplateApiResponse.fromJson(jsonResponse)}');
 
         return DefaultTemplateApiResponse.fromJson(jsonResponse);
       } else {

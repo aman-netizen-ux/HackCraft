@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 class RegistrationForm extends StatefulWidget {
   final String hackathonId;
-  const RegistrationForm({super.key,  this.hackathonId="" });
+  const RegistrationForm({super.key,  required this.hackathonId});
 
   @override
   State<RegistrationForm> createState() => _RegistrationFormState();
