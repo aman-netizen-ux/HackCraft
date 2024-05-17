@@ -11,6 +11,7 @@ import 'package:major_project__widget_testing/state/default_template_providers.d
 import 'package:major_project__widget_testing/state/defaulttemplateProvider.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/state/galleryProvider.dart';
+import 'package:major_project__widget_testing/state/loginProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
@@ -38,6 +39,7 @@ class _SidePanelState extends State<SidePanel> {
         Provider.of<HackathonDetailsProvider>(context);
     final defaultTemplateProvider =
         Provider.of<DefaultTemplateProvider>(context);
+
 
     final rulesProvider = Provider.of<RulesProvider>(context);
     final hackathonTextPropertiesProvider =
@@ -200,6 +202,8 @@ class _SidePanelState extends State<SidePanel> {
       HackathonDetailsProvider hackathonDetailsProvider,
       HackathonTextPropertiesProvider hackathonTextPropertiesProvider, 
       HackathonContainerPropertiesProvider hackathonContainerPropertiesProvider) async {
+            final loginProvider =
+        Provider.of<LoginProvider>(context,listen:false);
     setState(() {
       _isLoading = true;
     });
@@ -221,9 +225,12 @@ class _SidePanelState extends State<SidePanel> {
         hackathonContainerPropertiesProvider.getContainerProperties();
     //  following is to add roundsTextProperties according to their key in the above defined fields list
     fields = hackathonTextPropertiesProvider.addRoundsTextProperties(fields);
+    containers = hackathonContainerPropertiesProvider.addRoundsContainerProperties(containers);
 
     final hackathonId = await CreateHackathon().postSingleHackathon({
       "hackathon": {
+        "created_by": loginProvider.emailId,
+        "logo":"",
         "name": hackathonDetailsProvider.hackathonName,
         "organisation_name": hackathonDetailsProvider.organisationName,
         "mode_of_conduct": hackathonDetailsProvider.modeOfConduct,
@@ -233,6 +240,7 @@ class _SidePanelState extends State<SidePanel> {
         "start_date_time":
             "${hackathonDetailsProvider.startDateTime}T00:00:00Z",
         "about": hackathonDetailsProvider.about,
+        "images": [],
         "brief": hackathonDetailsProvider.brief,
         "website": "https://req",
         "fee": hackathonDetailsProvider.fee,
@@ -240,11 +248,17 @@ class _SidePanelState extends State<SidePanel> {
         "contact1_name": hackathonDetailsProvider.contact1Name,
         "contact1_number": int.parse(hackathonDetailsProvider.contact1Number),
         "contact2_name": hackathonDetailsProvider.contact2Name,
-        "contact2_number": int.parse(hackathonDetailsProvider.contact2Number)
+        "contact2_number": int.parse(hackathonDetailsProvider.contact2Number),
+        "discord": "",
+        "facebook": "",
+        "email": "",
+        "twitter": "",
+        "linkedin": "",
+        "total_number_rounds": rounds.length
       },
       "round": rounds,
       "fields": fields,
-      "containers": []
+      "containers": containers
     }, context);
     // final hackathonId = await CreateHackathon().postSingleHackathon({
     //   "hackathon": {
