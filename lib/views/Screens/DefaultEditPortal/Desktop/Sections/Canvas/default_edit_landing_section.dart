@@ -76,6 +76,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFF564A4A)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
     hackathonTextPropertiesProvider.textFieldPropertiesMap[hackathonNameKey] =
         TextFieldProperties(
@@ -89,6 +90,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFF000100)',
       underline: false,
       upperCase: false,
+      lineHeight:50,
     );
 
     hackathonTextPropertiesProvider.textFieldPropertiesMap[briefKey] =
@@ -103,6 +105,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFF000100)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
     hackathonTextPropertiesProvider
@@ -117,6 +120,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFFFFFFFF)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
     hackathonTextPropertiesProvider.textFieldPropertiesMap[modeOfConductKey] =
@@ -131,6 +135,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFFFFFFFF)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
     hackathonTextPropertiesProvider
@@ -145,6 +150,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFFFFFFFF)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
     hackathonTextPropertiesProvider.textFieldPropertiesMap[teamSizeKey] =
@@ -159,6 +165,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFFFFFFFF)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
     hackathonTextPropertiesProvider.textFieldPropertiesMap[venueKey] =
@@ -173,6 +180,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFFFFFFFF)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
     hackathonContainerPropertiesProvider
@@ -471,7 +479,6 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                             containerWidth: widget.containerWidth,
                             maxLength: 30,
                             editContainerMaxWidth: 400,
-                            height: 22.4,
                             isDense: true,
                             defaultEditBoxColorSet: true,
                             cursorHeight: defaultEditScaleHeight(
@@ -494,8 +501,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                             maxLength: 30,
                             editContainerMaxWidth: 700,
                             defaultEditBoxColorSet: true,
-                            height:
-                                50.4, //54 //Line Height is changed because of cursor size, initial line height was 22.4
+                           //54 //Line Height is changed because of cursor size, initial line height was 22.4
                             cursorHeight: defaultEditScaleHeight(
                                 widget.containerHeight, 49),
                             onSaved: (value) {
@@ -519,8 +525,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                             maxLines: 4,
                             isDense: true,
                             defaultEditBoxColorSet: true,
-                            height:
-                                22.4, //Line Height is changed because of cursor size, initial line height was 22.4
+                            //Line Height is changed because of cursor size, initial line height was 22.4
                             cursorHeight: defaultEditScaleHeight(
                                 widget.containerHeight, 20),
                             onSaved: (value) {
@@ -870,8 +875,7 @@ class hackathonDetailContainer extends StatelessWidget {
           containerHeight: containerHeight,
           containerWidth: containerWidth,
           maxLength: 15,
-          height:
-              22.4, //Line Height is changed because of cursor size, initial line height was 22.4
+           //Line Height is changed because of cursor size, initial line height was 22.4
           cursorHeight: defaultEditScaleHeight(containerHeight, 17),
           isDense: true,
           defaultEditBoxColorSet: true,

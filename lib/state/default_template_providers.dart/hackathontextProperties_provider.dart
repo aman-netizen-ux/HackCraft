@@ -591,20 +591,20 @@ value for thin is 100; so taking the value 100 , if thin is selected */
     }
   }
 
-  //Set lineSpacing value
-  // void setLineSpacing(int spacing) {
-  //   if (_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
-  //     textFieldPropertiesMap[_selectedTextFieldKey]!.letterSpacing = spacing;
-  //     notifyListeners();
-  //   }
-  // }
+  // Set lineSpacing value
+  void setLineSpacing(int spacing) {
+    if (_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
+      textFieldPropertiesMap[_selectedTextFieldKey]!.lineHeight = spacing;
+      notifyListeners();
+    }
+  }
 
-  // int getLineSpacing() {
-  //   if (_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
-  //     return textFieldPropertiesMap[_selectedTextFieldKey]!.letterSpacing;
-  //   }
-  //   return 1; // Default value
-  // }
+  int getLineSpacing() {
+    if (_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
+      return textFieldPropertiesMap[_selectedTextFieldKey]!.lineHeight;
+    }
+    return 1; // Default value
+  }
 
   //Set letterSpacing value
   void setLetterSpacing(int spacing) {

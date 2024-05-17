@@ -179,6 +179,7 @@ class HackathonDetailsProvider with ChangeNotifier {
             textColor: '',
             underline: false,
             upperCase: false,
+            lineHeight:0,
           )),
     ),
     containers: List.generate(
@@ -330,6 +331,7 @@ class HackathonDetailsProvider with ChangeNotifier {
             textColor: '',
             underline: false,
             upperCase: false,
+            lineHeight:0
           )),
     ));
   }

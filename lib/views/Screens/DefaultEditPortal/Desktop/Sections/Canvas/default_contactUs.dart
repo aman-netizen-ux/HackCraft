@@ -60,6 +60,7 @@ late TextEditingController contactMemberNumber2Controller;
       textColor: 'Color(0xFF1A202C)',
       underline: false,
       upperCase: false,
+      lineHeight:30,
     );
 
 
@@ -78,6 +79,7 @@ hackathonTextPropertiesProvider.textFieldPropertiesMap[contactName2Key] =
       textColor: 'Color(0xFF1A202C)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
 
@@ -96,6 +98,7 @@ hackathonTextPropertiesProvider.textFieldPropertiesMap[contactName2Key] =
       textColor: 'Color(0xFF1A202C)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
 
@@ -113,6 +116,7 @@ hackathonTextPropertiesProvider.textFieldPropertiesMap[contactName2Key] =
       textColor: 'Color(0xFF1A202C)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
 
@@ -241,7 +245,7 @@ hackathonTextPropertiesProvider.textFieldPropertiesMap[contactName2Key] =
                                 Column(
                                   children: [
                                     SizedBox(
-                                      height: 30,                                
+                                                                     
                                       child: DefaultTemplateTextFormField(
                                         isDense: true,
                                         hintText:'Contact Member Name 1',

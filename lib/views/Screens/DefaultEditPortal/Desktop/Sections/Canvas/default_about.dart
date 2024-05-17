@@ -57,6 +57,7 @@ class _DefaultEditAboutState extends State<DefaultEditAbout> {
       textColor: 'Color(0xFF000100)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
     hackathonContainerPropertiesProvider

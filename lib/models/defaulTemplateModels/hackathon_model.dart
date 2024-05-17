@@ -137,6 +137,7 @@ class TextFieldProperties {
   bool upperCase;
   String align;
   int letterSpacing;
+  int lineHeight;
 
   TextFieldProperties(
       {
@@ -149,7 +150,8 @@ class TextFieldProperties {
       required this.strikethrogh,
       required this.upperCase,
       required this.align,
-      required this.letterSpacing
+      required this.letterSpacing,
+      required this.lineHeight,
       });
 
   factory TextFieldProperties.fromJson(Map<String, dynamic> json) {
@@ -164,6 +166,7 @@ class TextFieldProperties {
       upperCase: json['upper_case'],
       align: json['align'],
       letterSpacing: json['letter_spacing'],
+      lineHeight: json['line_height']
     );
   }
 
@@ -178,7 +181,8 @@ class TextFieldProperties {
       'strikethrogh': strikethrogh,
       'upper_case': upperCase,
       'align': align,
-      'letter_spacing': letterSpacing
+      'letter_spacing': letterSpacing,
+      'line_height':lineHeight
     };
   }
 }
