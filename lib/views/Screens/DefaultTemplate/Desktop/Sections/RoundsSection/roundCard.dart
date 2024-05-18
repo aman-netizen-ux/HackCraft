@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:major_project__widget_testing/constants/colors.dart';
-import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
+import 'package:major_project__widget_testing/state/defaulttemplateProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Components/defaultTemplate_text.dart';
@@ -11,6 +10,7 @@ import 'package:provider/provider.dart';
 class RoundCard extends StatelessWidget {
   final String title;
   final TextFieldProperties titleTextProperties;
+  final ContainerProperties containerProperties;
   final int index;
   final void Function()? onTap;
   final String enddate;
@@ -26,18 +26,20 @@ class RoundCard extends StatelessWidget {
       required this.index,
       required this.titleTextProperties,
       required this.endDateTextProperties,
-      required this.startDateTextProperties});
+      required this.startDateTextProperties,
+      required this.containerProperties});
 
   @override
   Widget build(BuildContext context) {
     final rulesProvider = Provider.of<RulesProvider>(context);
-    
+    final defaultTemplateProvider =
+        Provider.of<DefaultTemplateProvider>(context);
 
     return InkWell(
       hoverColor: Colors.white,
       onTap: onTap,
       child: Container(
-          // height: scaleHeight(context, 67),
+          height: scaleHeight(context, containerProperties.height.toDouble()),
           width: double.infinity,
           margin: EdgeInsets.only(
               bottom: scaleHeight(context, 23),
@@ -45,27 +47,30 @@ class RoundCard extends StatelessWidget {
               right: scaleWidth(context, 26),
               top: scaleHeight(context, 23)),
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(rad5_3),
+              color: defaultTemplateProvider.stringToColor(containerProperties.color),
+              borderRadius: BorderRadius.circular(containerProperties.borderRadius.toDouble()),
               border: Border.all(
+                width: containerProperties.borderWidth.toDouble()/100 *10,
                   color: rulesProvider.selectedIndex == index
-                      ? black1
-                      : Colors.transparent),
-              boxShadow: const [
+                      ? defaultTemplateProvider.stringToColor(containerProperties.focusedBorderColor)
+                      : defaultTemplateProvider.stringToColor(containerProperties.borderColor),
+                      strokeAlign: BorderSide.strokeAlignCenter),
+              boxShadow: [
                 BoxShadow(
-                  color: Color(0x3F000000),
-                  blurRadius: 10,
-                  offset: Offset(0, 4),
+                  color: defaultTemplateProvider.stringToColor(containerProperties.boxShadowColor),
+                  blurRadius: containerProperties.blurRadius.toDouble(),
+                  offset: const Offset(0, 4),
                   spreadRadius: 0,
                 )
               ]),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
                 padding: EdgeInsets.only(
                     left: scaleWidth(context, 25),
+                    right: scaleWidth(context, 25),
                     top: scaleHeight(context, 15)),
                 //Title of the round
                 child: DefaultTemplateText(
@@ -78,8 +83,11 @@ class RoundCard extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(
                     left: scaleWidth(context, 25),
+                    right: scaleWidth(context, 25),
                     bottom: scaleHeight(context, 6)),
                 child: Row(
+                  mainAxisAlignment: defaultTemplateProvider
+                      .getMainAxisAlignment(startDateTextProperties.align),
                   children: [
                     DefaultTemplateText(
                       name: '$startDate - ',
@@ -91,7 +99,6 @@ class RoundCard extends StatelessWidget {
                       textProperties: endDateTextProperties,
                       height: 22.4,
                     ),
-                    
                   ],
                 ),
               )

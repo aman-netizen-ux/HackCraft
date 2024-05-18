@@ -6,6 +6,7 @@ import 'package:major_project__widget_testing/state/default_template_providers.d
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/DefaultRoundsSection/default_rounds_section.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/default_about.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/default_aboutus.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/default_contactUs.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/default_edit_landing_section.dart';
@@ -124,7 +125,7 @@ class _DefaultCanvasState extends State<DefaultCanvas> {
                 Container(
                   key: aboutUsEdit,
                   color: Colors.white,
-                  child: DefaultEditAboutus(
+                  child: DefaultEditAbout(
                       containerHeight: whiteContainerHeight,
                       containerWidth: whiteContainerWidth),
                 ),

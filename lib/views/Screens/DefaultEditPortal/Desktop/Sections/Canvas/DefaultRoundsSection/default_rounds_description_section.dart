@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
+import 'package:major_project__widget_testing/constants/enums.dart';
+import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
+import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonContainerPropertiesProvider.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
@@ -33,6 +36,18 @@ class _DefaultRoundsDescriptionState extends State<DefaultRoundsDescription> {
     super.initState();
 
     roundDescriptionController = TextEditingController();
+    // final hackathonContainerPropertiesProvider =
+    //     Provider.of<HackathonContainerPropertiesProvider>(context);
+
+    //final rulesProvider = Provider.of<RulesProvider>(context);
+
+    // hackathonContainerPropertiesProvider.containerPropertiesMap[
+    //         roundContainerGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescriptionContainer']!] =
+    //     ContainerProperties(
+    //         borderColor: 'Color(0x00000000)',
+    //         height: 85,
+    //         color: 'Color(0xFFFFFFFF)',
+    //         borderWidth: 0);
 
     // final hackathonTextPropertiesProvider =
     //     Provider.of<HackathonTextPropertiesProvider>(context, listen: false);
@@ -83,6 +98,9 @@ class _DefaultRoundsDescriptionState extends State<DefaultRoundsDescription> {
     final hackathonTextPropertiesProvider =
         Provider.of<HackathonTextPropertiesProvider>(context);
 
+    final hackathonContainerPropertiesProvider =
+        Provider.of<HackathonContainerPropertiesProvider>(context);
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       hackathonTextPropertiesProvider.convertAndRevertBackFromUpperCase(
           rulesProvider.descriptionControllers[rulesProvider.editSelectedIndex],
@@ -90,8 +108,10 @@ class _DefaultRoundsDescriptionState extends State<DefaultRoundsDescription> {
               'roundDescription']!);
       if (hackathonDetailsProvider
           .roundsList[rulesProvider.editSelectedIndex].description.isNotEmpty) {
-        rulesProvider.descriptionControllers[rulesProvider.editSelectedIndex].text = hackathonDetailsProvider
-            .roundsList[rulesProvider.editSelectedIndex].description;
+        rulesProvider
+                .descriptionControllers[rulesProvider.editSelectedIndex].text =
+            hackathonDetailsProvider
+                .roundsList[rulesProvider.editSelectedIndex].description;
       }
     });
 
@@ -106,71 +126,197 @@ class _DefaultRoundsDescriptionState extends State<DefaultRoundsDescription> {
     //   }
 
     return Container(
-        width: defaultEditScaleWidth(widget.containerWidth, 550),
-        height: defaultEditScaleHeight(widget.containerHeight, 453),
-        child: Stack(children: [
-          Positioned(
-            left: defaultEditScaleWidth(widget.containerWidth, 31),
-            top: defaultEditScaleHeight(widget.containerHeight, 0),
-            child: Container(
-              width: defaultEditScaleWidth(widget.containerWidth, 486),
-              height: defaultEditScaleHeight(widget.containerHeight, 318),
-              decoration: ShapeDecoration(
-                  color: black1,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  shadows: const [
-                    BoxShadow(
-                        blurRadius: 3,
-                        offset: Offset(0, -4),
-                        spreadRadius: 0,
-                        color: Colors.black)
-                  ]),
-            ),
+      height: defaultEditScaleHeight(
+          widget.containerHeight,
+          hackathonContainerPropertiesProvider
+              .containerPropertiesMap[roundContainerGlobalKeysMap[rulesProvider
+                  .editSelectedIndex]!['roundDescriptionContainer']]!
+              .height
+              .toDouble()),
+      alignment: Alignment.center,
+      child: Stack(children: [
+        Positioned(
+          left: defaultEditScaleWidth(widget.containerWidth, 31),
+          top: defaultEditScaleHeight(widget.containerHeight, 0),
+          child: Container(
+            width: defaultEditScaleWidth(widget.containerWidth, 486),
+            height: defaultEditScaleHeight(
+                widget.containerHeight,
+                0.64 *
+                    hackathonContainerPropertiesProvider
+                        .containerPropertiesMap[roundContainerGlobalKeysMap[
+                                rulesProvider.editSelectedIndex]![
+                            'roundDescriptionContainer']]!
+                        .height
+                        .toDouble()),
+            decoration: ShapeDecoration(
+                color: hackathonContainerPropertiesProvider.stringToColor(
+                    roundContainerGlobalKeysMap[rulesProvider
+                        .editSelectedIndex]!['roundDescriptionContainer']!,
+                    1,
+                    ContainerColorProperties.containerColor),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                        hackathonContainerPropertiesProvider.containerPropertiesMap[roundContainerGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescriptionContainer']]!.borderRadius
+                            .toDouble()),
+                    side: BorderSide(
+                        width:
+                            hackathonContainerPropertiesProvider.containerPropertiesMap[roundContainerGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescriptionContainer']]!.borderWidth
+                                    .toDouble() /
+                                100 *
+                                10,
+                        color: hackathonContainerPropertiesProvider.stringToColor(
+                            roundContainerGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescriptionContainer']!,
+                            1,
+                            ContainerColorProperties.containerBorderColor),
+                        strokeAlign: BorderSide.strokeAlignInside)),
+                shadows: [
+                  BoxShadow(
+                      blurRadius: hackathonContainerPropertiesProvider
+                          .containerPropertiesMap[roundContainerGlobalKeysMap[
+                                  rulesProvider.editSelectedIndex]![
+                              'roundDescriptionContainer']]!
+                          .blurRadius
+                          .toDouble(),
+                      offset: const Offset(0, -4),
+                      spreadRadius: 0,
+                      color: hackathonContainerPropertiesProvider.stringToColor(
+                          roundContainerGlobalKeysMap[
+                                  rulesProvider.editSelectedIndex]![
+                              'roundDescriptionContainer']!,
+                          1,
+                          ContainerColorProperties.boxShadowColor))
+                ]),
           ),
-          Positioned(
-              left: 0,
-              top: 33,
+        ),
+        Positioned(
+            left: 0,
+            top: 33,
+            child: InkWell(
+              onTap: () {
+                hackathonContainerPropertiesProvider.selectedContainerKey =
+                    roundContainerGlobalKeysMap[rulesProvider
+                        .editSelectedIndex]!['roundDescriptionContainer'];
+                if (hackathonTextPropertiesProvider.selectedTextFieldKey !=
+                    null) {
+                  hackathonTextPropertiesProvider.selectedTextFieldKey = null;
+                }
+              },
               child: Container(
                 width: defaultEditScaleWidth(widget.containerWidth, 550),
-                height: defaultEditScaleHeight(widget.containerHeight, 360),
+                height: defaultEditScaleHeight(
+                    widget.containerHeight,
+                    0.72 *
+                        hackathonContainerPropertiesProvider
+                            .containerPropertiesMap[roundContainerGlobalKeysMap[
+                                    rulesProvider.editSelectedIndex]![
+                                'roundDescriptionContainer']]!
+                            .height
+                            .toDouble()),
                 padding: EdgeInsets.only(
                     top: defaultEditScaleHeight(widget.containerHeight, 21),
                     left: defaultEditScaleWidth(widget.containerWidth, 31),
                     right: defaultEditScaleWidth(widget.containerWidth, 19),
                     bottom: defaultEditScaleHeight(widget.containerHeight, 66)),
                 decoration: ShapeDecoration(
-                  color: lavender,
+                  color: hackathonContainerPropertiesProvider.stringToColor(
+                      roundContainerGlobalKeysMap[rulesProvider
+                          .editSelectedIndex]!['roundDescriptionContainer']!,
+                      0,
+                      ContainerColorProperties.containerColor),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15)),
+                      borderRadius: BorderRadius.circular(
+                          hackathonContainerPropertiesProvider.containerPropertiesMap[roundContainerGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescriptionContainer']]!.borderRadius
+                              .toDouble()),
+                      side: BorderSide(
+                          width: hackathonContainerPropertiesProvider
+                                  .containerPropertiesMap[
+                                      roundContainerGlobalKeysMap[rulesProvider.editSelectedIndex]![
+                                          'roundDescriptionContainer']]!
+                                  .borderWidth
+                                  .toDouble() /
+                              100 *
+                              10,
+                          color: hackathonContainerPropertiesProvider.stringToColor(
+                              roundContainerGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescriptionContainer']!,
+                              0,
+                              ContainerColorProperties.containerBorderColor),
+                          strokeAlign: BorderSide.strokeAlignInside)),
                 ),
-                child: DefaultTemplateTextFormField(
-                  hintText: 'Type your Description here...',
-                  fieldKey: roundGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescription']!,
-                  controller: rulesProvider.descriptionControllers[rulesProvider.editSelectedIndex],
-                  containerHeight: widget.containerHeight,
-                  maxLength: 580,
-                  maxLines: 9,
-                  height: 27,
-                  onSaved: (value) {
-                    for(int i = 0; i < rulesProvider.descriptionControllers.length; i++){
-                      hackathonDetailsProvider.updateRoundDescription(
-                        i, rulesProvider.descriptionControllers[i].text);
-                    }
-                  },
+                child: Column(
+                  children: [
+                    DefaultTemplateTextFormField(
+                      hintText: 'Type your Description here...',
+                      fieldKey: roundGlobalKeysMap[rulesProvider
+                          .editSelectedIndex]!['roundDescription']!,
+                      controller: rulesProvider.descriptionControllers[
+                          rulesProvider.editSelectedIndex],
+                      containerHeight: widget.containerHeight,
+                      containerWidth: widget.containerWidth,
+                      editContainerMaxWidth: double.infinity,
+                      defaultEditBoxColorSet: true,
+                      maxLength: 580,
+                      maxLines: 9,
+                     
+                      isDense: true,
+                      onSaved: (value) {
+                        for (int i = 0;
+                            i < rulesProvider.descriptionControllers.length;
+                            i++) {
+                          hackathonDetailsProvider.updateRoundDescription(
+                              i, rulesProvider.descriptionControllers[i].text);
+                        }
+                      },
+                    ),
+                  ],
                 ),
-              )),
-
-          Positioned(
-              left: defaultEditScaleWidth(widget.containerWidth, 229),
-              top: defaultEditScaleHeight(widget.containerHeight, 339),
-              child: Container(
-                width: defaultEditScaleWidth(widget.containerWidth, 114),
-                height: defaultEditScaleHeight(widget.containerHeight, 114),
-                decoration:
-                    const ShapeDecoration(color: black1, shape: CircleBorder()),
-              ))
-        ]));
+              ),
+            )),
+        Positioned(
+            left: defaultEditScaleWidth(widget.containerWidth, 229),
+            top: defaultEditScaleHeight(
+                widget.containerHeight,
+                0.68 *
+                    hackathonContainerPropertiesProvider
+                        .containerPropertiesMap[roundContainerGlobalKeysMap[
+                                rulesProvider.editSelectedIndex]![
+                            'roundDescriptionContainer']]!
+                        .height
+                        .toDouble()),
+            child: Container(
+              width: defaultEditScaleWidth(widget.containerWidth, 114),
+              height: defaultEditScaleHeight(
+                  widget.containerHeight,
+                  0.23 *
+                      hackathonContainerPropertiesProvider
+                          .containerPropertiesMap[roundContainerGlobalKeysMap[
+                                  rulesProvider.editSelectedIndex]![
+                              'roundDescriptionContainer']]!
+                          .height
+                          .toDouble()),
+              decoration: ShapeDecoration(
+                  color: hackathonContainerPropertiesProvider.stringToColor(
+                      roundContainerGlobalKeysMap[rulesProvider
+                          .editSelectedIndex]!['roundDescriptionContainer']!,
+                      2,
+                      ContainerColorProperties.containerColor),
+                  shape: CircleBorder(
+                      side: BorderSide(
+                          width: hackathonContainerPropertiesProvider
+                                  .containerPropertiesMap[
+                                      roundContainerGlobalKeysMap[rulesProvider.editSelectedIndex]![
+                                          'roundDescriptionContainer']]!
+                                  .borderWidth
+                                  .toDouble() /
+                              100 *
+                              10,
+                          color: hackathonContainerPropertiesProvider.stringToColor(
+                              roundContainerGlobalKeysMap[rulesProvider.editSelectedIndex]!['roundDescriptionContainer']!,
+                              2,
+                              ContainerColorProperties.containerBorderColor),
+                          strokeAlign: BorderSide.strokeAlignInside))),
+            ))
+      ]),
+    );
   }
 }

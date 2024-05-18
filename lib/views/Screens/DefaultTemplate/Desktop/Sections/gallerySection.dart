@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
+import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
 import 'package:major_project__widget_testing/state/galleryProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
@@ -9,14 +12,18 @@ import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:provider/provider.dart';
 
 class GallerySection extends StatelessWidget {
-  const GallerySection({super.key});
+  const GallerySection({super.key, required this.isEdit, this.defaultTemplateModel});
+  final bool isEdit;
+   final DefaultTemplateApiResponse? defaultTemplateModel;
 
   @override
   Widget build(BuildContext context) {
     // Retrieve the GalleryProvider instance from the nearest ancestor
     // in the widget tree, using the Provider package.
     final galleryProvider = Provider.of<GalleryProvider>(context);
-    return Padding(
+    return defaultTemplateModel!.hackathons.images.isEmpty?
+    Container()
+    : Padding(
       key: gallery,
       padding: EdgeInsets.only(
         left: scaleWidth(context, 81),
@@ -41,12 +48,12 @@ class GallerySection extends StatelessWidget {
 
           //From here, the images will be shown in the list view using the list made in the gallery provider.
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: List.generate(
-              galleryProvider.galleryImages.length,
+              isEdit? galleryProvider.galleryImages.length: defaultTemplateModel!.hackathons.images.length,
               (index) {
                 //length of the image list present in the provider
-                int imagesLength = galleryProvider.galleryImages.length;
+                int imagesLength = isEdit? galleryProvider.galleryImages.length: defaultTemplateModel!.hackathons.images.length;
                 //These cardWidth and cardHeight variables are created in order
                 //to set the height and width of every image that will be shown.
                 double cardWidth;
@@ -133,12 +140,21 @@ class GallerySection extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
                   ),
-                  child: Image.asset(
-                    galleryProvider.galleryImages[index],
-                    fit: BoxFit.cover,
-                    height: cardHeight,
-                    width: cardWidth,
-                  ),
+                  child: isEdit
+                      ? Image.memory(
+                          base64Decode(
+                              galleryProvider.galleryImages[index]),
+                          fit: BoxFit.cover,
+                          height: cardHeight,
+                          width: cardWidth,
+                        )
+                       
+                      : Image.network(
+                          defaultTemplateModel!.hackathons.images[index],
+                          fit: BoxFit.cover,
+                          height: cardHeight,
+                          width: cardWidth,
+                        ),
                 );
               },
             ),

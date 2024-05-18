@@ -51,7 +51,7 @@ class DefaultCustomTimelineTile extends StatelessWidget {
           startDate: startDate,
           onTap: onTap,
           containerHeight: containerHeight,
-          containerWidth: containerWidth),
+          containerWidth: containerWidth, isLast: isLast),
     );
   }
 }

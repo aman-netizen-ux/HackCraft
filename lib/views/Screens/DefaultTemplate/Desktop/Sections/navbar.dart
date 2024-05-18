@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
+import 'package:major_project__widget_testing/state/galleryProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
@@ -12,13 +15,16 @@ import 'package:provider/provider.dart';
 
 class NavBar extends StatelessWidget {
     final DefaultTemplateApiResponse? defaultTemplateModel;
+ final bool isEdit;
 
-  const NavBar({super.key, required this.defaultTemplateModel});
+  const NavBar({super.key, required this.defaultTemplateModel, required this.isEdit});
 
   @override
   Widget build(BuildContext context) {
     final hackathonDetailsProvider =
         Provider.of<HackathonDetailsProvider>(context);
+    final galleryProvider = Provider.of<GalleryProvider>(context);
+
     return Padding(
       padding:  EdgeInsets.only(right: scaleWidth(context, 81),left:scaleWidth(context, 81), top:  scaleHeight(context, 39)),
       child: Row(
@@ -26,12 +32,22 @@ class NavBar extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    //container to be updated with image logic
-                    Container(
+                    //TODO: needs to be updated
+                    isEdit
+                    ?galleryProvider.logo==""
+                  ?Container(
                       height: scaleHeight(context, 44),
                       width: scaleHeight(context, 44),
-                      color:Colors.black.withOpacity(0.3)
-                    ),
+                      color: Colors.black.withOpacity(0.3),
+                      child: const Icon(Icons.add))
+                  : Image.memory(
+                        base64Decode(galleryProvider.logo),
+                        fit: BoxFit.cover,
+                        height: scaleHeight(context, 44),
+                      width: scaleHeight(context, 44),
+                      ): Image.network(defaultTemplateModel!.hackathons.logo, fit: BoxFit.cover,
+                        height: scaleHeight(context, 44),
+                      width: scaleHeight(context, 44),),
                     SizedBox(width: scaleWidth(context, 6),),
                     Text(
                      defaultTemplateModel!.hackathons.name,

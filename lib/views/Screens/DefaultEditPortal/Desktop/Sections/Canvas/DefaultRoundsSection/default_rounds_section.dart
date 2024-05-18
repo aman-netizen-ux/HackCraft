@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
-import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
@@ -10,7 +9,6 @@ import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/DefaultRoundsSection/default_rounds_description_section.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/DefaultRoundsSection/default_timeline_tile.dart';
 import 'package:provider/provider.dart';
-import 'package:dotted_border/dotted_border.dart';
 
 class DefaultRoundsAndRules extends StatelessWidget {
   final double containerHeight;
@@ -49,11 +47,11 @@ class DefaultRoundsAndRules extends StatelessWidget {
                   color: greyish1,
                   fontWeight: FontWeight.w400,
                   height: lineHeight(22.4, 18))),
+          // SizedBox(
+          //   height: defaultEditScaleHeight(containerHeight, 58),
+          // ),
           SizedBox(
-            height: defaultEditScaleHeight(containerHeight, 58),
-          ),
-          SizedBox(
-            height: defaultEditScaleHeight(containerHeight, 500),
+            height: defaultEditScaleHeight(containerHeight, 558),
             child: Row(
               children: [
                 Expanded(
@@ -61,54 +59,59 @@ class DefaultRoundsAndRules extends StatelessWidget {
                     //This list generates all the rounds coming from the list made in the provider file.
                     //Later on, integration with APIs will remain the same;
                     //just the list that will be used will come from the API.
-                    child: ListView(
-                        shrinkWrap: true,
-                        children: List.generate(hackathonDetailsProvider.roundsList.length,
-                            (index) {
-                          //Generates the round card along with the timeline
-                          return DefaultCustomTimelineTile(
-                            cardIndex: index,
-                            isFirst: index == 0,
-                            isLast:
-                                hackathonDetailsProvider.roundsList.length - 1 == index,
-                            roundTitle: hackathonDetailsProvider.roundsList[index].name,                                
-                            roundDescription: hackathonDetailsProvider.roundsList[index].description,
-                            endDate: hackathonDetailsProvider.roundsList[index].endTimeline,
-                            startDate: hackathonDetailsProvider.roundsList[index].startTimeline,
-                            onTap: () {
-                              rulesProvider.setEditSelectedIndex(index);
-                              rulesProvider.setEditDescriptionWidget(
-                                  defaultRoundDetails(
-                                      hackathonDetailsProvider.roundsList[index].description,
-                                      context,
-                                      containerHeight,
-                                      containerWidth,
-                                      ));
-                            },
-                            containerHeight: containerHeight,
-                            containerWidth: containerWidth,
-                          );
-                        }))),
-                Expanded(flex: 03, child: 
-                 InkWell(
-                onTap: (){
-                  hackathonDetailsProvider.increaseRoundsCount();
-                  addGlobalKeys(hackathonDetailsProvider.roundsList.length - 1);
-                  hackathonDetailsProvider.addTextPropertiesInFields();
-                  rulesProvider.addDescriptionControllers();
-                },
-                child: DottedBorder(
-                    borderType: BorderType.Circle,
-                    dashPattern: const [3, 7],
-                    color: yellow2,
                     child: Container(
-                      alignment: Alignment.center,
-                      height: 20,
-                      width: 20,
-                      decoration: const BoxDecoration(shape: BoxShape.circle),
-                      child: const Center(child:  Icon(Icons.add, size: 12,color: yellow2,)),
+                      alignment: Alignment.centerLeft,
+                      height:defaultEditScaleHeight(containerHeight, 500),
+                      child: ListView(
+                          shrinkWrap: true,
+                          children: List.generate(hackathonDetailsProvider.roundsList.length,
+                              (index) {
+                            //Generates the round card along with the timeline
+                            return DefaultCustomTimelineTile(
+                              cardIndex: index,
+                              isFirst: index == 0,
+                              isLast:
+                                  hackathonDetailsProvider.roundsList.length - 1 == index,
+                              roundTitle: hackathonDetailsProvider.roundsList[index].name,                                
+                              roundDescription: hackathonDetailsProvider.roundsList[index].description,
+                              endDate: hackathonDetailsProvider.roundsList[index].endTimeline,
+                              startDate: hackathonDetailsProvider.roundsList[index].startTimeline,
+                              onTap: () {
+                                rulesProvider.setEditSelectedIndex(index);
+                                rulesProvider.setEditDescriptionWidget(
+                                    defaultRoundDetails(
+                                        hackathonDetailsProvider.roundsList[index].description,
+                                        context,
+                                        containerHeight,
+                                        containerWidth,
+                                        ));
+                              },
+                              containerHeight: containerHeight,
+                              containerWidth: containerWidth,
+                            );
+                          })),
                     )),
-              )),
+              //   Expanded(flex: 03, child: 
+              //    InkWell(
+              //   onTap: (){
+              //     hackathonDetailsProvider.increaseRoundsCount();
+              //     addGlobalKeys(hackathonDetailsProvider.roundsList.length - 1);
+              //     hackathonDetailsProvider.addTextPropertiesInFields();
+              //     rulesProvider.addDescriptionControllers();
+              //   },
+              //   child: DottedBorder(
+              //       borderType: BorderType.Circle,
+              //       dashPattern: const [3, 7],
+              //       color: yellow2,
+              //       child: Container(
+              //         alignment: Alignment.center,
+              //         height: 20,
+              //         width: 20,
+              //         decoration: const BoxDecoration(shape: BoxShape.circle),
+              //         child: const Center(child:  Icon(Icons.add, size: 12,color: yellow2,)),
+              //       )),
+              // )),
+                const Expanded(flex: 03, child: SizedBox()),
                 Expanded(flex: 50, child: rulesProvider.editDescriptionWidget),
               ],
             ),

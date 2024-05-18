@@ -1,0 +1,180 @@
+//TODO: just for now later delete
+
+
+
+
+
+
+
+// points to be discussd regarding form api
+// sections(already discussed j  make this final)
+// team 3 questions
+// different fields
+//  and their validations
+
+{
+    "form": [
+        {
+            "_id": "fa504fe1-bc60-4d0a-b4a9-e12adafae189",
+            "created": "2024-01-23T18:20:54.188023Z",
+            "participant_name": "",
+            "participant_email": "",
+            "participant_phone": 0,
+            "participant_gender": "",
+            "hackathon": "4c30f380-8433-4e15-b0b1-4135eeff694a"
+        },
+        {
+            "_id": "9111cec4-bdc6-4824-b65a-08d948caa1ef",
+            "created": "2024-01-23T18:20:54.589249Z",
+            "participant_name": "",
+            "participant_email": "",
+            "participant_phone": 0,
+            "participant_gender": "",
+            "hackathon": "4c30f380-8433-4e15-b0b1-4135eeff694a"
+        }
+    ],
+    sections:[
+        {
+            name: general
+            custom_field:[{
+            "_id": "d8e486b1-2b27-428b-badc-f2e06d4348ee",
+            "short_answer": {
+                "_id": "e9af32e9-11de-4758-b40b-fec4edf9d74e",
+                "created": "2024-02-10T12:47:21.217180Z",
+                "text": "LinkedIn",
+                "custom_field": "d8e486b1-2b27-428b-badc-f2e06d4348ee"
+            },
+            "long_answer": null,
+            "multiple_choice": [],
+            "created": "2024-02-10T12:46:37.332313Z",
+            "label": "jens",
+            "form": "fa504fe1-bc60-4d0a-b4a9-e12adafae189"
+        },]
+        },
+
+         {
+            name: education
+            custom_field:[
+                {
+            "_id": "d8e486b1-2b27-428b-badc-f2e06d4348ee",
+            "short_answer": {
+                "_id": "e9af32e9-11de-4758-b40b-fec4edf9d74e",
+                "created": "2024-02-10T12:47:21.217180Z",
+                "text": "LinkedIn",
+                "custom_field": "d8e486b1-2b27-428b-badc-f2e06d4348ee"
+            },
+            "long_answer": null,
+            "multiple_choice": [
+                {
+                    option:1,
+                    next ques : 2
+                },
+
+                {
+                    option:2,
+                    next ques : 3
+                },
+
+                {
+                    option:3,
+                    next ques : 2
+                }
+            ],
+            "created": "2024-02-10T12:46:37.332313Z",
+            "label": "jens",
+            "form": "fa504fe1-bc60-4d0a-b4a9-e12adafae189"
+        },
+            ]
+        },
+
+         {
+            name: address
+            custom_field:[{
+            "_id": "d8e486b1-2b27-428b-badc-f2e06d4348ee",
+            "short_answer": {
+                "_id": "e9af32e9-11de-4758-b40b-fec4edf9d74e",
+                "created": "2024-02-10T12:47:21.217180Z",
+                "text": "LinkedIn",
+                "custom_field": "d8e486b1-2b27-428b-badc-f2e06d4348ee"
+            },
+            "long_answer": null,
+            "multiple_choice": [],
+            "created": "2024-02-10T12:46:37.332313Z",
+            "label": "jens",
+            "form": "fa504fe1-bc60-4d0a-b4a9-e12adafae189"
+        },]
+        }
+    ]
+
+    
+    
+    
+
+}
+
+sections:[{
+        seriol no.: 1
+        name: address,
+        no.ofques: 4
+    },{
+        serial no.2
+        name: address,
+        no.ofques: 4
+    }]
+
+   // rules: 
+
+
+
+    Note: First create the above structure in provider to save the details temporary
+    then on loop append each list of custom_field from each section into one and post
+    get the length of each list of custom field for each section and pass in no.of ques in section
+    get the name normally of each section and pass
+
+
+
+post for team leader jise andar jab bhi team leader submit karega to memebr mai ek object to team leader ka 
+create ho jeeyega with complete details
+and baaki team members create ho jaayenge with their tam ids and email and a bool field of user not registered
+later jab team members register karenge tb iski put api call hogi and wo update hogi aur update karegi bool field ko agar team 
+member ne apni saari required fields fill krdi hongi to true.
+
+in frontend we are disabling other users fields for a user and checking the user section based if he first or index of 
+his user id in member array.
+    {
+        team name:hh
+        num of mem: 4,
+        paid: "",
+        member:[
+            member1:{
+                email
+                id
+                name
+                address
+                gender
+                ....
+            }
+            member2:{
+                email
+                id
+                name
+                address
+                gender
+                ,....
+            }
+            member3:{
+                email
+                id
+                name
+                address
+                gender
+            }
+            member4:{
+                email
+                id
+                name
+                address
+                gender
+            }
+        ]
+    }

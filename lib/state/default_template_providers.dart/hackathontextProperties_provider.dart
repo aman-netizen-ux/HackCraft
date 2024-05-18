@@ -10,28 +10,28 @@ class HackathonTextPropertiesProvider with ChangeNotifier {
   bool _isBoldSelected = false;
   bool _isTextColorSelected = false;
   bool _isColorPickerSelected = false;
-  int _selectedColorTool=2;
+  int _selectedColorTool = 2;
   final List<Color> _colors = [];
   final int _maxCapacity = 16;
 
   List<Color> swatchesList = <Color>[
-  Colors.black,
-  Colors.red,
-  Colors.pink,
-  Colors.purple,
-  Colors.indigo,
-  Colors.blue,
-  Colors.teal,
-  Colors.green,
-  Colors.lightGreen,
-  Colors.yellow,
-  Colors.amber,
-  Colors.orange,
-  Colors.brown,
-  Colors.grey,
-  Colors.blueGrey,
-  Colors.white,
-];
+    Colors.black,
+    Colors.red,
+    Colors.pink,
+    Colors.purple,
+    Colors.indigo,
+    Colors.blue,
+    Colors.teal,
+    Colors.green,
+    Colors.lightGreen,
+    Colors.yellow,
+    Colors.amber,
+    Colors.orange,
+    Colors.brown,
+    Colors.grey,
+    Colors.blueGrey,
+    Colors.white,
+  ];
 
   final List<String> myGoogleFonts = [
     "Abril Fatface",
@@ -125,13 +125,14 @@ value for thin is 100; so taking the value 100 , if thin is selected */
 //   }
 // }
 
-Color getPrimaryColor(Color color) {
-  if (color is MaterialColor) {
-    return color[500] ?? color; // Return the primary color if it's a MaterialColor
-  } else {
-    return color; // Return the color itself if it's not a MaterialColor
+  Color getPrimaryColor(Color color) {
+    if (color is MaterialColor) {
+      return color[500] ??
+          color; // Return the primary color if it's a MaterialColor
+    } else {
+      return color; // Return the color itself if it's not a MaterialColor
+    }
   }
-}
 
   Color stringToColor(GlobalKey key) {
     if (textFieldPropertiesMap.containsKey(key)) {
@@ -241,7 +242,7 @@ Color getPrimaryColor(Color color) {
   bool get isBoldSelected => _isBoldSelected;
   bool get isTextColorSelected => _isTextColorSelected;
   bool get isColorPickerSelected => _isColorPickerSelected;
-  int get selectedColorTool=> _selectedColorTool;
+  int get selectedColorTool => _selectedColorTool;
 
   List<Color> get colors => _colors;
 
@@ -256,8 +257,8 @@ Color getPrimaryColor(Color color) {
     notifyListeners(); // Notify listeners about the change
   }
 
-  void setSelectedColorTool (int value){
-    _selectedColorTool= value;
+  void setSelectedColorTool(int value) {
+    _selectedColorTool = value;
     notifyListeners();
   }
 
@@ -290,8 +291,8 @@ Color getPrimaryColor(Color color) {
   void toggleStrikeThroughForSelectedTextField() {
     if (_selectedTextFieldKey != null &&
         textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
-      textFieldPropertiesMap[_selectedTextFieldKey!]!.strikethrogh = 
-        !textFieldPropertiesMap[_selectedTextFieldKey!]!.strikethrogh;
+      textFieldPropertiesMap[_selectedTextFieldKey!]!.strikethrogh =
+          !textFieldPropertiesMap[_selectedTextFieldKey!]!.strikethrogh;
       notifyListeners();
     }
   }
@@ -300,85 +301,78 @@ Color getPrimaryColor(Color color) {
   void toggleAllCapsForSelectedTextField() {
     if (_selectedTextFieldKey != null &&
         textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
-      textFieldPropertiesMap[_selectedTextFieldKey!]!.upperCase = 
-        !textFieldPropertiesMap[_selectedTextFieldKey!]!.upperCase;
-      notifyListeners();  
+      textFieldPropertiesMap[_selectedTextFieldKey!]!.upperCase =
+          !textFieldPropertiesMap[_selectedTextFieldKey!]!.upperCase;
+      notifyListeners();
     }
   }
 
   //To store the initial written text in the textfield
   Map<GlobalKey, String> _originalTexts = {};
 
-  void convertAndRevertBackFromUpperCase(TextEditingController controller, GlobalKey key) {
-  var upperCase = textFieldPropertiesMap[key]!.upperCase;
+  void convertAndRevertBackFromUpperCase(
+      TextEditingController controller, GlobalKey key) {
+    var upperCase = textFieldPropertiesMap[key]!.upperCase;
 
-  if (upperCase) {
-    if (!_originalTexts.containsKey(key)) {
-      // Store the original text before converting to uppercase
-      _originalTexts[key] = controller.text;
-    }
-    controller.text = controller.text.toUpperCase();
-  } else {
-    // Transition from uppercase to non-uppercase
-    if (_originalTexts.containsKey(key)) {
-      String originalText = _originalTexts[key]!;
-      String currentText = controller.text;
+    if (upperCase) {
+      if (!_originalTexts.containsKey(key)) {
+        // Store the original text before converting to uppercase
+        _originalTexts[key] = controller.text;
+      }
+      controller.text = controller.text.toUpperCase();
+    } else {
+      // Transition from uppercase to non-uppercase
+      if (_originalTexts.containsKey(key)) {
+        String originalText = _originalTexts[key]!;
+        String currentText = controller.text;
 
-      // Reconstruct the text by applying deletions and additions to the original text
-      String reconstructedText = reconstructText(originalText, currentText);
+        // Reconstruct the text by applying deletions and additions to the original text
+        String reconstructedText = reconstructText(originalText, currentText);
 
-      controller.text = reconstructedText;
-      _originalTexts.remove(key);
+        controller.text = reconstructedText;
+        _originalTexts.remove(key);
+      }
     }
   }
-}
 
 //This function helps in keeping the modifications in the original change intact
-String reconstructText(String originalText, String currentText) {
-  // Convert the original text to uppercase for comparison
-  String originalTextUpper = originalText.toUpperCase();
-  
-  // Find the common prefix and suffix between the original (in uppercase) and current text
-  int prefixLength = 0;
-  while (prefixLength < originalTextUpper.length && prefixLength < currentText.length
-         && originalTextUpper[prefixLength] == currentText[prefixLength]) {
-    prefixLength++;
+  String reconstructText(String originalText, String currentText) {
+    // Convert the original text to uppercase for comparison
+    String originalTextUpper = originalText.toUpperCase();
+
+    // Find the common prefix and suffix between the original (in uppercase) and current text
+    int prefixLength = 0;
+    while (prefixLength < originalTextUpper.length &&
+        prefixLength < currentText.length &&
+        originalTextUpper[prefixLength] == currentText[prefixLength]) {
+      prefixLength++;
+    }
+
+    int suffixLength = 0;
+    while (suffixLength + prefixLength < originalTextUpper.length &&
+        suffixLength + prefixLength < currentText.length &&
+        originalTextUpper[originalTextUpper.length - suffixLength - 1] ==
+            currentText[currentText.length - suffixLength - 1]) {
+      suffixLength++;
+    }
+
+    // Reconstruct the text by keeping the original (non-uppercase) prefix and suffix,
+    // and using the current text for the middle part
+    String prefix = originalText.substring(0, prefixLength);
+    String middle =
+        currentText.substring(prefixLength, currentText.length - suffixLength);
+    String suffix = originalText.substring(originalText.length - suffixLength);
+
+    return prefix + middle + suffix;
   }
 
-  int suffixLength = 0;
-  while (suffixLength + prefixLength < originalTextUpper.length
-         && suffixLength + prefixLength < currentText.length
-         && originalTextUpper[originalTextUpper.length - suffixLength - 1]
-         == currentText[currentText.length - suffixLength - 1]) {
-    suffixLength++;
-  }
-
-  // Reconstruct the text by keeping the original (non-uppercase) prefix and suffix,
-  // and using the current text for the middle part
-  String prefix = originalText.substring(0, prefixLength);
-  String middle = currentText.substring(prefixLength, currentText.length - suffixLength);
-  String suffix = originalText.substring(originalText.length - suffixLength);
-
-  return prefix + middle + suffix;
-}
-
- void textColorChange(String colorHex) {
+  void textColorChange(String colorHex) {
     if (_selectedTextFieldKey != null &&
         textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
       textFieldPropertiesMap[_selectedTextFieldKey!]!.textColor = colorHex;
       notifyListeners();
     }
   }
-
-
-
- 
-  
- 
-
-
-
-  
 
 //Fetch whether the italics is enabled for the respective textField
   bool isItalicsEnabledForSelectedTextField() {
@@ -416,13 +410,14 @@ String reconstructText(String originalText, String currentText) {
     }
   }
 
-  void setFontSize(String value){
+  void setFontSize(String value) {
     if (_selectedTextFieldKey != null &&
         textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
-          if(int.tryParse(value)!= null){
-            textFieldPropertiesMap[_selectedTextFieldKey!]!.size = int.tryParse(value)!;
-            notifyListeners();
-          } 
+      if (int.tryParse(value) != null) {
+        textFieldPropertiesMap[_selectedTextFieldKey!]!.size =
+            int.tryParse(value)!;
+        notifyListeners();
+      }
     }
   }
 
@@ -438,11 +433,13 @@ String reconstructText(String originalText, String currentText) {
   //Set the alignment of the text alongwith their respective icon
 
   //Alignment icon for the respective alignment
-  IconData getAlignmentIcon(){
-    if(_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)){
-      var currentAlignment = textFieldPropertiesMap[_selectedTextFieldKey]!.align;
+  IconData getAlignmentIcon() {
+    if (_selectedTextFieldKey != null &&
+        textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
+      var currentAlignment =
+          textFieldPropertiesMap[_selectedTextFieldKey]!.align;
 
-      switch(currentAlignment){
+      switch (currentAlignment) {
         case 'left':
           return Icons.format_align_left_rounded;
         case 'right':
@@ -456,12 +453,24 @@ String reconstructText(String originalText, String currentText) {
     return Icons.format_align_center_rounded;
   }
 
-  void toggleTextAlignment(){
-    if(_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)){
-      var currentAlignment = textFieldPropertiesMap[_selectedTextFieldKey]!.align;
+  int checkSelectedFiefdKeyIsRoundDate() {
+    for (int i = 0; i < roundGlobalKeysMap.length; i++) {
+      if (_selectedTextFieldKey == roundGlobalKeysMap[i]!['roundEndDate']! ||
+          _selectedTextFieldKey == roundGlobalKeysMap[i]!['roundStartDate']) {
+        return i;
+      }
+    }
+    return -1;
+  }
 
-      switch(currentAlignment){
-        case 'left' :
+  void toggleTextAlignment() {
+    if (_selectedTextFieldKey != null &&
+        textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
+      var currentAlignment =
+          textFieldPropertiesMap[_selectedTextFieldKey]!.align;
+
+      switch (currentAlignment) {
+        case 'left':
           textFieldPropertiesMap[_selectedTextFieldKey]!.align = 'center';
           break;
         case 'center':
@@ -481,10 +490,52 @@ String reconstructText(String originalText, String currentText) {
     }
   }
 
+  void toggleRoundTextAlignment(int index) {
+    if (_selectedTextFieldKey != null &&
+        textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
+      var currentAlignment =
+          textFieldPropertiesMap[_selectedTextFieldKey]!.align;
+
+      switch (currentAlignment) {
+        case 'left':
+          textFieldPropertiesMap[roundGlobalKeysMap[index]!['roundStartDate']!]!
+              .align = 'center';
+          textFieldPropertiesMap[roundGlobalKeysMap[index]!['roundEndDate']!]!
+              .align = 'center';
+          break;
+        case 'center':
+          textFieldPropertiesMap[roundGlobalKeysMap[index]!['roundStartDate']!]!
+              .align = 'right';
+          textFieldPropertiesMap[roundGlobalKeysMap[index]!['roundEndDate']!]!
+              .align = 'right';
+          break;
+        case 'right':
+          textFieldPropertiesMap[roundGlobalKeysMap[index]!['roundStartDate']!]!
+              .align = 'justify';
+          textFieldPropertiesMap[roundGlobalKeysMap[index]!['roundEndDate']!]!
+              .align = 'justify';
+          break;
+        case 'justify':
+          textFieldPropertiesMap[roundGlobalKeysMap[index]!['roundStartDate']!]!
+              .align = 'left';
+          textFieldPropertiesMap[roundGlobalKeysMap[index]!['roundEndDate']!]!
+              .align = 'left';
+          break;
+        default:
+          textFieldPropertiesMap[roundGlobalKeysMap[index]!['roundStartDate']!]!
+              .align = 'left';
+          textFieldPropertiesMap[roundGlobalKeysMap[index]!['roundEndDate']!]!
+              .align = 'left';
+          break;
+      }
+      notifyListeners();
+    }
+  }
+
   //Convert the string alignment coming from the API to TextAlign
   // has shifted to defaultTemplte provider
-  TextAlign getTextAlign(String align){
-    switch(align){
+  TextAlign getTextAlign(String align) {
+    switch (align) {
       case 'left':
         return TextAlign.left;
       case 'right':
@@ -497,9 +548,10 @@ String reconstructText(String originalText, String currentText) {
         return TextAlign.center;
     }
   }
+
 // has shifted to defaultTemplte provider
-  AlignmentGeometry getTextAlignForContainer(String align){
-    switch(align){
+  AlignmentGeometry getTextAlignForContainer(String align) {
+    switch (align) {
       case 'left':
         return Alignment.centerLeft;
       case 'right':
@@ -513,37 +565,63 @@ String reconstructText(String originalText, String currentText) {
     }
   }
 
-  //Set lineSpacing value
-  // void setLineSpacing(int spacing) {
-  //   if (_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
-  //     textFieldPropertiesMap[_selectedTextFieldKey]!.letterSpacing = spacing;
-  //     notifyListeners();
-  //   }
-  // }
+  Alignment getContainerAlign(String align) {
+    switch (align) {
+      case 'left':
+        return Alignment.centerLeft;
+      case 'right':
+        return Alignment.centerRight;
+      case 'center':
+        return Alignment.center;
+      default:
+        return Alignment.center;
+    }
+  }
 
-  // int getLineSpacing() {
-  //   if (_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
-  //     return textFieldPropertiesMap[_selectedTextFieldKey]!.letterSpacing;
-  //   }
-  //   return 1; // Default value
-  // }
+  MainAxisAlignment getMainAxisAlignment(String align) {
+    switch (align) {
+      case 'left':
+        return MainAxisAlignment.start;
+      case 'right':
+        return MainAxisAlignment.end;
+      case 'center':
+        return MainAxisAlignment.center;
+      default:
+        return MainAxisAlignment.center;
+    }
+  }
 
+  // Set lineSpacing value
+  void setLineSpacing(int spacing) {
+    if (_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
+      textFieldPropertiesMap[_selectedTextFieldKey]!.lineHeight = spacing;
+      notifyListeners();
+    }
+  }
+
+  int getLineSpacing() {
+    if (_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
+      return textFieldPropertiesMap[_selectedTextFieldKey]!.lineHeight;
+    }
+    return 1; // Default value
+  }
 
   //Set letterSpacing value
   void setLetterSpacing(int spacing) {
-    if (_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
+    if (_selectedTextFieldKey != null &&
+        textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
       textFieldPropertiesMap[_selectedTextFieldKey]!.letterSpacing = spacing;
       notifyListeners();
     }
   }
 
   int getLetterSpacing() {
-    if (_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
+    if (_selectedTextFieldKey != null &&
+        textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
       return textFieldPropertiesMap[_selectedTextFieldKey]!.letterSpacing;
     }
     return 1; // Default value
   }
-
 
   bool isColorsInSwatchList(Color targetColor) {
     for (int i = 0; i < swatchesList.length; i++) {
@@ -554,8 +632,8 @@ String reconstructText(String originalText, String currentText) {
     return false;
   }
 
-  List<TextFieldPropertiesArray> getTextProperties(){
-  //saving the text properties in _hackathonDetails ->field in provider
+  List<TextFieldPropertiesArray> getTextProperties() {
+    //saving the text properties in _hackathonDetails ->field in provider
 //or to pass in api giving the values to field
     return [
       // TextFieldPropertiesArray is the representation of every objects in the fields in api
@@ -566,61 +644,70 @@ String reconstructText(String originalText, String currentText) {
          hackathonTextPropertiesProvider.textFieldPropertiesMap[organisationKey]! gives 
          all the text properties of TextFieldProperties type  in {} format 
         and putting these values in textProperties  */
-          textProperties:textFieldPropertiesMap[organisationKey]!),//0
+          textProperties: textFieldPropertiesMap[organisationKey]!), //0
       TextFieldPropertiesArray(
           name: 'Hackathon Name',
           type: 'text',
-          textProperties: textFieldPropertiesMap[hackathonNameKey]!),//1
+          textProperties: textFieldPropertiesMap[hackathonNameKey]!), //1
       TextFieldPropertiesArray(
-        name: 'brief',
-        type: 'text',
-        textProperties: textFieldPropertiesMap[briefKey]!),//2
+          name: 'brief',
+          type: 'text',
+          textProperties: textFieldPropertiesMap[briefKey]!), //2
+          TextFieldPropertiesArray(
+          name: 'Mode Of Conduct',
+          type: 'text',
+          textProperties: textFieldPropertiesMap[modeOfConductKey]!), //3
+           TextFieldPropertiesArray(
+          name: 'Participation Fee',
+          type: 'text',
+          textProperties: textFieldPropertiesMap[participationFeeKey]!), //4
+          TextFieldPropertiesArray(
+          name: 'venue',
+          type: 'text',
+          textProperties: textFieldPropertiesMap[venueKey]!), //5
       TextFieldPropertiesArray(
           name: 'hackathonStartDate',
           type: 'text',
-          textProperties: textFieldPropertiesMap[hackathonStartDateKey]!),//3
-      TextFieldPropertiesArray(
-          name: 'Mode Of Conduct',
-          type: 'text',
-          textProperties: textFieldPropertiesMap[modeOfConductKey]!),//4
-      TextFieldPropertiesArray(
-          name: 'Participation Fee',
-          type: 'text',
-          textProperties: textFieldPropertiesMap[participationFeeKey]!),//5
+          textProperties: textFieldPropertiesMap[hackathonStartDateKey]!), //6
+      
+     
       TextFieldPropertiesArray(
           name: 'teamSize',
           type: 'text',
-          textProperties: textFieldPropertiesMap[teamSizeKey]!),//6
-      TextFieldPropertiesArray(
-          name: 'venue',
+          textProperties: textFieldPropertiesMap[teamSizeKey]!), //7
+          TextFieldPropertiesArray(
+          name: 'deadline',
           type: 'text',
-          textProperties: textFieldPropertiesMap[venueKey]!),//7
+          textProperties: textFieldPropertiesMap[hackathonEndingDateKey]!), //8
+
+      
       TextFieldPropertiesArray(
           name: 'description',
           type: 'text',
-          textProperties: textFieldPropertiesMap[descriptionKey]!),//8
+          textProperties: textFieldPropertiesMap[descriptionKey]!), //9
       TextFieldPropertiesArray(
           name: 'contactName1',
           type: 'text',
-          textProperties: textFieldPropertiesMap[contactName1Key]!),//9
+          textProperties: textFieldPropertiesMap[contactName1Key]!), //10
       TextFieldPropertiesArray(
           name: 'contactNumber1',
           type: 'text',
-          textProperties: textFieldPropertiesMap[contactNumber1Key]!),//10
+          textProperties: textFieldPropertiesMap[contactNumber1Key]!), //11
       TextFieldPropertiesArray(
           name: 'contactName2',
           type: 'text',
-          textProperties:textFieldPropertiesMap[contactName2Key]!),//11
-      
+          textProperties: textFieldPropertiesMap[contactName2Key]!), //12
+
       TextFieldPropertiesArray(
           name: 'contactNumber2',
           type: 'text',
-          textProperties: textFieldPropertiesMap[contactNumber2Key]!)//12
+          textProperties: textFieldPropertiesMap[contactNumber2Key]!) //13
     ];
-}
+  }
 
-List<TextFieldPropertiesArray> addRoundsTextProperties(List<TextFieldPropertiesArray> fields){
-  roundGlobalKeysMap.forEach((key, value) {
+  List<TextFieldPropertiesArray> addRoundsTextProperties(
+      List<TextFieldPropertiesArray> fields) {
+    roundGlobalKeysMap.forEach((key, value) {
       fields.addAll([
         TextFieldPropertiesArray(
           name: 'round${key + 1}Name',
@@ -640,11 +727,11 @@ List<TextFieldPropertiesArray> addRoundsTextProperties(List<TextFieldPropertiesA
         TextFieldPropertiesArray(
           name: 'round${key + 1}EndDate',
           type: 'text',
-          textProperties:textFieldPropertiesMap[value['roundEndDate']!]!,
+          textProperties: textFieldPropertiesMap[value['roundEndDate']!]!,
         ),
       ]);
     });
 
     return fields;
-}
+  }
 }

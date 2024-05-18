@@ -2,12 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/views/Screens/ContactSponsors/contact_sponsors.dart';
+import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/createRegistrationform.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/custom_editPortal.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/default_editPortal.dart';
 
 import 'package:major_project__widget_testing/views/Screens/GetRegistrationForm/getRegistrationForm.dart';
 import 'package:major_project__widget_testing/views/Screens/HostNavigation/hostNavigation.dart';
-// import 'package:major_project__widget_testing/views/Screens/LoginScreen/login.dart';
+import 'package:major_project__widget_testing/views/Screens/LoginScreen/Verification/registration.dart';
+import 'package:major_project__widget_testing/views/Screens/LoginScreen/desktop_login.dart';
 import 'package:major_project__widget_testing/views/Screens/MainNavigation/Desktop/Sections/Profile/profile.dart';
 import 'package:major_project__widget_testing/views/Screens/MainNavigation/mainNavigation.dart';
 import 'package:major_project__widget_testing/views/Screens/TempelateSelection/tempelate_selection.dart';
@@ -15,7 +17,7 @@ import 'package:major_project__widget_testing/views/Screens/TempelateSelection/t
 class AppRoutes {
   static const String start = '/';
   static const String hostNavigation = '/hostNavigation';
-static const String singleHackathon = '/singleHackathon';
+  static const String singleHackathon = '/singleHackathon';
   static const String templateSelection = '/templateSelection';
   static const String contactSponsors = '/contactSponsors';
 // static const String defaultTemplate = '/defaultTemplate';
@@ -23,10 +25,16 @@ static const String singleHackathon = '/singleHackathon';
   static const String defaultEditPortal = '/defaultEditPortal';
   static const String profile = '/profile';
   static const String getRegistration = '/getRegistration';
+  static const String mainNavigation = '/mainNavigation';
 
   static Map<String, Widget Function(BuildContext)> routes = {
-// start: (context) =>  Navigation(),
-    start: (context) => const MainNavigation(),
+    //TODO: NEED TO CHANGE THE STARTING APP ROUTE 
+    //start: (context) => const CustomEditPortal(),
+    
+    start: (context) => LoginPageDesktop(),
+  //start: (context) =>  RegistrationForm(hackathonId: "8611fbbe-44b5-481f-8f60-4fb99fd366f8"),
+    // start: (context) =>  RegisterUser(),
+    mainNavigation: (context) => const MainNavigation(),
     hostNavigation: (context) => const HostNavigation(),
     templateSelection: (context) => const TemplateSelection(),
     contactSponsors: (context) => const ContactSponsors(),

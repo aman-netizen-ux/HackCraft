@@ -32,7 +32,6 @@ class HackathonDetailsProvider with ChangeNotifier {
       _temporaryRoundList[index].description = newDescription;
       notifyListeners();
     } else {
-      
       logger.w("Invalid index");
     }
   }
@@ -136,6 +135,7 @@ class HackathonDetailsProvider with ChangeNotifier {
     hackathons: Hackathon(
       // Provide default or initial values here
       id: "",
+      logo:"",
       name: '',
       organisationName: '',
       modeOfConduct: '',
@@ -152,6 +152,8 @@ class HackathonDetailsProvider with ChangeNotifier {
       contact1Number: '',
       contact2Name: '',
       contact2Number: '',
+      totalRounds: '',
+     images: []
     ),
     rounds: [
       Round(
@@ -162,7 +164,7 @@ class HackathonDetailsProvider with ChangeNotifier {
           endTimeline: "")
     ],
     fields: List.generate(
-      17,
+      18,
       (index) => TextFieldPropertiesArray(
           name: '',
           type: '',
@@ -177,9 +179,25 @@ class HackathonDetailsProvider with ChangeNotifier {
             textColor: '',
             underline: false,
             upperCase: false,
+            lineHeight:0,
           )),
     ),
-    containers: [],
+    containers: List.generate(
+      10,
+      (index) => ContainerPropertiesArray(
+          name: '',
+          type: '',
+          containerProperties: ContainerProperties(
+            borderColor: '',
+            height: 0,
+            color: '',
+            borderWidth: 0,
+            blurRadius: 0,
+            borderRadius: 0,
+            boxShadowColor: '',
+            focusedBorderColor: ''
+          )),
+    ),
   );
 
   // Getter
@@ -313,21 +331,53 @@ class HackathonDetailsProvider with ChangeNotifier {
             textColor: '',
             underline: false,
             upperCase: false,
+            lineHeight:0
           )),
     ));
   }
 
-
   void deleteTextPropertiesOfRoundsFromFields(int n) {
-  // Calculate the starting index for deletion
-  int startIndex = 13 + 4 * n;
+    // Calculate the starting index for deletion
+    int startIndex = 14 + 4 * n;
 
-  // Perform deletion if the starting index is within the list bounds
-  if (startIndex < _hackathonDetails.fields.length) {
-    _hackathonDetails.fields.removeRange(startIndex, min(startIndex + 4, _hackathonDetails.fields.length));
+    // Perform deletion if the starting index is within the list bounds
+    if (startIndex < _hackathonDetails.fields.length) {
+      _hackathonDetails.fields.removeRange(
+          startIndex, min(startIndex + 4, _hackathonDetails.fields.length));
+    }
   }
-}
 
+  // Container
+
+  List<ContainerPropertiesArray> get containersProperties => _hackathonDetails.containers;
+
+  set containersProperties(List<ContainerPropertiesArray> value) {
+    _hackathonDetails.containers = value;
+    notifyListeners();
+  }
+
+
+  void addContainerPropertiesInFields() {
+    _hackathonDetails.containers.addAll(List.generate(
+      2,
+      (index) => ContainerPropertiesArray(
+          name: '',
+          type: '',
+          containerProperties: ContainerProperties(
+              borderColor: '', height: 0, color: '', borderWidth: 0, focusedBorderColor: '', blurRadius: 0, borderRadius: 0, boxShadowColor: '')),
+    ));
+  }
+
+  void deleteContainerPropertiesOfRoundsFromContainers(int n) {
+    // Calculate the starting index for deletion
+    int startIndex = 8 + 2 * n;
+
+    // Perform deletion if the starting index is within the list bounds
+    if (startIndex < _hackathonDetails.containers.length) {
+      _hackathonDetails.containers.removeRange(
+          startIndex, min(startIndex + 2, _hackathonDetails.containers.length));
+    }
+  }
 
 //not being used currently
   void synchronizeTemporaryRoundListWithRoundsList() {

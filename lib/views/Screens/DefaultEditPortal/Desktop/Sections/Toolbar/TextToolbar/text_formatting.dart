@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
+import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Components/customToolWidget.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/TextToolbar/letter_spacing_widget.dart';
@@ -24,7 +25,13 @@ class TextFormattingWidget extends StatelessWidget {
           //SvgPicture.asset("assets/icons/defaultEditPortal/alignLeft.svg"),
           message: "Align",
           onTap: () {
-            hackathonTextProvider.toggleTextAlignment();
+            int index=hackathonTextProvider.checkSelectedFiefdKeyIsRoundDate();
+            if(index>-1){
+              hackathonTextProvider.toggleRoundTextAlignment(index);
+            }
+            else{
+              hackathonTextProvider.toggleTextAlignment();
+            }
           },
           isWidgetClicked: false,
           child: Icon(hackathonTextProvider.getAlignmentIcon(), color: Colors.white,)
@@ -43,7 +50,7 @@ class TextFormattingWidget extends StatelessWidget {
         // SizedBox(
         //   width: scaleWidth(context, 2),
         // ),
-        const LineSpacingWidget(),
+        const LineSpacingWidget(),//line height
 
         SizedBox(
           width: scaleWidth(context, 5),
