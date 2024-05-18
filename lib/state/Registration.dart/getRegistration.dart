@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:major_project__widget_testing/api/Registartion/fetchRegistration.dart';
 import 'package:major_project__widget_testing/models/Registration/customField.dart';
+import 'package:major_project__widget_testing/models/Registration/registration_form_model.dart';
 
 var logger = Logger();
 
@@ -75,5 +76,30 @@ final TickerProvider _vsync;
     _createTabController();
     notifyListeners();
   }
+  
+ RegistrationFormModel _singleForm = RegistrationFormModel(
+      form: FormModel(hackthon: "", numberOfFields: 0),
+      fields: [],
+      sections: []);
+
+RegistrationFormModel get singleForm => _singleForm;
+    Future<void> getHackathonForm(String id) async {
+    final response = await GetRegistratioForm().getRegistratioForm(id);
+    if (response != null && response is RegistrationFormModel) {
+      _singleForm = response;
+      print("if $_singleForm");
+    } else {
+      _singleForm = RegistrationFormModel(
+          form: FormModel(hackthon: "", numberOfFields: 0),
+          fields: [],
+          sections: []);
+
+      print("else $_singleForm");
+    }
+
+    notifyListeners();
+  }
 
 }
+
+// cae9be78-910b-4fd4-82c6-22a547fce01c

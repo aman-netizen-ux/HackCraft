@@ -20,6 +20,42 @@ class DesktopGetRegisterationForm extends StatefulWidget {
 
 class _DesktopGetRegisterationFormState
     extends State<DesktopGetRegisterationForm> {
+
+
+String userType= "";
+String hackathonId="";
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("got into init");
+
+    //TODO:  get the user type from already hit api(or hit if it necessary but ig it wont be possible here due to lack of params)
+
+    userType="firstuser"; //for now
+
+     Future.delayed(Duration.zero, () {
+      print("im in future");
+      final args = ModalRoute.of(context)?.settings.arguments as Map?;
+      if (args != null && args.containsKey('hackathonId')) {
+        print("args were not null and args['hackathonId']: ${args['hackathonId']} ");
+        setState(() {
+          hackathonId = args['hackathonId'];
+        });
+      }
+    }).then((value)async{
+
+      final getRegistrationFormProvider =
+        Provider.of<GetRegistrationFormProvider>(context,listen:false);
+print("im in then");
+        await getRegistrationFormProvider.getHackathonForm(hackathonId);
+    });
+    
+
+    
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -45,7 +81,11 @@ class _DesktopGetRegisterationFormState
                         height: scaleHeight(context, 48),
                         child: Row(
                           children: [
-                            const Icon(Icons.arrow_back),
+                            InkWell(
+                              onTap:(){
+                                Navigator.pop(context);
+                              },
+                              child: const Icon(Icons.arrow_back)),
                             SizedBox(
                               width: scaleWidth(context, 10.67),
                             ),
@@ -245,7 +285,9 @@ class MiddleFormPart extends StatelessWidget {
                 width: scaleWidth(context, 12.15),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  getRegistrationFormProvider.getHackathonForm("");
+                },
                 child: Container(
                   height: scaleHeight(context, 40),
                   width: scaleWidth(context, 120.85),
