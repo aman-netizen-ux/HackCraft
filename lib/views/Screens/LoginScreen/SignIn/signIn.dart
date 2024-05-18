@@ -134,9 +134,10 @@ class _SignInState extends State<SignIn> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
+                        Container(
                           height: heightScaler(context, 35),
-                          width: widthScaler(context, 130),
+                          // width: widthScaler(context, 130),
+                           alignment: Alignment.center,
                           child: ElevatedButton(
                             onPressed: () async {
                               // Handling Google sign-in
@@ -216,9 +217,10 @@ class _SignInState extends State<SignIn> {
                           ),
                         ),
                         SizedBox(width: widthScaler(context, 10)),
-                        SizedBox(
+                        Container(
                           height: heightScaler(context, 35),
-                          width: widthScaler(context, 130),
+                          // width: widthScaler(context, 130),
+                           alignment: Alignment.center,
                           child: ElevatedButton(
                             // Handling GitHub sign-in
                             onPressed: () async {
