@@ -172,7 +172,7 @@ class LandingSection extends StatelessWidget {
             height: scaleHeight(context, 90),
           ),
           hackathonDetailContainer(
-              detail1: defaultTemplateModel!.hackathons.startDateTime,
+              detail1: extractDate(defaultTemplateModel!.hackathons.startDateTime),
               textProperties1: defaultTemplateModel!.fields[6].textProperties,
               containerProperties:
                   defaultTemplateModel!.containers[2].containerProperties,
@@ -259,7 +259,7 @@ class hackathonDetailContainer extends StatelessWidget {
               DefaultTemplateText(
                 name: detail1,
                 textProperties: textProperties1,
-                height: 22.4,
+               
               ),
               SizedBox(height: scaleHeight(context, isSecondContainer ? 6 : 8)),
               Text(isSecondContainer ? 'Reg Start Date' : 'Mode Of Conduct',
@@ -283,7 +283,7 @@ class hackathonDetailContainer extends StatelessWidget {
                           .stringToColor(textProperties1.textColor),
                       fontWeight: FontWeight.w300,
                       height:
-                          lineHeight(22.4, textProperties1.size.toDouble())))
+                          lineHeight(textProperties1.lineHeight.toDouble(), textProperties1.size.toDouble())))
             ],
           ),
           Column(
@@ -292,7 +292,7 @@ class hackathonDetailContainer extends StatelessWidget {
               DefaultTemplateText(
                 name: detail2,
                 textProperties: textProperties2,
-                height: 22.4,
+               
               ),
               SizedBox(height: scaleHeight(context, isSecondContainer ? 6 : 8)),
               Text(isSecondContainer ? 'Team Size' : 'Participation Fee',
@@ -316,7 +316,7 @@ class hackathonDetailContainer extends StatelessWidget {
                           .stringToColor(textProperties2.textColor),
                       fontWeight: FontWeight.w300,
                       height:
-                          lineHeight(22.4, textProperties2.size.toDouble())))
+                          lineHeight(textProperties2.lineHeight.toDouble(), textProperties2.size.toDouble())))
             ],
           ),
           Column(
@@ -325,7 +325,7 @@ class hackathonDetailContainer extends StatelessWidget {
               DefaultTemplateText(
                 name: detai3,
                 textProperties: textProperties3,
-                height: 22.4,
+               
               ),
               SizedBox(height: scaleHeight(context, isSecondContainer ? 6 : 8)),
               Text(isSecondContainer ? 'Reg Ending Date' : 'Venue',
@@ -349,7 +349,7 @@ class hackathonDetailContainer extends StatelessWidget {
                           .stringToColor(textProperties3.textColor),
                       fontWeight: FontWeight.w300,
                       height:
-                          lineHeight(22.4, textProperties3.size.toDouble())))
+                          lineHeight(textProperties3.lineHeight.toDouble(), textProperties3.size.toDouble())))
             ],
           ),
         ],
