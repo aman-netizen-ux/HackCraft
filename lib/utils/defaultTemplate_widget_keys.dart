@@ -9,6 +9,7 @@ final participationFeeKey = GlobalKey();
 final teamSizeKey = GlobalKey();
 final venueKey = GlobalKey();
 final briefKey = GlobalKey();
+final hackathonEndingDateKey = GlobalKey();
 final descriptionKey = GlobalKey();
 final contactName1Key = GlobalKey();
 final contactName2Key = GlobalKey();

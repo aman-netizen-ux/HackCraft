@@ -105,7 +105,7 @@ class DefaultTemplateTextFormField extends StatelessWidget {
                 textAlignVertical: TextAlignVertical.center,
                 controller: controller,
                 cursorHeight: cursorHeight,
-                cursorColor: Colors.black,
+                cursorColor: cursorColor,
                 decoration: InputDecoration(
                   isDense: isDense,
                   contentPadding: contentPadding,

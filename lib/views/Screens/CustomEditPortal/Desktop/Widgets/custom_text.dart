@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:major_project__widget_testing/constants/fontfamily.dart';
 
 class CustomText extends StatefulWidget {
   final dynamic node;

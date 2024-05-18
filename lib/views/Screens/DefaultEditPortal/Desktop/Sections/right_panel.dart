@@ -27,7 +27,6 @@ class _RightPanelState extends State<RightPanel> {
 
     final hackathonContainerPropertiesProvider =
         Provider.of<HackathonContainerPropertiesProvider>(context);
-        print("in right panel : ${hackathonContainerPropertiesProvider.activeIndex}");
     return Container(
       height: double.infinity,
       width: double.infinity,
