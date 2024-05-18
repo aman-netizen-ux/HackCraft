@@ -95,7 +95,7 @@ class RoundsDescription extends StatelessWidget {
                 child: DefaultTemplateText(
                   name: description,
                   textProperties: decriptionProperties,
-                  height: 22.4,
+                  
                 ),
               )),
           Positioned(

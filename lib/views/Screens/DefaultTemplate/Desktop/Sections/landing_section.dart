@@ -76,7 +76,7 @@ class LandingSection extends StatelessWidget {
                           '${defaultTemplateModel!.hackathons.organisationName} presents',
                       textProperties:
                           defaultTemplateModel!.fields[0].textProperties,
-                      height: 22.4,
+                     
                     ),
                     SizedBox(
                       height: scaleHeight(context, 42),
@@ -85,7 +85,7 @@ class LandingSection extends StatelessWidget {
                       name: defaultTemplateModel!.hackathons.name,
                       textProperties:
                           defaultTemplateModel!.fields[1].textProperties,
-                      height: 22.4,
+                     
                     ),
                     SizedBox(
                       height: scaleHeight(context, 11),
@@ -95,7 +95,7 @@ class LandingSection extends StatelessWidget {
                       textProperties:
                           defaultTemplateModel!.fields[2].textProperties,
                       maxLines: 4,
-                      height: 22.4,
+                     
                     ),
                   ],
                 ),
@@ -216,7 +216,7 @@ class hackathonDetailContainer extends StatelessWidget {
       child: DefaultTemplateText(
         name: detail,
         textProperties: textProperties,
-        height: 22.4,
+       
       ),
     );
   }
