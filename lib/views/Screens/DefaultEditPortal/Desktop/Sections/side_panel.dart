@@ -264,7 +264,7 @@ class _SidePanelState extends State<SidePanel> {
         "name": hackathonDetailsProvider.hackathonName,
         "organisation_name": hackathonDetailsProvider.organisationName,
         "mode_of_conduct": hackathonDetailsProvider.modeOfConduct,
-        "deadline": "2024-10-10",
+        "deadline": hackathonDetailsProvider.deadline,
         "team_size": int.parse(hackathonDetailsProvider.teamSize),
         "visible": "Public",
         "start_date_time":

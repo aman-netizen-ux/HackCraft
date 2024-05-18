@@ -76,7 +76,7 @@ class RoundsAndRules extends StatelessWidget {
                             isLast:
                                defaultTemplateModel!.rounds.length - 1 == index,
                             roundTitle:  defaultTemplateModel!.rounds[index].name,
-                             roundTitleTextProperties: defaultTemplateModel!.fields[4*index+13].textProperties,//4*index+13
+                             roundTitleTextProperties: defaultTemplateModel!.fields[4*index+14].textProperties,//4*index+13
                              // TODO: JAB YAHAAN MAINE 8 KI JAGAH & KIYA TOH ROUND KA CARD DIKHNE LAGA BUT AB DESCRIPTION MEI DIKKAT AA RHI HAI 
                              roundTitleContainerProperties: defaultTemplateModel!.containers[2*index + 8].containerProperties,
                             roundDescription: defaultTemplateModel!.rounds[index].description,
@@ -86,13 +86,13 @@ class RoundsAndRules extends StatelessWidget {
                             startDate:defaultTemplateModel!.rounds[index].startTimeline==''
                           ? ''
                           :extractDate(defaultTemplateModel!.rounds[index].startTimeline),  
-                          endDateTextProperties: defaultTemplateModel!.fields[4*index+16].textProperties,//4*index+16
-                          startDateTextProperties: defaultTemplateModel!.fields[4*index+15].textProperties,//4*index+15                         
+                          endDateTextProperties: defaultTemplateModel!.fields[4*index+17].textProperties,//4*index+16
+                          startDateTextProperties: defaultTemplateModel!.fields[4*index+16].textProperties,//4*index+15                         
                             onTap: () {
                               rulesProvider.setSelectedIndex(index);
                               rulesProvider.setDescriptionWidget(roundDetails(
                                   defaultTemplateModel!.rounds[index].description,
-                                   defaultTemplateModel!.fields[4*index+14].textProperties,//4*index+14
+                                   defaultTemplateModel!.fields[4*index+15].textProperties,//4*index+14
                                    // TODO: SAME HERE 9 ki jagah 7 kiya tab jaake theek hua hai 
                                    defaultTemplateModel!.containers[2*index + 9].containerProperties,
                                   context));

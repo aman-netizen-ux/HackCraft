@@ -81,7 +81,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                               children: [
                                 DefaultTemplateText(
                                   name: widget.defaultTemplateModel!.hackathons.contact1Name,
-                                  textProperties: widget.defaultTemplateModel!.fields[9].textProperties,
+                                  textProperties: widget.defaultTemplateModel!.fields[10].textProperties,
 
                                 ),
                                 SizedBox(
@@ -89,7 +89,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                                 ),
                                 DefaultTemplateText(
                                   name: widget.defaultTemplateModel!.hackathons.contact1Number,
-                                  textProperties: widget.defaultTemplateModel!.fields[10].textProperties,
+                                  textProperties: widget.defaultTemplateModel!.fields[11].textProperties,
                                  
                                 ),
                                 
@@ -119,7 +119,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                               children: [
                                 DefaultTemplateText(
                                   name: widget.defaultTemplateModel!.hackathons.contact2Name,
-                                  textProperties: widget.defaultTemplateModel!.fields[11].textProperties,
+                                  textProperties: widget.defaultTemplateModel!.fields[12].textProperties,
                                  
                                 ),
                                 
@@ -129,7 +129,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                           
                                  DefaultTemplateText(
                                   name: widget.defaultTemplateModel!.hackathons.contact2Number,
-                                  textProperties: widget.defaultTemplateModel!.fields[12].textProperties,
+                                  textProperties: widget.defaultTemplateModel!.fields[13].textProperties,
                                   
                                 ),
                                 

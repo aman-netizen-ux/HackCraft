@@ -164,7 +164,7 @@ class HackathonDetailsProvider with ChangeNotifier {
           endTimeline: "")
     ],
     fields: List.generate(
-      17,
+      18,
       (index) => TextFieldPropertiesArray(
           name: '',
           type: '',
@@ -338,7 +338,7 @@ class HackathonDetailsProvider with ChangeNotifier {
 
   void deleteTextPropertiesOfRoundsFromFields(int n) {
     // Calculate the starting index for deletion
-    int startIndex = 13 + 4 * n;
+    int startIndex = 14 + 4 * n;
 
     // Perform deletion if the starting index is within the list bounds
     if (startIndex < _hackathonDetails.fields.length) {
