@@ -35,7 +35,7 @@ class UploadImageToCloudinary  {
       final responseString = String.fromCharCodes(responseData);
       final jsonMap=jsonDecode(responseString);
       final url =jsonMap['url'];
-      print(url);
+      print("postem image in cloudinary url $url");
       galleryImagesURL.add(url);//TODO: have to recheck later
 
 

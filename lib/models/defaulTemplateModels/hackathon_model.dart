@@ -1,6 +1,6 @@
 class Hackathon {
   String id;
-  String? logo;
+  String logo;
   String name;
   String organisationName;
   String modeOfConduct;
@@ -10,7 +10,7 @@ class Hackathon {
   String startDateTime;
   String about;
   String brief;
- // List<String> images;
+ List<String> images;
   String website;
   String fee;
   String venue;
@@ -21,7 +21,7 @@ class Hackathon {
   String totalRounds;
   Hackathon({
     required this.id,
-    this.logo,
+   required this.logo,
     required this.name,
     required this.organisationName,
     required this.modeOfConduct,
@@ -31,7 +31,7 @@ class Hackathon {
     required this.startDateTime,
     required this.about,
     required this.brief,
- //   required this.images,
+   required this.images,
     required this.website,
     required this.fee,
     required this.venue,
@@ -54,7 +54,7 @@ class Hackathon {
         startDateTime: json['start_date_time'],
         about: json['about'],
         brief: json['brief'],
-        //images: List<String>.from(json['images']),
+        images: List<String>.from(json['images']),
         website: json['website'],
         fee: json['fee'],
         venue: json['venue'],
@@ -76,7 +76,7 @@ class Hackathon {
         'start_date_time': startDateTime,
         'about': about,
         'brief': brief,
-      //  'images': images,
+       'images': images,
         'website': website,
         'fee': fee,
         'venue': venue,
@@ -137,6 +137,7 @@ class TextFieldProperties {
   bool upperCase;
   String align;
   int letterSpacing;
+  int lineHeight;
 
   TextFieldProperties(
       {
@@ -149,7 +150,8 @@ class TextFieldProperties {
       required this.strikethrogh,
       required this.upperCase,
       required this.align,
-      required this.letterSpacing
+      required this.letterSpacing,
+      required this.lineHeight,
       });
 
   factory TextFieldProperties.fromJson(Map<String, dynamic> json) {
@@ -164,6 +166,7 @@ class TextFieldProperties {
       upperCase: json['upper_case'],
       align: json['align'],
       letterSpacing: json['letter_spacing'],
+      lineHeight: json['line_height']
     );
   }
 
@@ -178,7 +181,8 @@ class TextFieldProperties {
       'strikethrogh': strikethrogh,
       'upper_case': upperCase,
       'align': align,
-      'letter_spacing': letterSpacing
+      'letter_spacing': letterSpacing,
+      'line_height':lineHeight
     };
   }
 }

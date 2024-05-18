@@ -135,6 +135,7 @@ class HackathonDetailsProvider with ChangeNotifier {
     hackathons: Hackathon(
       // Provide default or initial values here
       id: "",
+      logo:"",
       name: '',
       organisationName: '',
       modeOfConduct: '',
@@ -152,7 +153,7 @@ class HackathonDetailsProvider with ChangeNotifier {
       contact2Name: '',
       contact2Number: '',
       totalRounds: '',
-     // images: []
+     images: []
     ),
     rounds: [
       Round(
@@ -178,6 +179,7 @@ class HackathonDetailsProvider with ChangeNotifier {
             textColor: '',
             underline: false,
             upperCase: false,
+            lineHeight:0,
           )),
     ),
     containers: List.generate(
@@ -329,6 +331,7 @@ class HackathonDetailsProvider with ChangeNotifier {
             textColor: '',
             underline: false,
             upperCase: false,
+            lineHeight:0
           )),
     ));
   }

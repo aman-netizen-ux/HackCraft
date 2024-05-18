@@ -75,6 +75,7 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
       textColor: 'Color(0xFF1A202C);',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
     hackathonTextPropertiesProvider.textFieldPropertiesMap[
@@ -91,6 +92,7 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
       textColor: 'Color(0xFF1A202C);',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
     hackathonTextPropertiesProvider.textFieldPropertiesMap[
@@ -107,6 +109,7 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
       textColor: 'Color(0xFF1A202C);',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
     final rulesProvider = Provider.of<RulesProvider>(context, listen: false);
@@ -125,6 +128,7 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
       textColor: 'Color(0xFF564A4A);',
       underline: false,
       upperCase: false,
+      lineHeight:27,
     );
 
     hackathonContainerPropertiesProvider.containerPropertiesMap[
@@ -365,8 +369,7 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
                                 containerWidth: widget.containerWidth,
                                 maxLength: 20,
                                 editContainerMaxWidth: 150,
-                                height:
-                                    22.4, //Line Height is changed because of cursor size, initial line height was 22.4
+                                 //Line Height is changed because of cursor size, initial line height was 22.4
                                 onSaved: (value) {
                                   hackathonDetailsProvider.updateRoundTitle(
                                       widget.index, value.toString());
@@ -453,8 +456,7 @@ class _DefaultRoundCardState extends State<DefaultRoundCard> {
                                       containerWidth: widget.containerWidth,
                                       alignmentRequired: false,
                                       maxLength: 10,
-                                      height:
-                                          22.4, //Line Height is changed because of cursor size, initial line height was 22.4
+                                      //Line Height is changed because of cursor size, initial line height was 22.4
                                       onSaved: (value) {
                                         hackathonDetailsProvider
                                             .updateRoundEndDate(

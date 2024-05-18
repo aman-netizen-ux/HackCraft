@@ -80,6 +80,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFF564A4A)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
     hackathonTextPropertiesProvider.textFieldPropertiesMap[hackathonNameKey] =
         TextFieldProperties(
@@ -93,6 +94,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFF000100)',
       underline: false,
       upperCase: false,
+      lineHeight:50,
     );
 
     hackathonTextPropertiesProvider.textFieldPropertiesMap[briefKey] =
@@ -107,6 +109,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFF000100)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
     hackathonTextPropertiesProvider
@@ -121,6 +124,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFF1a202c)',
       underline: false,
       upperCase: false,
+      lineHeight: 22
     );
 
     hackathonTextPropertiesProvider
@@ -135,6 +139,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFF1a202c)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
     hackathonTextPropertiesProvider.textFieldPropertiesMap[modeOfConductKey] =
@@ -149,6 +154,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFFFFFFFF)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
     hackathonTextPropertiesProvider
@@ -163,6 +169,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFFFFFFFF)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
     hackathonTextPropertiesProvider.textFieldPropertiesMap[teamSizeKey] =
@@ -177,6 +184,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFF1a202c)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
     hackathonTextPropertiesProvider.textFieldPropertiesMap[venueKey] =
@@ -191,6 +199,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFFFFFFFF)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
     hackathonContainerPropertiesProvider
@@ -496,7 +505,6 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                             containerWidth: widget.containerWidth,
                             maxLength: 30,
                             editContainerMaxWidth: 400,
-                            height: 22.4,
                             isDense: true,
                             defaultEditBoxColorSet: true,
                             cursorHeight: defaultEditScaleHeight(
@@ -519,8 +527,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                             maxLength: 30,
                             editContainerMaxWidth: 700,
                             defaultEditBoxColorSet: true,
-                            height:
-                                50.4, //54 //Line Height is changed because of cursor size, initial line height was 22.4
+                           //54 //Line Height is changed because of cursor size, initial line height was 22.4
                             cursorHeight: defaultEditScaleHeight(
                                 widget.containerHeight, 49),
                             onSaved: (value) {
@@ -544,8 +551,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                             maxLines: 4,
                             isDense: true,
                             defaultEditBoxColorSet: true,
-                            height:
-                                22.4, //Line Height is changed because of cursor size, initial line height was 22.4
+                            //Line Height is changed because of cursor size, initial line height was 22.4
                             cursorHeight: defaultEditScaleHeight(
                                 widget.containerHeight, 20),
                             onSaved: (value) {
@@ -1025,8 +1031,8 @@ class hackathonDetailContainer extends StatelessWidget {
                   containerHeight: containerHeight,
                   containerWidth: containerWidth,
                   maxLength: 15,
-                  height:
-                      22.4, //Line Height is changed because of cursor size, initial line height was 22.4
+                  // height:
+                  //     22.4, //Line Height is changed because of cursor size, initial line height was 22.4
                   cursorHeight: defaultEditScaleHeight(containerHeight, 17),
                   isDense: true,
                   defaultEditBoxColorSet: true,
@@ -1071,7 +1077,8 @@ class hackathonDetailContainer extends StatelessWidget {
                           .stringToColor(textKey1),
                       fontWeight: FontWeight.w300,
                       height: lineHeight(
-                          22.4, hackathonTextPropertiesProvider.textFieldPropertiesMap[textKey1]!.size.toDouble())),
+                          hackathonTextPropertiesProvider
+                              .textFieldPropertiesMap[textKey1]!.lineHeight.toDouble(), hackathonTextPropertiesProvider.textFieldPropertiesMap[textKey1]!.size.toDouble())),
                 )
               ],
             ),
@@ -1085,8 +1092,8 @@ class hackathonDetailContainer extends StatelessWidget {
                   containerHeight: containerHeight,
                   containerWidth: containerWidth,
                   maxLength: 15,
-                  height:
-                      22.4, //Line Height is changed because of cursor size, initial line height was 22.4
+                  // height:
+                  //     22.4, //Line Height is changed because of cursor size, initial line height was 22.4
                   cursorHeight: defaultEditScaleHeight(containerHeight, 17),
                   isDense: true,
                   defaultEditBoxColorSet: true,
@@ -1131,7 +1138,8 @@ class hackathonDetailContainer extends StatelessWidget {
                           .stringToColor(textKey2),
                       fontWeight: FontWeight.w300,
                       height: lineHeight(
-                          22.4, hackathonTextPropertiesProvider.textFieldPropertiesMap[textKey2]!.size.toDouble())),
+                          hackathonTextPropertiesProvider
+                              .textFieldPropertiesMap[textKey2]!.lineHeight.toDouble(), hackathonTextPropertiesProvider.textFieldPropertiesMap[textKey2]!.size.toDouble())),
                 )
               ],
             ),
@@ -1145,8 +1153,8 @@ class hackathonDetailContainer extends StatelessWidget {
                   containerHeight: containerHeight,
                   containerWidth: containerWidth,
                   maxLength: 15,
-                  height:
-                      22.4, //Line Height is changed because of cursor size, initial line height was 22.4
+                  // height:
+                  //     22.4, //Line Height is changed because of cursor size, initial line height was 22.4
                   cursorHeight: defaultEditScaleHeight(containerHeight, 17),
                   isDense: true,
                   defaultEditBoxColorSet: true,
@@ -1191,7 +1199,8 @@ class hackathonDetailContainer extends StatelessWidget {
                           .stringToColor(textKey3),
                       fontWeight: FontWeight.w300,
                       height: lineHeight(
-                          22.4, hackathonTextPropertiesProvider.textFieldPropertiesMap[textKey3]!.size.toDouble())),
+                          hackathonTextPropertiesProvider
+                              .textFieldPropertiesMap[textKey3]!.lineHeight.toDouble(), hackathonTextPropertiesProvider.textFieldPropertiesMap[textKey3]!.size.toDouble())),
                 )
               ],
             )

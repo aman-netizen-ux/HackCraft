@@ -40,12 +40,13 @@ class _SidePanelState extends State<SidePanel> {
     final defaultTemplateProvider =
         Provider.of<DefaultTemplateProvider>(context);
 
-
     final rulesProvider = Provider.of<RulesProvider>(context);
     final hackathonTextPropertiesProvider =
         Provider.of<HackathonTextPropertiesProvider>(context);
     final hackathonContainerPropertiesProvider =
         Provider.of<HackathonContainerPropertiesProvider>(context);
+         final galleryProvider =
+        Provider.of<GalleryProvider>(context,);
 
     List<GlobalKey<State<StatefulWidget>>> keyValues = [
       homeEdit,
@@ -75,36 +76,48 @@ class _SidePanelState extends State<SidePanel> {
                   // if (widget.formKey.currentState!.validate()) {
                   widget.formKey.currentState!.save();
 
-                  previewFunction(rulesProvider, hackathonDetailsProvider,
-                      hackathonTextPropertiesProvider, hackathonContainerPropertiesProvider);
+                  previewFunction(
+                      rulesProvider,
+                      hackathonDetailsProvider,
+                      hackathonTextPropertiesProvider,
+                      hackathonContainerPropertiesProvider);
                   // }
                 } else if (result == 'Save') {
                   //TODO
                 } else if (result == 'Host') {
-                  if (widget.formKey.currentState!.validate())
-                   {
+                  if (widget.formKey.currentState!.validate() && galleryProvider.logoFile.isNotEmpty) {
                     widget.formKey.currentState!.save();
 
-                    hostHackathon(rulesProvider, hackathonDetailsProvider,
-                        hackathonTextPropertiesProvider, hackathonContainerPropertiesProvider);
+                    hostHackathon(
+                        rulesProvider,
+                        hackathonDetailsProvider,
+                        hackathonTextPropertiesProvider,
+                        hackathonContainerPropertiesProvider);
+                  }else if(galleryProvider.logoFile.isEmpty){
+                    print("logo fill kro");
+                    galleryProvider.logoError=true;
                   }
-                } else if(result=='Upload Image'){
-                          final galleryProvider = Provider.of<GalleryProvider>(context, listen: false);
-                          if(galleryProvider.galleryImagesFile.isNotEmpty){
-                            final imageResponse = await UploadImageToCloudinary().uploadImage(galleryProvider.galleryImagesFile);
-                            print(imageResponse);
-                          }
-                          
-                          final logoResponse= await UploadImageToCloudinary().uploadLogo(galleryProvider.logoFile[0]);                          
-                          print(logoResponse);
+                } else if (result == 'Upload Image') {
+                  final galleryProvider =
+                      Provider.of<GalleryProvider>(context, listen: false);
+                  if (galleryProvider.galleryImagesFile.isNotEmpty) {
+                    final imageResponse = await UploadImageToCloudinary()
+                        .uploadImage(galleryProvider.galleryImagesFile);
+                    print("imageResponse $imageResponse");
+                  }
 
-                } 
+                  if (galleryProvider.logoFile.isNotEmpty) {
+                    final logoResponse = await UploadImageToCloudinary()
+                        .uploadLogo(galleryProvider.logoFile[0]);
+                    print("logoResponse $logoResponse");
+                  }
+                }
                 // else if(result=='Upload Preset'){
                 //           final galleryProvider = Provider.of<GalleryProvider>(context, listen: false);
                 //           galleryProvider.createCloudinaryPreset();
 
                 // }
-                
+
                 else {
                   Navigator.pop(context);
                 }
@@ -166,7 +179,8 @@ class _SidePanelState extends State<SidePanel> {
       RulesProvider rulesProvider,
       HackathonDetailsProvider hackathonDetailsProvider,
       HackathonTextPropertiesProvider hackathonTextPropertiesProvider,
-      HackathonContainerPropertiesProvider hackathonContainerPropertiesProvider) {
+      HackathonContainerPropertiesProvider
+          hackathonContainerPropertiesProvider) {
     rulesProvider.setSelectedIndex(-1);
     rulesProvider.setDescriptionWidget(
         SvgPicture.asset('assets/images/defaultTemplate/clickme.svg'));
@@ -178,8 +192,10 @@ class _SidePanelState extends State<SidePanel> {
 
     hackathonDetailsProvider.textFields = fields;
 
-    List<ContainerPropertiesArray> containers = hackathonContainerPropertiesProvider.getContainerProperties();
-    containers = hackathonContainerPropertiesProvider.addRoundsContainerProperties(containers);
+    List<ContainerPropertiesArray> containers =
+        hackathonContainerPropertiesProvider.getContainerProperties();
+    containers = hackathonContainerPropertiesProvider
+        .addRoundsContainerProperties(containers);
 
     hackathonDetailsProvider.containersProperties = containers;
 
@@ -196,14 +212,31 @@ class _SidePanelState extends State<SidePanel> {
   void hostHackathon(
       RulesProvider rulesProvider,
       HackathonDetailsProvider hackathonDetailsProvider,
-      HackathonTextPropertiesProvider hackathonTextPropertiesProvider, 
-      HackathonContainerPropertiesProvider hackathonContainerPropertiesProvider) async {
-            final loginProvider =
-        Provider.of<LoginProvider>(context,listen:false);
+      HackathonTextPropertiesProvider hackathonTextPropertiesProvider,
+      HackathonContainerPropertiesProvider
+          hackathonContainerPropertiesProvider) async {
+    final loginProvider = Provider.of<LoginProvider>(context, listen: false);
     setState(() {
       _isLoading = true;
     });
-    
+
+    final galleryProvider =
+        Provider.of<GalleryProvider>(context, listen: false);
+        List<String> imageResponse=[];
+         String logoResponse="";
+
+    if (galleryProvider.galleryImagesFile.isNotEmpty) {
+       imageResponse = await UploadImageToCloudinary()
+          .uploadImage(galleryProvider.galleryImagesFile);
+      print("imageResponse $imageResponse");
+    }
+
+    if (galleryProvider.logoFile.isNotEmpty) {
+       logoResponse = await UploadImageToCloudinary()
+          .uploadLogo(galleryProvider.logoFile[0]);
+      print("logoResponse $logoResponse");
+    }
+
     List<Map<String, dynamic>> rounds =
         hackathonDetailsProvider.roundsList.map((round) {
       return {
@@ -217,16 +250,17 @@ class _SidePanelState extends State<SidePanel> {
 
     List<TextFieldPropertiesArray> fields =
         hackathonTextPropertiesProvider.getTextProperties();
-        List<ContainerPropertiesArray> containers =
+    List<ContainerPropertiesArray> containers =
         hackathonContainerPropertiesProvider.getContainerProperties();
     //  following is to add roundsTextProperties according to their key in the above defined fields list
     fields = hackathonTextPropertiesProvider.addRoundsTextProperties(fields);
-    containers = hackathonContainerPropertiesProvider.addRoundsContainerProperties(containers);
+    containers = hackathonContainerPropertiesProvider
+        .addRoundsContainerProperties(containers);
 
     final hackathonId = await CreateHackathon().postSingleHackathon({
       "hackathon": {
         "created_by": loginProvider.emailId,
-        "logo":"",
+        "logo": logoResponse,
         "name": hackathonDetailsProvider.hackathonName,
         "organisation_name": hackathonDetailsProvider.organisationName,
         "mode_of_conduct": hackathonDetailsProvider.modeOfConduct,
@@ -236,7 +270,7 @@ class _SidePanelState extends State<SidePanel> {
         "start_date_time":
             "${hackathonDetailsProvider.startDateTime}T00:00:00Z",
         "about": hackathonDetailsProvider.about,
-        "images": [],
+        "images": imageResponse,
         "brief": hackathonDetailsProvider.brief,
         "website": "https://req",
         "fee": hackathonDetailsProvider.fee,

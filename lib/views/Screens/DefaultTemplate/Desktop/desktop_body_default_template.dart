@@ -25,14 +25,14 @@ class _DefaultTemplateDesktopBodyState
   Widget build(BuildContext context) {
     return Column(
       children: [
-        NavBar(defaultTemplateModel: widget.defaultTemplateModel),
+        NavBar(defaultTemplateModel: widget.defaultTemplateModel, isEdit: widget.isEdit,),
         LandingSection(defaultTemplateModel: widget.defaultTemplateModel),
         RoundsAndRules(defaultTemplateModel: widget.defaultTemplateModel),
         About(
           defaultTemplateModel: widget.defaultTemplateModel,
           isEdit: widget.isEdit,
         ),
-        GallerySection(isEdit: widget.isEdit),
+        GallerySection(isEdit: widget.isEdit, defaultTemplateModel: widget.defaultTemplateModel,),
         ContactUsAndFooterSection(
             defaultTemplateModel: widget.defaultTemplateModel)
       ],

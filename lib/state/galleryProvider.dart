@@ -13,11 +13,19 @@ class GalleryProvider with ChangeNotifier {
   final List<XFile> _galleryImagesFile = [];
   String _logo = '';
   List<XFile> _logoFile= [];
+  bool _logoError= false;
 
   List<String> get galleryImages => _galleryImages;
   List<XFile> get galleryImagesFile => _galleryImagesFile;
   String get logo => _logo;
   List<XFile> get logoFile=>_logoFile;
+  bool get logoError=>_logoError;
+
+  set logoError(bool value){
+    _logoError=value;
+
+    notifyListeners();
+  }
 
   set logo(String value) {
     _logo = value;

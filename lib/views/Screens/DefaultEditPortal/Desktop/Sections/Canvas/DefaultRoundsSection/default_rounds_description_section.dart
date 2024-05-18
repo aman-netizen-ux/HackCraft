@@ -257,7 +257,7 @@ class _DefaultRoundsDescriptionState extends State<DefaultRoundsDescription> {
                       defaultEditBoxColorSet: true,
                       maxLength: 580,
                       maxLines: 9,
-                      height: 27,
+                     
                       isDense: true,
                       onSaved: (value) {
                         for (int i = 0;
