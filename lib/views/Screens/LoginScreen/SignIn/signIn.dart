@@ -145,11 +145,21 @@ class _SignInState extends State<SignIn> {
                               });
                               UserCredential userCredential =
                                   await handleGoogleSignIn();
-                              User? user = userCredential.user;
-                              if (user != null) {
-                                String firebaseUUID = user.uid;
-                                String _email = user.email!;
-                                storeUserUid(firebaseUUID, _email);
+                              if (userCredential
+                                      .additionalUserInfo!.isNewUser ==
+                                  true) {
+                                showSnackBar(
+                                    "No user found for this Gmail.",
+                                    red2,
+                                    const Icon(
+                                        Icons.report_gmailerrorred_outlined),
+                                    context);
+                                FirebaseAuth.instance.signOut();
+                                 userCredential.user!.delete();
+                              } else {
+                                String firebaseUUID = userCredential.user!.uid;
+                                String? _email = userCredential.user!.email;
+                                storeUserUid(firebaseUUID, _email!);
                                 loginProvider.setUuid(firebaseUUID, _email);
                                 final status = await registerCheck(_email);
                                 if (status) {
@@ -168,24 +178,9 @@ class _SignInState extends State<SignIn> {
                                     isLoading = false;
                                   });
                                 }
-                              } else {
-                                // Handle sign-in failure
-                                setState(() {
-                                  isLoading = false;
-                                });
-                                debugPrint(
-                                  'No user found for this Gmail.',
-                                );
-                                showSnackBar(
-                                    "No user found for this Gmail.",
-                                    red2,
-                                    const Icon(
-                                        Icons.report_gmailerrorred_outlined),
-                                    // ignore: use_build_context_synchronously
-                                    context);
-                                FirebaseAuth.instance.signOut();
-                                user!.delete();
                               }
+                              // User? user = userCredential.user;
+                             
                             },
 
                             style: ButtonStyle(

@@ -25,14 +25,15 @@ class AppRoutes {
   static const String profile = '/profile';
   static const String getRegistration = '/getRegistration';
   static const String mainNavigation = '/mainNavigation';
+   static const String dashboard = '/dashboard';
 
   static Map<String, Widget Function(BuildContext)> routes = {
     //TODO: NEED TO CHANGE THE STARTING APP ROUTE 
     //start: (context) => const CustomEditPortal(),
     
-    start: (context) => LoginPageDesktop(),
+      // start: (context) => const LoginPageDesktop(),
 
-    // start: (context) =>  Dashboard(),
+      start: (context) => const   Dashboard(),
     mainNavigation: (context) => const MainNavigation(),
     hostNavigation: (context) => const HostNavigation(),
     templateSelection: (context) => const TemplateSelection(),
@@ -41,6 +42,7 @@ class AppRoutes {
     customEditPortal: (context) => const CustomEditPortal(),
     defaultEditPortal: (context) => const DefaultEditPortal(),
     profile: (context) => const Profile(),
+    dashboard: (context) => const Dashboard(),
     getRegistration: (context) => const GetRegistrationForm(),
   };
 }
