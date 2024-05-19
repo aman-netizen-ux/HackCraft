@@ -150,6 +150,7 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                                                       .updateKeyAtIndex(index,
                                                           createRegistrationProvider
                                                         .tab[index].text, context);
+                                                        FocusScope.of(context).unfocus();
                                                 },
                                               )
                                             : Text(keys[index],
