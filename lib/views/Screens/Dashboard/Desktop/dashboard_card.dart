@@ -2,26 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
+import 'package:major_project__widget_testing/models/DashboardModel/hackathonModel.dart';
 import 'package:major_project__widget_testing/state/DashboardProvider/dashboardProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:provider/provider.dart';
 
 class DashboardCard extends StatelessWidget {
-  const DashboardCard({super.key});
+  final HackathonModel hackathon;
+  const DashboardCard({super.key, required this.hackathon});
 
   @override
   Widget build(BuildContext context) {
     final dashboardProvider = Provider.of<DashboardProvider>(context);
     return InkWell(
       onTap: () {
+        dashboardProvider.setName(hackathon.name);
         dashboardProvider.setSelectedIndex(1);
       },
       child: Card(
         margin: EdgeInsets.only(right: scaleWidth(context, 20)),
         color: const Color(0xffE8EDF1),
         child: Container(
-          width: 260,
-          height: 260,
+          height: scaleHeight(context, 260),
+          width: scaleWidth(context, 260),
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(35)),
           padding: EdgeInsets.all(scaleHeight(context, 19)),
           child: Column(
@@ -36,6 +39,7 @@ class DashboardCard extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: lightSilverGrey,
                         borderRadius: BorderRadius.circular(24)),
+                    //child: Icon(Icons.logo),
                   ),
                   Container(
                     height: scaleHeight(context, 16),
@@ -47,17 +51,17 @@ class DashboardCard extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: scaleHeight(context, 39),
+                height: scaleHeight(context, 29),
               ),
               Text(
-                'Ctrl Freaks',
+                hackathon.organisation,
                 style: GoogleFonts.getFont(fontFamily2,
                     fontSize: scaleHeight(context, 14),
                     fontWeight: FontWeight.w500,
                     color: darkCharcoal),
               ),
               Text(
-                'Debug There',
+                hackathon.name,
                 style: GoogleFonts.getFont(fontFamily2,
                     fontSize: scaleHeight(context, 24),
                     fontWeight: FontWeight.w600,
@@ -78,7 +82,7 @@ class DashboardCard extends StatelessWidget {
                               color: darkCharcoal.withOpacity(0.8)),
                         ),
                         Text(
-                          '22/04/24',
+                          hackathon.startDate,
                           style: GoogleFonts.getFont(fontFamily2,
                               fontSize: scaleHeight(context, 14),
                               fontWeight: FontWeight.w500,
@@ -92,13 +96,13 @@ class DashboardCard extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          'Start Date',
+                          'End Date',
                           style: GoogleFonts.getFont(fontFamily2,
                               fontSize: scaleHeight(context, 12),
                               fontWeight: FontWeight.w400,
                               color: darkCharcoal.withOpacity(0.8)),
                         ),
-                        Text('22/04/24',
+                        Text(hackathon.endDate,
                             style: GoogleFonts.getFont(fontFamily2,
                                 fontSize: scaleHeight(context, 14),
                                 fontWeight: FontWeight.w500,
@@ -115,9 +119,9 @@ class DashboardCard extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                             color: darkCharcoal.withOpacity(0.8)),
                       ),
-                      Text('220',
+                      Text(hackathon.numberOfRegistrations.toString(),
                           style: GoogleFonts.getFont(fontFamily2,
-                              fontSize: scaleHeight(context, 14),
+                              fontSize: scaleHeight(context, 12),
                               fontWeight: FontWeight.w500,
                               color: darkCharcoal)),
                     ],
@@ -125,7 +129,7 @@ class DashboardCard extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: scaleHeight(context, 50),
+                height: scaleHeight(context, 30),
               ),
               Container(
                 height: scaleHeight(context, 24),

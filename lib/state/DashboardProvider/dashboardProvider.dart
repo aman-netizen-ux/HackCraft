@@ -13,9 +13,21 @@ class DashboardProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  String _hackathonId = "";
+  String get hackathonId => _hackathonId;
+  void setSelectedHackathonId(String id) {
+    _hackathonId = id;
+  }
+
+  String _name = "";
+  String get name => _name;
+  void setName(String nam) {
+    _name = nam;
+  }
+
   List<Widget> pages = const [
     DashboardScreen(),
-    PerformanceMatrix(hackathonName: "hackathonName"),
+    PerformanceMatrix(),
     RegistrationDetails(),
     Text("data"),
   ];

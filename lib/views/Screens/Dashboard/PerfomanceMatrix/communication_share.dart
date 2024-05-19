@@ -6,9 +6,9 @@ import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Screens/Dashboard/PerfomanceMatrix/compose_email.dart';
 
-
 class CommunicateShare extends StatefulWidget {
-  const CommunicateShare({super.key});
+  final String url;
+  const CommunicateShare({super.key, required this.url});
 
   @override
   State<CommunicateShare> createState() => _CommunicateShareState();
@@ -112,20 +112,17 @@ class _CommunicateShareState extends State<CommunicateShare> {
                 ),
                 Row(
                   children: [
-                    SvgPicture.asset(
-                      'assets/icons/Dashboard/whatsappIcon.svg',
-                      width: scaleHeight(context, 34),
-                      height: scaleHeight(context, 34)
-                    ),
+                    SvgPicture.asset('assets/icons/Dashboard/whatsappIcon.svg',
+                        width: scaleHeight(context, 34),
+                        height: scaleHeight(context, 34)),
                     SvgPicture.asset(
                         'assets/icons/Dashboard/instagramSvgIcon.svg',
                         width: scaleHeight(context, 34),
                         height: scaleHeight(context, 34)),
-                     SvgPicture.asset(
-                      'assets/icons/Dashboard/facebookSvgIcon.svg',
-                      width: scaleHeight(context, 34),
-                      height: scaleHeight(context, 34)
-                    ),
+                    SvgPicture.asset(
+                        'assets/icons/Dashboard/facebookSvgIcon.svg',
+                        width: scaleHeight(context, 34),
+                        height: scaleHeight(context, 34)),
                     SvgPicture.asset('assets/icons/Dashboard/redditIcon.svg',
                         width: scaleHeight(context, 34),
                         height: scaleHeight(context, 34)),
@@ -138,7 +135,7 @@ class _CommunicateShareState extends State<CommunicateShare> {
                     height: scaleHeight(context, 44),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        border: Border.all( color: const Color(0xffBDBDBD))),
+                        border: Border.all(color: const Color(0xffBDBDBD))),
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: scaleWidth(context, 10)),
@@ -146,7 +143,7 @@ class _CommunicateShareState extends State<CommunicateShare> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "https://kfiui..........",
+                            widget.url,
                             style: GoogleFonts.getFont(fontFamily2,
                                 fontSize: scaleHeight(context, 16),
                                 fontWeight: FontWeight.w400,
@@ -154,7 +151,8 @@ class _CommunicateShareState extends State<CommunicateShare> {
                           ),
                           Container(
                             decoration: BoxDecoration(
-                                border: Border.all( color: const Color(0xffBDBDBD))),
+                                border:
+                                    Border.all(color: const Color(0xffBDBDBD))),
                             height: scaleHeight(context, 30),
                             width: scaleWidth(context, 20),
                           )

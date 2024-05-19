@@ -176,12 +176,12 @@ class _SignInState extends State<SignIn> {
                                 debugPrint(
                                   'No user found for this Gmail.',
                                 );
-                                // ignore: use_build_context_synchronously
                                 showSnackBar(
                                     "No user found for this Gmail.",
                                     red2,
                                     const Icon(
                                         Icons.report_gmailerrorred_outlined),
+                                    // ignore: use_build_context_synchronously
                                     context);
                                 FirebaseAuth.instance.signOut();
                                 user!.delete();

@@ -9,7 +9,6 @@ import 'package:major_project__widget_testing/state/getAllHackathons/getAllHacka
 import 'package:major_project__widget_testing/state/profile-provider/profile_provider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
-import 'package:major_project__widget_testing/views/Screens/LoginScreen/login.dart';
 import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
@@ -122,33 +121,38 @@ class _ProfileState extends State<Profile> {
                           children: [
                             SvgPicture.asset(
                                 'assets/images/profile/Dashboard.svg'),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: scaleWidth(context, 20),
-                                  vertical: scaleHeight(context, 12)),
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: scaleWidth(context, 8),
-                                  vertical: scaleHeight(context, 12)),
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15)),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SvgPicture.asset(
-                                      'assets/icons/defaultEditPortal/add.svg',
-                                      height: scaleHeight(context, 24),
-                                      width: scaleWidth(context, 24)),
-                                  SizedBox(width: scaleWidth(context, 8)),
-                                  Text('Dashboard',
-                                      style: GoogleFonts.getFont(fontFamily2,
-                                          fontSize: scaleWidth(context, 14),
-                                          color: black1,
-                                          height: lineHeight(19.2, 14),
-                                          fontWeight: FontWeight.w400))
-                                ],
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, '/dashboard');
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: scaleWidth(context, 20),
+                                    vertical: scaleHeight(context, 12)),
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: scaleWidth(context, 8),
+                                    vertical: scaleHeight(context, 12)),
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15)),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/icons/defaultEditPortal/add.svg',
+                                        height: scaleHeight(context, 24),
+                                        width: scaleWidth(context, 24)),
+                                    SizedBox(width: scaleWidth(context, 8)),
+                                    Text('Dashboard',
+                                        style: GoogleFonts.getFont(fontFamily2,
+                                            fontSize: scaleWidth(context, 14),
+                                            color: black1,
+                                            height: lineHeight(19.2, 14),
+                                            fontWeight: FontWeight.w400))
+                                  ],
+                                ),
                               ),
                             ),
                           ],

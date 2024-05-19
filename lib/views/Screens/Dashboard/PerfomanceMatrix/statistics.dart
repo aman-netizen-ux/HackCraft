@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
+import 'package:major_project__widget_testing/models/DashboardModel/statisticModel.dart';
+import 'package:major_project__widget_testing/state/DashboardProvider/dashboardProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Screens/Dashboard/PerfomanceMatrix/barChart.dart';
 import 'package:major_project__widget_testing/views/Screens/Dashboard/PerfomanceMatrix/doughnutChart.dart';
+import 'package:provider/provider.dart';
 
 class Statistic extends StatefulWidget {
-  const Statistic({super.key});
+  final StatisticModel statistic;
+  const Statistic({super.key, required this.statistic});
 
   @override
   State<Statistic> createState() => _StatisticState();
@@ -16,13 +20,14 @@ class Statistic extends StatefulWidget {
 class _StatisticState extends State<Statistic> {
   @override
   Widget build(BuildContext context) {
+    final dashboardProvider = Provider.of<DashboardProvider>(context);
     return Padding(
       padding: EdgeInsets.only(top: scaleHeight(context, 40)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "{widget.hackathonName} Performance Matrix",
+            "${dashboardProvider.name} Performance Matrix",
             style: GoogleFonts.getFont(fontFamily2,
                 fontSize: scaleHeight(context, 24),
                 fontWeight: FontWeight.w500,
@@ -36,8 +41,10 @@ class _StatisticState extends State<Statistic> {
               Expanded(
                 flex: 560,
                 child: Container(
-                  height: scaleHeight(context, 211),
-                  color: pastelBlueGray,
+                  height: scaleHeight(context, 212),
+                  decoration: BoxDecoration(
+                      color: pastelBlueGray,
+                      borderRadius: BorderRadius.circular(15)),
                   child: const BarChart(),
                 ),
               ),
@@ -48,15 +55,11 @@ class _StatisticState extends State<Statistic> {
                     margin: EdgeInsets.only(left: scaleWidth(context, 24)),
                     decoration: BoxDecoration(
                       color: const Color(0xff5058DC),
-                      borderRadius: BorderRadius.circular(
-                          20), 
+                      borderRadius: BorderRadius.circular(20),
                       gradient: const LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
-                        colors: [
-                          Color(0xFF5058DC),
-                          Color(0xFF8489E7)
-                        ], // Adjust gradient colors as needed
+                        colors: [Color(0xFF5058DC), Color(0xFF8489E7)],
                       ),
                     ),
                     child: Stack(
@@ -167,7 +170,8 @@ class _StatisticState extends State<Statistic> {
                                           width: scaleHeight(context, 40),
                                         ),
                                         Text(
-                                          "000",
+                                          widget.statistic.numberOfRegistrations
+                                              .toString(),
                                           style: GoogleFonts.getFont(
                                               fontFamily2,
                                               fontSize:
@@ -217,7 +221,8 @@ class _StatisticState extends State<Statistic> {
                                           width: scaleHeight(context, 40),
                                         ),
                                         Text(
-                                          "600",
+                                          widget.statistic.numberOfImpressions
+                                              .toString(),
                                           style: GoogleFonts.getFont(
                                               fontFamily2,
                                               fontSize:
@@ -258,7 +263,7 @@ class _StatisticState extends State<Statistic> {
                             topLeft: Radius.circular(2),
                             bottomRight: Radius.circular(15),
                             topRight: Radius.circular(15))),
-                    child:const  DoughnutChart(),
+                    child: const DoughnutChart(),
                   )),
             ],
           ),

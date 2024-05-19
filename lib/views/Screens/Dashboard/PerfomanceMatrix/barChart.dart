@@ -38,7 +38,7 @@ class _BarChartState extends State<BarChart> {
           height: scaleHeight(context, 10),
         ),
         Padding(
-          padding:  EdgeInsets.symmetric(horizontal:scaleWidth(context,22)),
+          padding: EdgeInsets.symmetric(horizontal: scaleWidth(context, 22)),
           child: Row(
             children: [
               Text(
@@ -48,24 +48,29 @@ class _BarChartState extends State<BarChart> {
                     fontWeight: FontWeight.w400,
                     color: darkCharcoal),
               ),
-              
             ],
           ),
         ),
         SizedBox(
-          height: scaleHeight(context, 154),
+          height: scaleHeight(context, 174),
           width: scaleWidth(context, 361),
           child: SfCartesianChart(
             primaryXAxis: const CategoryAxis(
               isVisible: true,
-              axisLine: AxisLine(width: 0),
-              majorTickLines: MajorTickLines(size: 0),
-              majorGridLines: MajorGridLines(width: 0),
+              axisLine: AxisLine(width: 1),
+              majorTickLines: MajorTickLines(size: 5),
+              majorGridLines: MajorGridLines(width: 1),
+              // title: AxisTitle(text: 'Month'),
             ),
             primaryYAxis: const NumericAxis(
-              isVisible: false,
+              isVisible: true,
+              axisLine: AxisLine(width: 1),
+              majorTickLines: MajorTickLines(size: 5),
+              majorGridLines: MajorGridLines(width: 1),
+              // title: AxisTitle(text: 'Count'),
             ),
-            legend: const Legend(isVisible: false),
+            legend:
+                const Legend(isVisible: true, position: LegendPosition.bottom),
             tooltipBehavior: TooltipBehavior(enable: true),
             series: <CartesianSeries>[
               ColumnSeries<ChartData, String>(

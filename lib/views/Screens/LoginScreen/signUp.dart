@@ -89,6 +89,7 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                 isLoading = true;
                               });
                               UserCredential user = await handleGoogleSignIn();
+                              
                               if (user.additionalUserInfo!.isNewUser == false) {
                                 debugPrint(
                                   'An account exits with the given email address.',
@@ -102,6 +103,7 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                     context);
                                 FirebaseAuth.instance.signOut();
                               } else {
+
                                 //
                                 String? displayName = user.user!.displayName;
                                 loginProvider.setEmail(user.user!.email!);

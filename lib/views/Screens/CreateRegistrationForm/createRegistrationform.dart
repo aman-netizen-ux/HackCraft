@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/responsive/responsive_layout.dart';
 import 'package:major_project__widget_testing/state/Registration.dart/createRegistrationProvider.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/desktop_registration_form.dart';
-import 'package:major_project__widget_testing/views/Screens/GetRegistrationForm/Desktop/desktop_get_form.dart';
 import 'package:provider/provider.dart';
 
 class RegistrationForm extends StatefulWidget {

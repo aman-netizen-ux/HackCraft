@@ -37,9 +37,9 @@ class _DoughnutChartState extends State<DoughnutChart> {
               series: <CircularSeries>[
                 DoughnutSeries<DoughnutChartData, String>(
                   dataSource: <DoughnutChartData>[
-                    DoughnutChartData('Male', 10),
-                    DoughnutChartData('Female', 20),
-                    DoughnutChartData('others', 30),
+                    DoughnutChartData('Male', 1),
+                    DoughnutChartData('Female', 0),
+                    DoughnutChartData('others', 0),
                   ],
                   xValueMapper: (DoughnutChartData data, _) => data.category,
                   yValueMapper: (DoughnutChartData data, _) => data.value,
