@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
@@ -205,7 +204,7 @@ class _ColoPickerCardState extends State<ColoPickerCard> {
       :hackathonTextProvider
         .stringToColor(hackathonTextProvider.selectedTextFieldKey!));
     return Container(
-        height: scaleHeight(context, 275),
+        height: scaleHeight(context, 290),
         width: scaleWidth(context, 150),
         decoration: BoxDecoration(
             color: grey3,
@@ -215,20 +214,24 @@ class _ColoPickerCardState extends State<ColoPickerCard> {
             valueListenable: _colorNotifier,
             builder: (_, color, __) {
               return CustomColorPicker(
-                  pickerColor: color,
-                  colorPickerWidth: scaleWidth(context, 150),
-                  pickerAreaBorderRadius:
-                      const BorderRadius.vertical(bottom: Radius.circular(4)),
+                color: color,
+                initialPicker: Picker.paletteHue,
+                pickerOrientation: PickerOrientation.portrait,
+                paletteHeight: scaleHeight(context, 170),
+                  // pickerColor: color,
+                  // colorPickerWidth: scaleWidth(context, 150),
+                  // pickerAreaBorderRadius:
+                  //     const BorderRadius.vertical(bottom: Radius.circular(4)),
                   // labelTypes: const [
                   //   ColorLabelType.hex,
                   //   ColorLabelType.rgb,
                   //   ColorLabelType.hsl,
                   //   ColorLabelType.hsv
                   // ],
-                  hexInputBar: true,
-                  paletteType: PaletteType.hslWithHue, // have to think
-                  pickerAreaHeightPercent: 0.8,
-                  onColorChanged: (value) {
+                  // hexInputBar: true,
+                  // paletteType: PaletteType.hslWithHue, // have to think
+                  // pickerAreaHeightPercent: 0.8,
+                  onChanged: (value) {
                     hackathonTextProvider.addColor(value);
                     
                     hackathonTextProvider.textColorChange(value.toString());

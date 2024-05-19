@@ -164,7 +164,7 @@ class DateFieldModel extends FieldModel {
       errorText: json['error_text'] ?? '',
       required: json['required'] ?? false,
       // form: json['form'],
-      type: json['type'],
+      type: FieldTypes.values.firstWhere((e) => e.toString().split('.').last == json['type']),
       minDate: json['min_date'],
       maxDate: json['max_date'],
     );
@@ -179,7 +179,7 @@ class DateFieldModel extends FieldModel {
       'error_text': errorText,
       'required': required,
       // 'form': form,
-      'type': type,
+      'type': type.toString().split('.').last,
       'min_date': minDate,
       'max_date': maxDate,
     };
@@ -218,7 +218,7 @@ class FileFieldModel extends FieldModel {
       errorText: json['error_text'] ?? '',
       required: json['required'] ?? false,
       // form: json['form'],
-      type: json['type'],
+      type: FieldTypes.values.firstWhere((e) => e.toString().split('.').last == json['type']),
       hint: json['hint'],
     );
   }
@@ -232,7 +232,7 @@ class FileFieldModel extends FieldModel {
       'error_text': errorText,
       'required': required,
       // 'form': form,
-      'type': type,
+      'type': type.toString().split('.').last,
     };
   }
 }
@@ -271,7 +271,7 @@ class LongAnswerFieldModel extends FieldModel {
       errorText: json['error_text'] ?? '',
       required: json['required'] ?? false,
       // form: json['form'],
-      type: json['type'],
+      type: FieldTypes.values.firstWhere((e) => e.toString().split('.').last == json['type']),
       wordLimit: json['word_limit'],
       hint: json['hint'],
     );
@@ -286,7 +286,7 @@ class LongAnswerFieldModel extends FieldModel {
       'error_text': errorText,
       'required': required,
       // 'form': form,
-      'type': type,
+      'type': type.toString().split('.').last,
       'word_limit': wordLimit,
     };
   }
@@ -325,7 +325,7 @@ class RadioFieldModel extends FieldModel {
       errorText: json['error_text'] ?? '',
       required: json['required'] ?? false,
       // form: json['form'],
-      type: json['type'],
+      type:FieldTypes.values.firstWhere((e) => e.toString().split('.').last == json['type']),
       options: List<RegistrationOption>.from(json['options']),
     );
   }
@@ -339,7 +339,7 @@ class RadioFieldModel extends FieldModel {
       'error_text': errorText,
       'required': required,
       // 'form': form,
-      'type': type,
+      'type': type.toString().split('.').last,
       'options': options,
     };
   }
@@ -378,7 +378,7 @@ class CheckBoxModel extends FieldModel {
       errorText: json['error_text'] ?? '',
       required: json['required'] ?? false,
       // form: json['form'],
-      type: json['type'],
+      type: FieldTypes.values.firstWhere((e) => e.toString().split('.').last == json['type']),
       options: List<RegistrationOption>.from(json['options']),
     );
   }
@@ -392,7 +392,7 @@ class CheckBoxModel extends FieldModel {
       'error_text': errorText,
       'required': required,
       // 'form': form,
-      'type': type,
+      'type': type.toString().split('.').last,
       'options': options,
     };
   }
@@ -433,7 +433,7 @@ class ShortAnswerFieldModel extends FieldModel {
       errorText: json['error_text'] ?? '',
       required: json['required'] ?? false,
       // form: json['form'],
-      type: json['type'],
+      type: FieldTypes.values.firstWhere((e) => e.toString().split('.').last == json['type']),
       validation: json['validation'],
       hint: json['hint'],
     );
@@ -448,7 +448,7 @@ class ShortAnswerFieldModel extends FieldModel {
       'error_text': errorText,
       'required': required,
       // 'form': form,
-      'type': type,
+      'type': type.toString().split('.').last,
       'validation': validation,
       'hint': hint,
     };
@@ -493,7 +493,7 @@ class TagModel extends FieldModel {
         errorText: json['error_text'] ?? '',
         required: json['required'] ?? false,
         // form: json['form'],
-        type: json['type'],
+        type: FieldTypes.values.firstWhere((e) => e.toString().split('.').last == json['type']),
         options: options);
   }
   Map<String, dynamic> toJson() {
@@ -505,7 +505,7 @@ class TagModel extends FieldModel {
       'error_text': errorText,
       'required': required,
       // 'form': form,
-      'type': type,
+      'type': type.toString().split('.').last,
       'options': options.map((option) => {'text': option}).toList(),
     };
   }
@@ -545,7 +545,7 @@ class StepperModel extends FieldModel {
       errorText: json['error_text'] ?? '',
       required: json['required'] ?? false,
       // form: json['form'],
-      type: json['type'],
+      type: FieldTypes.values.firstWhere((e) => e.toString().split('.').last == json['type']),
       min_value: json['min_value'],
       max_value: json['max_value'],
     );
@@ -559,7 +559,7 @@ class StepperModel extends FieldModel {
       'error_text': errorText,
       'required': required,
       // 'form': form,
-      'type': type,
+      'type': type.toString().split('.').last,
     };
   }
 }
@@ -601,7 +601,7 @@ class RangeModel extends FieldModel {
       errorText: json['error_text'] ?? '',
       required: json['required'] ?? false,
       // form: json['form'],
-      type: json['type'],
+      type: FieldTypes.values.firstWhere((e) => e.toString().split('.').last == json['type']),
       labels: labels,
     );
   }
@@ -614,7 +614,7 @@ class RangeModel extends FieldModel {
       'error_text': errorText,
       'required': required,
       // 'form': form,
-      'type': type,
+      'type': type.toString().split('.').last,
     };
   }
 }
@@ -656,7 +656,7 @@ class LinearModel extends FieldModel {
       errorText: json['error_text'] ?? '',
       required: json['required'] ?? false,
       // form: json['form'],
-      type: json['type'],
+      type: FieldTypes.values.firstWhere((e) => e.toString().split('.').last == json['type']),
       labels: labels,
     );
   }
@@ -669,7 +669,7 @@ class LinearModel extends FieldModel {
       'error_text': errorText,
       'required': required,
       // 'form': form,
-      'type': type,
+      'type': type.toString().split('.').last,
       'labels': labels,
     };
   }
@@ -712,7 +712,7 @@ class SliderModel extends FieldModel {
       errorText: json['error_text'] ?? '',
       required: json['required'] ?? false,
       // form: json['form'],
-      type: json['type'],
+      type: FieldTypes.values.firstWhere((e) => e.toString().split('.').last == json['type']),
       labels: labels,
     );
   }
@@ -725,7 +725,7 @@ class SliderModel extends FieldModel {
       'error_text': errorText,
       'required': required,
       // 'form': form,
-      'type': type,
+      'type': type.toString().split('.').last,
     };
   }
 }
@@ -757,7 +757,7 @@ class ToggleModel extends FieldModel {
       errorText: json['error_text'] ?? '',
       required: json['required'] ?? false,
       // form: json['form'],
-      type: json['type'],
+      type: FieldTypes.values.firstWhere((e) => e.toString().split('.').last == json['type']),
     );
   }
   Map<String, dynamic> toJson() {
@@ -769,7 +769,7 @@ class ToggleModel extends FieldModel {
       'error_text': errorText,
       'required': required,
       // 'form': form,
-      'type': type,
+      'type': type.toString().split('.').last,
     };
   }
 }
@@ -803,7 +803,7 @@ class DropDownModel extends FieldModel {
       errorText: json['error_text'] ?? '',
       required: json['required'] ?? false,
       // form: json['form'],
-      type: json['type'],
+      type: FieldTypes.values.firstWhere((e) => e.toString().split('.').last == json['type']),
       options: List<RegistrationOption>.from(json['options']),
     );
   }
@@ -816,7 +816,7 @@ class DropDownModel extends FieldModel {
       'error_text': errorText,
       'required': required,
       // 'form': form,
-      'type': type,
+      'type': type.toString().split('.').last,
       'options': options,
     };
   }
@@ -857,7 +857,7 @@ class PhoneNumberModel extends FieldModel {
       errorText: json['error_text'] ?? '',
       required: json['required'] ?? false,
       // form: json['form'],
-      type: json['type'],
+      type: FieldTypes.values.firstWhere((e) => e.toString().split('.').last == json['type']),
       validation: json['validation'],
       hint: json['hint'],
     );
@@ -872,7 +872,7 @@ class PhoneNumberModel extends FieldModel {
       'error_text': errorText,
       'required': required,
       // 'form': form,
-      'type': type,
+      'type': type.toString().split('.').last,
       'validation': validation,
       'hint': hint,
     };

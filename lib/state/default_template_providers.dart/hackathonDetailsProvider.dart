@@ -135,6 +135,7 @@ class HackathonDetailsProvider with ChangeNotifier {
     hackathons: Hackathon(
       // Provide default or initial values here
       id: "",
+      logo:"",
       name: '',
       organisationName: '',
       modeOfConduct: '',
@@ -151,6 +152,8 @@ class HackathonDetailsProvider with ChangeNotifier {
       contact1Number: '',
       contact2Name: '',
       contact2Number: '',
+      totalRounds: '',
+     images: []
     ),
     rounds: [
       Round(
@@ -161,7 +164,7 @@ class HackathonDetailsProvider with ChangeNotifier {
           endTimeline: "")
     ],
     fields: List.generate(
-      17,
+      18,
       (index) => TextFieldPropertiesArray(
           name: '',
           type: '',
@@ -176,6 +179,7 @@ class HackathonDetailsProvider with ChangeNotifier {
             textColor: '',
             underline: false,
             upperCase: false,
+            lineHeight:0,
           )),
     ),
     containers: List.generate(
@@ -327,13 +331,14 @@ class HackathonDetailsProvider with ChangeNotifier {
             textColor: '',
             underline: false,
             upperCase: false,
+            lineHeight:0
           )),
     ));
   }
 
   void deleteTextPropertiesOfRoundsFromFields(int n) {
     // Calculate the starting index for deletion
-    int startIndex = 13 + 4 * n;
+    int startIndex = 14 + 4 * n;
 
     // Perform deletion if the starting index is within the list bounds
     if (startIndex < _hackathonDetails.fields.length) {

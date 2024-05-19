@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/enums.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonContainerPropertiesProvider.dart';
@@ -6,6 +7,7 @@ import 'package:major_project__widget_testing/state/default_template_providers.d
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
 import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/views/Components/defaultTemplate_textFormField.dart';
 import 'package:provider/provider.dart';
 
@@ -32,6 +34,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
   late TextEditingController hackathonFeeController;
   late TextEditingController hackathonTeamSizeController;
   late TextEditingController hackathonVenueController;
+  late TextEditingController hackathonDeadlineController;
 
   @override
   void initState() {
@@ -46,6 +49,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
     hackathonFeeController = TextEditingController();
     hackathonTeamSizeController = TextEditingController();
     hackathonVenueController = TextEditingController();
+    hackathonDeadlineController = TextEditingController();
 
 // HackathonTextPropertiesProvider is for text Field Properties and its methods
     final hackathonTextPropertiesProvider =
@@ -76,6 +80,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFF564A4A)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
     hackathonTextPropertiesProvider.textFieldPropertiesMap[hackathonNameKey] =
         TextFieldProperties(
@@ -89,6 +94,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFF000100)',
       underline: false,
       upperCase: false,
+      lineHeight:50,
     );
 
     hackathonTextPropertiesProvider.textFieldPropertiesMap[briefKey] =
@@ -103,6 +109,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFF000100)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
     hackathonTextPropertiesProvider
@@ -114,15 +121,31 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       italics: false,
       letterSpacing: 0,
       strikethrogh: false,
-      textColor: 'Color(0xFFFFFFFF)',
+      textColor: 'Color(0xFF1a202c)',
       underline: false,
       upperCase: false,
+      lineHeight: 22
+    );
+
+    hackathonTextPropertiesProvider
+        .textFieldPropertiesMap[hackathonEndingDateKey] = TextFieldProperties(
+      size: 20,
+      align: 'center',
+      font: 'Fira Sans',
+      fontWeight: 600,
+      italics: false,
+      letterSpacing: 0,
+      strikethrogh: false,
+      textColor: 'Color(0xFF1a202c)',
+      underline: false,
+      upperCase: false,
+      lineHeight:22,
     );
 
     hackathonTextPropertiesProvider.textFieldPropertiesMap[modeOfConductKey] =
         TextFieldProperties(
       size: 20,
-      align: 'center',
+      align: 'left',
       font: 'Fira Sans',
       fontWeight: 600,
       italics: false,
@@ -131,6 +154,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFFFFFFFF)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
     hackathonTextPropertiesProvider
@@ -145,6 +169,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFFFFFFFF)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
     hackathonTextPropertiesProvider.textFieldPropertiesMap[teamSizeKey] =
@@ -156,9 +181,10 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       italics: false,
       letterSpacing: 0,
       strikethrogh: false,
-      textColor: 'Color(0xFFFFFFFF)',
+      textColor: 'Color(0xFF1a202c)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
     hackathonTextPropertiesProvider.textFieldPropertiesMap[venueKey] =
@@ -173,6 +199,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       textColor: 'Color(0xFFFFFFFF)',
       underline: false,
       upperCase: false,
+      lineHeight:22,
     );
 
     hackathonContainerPropertiesProvider
@@ -182,8 +209,8 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
             height: 523,
             color: 'Color(0xFFE2CCFF)',
             borderWidth: 0,
-            blurRadius: 0,
-            borderRadius: 30,
+            blurRadius: 0.0,
+            borderRadius: 30.0,
             boxShadowColor: 'Color(0xFFFFFFFF)',
             focusedBorderColor: '');
 
@@ -191,23 +218,23 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
             .containerPropertiesMap[dateContainerKey] =
         ContainerProperties(
             borderColor: 'Color(0xFFFFFFFF)',
-            height: 102,
-            color: 'Color(0xFF000100)',
+            height: 170,
+            color: 'Color(0xFF1a202c)',
             borderWidth: 0,
-            blurRadius: 0,
-            borderRadius: 15,
+            blurRadius: 0.0,
+            borderRadius: 10.0,
             boxShadowColor: 'Color(0xFFFFFFFF)',
             focusedBorderColor: '');
 
     hackathonContainerPropertiesProvider
             .containerPropertiesMap[modeOfConductContainerKey] =
         ContainerProperties(
-            borderColor: 'Color(0xFFFFFFFF)',
-            height: 102,
-            color: 'Color(0xFF000100)',
+            borderColor: 'Color(0xFF1a202c)',
+            height: 117,
+            color: 'Color(0xFFFFFFFF)',
             borderWidth: 0,
-            blurRadius: 0,
-            borderRadius: 15,
+            blurRadius: 0.0,
+            borderRadius: 10.0,
             boxShadowColor: 'Color(0xFFFFFFFF)',
             focusedBorderColor: '');
 
@@ -218,8 +245,8 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
             height: 102,
             color: 'Color(0xFF000100)',
             borderWidth: 0,
-            blurRadius: 0,
-            borderRadius: 15,
+            blurRadius: 0.0,
+            borderRadius: 15.0,
             boxShadowColor: 'Color(0xFFFFFFFF)',
             focusedBorderColor: '');
 
@@ -230,8 +257,8 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
             height: 102,
             color: 'Color(0xFF000100)',
             borderWidth: 0,
-            blurRadius: 0,
-            borderRadius: 15,
+            blurRadius: 0.0,
+            borderRadius: 15.0,
             boxShadowColor: 'Color(0xFFFFFFFF)',
             focusedBorderColor: '');
 
@@ -242,8 +269,8 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
             height: 102,
             color: 'Color(0xFF000100)',
             borderWidth: 0,
-            blurRadius: 0,
-            borderRadius: 15,
+            blurRadius: 0.0,
+            borderRadius: 15.0,
             boxShadowColor: 'Color(0xFFFFFFFF)',
             focusedBorderColor: '');
 
@@ -254,11 +281,11 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
 
     hackathonContainerPropertiesProvider
             .limitContainerHeightMap[dateContainerKey] =
-        LimitContainerHeight(minHeight: 20, maxHeight: 102);
+        LimitContainerHeight(minHeight: 20, maxHeight: 170);
 
     hackathonContainerPropertiesProvider
             .limitContainerHeightMap[modeOfConductContainerKey] =
-        LimitContainerHeight(minHeight: 20, maxHeight: 102);
+        LimitContainerHeight(minHeight: 20, maxHeight: 117);
 
     hackathonContainerPropertiesProvider
             .limitContainerHeightMap[participationFeeContainerKey] =
@@ -302,6 +329,10 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
       hackathonFeeController.text = hackathonDetailsProvider.fee;
     }
 
+    if (hackathonDetailsProvider.deadline.isNotEmpty) {
+      hackathonDeadlineController.text = hackathonDetailsProvider.deadline;
+    }
+
     if (hackathonDetailsProvider.venue.isNotEmpty) {
       hackathonVenueController.text = hackathonDetailsProvider.venue;
     }
@@ -315,6 +346,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
     hackathonDateController.dispose();
     hackathonModeController.dispose();
     hackathonFeeController.dispose();
+    hackathonDeadlineController.dispose();
     hackathonTeamSizeController.dispose();
     hackathonVenueController.dispose();
 
@@ -368,6 +400,8 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
           hackathonModeController, modeOfConductKey);
       hackathonTextPropertiesProvider.convertAndRevertBackFromUpperCase(
           hackathonFeeController, participationFeeKey);
+      hackathonTextPropertiesProvider.convertAndRevertBackFromUpperCase(
+          hackathonDeadlineController, hackathonEndingDateKey);
       hackathonTextPropertiesProvider.convertAndRevertBackFromUpperCase(
           hackathonTeamSizeController, teamSizeKey);
       hackathonTextPropertiesProvider.convertAndRevertBackFromUpperCase(
@@ -471,7 +505,6 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                             containerWidth: widget.containerWidth,
                             maxLength: 30,
                             editContainerMaxWidth: 400,
-                            height: 22.4,
                             isDense: true,
                             defaultEditBoxColorSet: true,
                             cursorHeight: defaultEditScaleHeight(
@@ -494,8 +527,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                             maxLength: 30,
                             editContainerMaxWidth: 700,
                             defaultEditBoxColorSet: true,
-                            height:
-                                50.4, //54 //Line Height is changed because of cursor size, initial line height was 22.4
+                           //54 //Line Height is changed because of cursor size, initial line height was 22.4
                             cursorHeight: defaultEditScaleHeight(
                                 widget.containerHeight, 49),
                             onSaved: (value) {
@@ -519,8 +551,7 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                             maxLines: 4,
                             isDense: true,
                             defaultEditBoxColorSet: true,
-                            height:
-                                22.4, //Line Height is changed because of cursor size, initial line height was 22.4
+                            //Line Height is changed because of cursor size, initial line height was 22.4
                             cursorHeight: defaultEditScaleHeight(
                                 widget.containerHeight, 20),
                             onSaved: (value) {
@@ -533,240 +564,288 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
                   ),
                   SizedBox(
                       height:
-                          defaultEditScaleHeight(widget.containerHeight, 51))
+                          defaultEditScaleHeight(widget.containerHeight, 85))
                 ],
               ),
               Positioned(
                 bottom: 0,
                 child: Container(
                   width: defaultEditScaleWidth(widget.containerWidth, 1108),
-                  height: defaultEditScaleHeight(widget.containerHeight, 102),
+                  height: defaultEditScaleHeight(widget.containerHeight, 170),
                   // padding: EdgeInsets.symmetric(horizontal: defaultEditScaleWidth(containerWidth, 68.5)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       hackathonDetailContainer(
-                        borderWidth: hackathonContainerPropertiesProvider
-                            .containerPropertiesMap[dateContainerKey]!
-                            .borderWidth
-                            .toDouble(),
-                        containerKey: dateContainerKey,
-                        textKey: hackathonStartDateKey,
-                        containerColor:
-                            hackathonContainerPropertiesProvider.stringToColor(
-                                dateContainerKey,
-                                0,
-                                ContainerColorProperties.containerColor),
-                        height: hackathonContainerPropertiesProvider
-                            .containerPropertiesMap[dateContainerKey]!.height
-                            .toDouble(),
-                        containerHeight: widget.containerHeight,
-                        containerWidth: widget.containerWidth,
-                        detail: 'Date',
-                        controller: hackathonDateController,
-                        borderRadius: hackathonContainerPropertiesProvider
-                            .containerPropertiesMap[dateContainerKey]!
-                            .borderRadius
-                            .toDouble(),
-                        blurRadius: hackathonContainerPropertiesProvider
-                            .containerPropertiesMap[dateContainerKey]!
-                            .blurRadius
-                            .toDouble(),
-                        borderColor:
-                            hackathonContainerPropertiesProvider.stringToColor(
-                                dateContainerKey,
-                                0,
-                                ContainerColorProperties.containerBorderColor),
-                        boxShadowColor:
-                            hackathonContainerPropertiesProvider.stringToColor(
-                                dateContainerKey,
-                                0,
-                                ContainerColorProperties.boxShadowColor),
-                        onSaved: (value) {
-                          hackathonDetailsProvider.startDateTime =
-                              value.toString();
-                        },
-                        type: TextInputType.text,
-                        hint: 'Date',
-                      ),
-                      hackathonDetailContainer(
-                        borderWidth: hackathonContainerPropertiesProvider
-                            .containerPropertiesMap[modeOfConductContainerKey]!
-                            .borderWidth
-                            .toDouble(),
-                        containerKey: modeOfConductContainerKey,
-                        textKey: modeOfConductKey,
-                        containerColor:
-                            hackathonContainerPropertiesProvider.stringToColor(
-                                modeOfConductContainerKey,
-                                0,
-                                ContainerColorProperties.containerColor),
-                        height: hackathonContainerPropertiesProvider
-                            .containerPropertiesMap[modeOfConductContainerKey]!
-                            .height
-                            .toDouble(),
-                        containerHeight: widget.containerHeight,
-                        containerWidth: widget.containerWidth,
-                        detail: 'Mode of Conduct',
-                        borderRadius: hackathonContainerPropertiesProvider
-                            .containerPropertiesMap[modeOfConductContainerKey]!
-                            .borderRadius
-                            .toDouble(),
-                        blurRadius: hackathonContainerPropertiesProvider
-                            .containerPropertiesMap[modeOfConductContainerKey]!
-                            .blurRadius
-                            .toDouble(),
-                        borderColor:
-                            hackathonContainerPropertiesProvider.stringToColor(
-                                modeOfConductContainerKey,
-                                0,
-                                ContainerColorProperties.containerBorderColor),
-                        boxShadowColor:
-                            hackathonContainerPropertiesProvider.stringToColor(
-                                modeOfConductContainerKey,
-                                0,
-                                ContainerColorProperties.boxShadowColor),
-                        controller: hackathonModeController,
-                        onSaved: (value) {
-                          hackathonDetailsProvider.modeOfConduct =
-                              value.toString();
-                        },
-                        type: TextInputType.text,
-                        hint: 'Mode of Conduct',
-                      ),
-                      hackathonDetailContainer(
-                        borderWidth: hackathonContainerPropertiesProvider
-                            .containerPropertiesMap[
-                                participationFeeContainerKey]!
-                            .borderWidth
-                            .toDouble(),
-                        containerKey: participationFeeContainerKey,
-                        textKey: participationFeeKey,
-                        containerColor:
-                            hackathonContainerPropertiesProvider.stringToColor(
-                                participationFeeContainerKey,
-                                0,
-                                ContainerColorProperties.containerColor),
-                        height: hackathonContainerPropertiesProvider
-                            .containerPropertiesMap[
-                                participationFeeContainerKey]!
-                            .height
-                            .toDouble(),
-                        borderRadius: hackathonContainerPropertiesProvider
-                            .containerPropertiesMap[
-                                participationFeeContainerKey]!
-                            .borderRadius
-                            .toDouble(),
-                        blurRadius: hackathonContainerPropertiesProvider
-                            .containerPropertiesMap[
-                                participationFeeContainerKey]!
-                            .blurRadius
-                            .toDouble(),
-                        containerHeight: widget.containerHeight,
-                        containerWidth: widget.containerWidth,
-                        detail: 'Participation fee',
-                        controller: hackathonFeeController,
-                        borderColor:
-                            hackathonContainerPropertiesProvider.stringToColor(
-                                participationFeeContainerKey,
-                                0,
-                                ContainerColorProperties.containerBorderColor),
-                        boxShadowColor:
-                            hackathonContainerPropertiesProvider.stringToColor(
-                                participationFeeContainerKey,
-                                0,
-                                ContainerColorProperties.boxShadowColor),
-                        onSaved: (value) {
-                          hackathonDetailsProvider.fee = value.toString();
-                        },
-                        type: TextInputType.text,
-                        hint: 'Participation fee',
-                      ),
-                      hackathonDetailContainer(
-                          borderWidth: hackathonContainerPropertiesProvider
-                              .containerPropertiesMap[teamSizeContainerKey]!
-                              .borderWidth
-                              .toDouble(),
-                          containerKey: teamSizeContainerKey,
-                          containerColor: hackathonContainerPropertiesProvider.stringToColor(
-                              teamSizeContainerKey,
-                              0,
-                              ContainerColorProperties.containerColor),
-                          textKey: teamSizeKey,
-                          height: hackathonContainerPropertiesProvider
-                              .containerPropertiesMap[teamSizeContainerKey]!
-                              .height
-                              .toDouble(),
-                          borderRadius: hackathonContainerPropertiesProvider
-                              .containerPropertiesMap[teamSizeContainerKey]!
-                              .borderRadius
-                              .toDouble(),
                           containerHeight: widget.containerHeight,
                           containerWidth: widget.containerWidth,
-                          detail: 'Team Size',
-                          controller: hackathonTeamSizeController,
+                          type: TextInputType.text,
+                          hint1: "Type here ...",
+                          containerKey: dateContainerKey,
+                          height: hackathonContainerPropertiesProvider
+                              .containerPropertiesMap[dateContainerKey]!.height
+                              .toDouble(),
+                          containerColor:
+                              hackathonContainerPropertiesProvider.stringToColor(
+                                  dateContainerKey,
+                                  0,
+                                  ContainerColorProperties.containerColor),
+                          borderWidth: hackathonContainerPropertiesProvider
+                              .containerPropertiesMap[dateContainerKey]!
+                              .borderWidth
+                              .toDouble(),
+                          borderRadius: hackathonContainerPropertiesProvider
+                              .containerPropertiesMap[dateContainerKey]!
+                              .borderRadius
+                              .toDouble(),
                           blurRadius: hackathonContainerPropertiesProvider
-                              .containerPropertiesMap[teamSizeContainerKey]!
+                              .containerPropertiesMap[dateContainerKey]!
                               .blurRadius
                               .toDouble(),
                           borderColor: hackathonContainerPropertiesProvider.stringToColor(
-                              teamSizeContainerKey, 0, ContainerColorProperties.containerBorderColor),
-                          boxShadowColor: hackathonContainerPropertiesProvider.stringToColor(teamSizeContainerKey, 0, ContainerColorProperties.boxShadowColor),
-                          onSaved: (value) {
-                            hackathonDetailsProvider.teamSize =
+                              dateContainerKey, 0, ContainerColorProperties.containerBorderColor),
+                          boxShadowColor: hackathonContainerPropertiesProvider.stringToColor(dateContainerKey, 0, ContainerColorProperties.boxShadowColor),
+                          controller1: hackathonModeController,
+                          controller2: hackathonFeeController,
+                          controller3: hackathonVenueController,
+                          textKey1: modeOfConductKey,
+                          textKey2: participationFeeKey,
+                          textKey3: venueKey,
+                          hint2: "Type here ...",
+                          hint3: "Type here ...",
+                          onSaved1: (value) {
+                            hackathonDetailsProvider.modeOfConduct =
                                 value.toString();
                           },
-                          type: TextInputType.number,
-                          hint: 'Team Size'),
-                      hackathonDetailContainer(
-                        borderWidth: hackathonContainerPropertiesProvider
-                            .containerPropertiesMap[
-                                registrationCountContainerKey]!
-                            .borderWidth
-                            .toDouble(),
-                        containerColor:
-                            hackathonContainerPropertiesProvider.stringToColor(
-                                registrationCountContainerKey,
-                                0,
-                                ContainerColorProperties.containerColor),
-                        height: hackathonContainerPropertiesProvider
-                            .containerPropertiesMap[
-                                registrationCountContainerKey]!
-                            .height
-                            .toDouble(),
-                        borderRadius: hackathonContainerPropertiesProvider
-                            .containerPropertiesMap[
-                                registrationCountContainerKey]!
-                            .borderRadius
-                            .toDouble(),
-                        borderColor:
-                            hackathonContainerPropertiesProvider.stringToColor(
-                                registrationCountContainerKey,
-                                0,
-                                ContainerColorProperties.containerBorderColor),
-                        boxShadowColor:
-                            hackathonContainerPropertiesProvider.stringToColor(
-                                registrationCountContainerKey,
-                                0,
-                                ContainerColorProperties.boxShadowColor),
-                        containerKey: registrationCountContainerKey,
-                        textKey: venueKey,
-                        containerHeight: widget.containerHeight,
-                        containerWidth: widget.containerWidth,
-                        detail: 'Venue',
-                        controller: hackathonVenueController,
-                        blurRadius: hackathonContainerPropertiesProvider
-                            .containerPropertiesMap[
-                                registrationCountContainerKey]!
-                            .blurRadius
-                            .toDouble(),
-                        onSaved: (value) {
-                          hackathonDetailsProvider.venue = value.toString();
-                        },
-                        type: TextInputType.text,
-                        hint: 'Venue',
-                      ),
+                          onSaved2: (value) {
+                            hackathonDetailsProvider.fee = value.toString();
+                          },
+                          onSaved3: (value) {
+                            hackathonDetailsProvider.venue = value.toString();
+                          },
+                          isSecondContainer: false)
+                      // hackathonDetailContainer(
+                      //   borderWidth: hackathonContainerPropertiesProvider
+                      //       .containerPropertiesMap[dateContainerKey]!
+                      //       .borderWidth
+                      //       .toDouble(),
+                      //   containerKey: dateContainerKey,
+                      //   textKey: hackathonStartDateKey,
+                      //   containerColor:
+                      //       hackathonContainerPropertiesProvider.stringToColor(
+                      //           dateContainerKey,
+                      //           0,
+                      //           ContainerColorProperties.containerColor),
+                      //   height: hackathonContainerPropertiesProvider
+                      //       .containerPropertiesMap[dateContainerKey]!.height
+                      //       .toDouble(),
+                      //   containerHeight: widget.containerHeight,
+                      //   containerWidth: widget.containerWidth,
+                      //   detail: 'Date',
+                      //   controller: hackathonDateController,
+                      //   borderRadius: hackathonContainerPropertiesProvider
+                      //       .containerPropertiesMap[dateContainerKey]!
+                      //       .borderRadius
+                      //       .toDouble(),
+                      //   blurRadius: hackathonContainerPropertiesProvider
+                      //       .containerPropertiesMap[dateContainerKey]!
+                      //       .blurRadius
+                      //       .toDouble(),
+                      //   borderColor:
+                      //       hackathonContainerPropertiesProvider.stringToColor(
+                      //           dateContainerKey,
+                      //           0,
+                      //           ContainerColorProperties.containerBorderColor),
+                      //   boxShadowColor:
+                      //       hackathonContainerPropertiesProvider.stringToColor(
+                      //           dateContainerKey,
+                      //           0,
+                      //           ContainerColorProperties.boxShadowColor),
+                      //   onSaved: (value) {
+                      //     hackathonDetailsProvider.startDateTime =
+                      //         value.toString();
+                      //   },
+                      //   type: TextInputType.text,
+                      //   hint: 'Date',
+                      // ),
+                      // hackathonDetailContainer(
+                      //   borderWidth: hackathonContainerPropertiesProvider
+                      //       .containerPropertiesMap[modeOfConductContainerKey]!
+                      //       .borderWidth
+                      //       .toDouble(),
+                      //   containerKey: modeOfConductContainerKey,
+                      //   textKey: modeOfConductKey,
+                      //   containerColor:
+                      //       hackathonContainerPropertiesProvider.stringToColor(
+                      //           modeOfConductContainerKey,
+                      //           0,
+                      //           ContainerColorProperties.containerColor),
+                      //   height: hackathonContainerPropertiesProvider
+                      //       .containerPropertiesMap[modeOfConductContainerKey]!
+                      //       .height
+                      //       .toDouble(),
+                      //   containerHeight: widget.containerHeight,
+                      //   containerWidth: widget.containerWidth,
+                      //   detail: 'Mode of Conduct',
+                      //   borderRadius: hackathonContainerPropertiesProvider
+                      //       .containerPropertiesMap[modeOfConductContainerKey]!
+                      //       .borderRadius
+                      //       .toDouble(),
+                      //   blurRadius: hackathonContainerPropertiesProvider
+                      //       .containerPropertiesMap[modeOfConductContainerKey]!
+                      //       .blurRadius
+                      //       .toDouble(),
+                      //   borderColor:
+                      //       hackathonContainerPropertiesProvider.stringToColor(
+                      //           modeOfConductContainerKey,
+                      //           0,
+                      //           ContainerColorProperties.containerBorderColor),
+                      //   boxShadowColor:
+                      //       hackathonContainerPropertiesProvider.stringToColor(
+                      //           modeOfConductContainerKey,
+                      //           0,
+                      //           ContainerColorProperties.boxShadowColor),
+                      //   controller: hackathonModeController,
+                      //   onSaved: (value) {
+                      //     hackathonDetailsProvider.modeOfConduct =
+                      //         value.toString();
+                      //   },
+                      //   type: TextInputType.text,
+                      //   hint: 'Mode of Conduct',
+                      // ),
+                      // hackathonDetailContainer(
+                      //   borderWidth: hackathonContainerPropertiesProvider
+                      //       .containerPropertiesMap[
+                      //           participationFeeContainerKey]!
+                      //       .borderWidth
+                      //       .toDouble(),
+                      //   containerKey: participationFeeContainerKey,
+                      //   textKey: participationFeeKey,
+                      //   containerColor:
+                      //       hackathonContainerPropertiesProvider.stringToColor(
+                      //           participationFeeContainerKey,
+                      //           0,
+                      //           ContainerColorProperties.containerColor),
+                      //   height: hackathonContainerPropertiesProvider
+                      //       .containerPropertiesMap[
+                      //           participationFeeContainerKey]!
+                      //       .height
+                      //       .toDouble(),
+                      //   borderRadius: hackathonContainerPropertiesProvider
+                      //       .containerPropertiesMap[
+                      //           participationFeeContainerKey]!
+                      //       .borderRadius
+                      //       .toDouble(),
+                      //   blurRadius: hackathonContainerPropertiesProvider
+                      //       .containerPropertiesMap[
+                      //           participationFeeContainerKey]!
+                      //       .blurRadius
+                      //       .toDouble(),
+                      //   containerHeight: widget.containerHeight,
+                      //   containerWidth: widget.containerWidth,
+                      //   detail: 'Participation fee',
+                      //   controller: hackathonFeeController,
+                      //   borderColor:
+                      //       hackathonContainerPropertiesProvider.stringToColor(
+                      //           participationFeeContainerKey,
+                      //           0,
+                      //           ContainerColorProperties.containerBorderColor),
+                      //   boxShadowColor:
+                      //       hackathonContainerPropertiesProvider.stringToColor(
+                      //           participationFeeContainerKey,
+                      //           0,
+                      //           ContainerColorProperties.boxShadowColor),
+                      //   onSaved: (value) {
+                      //     hackathonDetailsProvider.fee = value.toString();
+                      //   },
+                      //   type: TextInputType.text,
+                      //   hint: 'Participation fee',
+                      // ),
+                      // hackathonDetailContainer(
+                      //     borderWidth: hackathonContainerPropertiesProvider
+                      //         .containerPropertiesMap[teamSizeContainerKey]!
+                      //         .borderWidth
+                      //         .toDouble(),
+                      //     containerKey: teamSizeContainerKey,
+                      //     containerColor: hackathonContainerPropertiesProvider.stringToColor(
+                      //         teamSizeContainerKey,
+                      //         0,
+                      //         ContainerColorProperties.containerColor),
+                      //     textKey: teamSizeKey,
+                      //     height: hackathonContainerPropertiesProvider
+                      //         .containerPropertiesMap[teamSizeContainerKey]!
+                      //         .height
+                      //         .toDouble(),
+                      //     borderRadius: hackathonContainerPropertiesProvider
+                      //         .containerPropertiesMap[teamSizeContainerKey]!
+                      //         .borderRadius
+                      //         .toDouble(),
+                      //     containerHeight: widget.containerHeight,
+                      //     containerWidth: widget.containerWidth,
+                      //     detail: 'Team Size',
+                      //     controller: hackathonTeamSizeController,
+                      //     blurRadius: hackathonContainerPropertiesProvider
+                      //         .containerPropertiesMap[teamSizeContainerKey]!
+                      //         .blurRadius
+                      //         .toDouble(),
+                      //     borderColor: hackathonContainerPropertiesProvider.stringToColor(
+                      //         teamSizeContainerKey, 0, ContainerColorProperties.containerBorderColor),
+                      //     boxShadowColor: hackathonContainerPropertiesProvider.stringToColor(teamSizeContainerKey, 0, ContainerColorProperties.boxShadowColor),
+                      //     onSaved: (value) {
+                      //       hackathonDetailsProvider.teamSize =
+                      //           value.toString();
+                      //     },
+                      //     type: TextInputType.number,
+                      //     hint: 'Team Size'),
+                      // hackathonDetailContainer(
+                      //   borderWidth: hackathonContainerPropertiesProvider
+                      //       .containerPropertiesMap[
+                      //           registrationCountContainerKey]!
+                      //       .borderWidth
+                      //       .toDouble(),
+                      //   containerColor:
+                      //       hackathonContainerPropertiesProvider.stringToColor(
+                      //           registrationCountContainerKey,
+                      //           0,
+                      //           ContainerColorProperties.containerColor),
+                      //   height: hackathonContainerPropertiesProvider
+                      //       .containerPropertiesMap[
+                      //           registrationCountContainerKey]!
+                      //       .height
+                      //       .toDouble(),
+                      //   borderRadius: hackathonContainerPropertiesProvider
+                      //       .containerPropertiesMap[
+                      //           registrationCountContainerKey]!
+                      //       .borderRadius
+                      //       .toDouble(),
+                      //   borderColor:
+                      //       hackathonContainerPropertiesProvider.stringToColor(
+                      //           registrationCountContainerKey,
+                      //           0,
+                      //           ContainerColorProperties.containerBorderColor),
+                      //   boxShadowColor:
+                      //       hackathonContainerPropertiesProvider.stringToColor(
+                      //           registrationCountContainerKey,
+                      //           0,
+                      //           ContainerColorProperties.boxShadowColor),
+                      //   containerKey: registrationCountContainerKey,
+                      //   textKey: venueKey,
+                      //   containerHeight: widget.containerHeight,
+                      //   containerWidth: widget.containerWidth,
+                      //   detail: 'Venue',
+                      //   controller: hackathonVenueController,
+                      //   blurRadius: hackathonContainerPropertiesProvider
+                      //       .containerPropertiesMap[
+                      //           registrationCountContainerKey]!
+                      //       .blurRadius
+                      //       .toDouble(),
+                      //   onSaved: (value) {
+                      //     hackathonDetailsProvider.venue = value.toString();
+                      //   },
+                      //   type: TextInputType.text,
+                      //   hint: 'Venue',
+                      // ),
                     ],
                   ),
                 ),
@@ -777,7 +856,67 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
           //spacing
           SizedBox(
             height: defaultEditScaleHeight(widget.containerHeight, 90),
-          )
+          ),
+
+          Container(
+              width: defaultEditScaleWidth(widget.containerWidth, 1108),
+              height: defaultEditScaleHeight(widget.containerHeight, 117),
+              padding:
+                  EdgeInsets.symmetric(horizontal: scaleWidth(context, 47)),
+              child: hackathonDetailContainer(
+                containerHeight: widget.containerHeight,
+                containerWidth: widget.containerWidth,
+                type: TextInputType.text,
+                hint1: "Type here ...",
+                containerKey: modeOfConductContainerKey,
+                height: hackathonContainerPropertiesProvider
+                    .containerPropertiesMap[modeOfConductContainerKey]!.height
+                    .toDouble(),
+                containerColor:
+                    hackathonContainerPropertiesProvider.stringToColor(
+                        modeOfConductContainerKey,
+                        0,
+                        ContainerColorProperties.containerColor),
+                borderWidth: hackathonContainerPropertiesProvider
+                    .containerPropertiesMap[modeOfConductContainerKey]!
+                    .borderWidth
+                    .toDouble(),
+                borderRadius: hackathonContainerPropertiesProvider
+                    .containerPropertiesMap[modeOfConductContainerKey]!
+                    .borderRadius
+                    .toDouble(),
+                blurRadius: hackathonContainerPropertiesProvider
+                    .containerPropertiesMap[modeOfConductContainerKey]!
+                    .blurRadius
+                    .toDouble(),
+                borderColor: hackathonContainerPropertiesProvider.stringToColor(
+                    modeOfConductContainerKey,
+                    0,
+                    ContainerColorProperties.containerBorderColor),
+                boxShadowColor:
+                    hackathonContainerPropertiesProvider.stringToColor(
+                        modeOfConductContainerKey,
+                        0,
+                        ContainerColorProperties.boxShadowColor),
+                controller1: hackathonDateController,
+                controller2: hackathonTeamSizeController,
+                controller3: hackathonDeadlineController,
+                textKey1: hackathonStartDateKey,
+                textKey2: teamSizeKey,
+                textKey3: hackathonEndingDateKey,
+                hint2: "Type here ...",
+                hint3: "Type here ...",
+                isSecondContainer: true,
+                onSaved1: (value) {
+                  hackathonDetailsProvider.startDateTime = value.toString();
+                },
+                onSaved2: (value) {
+                  hackathonDetailsProvider.teamSize = value.toString();
+                },
+                onSaved3: (value) {
+                  hackathonDetailsProvider.deadline = value.toString();
+                },
+              ))
         ],
       ),
     );
@@ -785,7 +924,9 @@ class _DefaultEditLandingSectionState extends State<DefaultEditLandingSection> {
 }
 
 class hackathonDetailContainer extends StatelessWidget {
-  final GlobalKey textKey;
+  final GlobalKey textKey1;
+  final GlobalKey textKey2;
+  final GlobalKey textKey3;
   final GlobalKey containerKey;
   final double height;
   final double borderWidth;
@@ -793,24 +934,28 @@ class hackathonDetailContainer extends StatelessWidget {
   final double containerHeight;
   final double containerWidth;
   final double blurRadius;
-  final TextEditingController controller;
-  final void Function(dynamic)? onSaved;
+  final TextEditingController controller1;
+  final TextEditingController controller2;
+  final TextEditingController controller3;
+  final void Function(dynamic)? onSaved1;
+  final void Function(dynamic)? onSaved2;
+  final void Function(dynamic)? onSaved3;
   final TextInputType type;
-  final String hint;
+  final String hint1;
+  final String hint2;
+  final String hint3;
   final double borderRadius;
   final Color boxShadowColor;
   final Color borderColor;
+  final bool isSecondContainer;
 
   const hackathonDetailContainer({
     super.key,
-    required this.detail,
     required this.containerHeight,
     required this.containerWidth,
-    required this.controller,
-    this.onSaved,
+    this.onSaved1,
     required this.type,
-    required this.hint,
-    required this.textKey,
+    required this.hint1,
     required this.containerKey,
     required this.height,
     required this.containerColor,
@@ -819,10 +964,18 @@ class hackathonDetailContainer extends StatelessWidget {
     required this.blurRadius,
     required this.boxShadowColor,
     required this.borderColor,
-    // required this.key,
+    required this.controller1,
+    required this.controller2,
+    required this.controller3,
+    required this.textKey1,
+    required this.textKey2,
+    required this.textKey3,
+    required this.hint2,
+    required this.hint3,
+    required this.isSecondContainer,
+    this.onSaved2,
+    this.onSaved3,
   });
-
-  final String detail;
 
   @override
   Widget build(BuildContext context) {
@@ -844,11 +997,12 @@ class hackathonDetailContainer extends StatelessWidget {
       },
       child: Container(
         height: defaultEditScaleHeight(containerHeight, height),
-        width: defaultEditScaleWidth(containerWidth, 159),
-        alignment: Alignment.center,
+        width: defaultEditScaleWidth(containerWidth, 991),
+        // alignment: Alignment.center,
         padding: EdgeInsets.symmetric(
-            horizontal: defaultEditScaleWidth(containerWidth, 5),
-            vertical: defaultEditScaleHeight(containerHeight, 5)),
+            horizontal: defaultEditScaleWidth(containerWidth, 43),
+            vertical: defaultEditScaleHeight(
+                containerHeight, isSecondContainer ? 27 : 50)),
         decoration: BoxDecoration(
             color: containerColor,
             border: Border.all(
@@ -863,23 +1017,297 @@ class hackathonDetailContainer extends StatelessWidget {
                   spreadRadius: 0,
                   color: boxShadowColor)
             ]),
-        child: DefaultTemplateTextFormField(
-          hintText: hint,
-          fieldKey: textKey,
-          controller: controller,
-          containerHeight: containerHeight,
-          containerWidth: containerWidth,
-          maxLength: 15,
-          height:
-              22.4, //Line Height is changed because of cursor size, initial line height was 22.4
-          cursorHeight: defaultEditScaleHeight(containerHeight, 17),
-          isDense: true,
-          defaultEditBoxColorSet: true,
-          onSaved: onSaved,
-          cursorColor: Color(0xFFFFFFFF),
-          keyboardType: type,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                DefaultTemplateTextFormField(
+                  hintText: hint1,
+                  fieldKey: textKey1,
+                  controller: controller1,
+                  containerHeight: containerHeight,
+                  containerWidth: containerWidth,
+                  maxLength: 15,
+                  // height:
+                  //     22.4, //Line Height is changed because of cursor size, initial line height was 22.4
+                  cursorHeight: defaultEditScaleHeight(containerHeight, 17),
+                  isDense: true,
+                  defaultEditBoxColorSet: true,
+                  onSaved: onSaved1,
+                  cursorColor: const Color(0xFFFFFFFF),
+                  keyboardType: type,
+                ),
+                SizedBox(
+                    height: scaleHeight(context, isSecondContainer ? 6 : 8)),
+                Text(
+                  isSecondContainer ? 'Reg Start Date' : 'Mode Of Conduct',
+                  textAlign: hackathonTextPropertiesProvider.getTextAlign(
+                      hackathonTextPropertiesProvider
+                          .textFieldPropertiesMap[textKey1]!.align),
+                  style: GoogleFonts.getFont(
+                      hackathonTextPropertiesProvider
+                          .textFieldPropertiesMap[textKey1]!.font,
+                      fontStyle: hackathonTextPropertiesProvider
+                              .textFieldPropertiesMap[textKey1]!.italics
+                          ? FontStyle.italic
+                          : FontStyle.normal,
+                      letterSpacing: hackathonTextPropertiesProvider
+                          .textFieldPropertiesMap[textKey1]!.letterSpacing
+                          .toDouble(),
+                      decoration: TextDecoration.combine([
+                        hackathonTextPropertiesProvider
+                                .textFieldPropertiesMap[textKey1]!.strikethrogh
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
+                        hackathonTextPropertiesProvider
+                                .textFieldPropertiesMap[textKey1]!.underline
+                            ? TextDecoration.underline
+                            : TextDecoration.none,
+                      ]),
+                      fontSize: defaultEditScaleHeight(
+                              containerHeight,
+                              hackathonTextPropertiesProvider
+                                  .textFieldPropertiesMap[textKey1]!.size
+                                  .toDouble()) -
+                          2,
+                      color: hackathonTextPropertiesProvider
+                          .stringToColor(textKey1),
+                      fontWeight: FontWeight.w300,
+                      height: lineHeight(
+                          hackathonTextPropertiesProvider
+                              .textFieldPropertiesMap[textKey1]!.lineHeight.toDouble(), hackathonTextPropertiesProvider.textFieldPropertiesMap[textKey1]!.size.toDouble())),
+                )
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                DefaultTemplateTextFormField(
+                  hintText: hint2,
+                  fieldKey: textKey2,
+                  controller: controller2,
+                  containerHeight: containerHeight,
+                  containerWidth: containerWidth,
+                  maxLength: 15,
+                  // height:
+                  //     22.4, //Line Height is changed because of cursor size, initial line height was 22.4
+                  cursorHeight: defaultEditScaleHeight(containerHeight, 17),
+                  isDense: true,
+                  defaultEditBoxColorSet: true,
+                  onSaved: onSaved2,
+                  cursorColor: const Color(0xFFFFFFFF),
+                  keyboardType: type,
+                ),
+                SizedBox(
+                    height: scaleHeight(context, isSecondContainer ? 6 : 8)),
+                Text(
+                  isSecondContainer ? 'Team Size' : 'Participation Fee',
+                  textAlign: hackathonTextPropertiesProvider.getTextAlign(
+                      hackathonTextPropertiesProvider
+                          .textFieldPropertiesMap[textKey2]!.align),
+                  style: GoogleFonts.getFont(
+                      hackathonTextPropertiesProvider
+                          .textFieldPropertiesMap[textKey2]!.font,
+                      fontStyle: hackathonTextPropertiesProvider
+                              .textFieldPropertiesMap[textKey2]!.italics
+                          ? FontStyle.italic
+                          : FontStyle.normal,
+                      letterSpacing: hackathonTextPropertiesProvider
+                          .textFieldPropertiesMap[textKey2]!.letterSpacing
+                          .toDouble(),
+                      decoration: TextDecoration.combine([
+                        hackathonTextPropertiesProvider
+                                .textFieldPropertiesMap[textKey2]!.strikethrogh
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
+                        hackathonTextPropertiesProvider
+                                .textFieldPropertiesMap[textKey2]!.underline
+                            ? TextDecoration.underline
+                            : TextDecoration.none,
+                      ]),
+                      fontSize: defaultEditScaleHeight(
+                              containerHeight,
+                              hackathonTextPropertiesProvider
+                                  .textFieldPropertiesMap[textKey2]!.size
+                                  .toDouble()) -
+                          2,
+                      color: hackathonTextPropertiesProvider
+                          .stringToColor(textKey2),
+                      fontWeight: FontWeight.w300,
+                      height: lineHeight(
+                          hackathonTextPropertiesProvider
+                              .textFieldPropertiesMap[textKey2]!.lineHeight.toDouble(), hackathonTextPropertiesProvider.textFieldPropertiesMap[textKey2]!.size.toDouble())),
+                )
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                DefaultTemplateTextFormField(
+                  hintText: hint3,
+                  fieldKey: textKey3,
+                  controller: controller3,
+                  containerHeight: containerHeight,
+                  containerWidth: containerWidth,
+                  maxLength: 15,
+                  // height:
+                  //     22.4, //Line Height is changed because of cursor size, initial line height was 22.4
+                  cursorHeight: defaultEditScaleHeight(containerHeight, 17),
+                  isDense: true,
+                  defaultEditBoxColorSet: true,
+                  onSaved: onSaved3,
+                  cursorColor: const Color(0xFFFFFFFF),
+                  keyboardType: type,
+                ),
+                SizedBox(
+                    height: scaleHeight(context, isSecondContainer ? 6 : 8)),
+                Text(
+                  isSecondContainer ? 'Reg Ending Date' : 'Venue',
+                  textAlign: hackathonTextPropertiesProvider.getTextAlign(
+                      hackathonTextPropertiesProvider
+                          .textFieldPropertiesMap[textKey3]!.align),
+                  style: GoogleFonts.getFont(
+                      hackathonTextPropertiesProvider
+                          .textFieldPropertiesMap[textKey3]!.font,
+                      fontStyle: hackathonTextPropertiesProvider
+                              .textFieldPropertiesMap[textKey3]!.italics
+                          ? FontStyle.italic
+                          : FontStyle.normal,
+                      letterSpacing: hackathonTextPropertiesProvider
+                          .textFieldPropertiesMap[textKey3]!.letterSpacing
+                          .toDouble(),
+                      decoration: TextDecoration.combine([
+                        hackathonTextPropertiesProvider
+                                .textFieldPropertiesMap[textKey3]!.strikethrogh
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
+                        hackathonTextPropertiesProvider
+                                .textFieldPropertiesMap[textKey3]!.underline
+                            ? TextDecoration.underline
+                            : TextDecoration.none,
+                      ]),
+                      fontSize: defaultEditScaleHeight(
+                              containerHeight,
+                              hackathonTextPropertiesProvider
+                                  .textFieldPropertiesMap[textKey3]!.size
+                                  .toDouble()) -
+                          2,
+                      color: hackathonTextPropertiesProvider
+                          .stringToColor(textKey3),
+                      fontWeight: FontWeight.w300,
+                      height: lineHeight(
+                          hackathonTextPropertiesProvider
+                              .textFieldPropertiesMap[textKey3]!.lineHeight.toDouble(), hackathonTextPropertiesProvider.textFieldPropertiesMap[textKey3]!.size.toDouble())),
+                )
+              ],
+            )
+          ],
         ),
       ),
     );
   }
 }
+
+
+// class hackathonDetailContainer extends StatelessWidget {
+//   final GlobalKey textKey;
+//   final GlobalKey containerKey;
+//   final double height;
+//   final double borderWidth;
+//   final Color containerColor;
+//   final double containerHeight;
+//   final double containerWidth;
+//   final double blurRadius;
+//   final TextEditingController controller;
+//   final void Function(dynamic)? onSaved;
+//   final TextInputType type;
+//   final String hint;
+//   final double borderRadius;
+//   final Color boxShadowColor;
+//   final Color borderColor;
+
+//   const hackathonDetailContainer({
+//     super.key,
+//     required this.detail,
+//     required this.containerHeight,
+//     required this.containerWidth,
+//     required this.controller,
+//     this.onSaved,
+//     required this.type,
+//     required this.hint,
+//     required this.textKey,
+//     required this.containerKey,
+//     required this.height,
+//     required this.containerColor,
+//     required this.borderWidth,
+//     required this.borderRadius,
+//     required this.blurRadius,
+//     required this.boxShadowColor,
+//     required this.borderColor,
+//     // required this.key,
+//   });
+
+//   final String detail;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final hackathonContainerPropertiesProvider =
+//         Provider.of<HackathonContainerPropertiesProvider>(context);
+//     final hackathonTextPropertiesProvider =
+//         Provider.of<HackathonTextPropertiesProvider>(context);
+//     return InkWell(
+//       onTap: () {
+//         hackathonContainerPropertiesProvider.selectedContainerKey =
+//             containerKey;
+//         if (hackathonTextPropertiesProvider.selectedTextFieldKey != null) {
+//           hackathonTextPropertiesProvider.selectedTextFieldKey = null;
+//         }
+
+//         if (hackathonTextPropertiesProvider.isTextColorSelected) {
+//           hackathonTextPropertiesProvider.setIsTextColorSelected();
+//         }
+//       },
+//       child: Container(
+//         height: defaultEditScaleHeight(containerHeight, height),
+//         width: defaultEditScaleWidth(containerWidth, 159),
+//         alignment: Alignment.center,
+//         padding: EdgeInsets.symmetric(
+//             horizontal: defaultEditScaleWidth(containerWidth, 5),
+//             vertical: defaultEditScaleHeight(containerHeight, 5)),
+//         decoration: BoxDecoration(
+//             color: containerColor,
+//             border: Border.all(
+//                 width: borderWidth / 100 * 15,
+//                 color: borderColor,
+//                 strokeAlign: BorderSide.strokeAlignOutside),
+//             borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+//             boxShadow: [
+//               BoxShadow(
+//                   blurRadius: blurRadius,
+//                   offset: const Offset(0, 0),
+//                   spreadRadius: 0,
+//                   color: boxShadowColor)
+//             ]),
+//         child: DefaultTemplateTextFormField(
+//           hintText: hint,
+//           fieldKey: textKey,
+//           controller: controller,
+//           containerHeight: containerHeight,
+//           containerWidth: containerWidth,
+//           maxLength: 15,
+//           height:
+//               22.4, //Line Height is changed because of cursor size, initial line height was 22.4
+//           cursorHeight: defaultEditScaleHeight(containerHeight, 17),
+//           isDense: true,
+//           defaultEditBoxColorSet: true,
+//           onSaved: onSaved,
+//           cursorColor: Color(0xFFFFFFFF),
+//           keyboardType: type,
+//         ),
+//       ),
+//     );
+//   }
+// }

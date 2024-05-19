@@ -53,8 +53,7 @@ void main() async {
       ChangeNotifierProvider(create: (context) => HackathonDetailsProvider()),
       ChangeNotifierProvider(create: (context) => AllHackathonProvider()),
       ChangeNotifierProvider(create: (context) => SingleHackathonProvider()),
-      ChangeNotifierProvider(
-          create: (context) => GetRegistrationFormProvider()),
+      
       ChangeNotifierProvider(create: (context) => DefaultTemplateProvider()),
       ChangeNotifierProvider(
           create: (context) => HackathonTextPropertiesProvider()),

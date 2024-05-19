@@ -20,173 +20,77 @@ class _AddFieldSectionState extends State<AddFieldSection>
     {
       'title': 'Short Answer',
       'icon': Icons.text_fields,
-      "onTap": ShortAnswerFieldModel(
-          errorText: "Error Text",
-          hint: "Hint",
-          label: "Question",
-          required: true,
-          serialNumber: 1,
-          type: FieldTypes.shortAnswer,
-          validation: "String")
+      "onTap": FieldTypes.shortAnswer
     },
     {
       'title': 'Paragraph',
       'icon': Icons.notes,
-      "onTap": LongAnswerFieldModel(
-          errorText: "Error Text",
-          label: "Question",
-          hint: "Hint",
-          required: true,
-          serialNumber: 2,
-          type: FieldTypes.longAnswer,
-          wordLimit: 100)
+      "onTap": FieldTypes.longAnswer
     },
     {
       'title': 'Multiple Choice',
       'icon': Icons.list,
-      "onTap": RadioFieldModel(
-          errorText: "Error Text",
-          label: "Question",
-          options: [
-            RegistrationOption(text: "First Option", serialNumber: 1),
-            RegistrationOption(text: "Second Options", serialNumber: 2)
-          ],
-          required: true,
-          serialNumber: 1,
-          type: FieldTypes.radio)
+      "onTap": FieldTypes.radio
     },
     {
       'title': 'Checkboxes',
       'icon': Icons.check_box_outlined,
-      "onTap": CheckBoxModel(
-          errorText: "Error Text",
-          label: "Question",
-          options: [
-            RegistrationOption(text: "First Option", serialNumber: 1),
-            RegistrationOption(text: "Second Options", serialNumber: 2)
-          ],
-          required: true,
-          serialNumber: 3,
-          type: FieldTypes.checkbox)
+      "onTap": FieldTypes.checkbox
     },
     {
       'title': 'Yes/No',
       'icon': Icons.toggle_on_outlined,
-      "onTap": RadioFieldModel(
-          serialNumber: 4,
-          errorText: "Error Text",
-          label: "Question",
-          options: [
-            RegistrationOption(text: "First Option", serialNumber: 1),
-            RegistrationOption(text: "Second Options", serialNumber: 2)
-          ],
-          required: true,
-          type: FieldTypes.yesNo)
+      "onTap": FieldTypes.yesNo
     },
     {
       'title': 'Drop Down',
       'icon': Icons.arrow_drop_down_circle_outlined,
-      "onTap": DropDownModel(
-          errorText: "Error Text",
-          label: "Question",
-          required: true,
-          serialNumber: 4,
-        options: [
-            RegistrationOption(text: "First Option", serialNumber: 1),
-            RegistrationOption(text: "Second Options", serialNumber: 2)
-          ],
-          type: FieldTypes.dropdown)
+      "onTap":FieldTypes.dropdown
     },
     {
       'title': 'File Upload',
       'icon': Icons.cloud_upload_outlined,
-      "onTap": FieldModel(
-          serialNumber: 6,
-          errorText: "Error Text",
-          label: "Question",
-          required: true,
-          type: FieldTypes.file)
+      "onTap": FieldTypes.file
     },
     {
       'title': 'Linear Scale',
       'icon': Icons.linear_scale_outlined,
-      "onTap": LinearModel(
-          errorText: "Error Text",
-          label: "Question",
-          required: true,
-          labels: {"options": 4, "option": 5},
-          serialNumber: 6,
-          type: FieldTypes.linear)
+      "onTap": FieldTypes.linear
     },
     {
       'title': 'Slider',
       'icon': Icons.slideshow,
-      "onTap": SliderModel(
-          serialNumber: 1,
-          errorText: "Error Text",
-          label: "Question",
-          required: true,
-          type: FieldTypes.slider,
-          labels: {"start": 4, "end": 10})
+      "onTap": FieldTypes.slider
     },
     {
       'title': 'Range Slider',
       'icon': Icons.tune,
-      "onTap": RangeModel(
-          serialNumber: 4,
-          errorText: "Error Text",
-          label: "Question",
-          required: false,
-          type: FieldTypes.range,
-          labels: {"options": 4, "jjjn": 5})
+      "onTap":FieldTypes.range
     },
     {
       'title': 'Stepper',
       'icon': Icons.exposure_plus_1,
-      "onTap": StepperModel(
-          errorText: "Error Text",
-          label: "Question",
-          max_value: 45,
-          min_value: 10,
-          required: true,
-          serialNumber: 1,
-          type: FieldTypes.stepper)
+      "onTap":FieldTypes.stepper
     },
     {
       'title': 'Toggle',
       'icon': Icons.toggle_on,
-      "onTap": ToggleModel(
-          serialNumber: 3,
-          errorText: "Error Text",
-          label: "Question",
-          required: true,
-          type: FieldTypes.toggle)
+      "onTap": FieldTypes.toggle
     },
     {
       'title': 'Tags',
       'icon': Icons.tag,
-      "onTap": TagModel(
-        serialNumber: 1,
-        errorText: "Error Text",
-        label: "Question",
-        required: true,
-        type: FieldTypes.tag,
-        options: ["option1", " options2"],
-      )
+      "onTap": FieldTypes.tag
     },
     {
       'title': 'Date',
       'icon': Icons.date_range,
-      "onTap": DateFieldModel(
-          serialNumber: 2,
-          errorText: "Error Text",
-          label: "Question",
-          required: true,
-          type: FieldTypes.date,
-          minDate: "",
-          maxDate: "")
+      "onTap":FieldTypes.date
     },
   ];
+
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -225,11 +129,9 @@ class _AddFieldSectionState extends State<AddFieldSection>
                     fields: fields,
                     index: fields.length - 1,
                     onTap: () {
-                      List<String> keys =
-                          createRegistrationProvider.tabField.keys.toList();
-                      createRegistrationProvider.tabField[keys[
-                              createRegistrationProvider.formcontroller.index]]!
-                          .add(fields[fields.length - 1]['onTap']);
+                      
+                           createRegistrationProvider.addField(createRegistrationProvider.getFieldModel(fields[fields.length - 1]['onTap'])   , context );
+                     
                     },
                   ))
               : const SizedBox()
@@ -305,7 +207,9 @@ class FieldsRowButon extends StatelessWidget {
                       Provider.of<CreateRegistrationProvider>(context,
                           listen: false);
 
-                  createRegistrationProvider.addField(fields[index1]['onTap']);
+                      
+
+                  createRegistrationProvider.addField(createRegistrationProvider.getFieldModel(fields[index1]['onTap'])  , context  );
                   // print(
                   //     "index ${createRegistrationProvider.formcontroller.index}");
 
@@ -330,7 +234,7 @@ class FieldsRowButon extends StatelessWidget {
                   final createRegistrationProvider =
                       Provider.of<CreateRegistrationProvider>(context,
                           listen: false);
-                  createRegistrationProvider.addField(fields[index2]['onTap']);
+                   createRegistrationProvider.addField(createRegistrationProvider.getFieldModel(fields[index2]['onTap'])  , context  );
                   print(
                       "index ${createRegistrationProvider.formcontroller.index}");
                   print(createRegistrationProvider.tabField);

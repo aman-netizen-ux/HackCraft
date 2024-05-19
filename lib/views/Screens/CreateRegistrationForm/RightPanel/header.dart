@@ -5,6 +5,7 @@ import 'package:major_project__widget_testing/constants/enums.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/state/Registration.dart/createRegistrationProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:major_project__widget_testing/views/Components/toolTip_custom_decoration.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/RegFieldsCollection/customToggle.dart';
 import 'package:provider/provider.dart';
 
@@ -110,7 +111,7 @@ class _HeaderState extends State<Header> {
                     color: lightSilver,
                   ),
                   Text(
-                    fieldTypeText,
+                    "${createRegistrationProvider.currentIndex + 1}) $fieldTypeText",
                     style: GoogleFonts.firaSans(
                         fontSize: scaleHeight(context, 18),
                         color: darkCharcoal,
@@ -121,23 +122,49 @@ class _HeaderState extends State<Header> {
               Row(
                 children: [
                   CustomToggle(
-                    required:currentField
-                        .required,
+                    // required: currentField.required,
+                    activeColor: Colors.blue,
+                    iconPath: "assets/icons/defaultEditPortal/deleteIcon.svg",
+                    name: "Required",
+                    isChecked: currentField.required,
+                    onTap: () {
+                      currentField.required = !currentField.required;
+                      createRegistrationProvider.notify();
+                    },
                   ),
-                  Container(
-                    height: scaleHeight(context, 34),
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(
-                        left: scaleWidth(context, 8),
-                        right: scaleWidth(context, 14)),
-                    width: scaleHeight(context, 34),
-                    color: lightSilver,
-                    child: InkWell(
-                      onTap: () {},
-                      child: const Icon(
-                        Icons.delete,
-                        size: 18,
-                        color: red,
+ Tooltip(
+            message: "Delete Field",
+            verticalOffset: 5,
+            decoration: const ShapeDecoration(
+              shape: ToolTipCustomDecoration(
+                  side: TooltipSide.top, borderColor: greyish3, borderWidth: 0),
+              color: greyish7,
+            ),
+                    child: Container(
+                      height: scaleHeight(context, 34),
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(
+                          left: scaleWidth(context, 8),
+                          right: scaleWidth(context, 14)),
+                      width: scaleHeight(context, 34),
+                      color: lightSilver,
+                      child: InkWell(
+                        onTap: () {
+                          int index = createRegistrationProvider.currentIndex;
+                          List<dynamic> fieldsList = createRegistrationProvider
+                              .tabField[createRegistrationProvider.currentKey]!;
+                          if (index >= 0 && index < fieldsList.length) {
+                            fieldsList.removeAt(index);
+                            createRegistrationProvider.currentIndex = -1;
+                            createRegistrationProvider.currentKey = "";
+                            createRegistrationProvider.notify();
+                          }
+                        },
+                        child: const Icon(
+                          Icons.delete,
+                          size: 18,
+                          color: red,
+                        ),
                       ),
                     ),
                   ),
@@ -148,30 +175,28 @@ class _HeaderState extends State<Header> {
           SizedBox(
             height: scaleHeight(context, 12),
           ),
-          SizedBox(
-            height: scaleHeight(context, 40),
-            width: scaleWidth(context, 289),
-            child: InkWell(
-              onTap: () {
-                
-              },
-              child: Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.only(bottom: scaleHeight(context, 10)),
-                decoration: BoxDecoration(
-                    color: lightSilver, borderRadius: BorderRadius.circular(5)),
-                child: Text(
-                  "Save",
-                  style: GoogleFonts.getFont(
-                    fontFamily2,
-                    fontWeight: FontWeight.w400,
-                    color: darkCharcoal,
-                    fontSize: scaleHeight(context, 16),
-                  ),
-                ),
-              ),
-            ),
-          )
+          // SizedBox(
+          //   height: scaleHeight(context, 40),
+          //   width: scaleWidth(context, 289),
+          //   child: InkWell(
+          //     onTap: () {},
+          //     child: Container(
+          //       alignment: Alignment.center,
+          //       margin: EdgeInsets.only(bottom: scaleHeight(context, 10)),
+          //       decoration: BoxDecoration(
+          //           color: lightSilver, borderRadius: BorderRadius.circular(5)),
+          //       child: Text(
+          //         "Save",
+          //         style: GoogleFonts.getFont(
+          //           fontFamily2,
+          //           fontWeight: FontWeight.w400,
+          //           color: darkCharcoal,
+          //           fontSize: scaleHeight(context, 16),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );

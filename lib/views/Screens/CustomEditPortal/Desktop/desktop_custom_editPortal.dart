@@ -17,21 +17,25 @@ class _CustomEditPortalDesktopBodyState
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
-      children: [
-        Expanded(
-            flex: 200,
-            child: CustomSidePanel(
-                // formKey: _formKey,
-                // textinput: textinput,
-                )),
-        Expanded(
-            flex: 800,
-            child: CustomRightPanel(
-                // formKey: _formKey,
-                // textinput: textinput,
-                ))
-      ],
+    return Container(
+      width: double.infinity,
+       color: const Color(0xff313030),
+      child: const Row(
+        children: [
+          Expanded(
+              flex: 200,
+              child: CustomSidePanel(
+                  // formKey: _formKey,
+                  // textinput: textinput,
+                  )),
+          Expanded(
+              flex: 800,
+              child: CustomRightPanel(
+                  // formKey: _formKey,
+                  // textinput: textinput,
+                  ))
+        ],
+      ),
     );
   }
 }

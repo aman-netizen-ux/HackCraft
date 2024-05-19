@@ -80,9 +80,11 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
+                        Container(
                           height: heightScaler(context, 35),
-                          width: widthScaler(context, 130),
+                          // width: widthScaler(context, 130),
+                          alignment: Alignment.center,
+                         
                           child: ElevatedButton(
                             onPressed: () async {
                               setState(() {
@@ -195,9 +197,10 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                         SizedBox(
                           width: widthScaler(context, 10),
                         ),
-                        SizedBox(
+                        Container(
                           height: heightScaler(context, 35),
-                          width: widthScaler(context, 130),
+                          // width: widthScaler(context, 130),
+                           alignment: Alignment.center,
                           child: ElevatedButton(
                             onPressed: () async {
                               setState(() {

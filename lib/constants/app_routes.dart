@@ -31,9 +31,9 @@ class AppRoutes {
     //TODO: NEED TO CHANGE THE STARTING APP ROUTE 
     //start: (context) => const CustomEditPortal(),
     
-      // start: (context) => const LoginPageDesktop(),
-
-      start: (context) => const   Dashboard(),
+    start: (context) => LoginPageDesktop(),
+  //start: (context) =>  RegistrationForm(hackathonId: "8611fbbe-44b5-481f-8f60-4fb99fd366f8"),
+    // start: (context) =>  RegisterUser(),
     mainNavigation: (context) => const MainNavigation(),
     hostNavigation: (context) => const HostNavigation(),
     templateSelection: (context) => const TemplateSelection(),

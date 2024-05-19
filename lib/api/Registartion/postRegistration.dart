@@ -1,29 +1,36 @@
 import 'dart:convert';
-import 'dart:developer';
-
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
 class PostApiService {
   var logger = Logger();
-  postRegistration(String hackathonId, Map<String, dynamic> params) async {
+  Future<bool> postRegistration(
+      String hackathonId, Map<String, dynamic> params) async {
     final String baseUrl = dotenv.get("registration");
     final String url = '$baseUrl$hackathonId';
+
+    var fieldsAsJson = params['fields'].map((field) => field.toJson()).toList();
+
+    params['fields'] = fieldsAsJson;
+
+    debugPrint('params : $params');
+    debugPrint('encoded : ${jsonEncode(params)}');
 
     final response = await http.post(
       Uri.parse(url),
       headers: <String, String>{
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(params),
     );
-
+    print("form status ${response.statusCode}");
     try {
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         logger.i('Registration success');
-        return response.statusCode;
+        debugPrint('Registration success');
+        return true;
       } else {
         final errorResponse = jsonDecode(response.body);
         String errorMessage = '';
@@ -32,14 +39,13 @@ class PostApiService {
         });
 
         logger.e(errorMessage);
-        return response.statusCode;
+        return false;
       }
     } catch (e) {
-      
       logger.e("Error message : $e, ${response.body} ");
-      print(response.body);
+      debugPrint(response.body);
       // log("*********${response.body}*********8");
-      return response.statusCode;
+      return false;
     }
   }
 }

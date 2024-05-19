@@ -7,10 +7,11 @@ import 'package:major_project__widget_testing/views/Screens/CreateRegistrationFo
 class RegFormFields extends StatefulWidget {
   const RegFormFields({
     super.key,
-    required this.fieldtabController,
+    required this.fieldtabController, required this.hackathonId,
   });
 
   final TabController fieldtabController;
+  final String hackathonId;
 
   @override
   State<RegFormFields> createState() => _RegFormFieldsState();
@@ -29,7 +30,7 @@ class _RegFormFieldsState extends State<RegFormFields> {
               flex: 166,
               child: FieldsCollection(
                   fieldtabController: widget.fieldtabController)),
-          const Expanded(flex: 554, child: CreateForm()),
+          Expanded(flex: 554, child: CreateForm(hackathonId: widget.hackathonId,)),
           const Expanded(flex: 280, child: RigthPanel())
         ],
       ),

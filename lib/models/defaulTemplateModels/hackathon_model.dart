@@ -1,6 +1,6 @@
 class Hackathon {
   String id;
-  String? logo;
+  String logo;
   String name;
   String organisationName;
   String modeOfConduct;
@@ -10,11 +10,7 @@ class Hackathon {
   String startDateTime;
   String about;
   String brief;
-  String? image1;
-  String? image2;
-  String? image3;
-  String? image4;
-  String? image5;
+ List<String> images;
   String website;
   String fee;
   String venue;
@@ -22,10 +18,10 @@ class Hackathon {
   String contact1Number;
   String contact2Name;
   String contact2Number;
-
+  String totalRounds;
   Hackathon({
     required this.id,
-    this.logo,
+   required this.logo,
     required this.name,
     required this.organisationName,
     required this.modeOfConduct,
@@ -35,11 +31,7 @@ class Hackathon {
     required this.startDateTime,
     required this.about,
     required this.brief,
-    this.image1,
-    this.image2,
-    this.image3,
-    this.image4,
-    this.image5,
+   required this.images,
     required this.website,
     required this.fee,
     required this.venue,
@@ -47,6 +39,7 @@ class Hackathon {
     required this.contact1Number,
     required this.contact2Name,
     required this.contact2Number,
+    required this.totalRounds
   });
 
   factory Hackathon.fromJson(Map<String, dynamic> json) => Hackathon(
@@ -61,11 +54,7 @@ class Hackathon {
         startDateTime: json['start_date_time'],
         about: json['about'],
         brief: json['brief'],
-        image1: json['image1'],
-        image2: json['image2'],
-        image3: json['image3'],
-        image4: json['image4'],
-        image5: json['image5'],
+        images: List<String>.from(json['images']),
         website: json['website'],
         fee: json['fee'],
         venue: json['venue'],
@@ -73,6 +62,7 @@ class Hackathon {
         contact1Number: json['contact1_number'].toString(),
         contact2Name: json['contact2_name'],
         contact2Number: json['contact2_number'].toString(),
+        totalRounds: json['total_number_rounds'].toString()
       );
 
   Map<String, dynamic> toJson() => {
@@ -86,11 +76,7 @@ class Hackathon {
         'start_date_time': startDateTime,
         'about': about,
         'brief': brief,
-        'image1': image1,
-        'image2': image2,
-        'image3': image3,
-        'image4': image4,
-        'image5': image5,
+       'images': images,
         'website': website,
         'fee': fee,
         'venue': venue,
@@ -98,6 +84,7 @@ class Hackathon {
         'contact1_number': contact1Number,
         'contact2_name': contact2Name,
         'contact2_number': contact2Number,
+        'total_number_rounds': totalRounds
       };
 }
 
@@ -150,6 +137,7 @@ class TextFieldProperties {
   bool upperCase;
   String align;
   int letterSpacing;
+  int lineHeight;
 
   TextFieldProperties(
       {
@@ -162,7 +150,8 @@ class TextFieldProperties {
       required this.strikethrogh,
       required this.upperCase,
       required this.align,
-      required this.letterSpacing
+      required this.letterSpacing,
+      required this.lineHeight,
       });
 
   factory TextFieldProperties.fromJson(Map<String, dynamic> json) {
@@ -177,6 +166,7 @@ class TextFieldProperties {
       upperCase: json['upper_case'],
       align: json['align'],
       letterSpacing: json['letter_spacing'],
+      lineHeight: json['line_height']
     );
   }
 
@@ -191,7 +181,8 @@ class TextFieldProperties {
       'strikethrogh': strikethrogh,
       'upper_case': upperCase,
       'align': align,
-      'letter_spacing': letterSpacing
+      'letter_spacing': letterSpacing,
+      'line_height':lineHeight
     };
   }
 }
@@ -227,8 +218,8 @@ class ContainerProperties {
   int borderWidth;
   String color;
   String focusedBorderColor;
-  int borderRadius;
-  int blurRadius;
+  double borderRadius;
+  double blurRadius;
   String boxShadowColor;
   //border_radius is remaining
 
@@ -249,7 +240,7 @@ class ContainerProperties {
       borderColor: json['border_color'],
       height: json['height'],
       color: json['Color'],
-      borderWidth: json['border_width'], focusedBorderColor: json['focused_color'],
+      borderWidth: json['border_width'], focusedBorderColor: json['focused_border_color'],
       blurRadius: json['blur_radius'],
       borderRadius: json['border_radius'],
       boxShadowColor: json['box_shadow_color']

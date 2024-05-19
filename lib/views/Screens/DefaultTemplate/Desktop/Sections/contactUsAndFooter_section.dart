@@ -81,16 +81,16 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                               children: [
                                 DefaultTemplateText(
                                   name: widget.defaultTemplateModel!.hackathons.contact1Name,
-                                  textProperties: widget.defaultTemplateModel!.fields[9].textProperties,
-                                  height: 29,
+                                  textProperties: widget.defaultTemplateModel!.fields[10].textProperties,
+
                                 ),
                                 SizedBox(
                                   height: scaleHeight(context, 5),
                                 ),
                                 DefaultTemplateText(
                                   name: widget.defaultTemplateModel!.hackathons.contact1Number,
-                                  textProperties: widget.defaultTemplateModel!.fields[10].textProperties,
-                                  height: 5,
+                                  textProperties: widget.defaultTemplateModel!.fields[11].textProperties,
+                                 
                                 ),
                                 
                               ],
@@ -119,8 +119,8 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                               children: [
                                 DefaultTemplateText(
                                   name: widget.defaultTemplateModel!.hackathons.contact2Name,
-                                  textProperties: widget.defaultTemplateModel!.fields[11].textProperties,
-                                  height: 29,
+                                  textProperties: widget.defaultTemplateModel!.fields[12].textProperties,
+                                 
                                 ),
                                 
                                 SizedBox(
@@ -129,8 +129,8 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                           
                                  DefaultTemplateText(
                                   name: widget.defaultTemplateModel!.hackathons.contact2Number,
-                                  textProperties: widget.defaultTemplateModel!.fields[12].textProperties,
-                                  height: 5,
+                                  textProperties: widget.defaultTemplateModel!.fields[13].textProperties,
+                                  
                                 ),
                                 
                               ],

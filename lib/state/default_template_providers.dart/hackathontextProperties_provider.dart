@@ -591,20 +591,20 @@ value for thin is 100; so taking the value 100 , if thin is selected */
     }
   }
 
-  //Set lineSpacing value
-  // void setLineSpacing(int spacing) {
-  //   if (_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
-  //     textFieldPropertiesMap[_selectedTextFieldKey]!.letterSpacing = spacing;
-  //     notifyListeners();
-  //   }
-  // }
+  // Set lineSpacing value
+  void setLineSpacing(int spacing) {
+    if (_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
+      textFieldPropertiesMap[_selectedTextFieldKey]!.lineHeight = spacing;
+      notifyListeners();
+    }
+  }
 
-  // int getLineSpacing() {
-  //   if (_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
-  //     return textFieldPropertiesMap[_selectedTextFieldKey]!.letterSpacing;
-  //   }
-  //   return 1; // Default value
-  // }
+  int getLineSpacing() {
+    if (_selectedTextFieldKey != null && textFieldPropertiesMap.containsKey(_selectedTextFieldKey)) {
+      return textFieldPropertiesMap[_selectedTextFieldKey]!.lineHeight;
+    }
+    return 1; // Default value
+  }
 
   //Set letterSpacing value
   void setLetterSpacing(int spacing) {
@@ -653,47 +653,55 @@ value for thin is 100; so taking the value 100 , if thin is selected */
           name: 'brief',
           type: 'text',
           textProperties: textFieldPropertiesMap[briefKey]!), //2
+          TextFieldPropertiesArray(
+          name: 'Mode Of Conduct',
+          type: 'text',
+          textProperties: textFieldPropertiesMap[modeOfConductKey]!), //3
+           TextFieldPropertiesArray(
+          name: 'Participation Fee',
+          type: 'text',
+          textProperties: textFieldPropertiesMap[participationFeeKey]!), //4
+          TextFieldPropertiesArray(
+          name: 'venue',
+          type: 'text',
+          textProperties: textFieldPropertiesMap[venueKey]!), //5
       TextFieldPropertiesArray(
           name: 'hackathonStartDate',
           type: 'text',
-          textProperties: textFieldPropertiesMap[hackathonStartDateKey]!), //3
-      TextFieldPropertiesArray(
-          name: 'Mode Of Conduct',
-          type: 'text',
-          textProperties: textFieldPropertiesMap[modeOfConductKey]!), //4
-      TextFieldPropertiesArray(
-          name: 'Participation Fee',
-          type: 'text',
-          textProperties: textFieldPropertiesMap[participationFeeKey]!), //5
+          textProperties: textFieldPropertiesMap[hackathonStartDateKey]!), //6
+      
+     
       TextFieldPropertiesArray(
           name: 'teamSize',
           type: 'text',
-          textProperties: textFieldPropertiesMap[teamSizeKey]!), //6
-      TextFieldPropertiesArray(
-          name: 'venue',
+          textProperties: textFieldPropertiesMap[teamSizeKey]!), //7
+          TextFieldPropertiesArray(
+          name: 'deadline',
           type: 'text',
-          textProperties: textFieldPropertiesMap[venueKey]!), //7
+          textProperties: textFieldPropertiesMap[hackathonEndingDateKey]!), //8
+
+      
       TextFieldPropertiesArray(
           name: 'description',
           type: 'text',
-          textProperties: textFieldPropertiesMap[descriptionKey]!), //8
+          textProperties: textFieldPropertiesMap[descriptionKey]!), //9
       TextFieldPropertiesArray(
           name: 'contactName1',
           type: 'text',
-          textProperties: textFieldPropertiesMap[contactName1Key]!), //9
+          textProperties: textFieldPropertiesMap[contactName1Key]!), //10
       TextFieldPropertiesArray(
           name: 'contactNumber1',
           type: 'text',
-          textProperties: textFieldPropertiesMap[contactNumber1Key]!), //10
+          textProperties: textFieldPropertiesMap[contactNumber1Key]!), //11
       TextFieldPropertiesArray(
           name: 'contactName2',
           type: 'text',
-          textProperties: textFieldPropertiesMap[contactName2Key]!), //11
+          textProperties: textFieldPropertiesMap[contactName2Key]!), //12
 
       TextFieldPropertiesArray(
           name: 'contactNumber2',
           type: 'text',
-          textProperties: textFieldPropertiesMap[contactNumber2Key]!) //12
+          textProperties: textFieldPropertiesMap[contactNumber2Key]!) //13
     ];
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/about_section.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/contactUsAndFooter_section.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/aboutUs_section.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/Desktop/Sections/gallerySection.dart';
@@ -24,14 +25,14 @@ class _DefaultTemplateDesktopBodyState
   Widget build(BuildContext context) {
     return Column(
       children: [
-        NavBar(defaultTemplateModel: widget.defaultTemplateModel),
+        NavBar(defaultTemplateModel: widget.defaultTemplateModel, isEdit: widget.isEdit,),
         LandingSection(defaultTemplateModel: widget.defaultTemplateModel),
         RoundsAndRules(defaultTemplateModel: widget.defaultTemplateModel),
-        Aboutus(
+        About(
           defaultTemplateModel: widget.defaultTemplateModel,
           isEdit: widget.isEdit,
         ),
-        GallerySection(isEdit: widget.isEdit),
+        GallerySection(isEdit: widget.isEdit, defaultTemplateModel: widget.defaultTemplateModel,),
         ContactUsAndFooterSection(
             defaultTemplateModel: widget.defaultTemplateModel)
       ],

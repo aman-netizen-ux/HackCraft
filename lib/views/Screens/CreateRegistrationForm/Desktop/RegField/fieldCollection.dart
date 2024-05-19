@@ -27,14 +27,15 @@ class FieldsCollection extends StatelessWidget {
           top: scaleHeight(context, 19),
           left: scaleWidth(context, 17),
           right: scaleWidth(context, 14),
+          bottom: scaleHeight(context, 47),
         ),
         child: Column(
           children: [
             Padding(
               padding: EdgeInsets.only(bottom: scaleHeight(context, 14)),
               child: SizedBox(
-                height: scaleHeight(context, 68),
-                width: scaleWidth(context, 180),
+                // height: scaleHeight(context, 68),
+                width: double.infinity,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -59,9 +60,7 @@ class FieldsCollection extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
-              width: scaleWidth(context, 200),
-              height: 482,
+            Expanded(
               child: Column(
                 children: [
                   Container(
@@ -105,8 +104,7 @@ class FieldsCollection extends StatelessWidget {
                   SizedBox(
                     height: scaleHeight(context, 10),
                   ),
-                  SizedBox(
-                    height: scaleHeight(context, 480),
+                  Expanded(
                     child: TabBarView(
                       controller: fieldtabController,
                       children: const [
@@ -121,23 +119,25 @@ class FieldsCollection extends StatelessWidget {
             SizedBox(
               height: scaleHeight(context, 25),
             ),
-            SizedBox(
-              height: scaleHeight(context, 38),
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  final createRegistrationProvider =
-                      Provider.of<CreateRegistrationProvider>(context,
-                          listen: false);
-                  createRegistrationProvider.setTabField(
-                      "New Tab ${createRegistrationProvider.tabField.length + 1}");
-                  createRegistrationProvider.refreshTabs();
-                  createRegistrationProvider.formcontroller.animateTo(
-                      createRegistrationProvider.tabField.length - 1);
-                  //createRegistrationProvider.resetEditingState(createRegistrationProvider.tabField.length - 1);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: lightSilver,
+            InkWell(
+              onTap: () {
+                final createRegistrationProvider =
+                    Provider.of<CreateRegistrationProvider>(context,
+                        listen: false);
+                createRegistrationProvider.setTabField(
+                    "New Added Section ${createRegistrationProvider.tabField.length + 1}");
+                // createRegistrationProvider.refreshTabs();
+                // createRegistrationProvider.formcontroller
+                //     .animateTo(createRegistrationProvider.tabField.length - 1);
+                //createRegistrationProvider.resetEditingState(createRegistrationProvider.tabField.length - 1);
+              },
+              child: Container(
+                height: scaleHeight(context, 38),
+                width: double.infinity,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: lightSilver,
+                  borderRadius: BorderRadius.circular(5)
                 ),
                 child: Text(
                   "New Section",

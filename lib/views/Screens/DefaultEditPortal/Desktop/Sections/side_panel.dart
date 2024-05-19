@@ -11,6 +11,7 @@ import 'package:major_project__widget_testing/state/default_template_providers.d
 import 'package:major_project__widget_testing/state/defaulttemplateProvider.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/state/galleryProvider.dart';
+import 'package:major_project__widget_testing/state/loginProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
@@ -44,6 +45,8 @@ class _SidePanelState extends State<SidePanel> {
         Provider.of<HackathonTextPropertiesProvider>(context);
     final hackathonContainerPropertiesProvider =
         Provider.of<HackathonContainerPropertiesProvider>(context);
+         final galleryProvider =
+        Provider.of<GalleryProvider>(context,);
 
     List<GlobalKey<State<StatefulWidget>>> keyValues = [
       homeEdit,
@@ -73,36 +76,48 @@ class _SidePanelState extends State<SidePanel> {
                   // if (widget.formKey.currentState!.validate()) {
                   widget.formKey.currentState!.save();
 
-                  previewFunction(rulesProvider, hackathonDetailsProvider,
-                      hackathonTextPropertiesProvider, hackathonContainerPropertiesProvider);
+                  previewFunction(
+                      rulesProvider,
+                      hackathonDetailsProvider,
+                      hackathonTextPropertiesProvider,
+                      hackathonContainerPropertiesProvider);
                   // }
                 } else if (result == 'Save') {
                   //TODO
                 } else if (result == 'Host') {
-                  if (widget.formKey.currentState!.validate())
-                   {
+                  if (widget.formKey.currentState!.validate() && galleryProvider.logoFile.isNotEmpty) {
                     widget.formKey.currentState!.save();
 
-                    hostHackathon(rulesProvider, hackathonDetailsProvider,
-                        hackathonTextPropertiesProvider, hackathonContainerPropertiesProvider);
+                    hostHackathon(
+                        rulesProvider,
+                        hackathonDetailsProvider,
+                        hackathonTextPropertiesProvider,
+                        hackathonContainerPropertiesProvider);
+                  }else if(galleryProvider.logoFile.isEmpty){
+                    print("logo fill kro");
+                    galleryProvider.logoError=true;
                   }
-                } else if(result=='Upload Image'){
-                          final galleryProvider = Provider.of<GalleryProvider>(context, listen: false);
-                          if(galleryProvider.galleryImagesFile.isNotEmpty){
-                            final imageResponse = await UploadImageToCloudinary().uploadImage(galleryProvider.galleryImagesFile);
-                            print(imageResponse);
-                          }
-                          
-                          final logoResponse= await UploadImageToCloudinary().uploadLogo(galleryProvider.logoFile[0]);                          
-                          print(logoResponse);
+                } else if (result == 'Upload Image') {
+                  final galleryProvider =
+                      Provider.of<GalleryProvider>(context, listen: false);
+                  if (galleryProvider.galleryImagesFile.isNotEmpty) {
+                    final imageResponse = await UploadImageToCloudinary()
+                        .uploadImage(galleryProvider.galleryImagesFile);
+                    print("imageResponse $imageResponse");
+                  }
 
-                } 
+                  if (galleryProvider.logoFile.isNotEmpty) {
+                    final logoResponse = await UploadImageToCloudinary()
+                        .uploadLogo(galleryProvider.logoFile[0]);
+                    print("logoResponse $logoResponse");
+                  }
+                }
                 // else if(result=='Upload Preset'){
                 //           final galleryProvider = Provider.of<GalleryProvider>(context, listen: false);
                 //           galleryProvider.createCloudinaryPreset();
 
                 // }
-                
+
                 else {
                   Navigator.pop(context);
                 }
@@ -164,7 +179,8 @@ class _SidePanelState extends State<SidePanel> {
       RulesProvider rulesProvider,
       HackathonDetailsProvider hackathonDetailsProvider,
       HackathonTextPropertiesProvider hackathonTextPropertiesProvider,
-      HackathonContainerPropertiesProvider hackathonContainerPropertiesProvider) {
+      HackathonContainerPropertiesProvider
+          hackathonContainerPropertiesProvider) {
     rulesProvider.setSelectedIndex(-1);
     rulesProvider.setDescriptionWidget(
         SvgPicture.asset('assets/images/defaultTemplate/clickme.svg'));
@@ -176,8 +192,10 @@ class _SidePanelState extends State<SidePanel> {
 
     hackathonDetailsProvider.textFields = fields;
 
-    List<ContainerPropertiesArray> containers = hackathonContainerPropertiesProvider.getContainerProperties();
-    containers = hackathonContainerPropertiesProvider.addRoundsContainerProperties(containers);
+    List<ContainerPropertiesArray> containers =
+        hackathonContainerPropertiesProvider.getContainerProperties();
+    containers = hackathonContainerPropertiesProvider
+        .addRoundsContainerProperties(containers);
 
     hackathonDetailsProvider.containersProperties = containers;
 
@@ -194,12 +212,31 @@ class _SidePanelState extends State<SidePanel> {
   void hostHackathon(
       RulesProvider rulesProvider,
       HackathonDetailsProvider hackathonDetailsProvider,
-      HackathonTextPropertiesProvider hackathonTextPropertiesProvider, 
-      HackathonContainerPropertiesProvider hackathonContainerPropertiesProvider) async {
+      HackathonTextPropertiesProvider hackathonTextPropertiesProvider,
+      HackathonContainerPropertiesProvider
+          hackathonContainerPropertiesProvider) async {
+    final loginProvider = Provider.of<LoginProvider>(context, listen: false);
     setState(() {
       _isLoading = true;
     });
-    
+
+    final galleryProvider =
+        Provider.of<GalleryProvider>(context, listen: false);
+        List<String> imageResponse=[];
+         String logoResponse="";
+
+    if (galleryProvider.galleryImagesFile.isNotEmpty) {
+       imageResponse = await UploadImageToCloudinary()
+          .uploadImage(galleryProvider.galleryImagesFile);
+      print("imageResponse $imageResponse");
+    }
+
+    if (galleryProvider.logoFile.isNotEmpty) {
+       logoResponse = await UploadImageToCloudinary()
+          .uploadLogo(galleryProvider.logoFile[0]);
+      print("logoResponse $logoResponse");
+    }
+
     List<Map<String, dynamic>> rounds =
         hackathonDetailsProvider.roundsList.map((round) {
       return {
@@ -213,22 +250,27 @@ class _SidePanelState extends State<SidePanel> {
 
     List<TextFieldPropertiesArray> fields =
         hackathonTextPropertiesProvider.getTextProperties();
-        List<ContainerPropertiesArray> containers =
+    List<ContainerPropertiesArray> containers =
         hackathonContainerPropertiesProvider.getContainerProperties();
     //  following is to add roundsTextProperties according to their key in the above defined fields list
     fields = hackathonTextPropertiesProvider.addRoundsTextProperties(fields);
+    containers = hackathonContainerPropertiesProvider
+        .addRoundsContainerProperties(containers);
 
     final hackathonId = await CreateHackathon().postSingleHackathon({
       "hackathon": {
+        "created_by": loginProvider.emailId,
+        "logo": logoResponse,
         "name": hackathonDetailsProvider.hackathonName,
         "organisation_name": hackathonDetailsProvider.organisationName,
         "mode_of_conduct": hackathonDetailsProvider.modeOfConduct,
-        "deadline": "2024-10-10",
+        "deadline": hackathonDetailsProvider.deadline,
         "team_size": int.parse(hackathonDetailsProvider.teamSize),
         "visible": "Public",
         "start_date_time":
             "${hackathonDetailsProvider.startDateTime}T00:00:00Z",
         "about": hackathonDetailsProvider.about,
+        "images": imageResponse,
         "brief": hackathonDetailsProvider.brief,
         "website": "https://req",
         "fee": hackathonDetailsProvider.fee,
@@ -236,11 +278,17 @@ class _SidePanelState extends State<SidePanel> {
         "contact1_name": hackathonDetailsProvider.contact1Name,
         "contact1_number": int.parse(hackathonDetailsProvider.contact1Number),
         "contact2_name": hackathonDetailsProvider.contact2Name,
-        "contact2_number": int.parse(hackathonDetailsProvider.contact2Number)
+        "contact2_number": int.parse(hackathonDetailsProvider.contact2Number),
+        "discord": "",
+        "facebook": "",
+        "email": "",
+        "twitter": "",
+        "linkedin": "",
+        "total_number_rounds": rounds.length
       },
       "round": rounds,
       "fields": fields,
-      "containers": []
+      "containers": containers
     }, context);
     // final hackathonId = await CreateHackathon().postSingleHackathon({
     //   "hackathon": {

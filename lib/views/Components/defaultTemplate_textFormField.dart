@@ -22,7 +22,7 @@ class DefaultTemplateTextFormField extends StatelessWidget {
       this.contentPadding,
       TextInputType? keyboardType,
       int? maxLines,
-      double? height,
+      // double? height,
       Color? cursorColor,
       bool? isDense,
       double? editContainerMaxWidth,
@@ -38,7 +38,7 @@ class DefaultTemplateTextFormField extends StatelessWidget {
             : (maxLines ??
                 1), // Set maxLines to 1 if user doesn't provide any input
         minLines = minLines == 0 ? null : (minLines ?? 1),
-        height = height ?? 22.4,
+        // height = height ?? 22.4,
         cursorColor = cursorColor ?? Colors.black,
         isDense = isDense ?? false,
         defaultEditBoxColorSet = defaultEditBoxColorSet ?? false,
@@ -55,7 +55,7 @@ class DefaultTemplateTextFormField extends StatelessWidget {
   final int? maxLines;
   final TextInputType keyboardType;
   final int? maxLength;
-  final double height; //for now only
+  // final double height; //for now only
   final double? cursorHeight;
   final Color cursorColor;
   final bool isDense;
@@ -105,7 +105,7 @@ class DefaultTemplateTextFormField extends StatelessWidget {
                 textAlignVertical: TextAlignVertical.center,
                 controller: controller,
                 cursorHeight: cursorHeight,
-                cursorColor: Colors.black,
+                cursorColor: cursorColor,
                 decoration: InputDecoration(
                   isDense: isDense,
                   contentPadding: contentPadding,
@@ -139,7 +139,8 @@ class DefaultTemplateTextFormField extends StatelessWidget {
                       fontWeight: hackathonTextPropertiesProvider
                           .getSelectedTextFieldFontWeight(fieldKey),
                       height: lineHeight(
-                          height,
+                          hackathonTextPropertiesProvider
+                              .textFieldPropertiesMap[fieldKey]!.lineHeight.toDouble(),
                           hackathonTextPropertiesProvider
                               .textFieldPropertiesMap[fieldKey]!.size
                               .toDouble())), //20 //Line Height is changed because of cursor size, initial line height was 22.4
@@ -194,7 +195,10 @@ class DefaultTemplateTextFormField extends StatelessWidget {
                     fontWeight: hackathonTextPropertiesProvider
                         .getSelectedTextFieldFontWeight(fieldKey),
                     height:
-                        lineHeight(height, hackathonTextPropertiesProvider.textFieldPropertiesMap[fieldKey]!.size.toDouble())), //20 //Line Height Changed
+                        lineHeight(
+                           hackathonTextPropertiesProvider
+                              .textFieldPropertiesMap[fieldKey]!.lineHeight.toDouble(),
+                           hackathonTextPropertiesProvider.textFieldPropertiesMap[fieldKey]!.size.toDouble())), //20 //Line Height Changed
                 validator: (value) {
                   if (value!.isEmpty) {
                     return '';

@@ -44,7 +44,7 @@ class _LineSpacingWidgetState extends State<LineSpacingWidget> {
     final hackathonTextProvider =
         Provider.of<HackathonTextPropertiesProvider>(context, listen: false);
     // Update the provider with the new line spacing value
-   // hackathonTextProvider.setLineSpacing(value);
+   hackathonTextProvider.setLineSpacing(value);
   }
 
   
@@ -57,6 +57,11 @@ class _LineSpacingWidgetState extends State<LineSpacingWidget> {
   Widget build(BuildContext context) {
     final hackathonTextProvider =
         Provider.of<HackathonTextPropertiesProvider>(context);
+
+        if (hackathonTextProvider.selectedTextFieldKey != null) {
+      int currentSpacing = hackathonTextProvider.getLineSpacing();
+      lineSpacingController.text = currentSpacing.toString();
+    }
     return Tooltip(
       message: "Line Spacing",
       verticalOffset: 5,

@@ -565,70 +565,64 @@ class CustomEditPortal extends ChangeNotifier {
     return widgets;
   }
 
-//    void addChild(int id, GlobalKey globalKey) {
-//   log('Global key in add child: $globalKey');
-//   Map<String, dynamic> newChild = {
-//     globalKey.toString(): {
-//       "id": id,
-//       "properties": {},
-//       "child": [] // Using a list for potential multiple children
-//     }
-//   };
-//   _jsonObject["children"]["gloabalkey"]['child'].add(newChild);
-//   notifyListeners(); // Notify all listening widgets of the update
-// }
+  bool addPropertyByKey(
+      String globalKey, String propertyType, dynamic property) {
+    bool _searchAndAdd(
+      dynamic node,
+      String key,
+      int depth,
+    ) {
+      print('here starting');
 
-  // int? findIdByKey(String globalKey) {
-  //   for (var child in _jsonObject["children"]) {
-  //     if (child.values.first["key"] == globalKey) {
-  //       return child.values.first["id"];
-  //     }
-  //   }
-  //   return null; // Return null if no matching key is found
-  // }
+      if (node is Map) {
+        print('map is there');
+        if (node.containsKey(key)) {
+          print('key found');
+          print('node ; $node');
+          // print('prop. : ${node['key']['properties']}');
+          // print('height : ${node['key']['properties']['height']}');
+          if (node[key]['properties'] != null) {
+            node[key]['properties'][propertyType] = property;
+          }
 
-//   bool checkAndChildByKey(String globalKey) {
-//   for (var child in _jsonObject["children"]) {
-//     // The child is now a map where the key is the GlobalKey's toString value
-//     if (child.containsKey(globalKey)) {
-//       // Access the child using its GlobalKey string
-//       var foundChild = child[globalKey];
-//       // Check if this child has its own "children" list and if it's empty
-//       return foundChild["child"].isEmpty;
-//     }
-//   }
-//   return true; // Return true if no matching key is found, indicating "empty"
-// }
+          return true;
+        } else {
+          log(" doesn't contained key");
+          // Recursively search each value if the key is not found at this level
+          for (var value in node.values) {
+            log(" value : $value");
+            log("***********");
+            if (_searchAndAdd(
+              value,
+              key,
+              depth + 1,
+            )) {
+              log("IM here 2");
+              return true; // Indicating that a child was added or found empty
+            }
+          }
+        }
+      } else if (node is List) {
+        print('entered in here');
+        for (var element in node) {
+          print(" elemet: $element");
+          if (_searchAndAdd(
+            element,
+            key,
+            depth + 1,
+          )) {
+            log("IM here 3");
+            return true; // Indicating that a child was added or found empty
+          }
+        }
+      }
+      return false;
+    }
 
-// bool checkAndChildByKey(String globalKey) {
-//   // Define an auxiliary function to handle recursion
-//   bool _search(dynamic node, String key) {
-//     if (node is Map) {
-//       // If the node is a Map and contains the key directly
-//       if (node.containsKey(key)) {
-//         // Check if 'child' related to this key is empty
-//         return node[key]['child'].isEmpty;
-//       } else {
-//         // Recursively search each value if the key is not found at this level
-//         for (var value in node.values) {
-//           if (_search(value, key)) {
-//             return true;
-//           }
-//         }
-//       }
-//     } else if (node is List) {
-//       // If the node is a List, iterate and search each element
-//       for (var element in node) {
-//         if (_search(element, key)) {
-//           return true;
-//         }
-//       }
-//     }
-//     // Key not found in the current path
-//     return false;
-//   }
-
-//   // Start the search from the top level 'children'
-//   return _search(_jsonObject["children"], globalKey);
-// }
+    return _searchAndAdd(
+      _jsonObject["children"],
+      globalKey,
+      0,
+    );
+  }
 }

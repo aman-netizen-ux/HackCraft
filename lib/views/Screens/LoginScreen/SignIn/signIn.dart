@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -60,7 +62,6 @@ class _SignInState extends State<SignIn> {
               Icons.report_gmailerrorred_outlined,
               color: white,
             ),
-            // ignore: use_build_context_synchronously
             context);
         debugPrint("No user found on that email");
       } else if (e.code == "invalid-credential") {
@@ -71,7 +72,6 @@ class _SignInState extends State<SignIn> {
               Icons.report_gmailerrorred_outlined,
               color: white,
             ),
-            // ignore: use_build_context_synchronously
             context);
         debugPrint("Invalid Credentials");
       } else {
@@ -82,7 +82,6 @@ class _SignInState extends State<SignIn> {
               Icons.report_gmailerrorred_outlined,
               color: white,
             ),
-            // ignore: use_build_context_synchronously
             context);
         debugPrint("Invalid ");
       }
@@ -134,9 +133,10 @@ class _SignInState extends State<SignIn> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
+                        Container(
                           height: heightScaler(context, 35),
-                          width: widthScaler(context, 130),
+                          // width: widthScaler(context, 130),
+                          alignment: Alignment.center,
                           child: ElevatedButton(
                             onPressed: () async {
                               // Handling Google sign-in
@@ -155,15 +155,14 @@ class _SignInState extends State<SignIn> {
                                         Icons.report_gmailerrorred_outlined),
                                     context);
                                 FirebaseAuth.instance.signOut();
-                                 userCredential.user!.delete();
+                                userCredential.user!.delete();
                               } else {
                                 String firebaseUUID = userCredential.user!.uid;
-                                String? _email = userCredential.user!.email;
-                                storeUserUid(firebaseUUID, _email!);
-                                loginProvider.setUuid(firebaseUUID, _email);
-                                final status = await registerCheck(_email);
+                                String? email = userCredential.user!.email;
+                                storeUserUid(firebaseUUID, email!);
+                                loginProvider.setUuid(firebaseUUID, email);
+                                final status = await registerCheck(email);
                                 if (status) {
-                                  // ignore: use_build_context_synchronously
                                   Navigator.pushNamed(
                                     context,
                                     '/mainNavigation',
@@ -180,7 +179,9 @@ class _SignInState extends State<SignIn> {
                                 }
                               }
                               // User? user = userCredential.user;
-                             
+                              setState(() {
+                                isLoading = false;
+                              });
                             },
 
                             style: ButtonStyle(
@@ -223,9 +224,10 @@ class _SignInState extends State<SignIn> {
                           ),
                         ),
                         SizedBox(width: widthScaler(context, 10)),
-                        SizedBox(
+                        Container(
                           height: heightScaler(context, 35),
-                          width: widthScaler(context, 130),
+                          // width: widthScaler(context, 130),
+                          alignment: Alignment.center,
                           child: ElevatedButton(
                             // Handling GitHub sign-in
                             onPressed: () async {
@@ -234,15 +236,24 @@ class _SignInState extends State<SignIn> {
                               });
                               UserCredential userCredential =
                                   await signInWithGitHub();
-                              User? user = userCredential.user;
-                              if (user != null) {
-                                String firebaseUUID = user.uid;
-                                String _email = user.email!;
-                                storeUserUid(firebaseUUID, _email);
-                                loginProvider.setUuid(firebaseUUID, _email);
-                                final status = await registerCheck(_email);
+                              if (userCredential
+                                      .additionalUserInfo!.isNewUser ==
+                                  true) {
+                                showSnackBar(
+                                    "No user found for this Gmail.",
+                                    red2,
+                                    const Icon(
+                                        Icons.report_gmailerrorred_outlined),
+                                    context);
+                                FirebaseAuth.instance.signOut();
+                                userCredential.user!.delete();
+                              } else {
+                                String firebaseUUID = userCredential.user!.uid;
+                                String email = userCredential.user!.email!;
+                                storeUserUid(firebaseUUID, email);
+                                loginProvider.setUuid(firebaseUUID, email);
+                                final status = await registerCheck(email);
                                 if (status) {
-                                  // ignore: use_build_context_synchronously
                                   Navigator.pushNamed(
                                     context,
                                     '/mainNavigation',
@@ -259,20 +270,6 @@ class _SignInState extends State<SignIn> {
                                     isLoading = false;
                                   });
                                 }
-                              } else {
-                                // Handle sign-in failure
-                                // ignore: use_build_context_synchronously
-                                setState(() {
-                                  isLoading = false;
-                                });
-                                showSnackBar(
-                                    "No user found for this Gmail.",
-                                    red2,
-                                    const Icon(
-                                        Icons.report_gmailerrorred_outlined),
-                                    context);
-                                FirebaseAuth.instance.signOut();
-                                user!.delete();
                               }
                             },
                             style: ButtonStyle(
@@ -516,7 +513,6 @@ class _SignInState extends State<SignIn> {
                         loginProvider.setUuid(firebaseUUID, _emailText.text);
                         final status = await registerCheck(email);
                         if (status) {
-                          // ignore: use_build_context_synchronously
                           Navigator.pushNamed(
                             context,
                             '/mainNavigation',

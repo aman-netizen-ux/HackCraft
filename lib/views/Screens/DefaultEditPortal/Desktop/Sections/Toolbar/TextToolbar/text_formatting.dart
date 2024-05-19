@@ -50,7 +50,7 @@ class TextFormattingWidget extends StatelessWidget {
         // SizedBox(
         //   width: scaleWidth(context, 2),
         // ),
-        const LineSpacingWidget(),
+        const LineSpacingWidget(),//line height
 
         SizedBox(
           width: scaleWidth(context, 5),

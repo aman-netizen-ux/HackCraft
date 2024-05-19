@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:major_project__widget_testing/constants/colors.dart';
-import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/hackathon_model.dart';
 import 'package:major_project__widget_testing/state/defaulttemplateProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
@@ -78,7 +76,7 @@ class RoundCard extends StatelessWidget {
                 child: DefaultTemplateText(
                   name: title,
                   textProperties: titleTextProperties,
-                  height: 22.4,
+                  
                 ),
               ),
               //Timeline i.e Start date and End date of the round
@@ -94,12 +92,12 @@ class RoundCard extends StatelessWidget {
                     DefaultTemplateText(
                       name: '$startDate - ',
                       textProperties: startDateTextProperties,
-                      height: 22.4,
+                     
                     ),
                     DefaultTemplateText(
                       name: enddate,
                       textProperties: endDateTextProperties,
-                      height: 22.4,
+                     
                     ),
                   ],
                 ),

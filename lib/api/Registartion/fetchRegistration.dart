@@ -39,7 +39,8 @@ class GetRegistratioForm {
       final response = await http.get(
         Uri.parse(url),
       );
-      print("try state");
+      print("response:****************** ${response.body} ");
+      print("try state ${response.statusCode} ");
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> jsonResponse = json.decode(response.body);

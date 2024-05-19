@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:major_project__widget_testing/api/Registartion/postRegistration.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/models/Registration/questionModel.dart';
@@ -23,11 +22,7 @@ class RegistrationFormDesktopBody extends StatefulWidget {
 
 class _RegistrationFormDesktopBodyState
     extends State<RegistrationFormDesktopBody> with TickerProviderStateMixin {
-  final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
   final List<Question> questions = [];
-  TextEditingController _countryCodeController =
-      TextEditingController(text: '+91');
-  TextEditingController _collegeController = TextEditingController();
   late TabController fieldtabController;
   late TabController tabController;
   int regTab = 1;
@@ -40,102 +35,102 @@ class _RegistrationFormDesktopBodyState
   }
 
 // Function to handle form submission for registration
-  Future<bool> submitRegistration() async {
-    if (_formKey.currentState!.saveAndValidate()) {
-      final formData = _formKey.currentState!.value;
+  // Future<bool> submitRegistration() async {
+  //   if (_formKey.currentState!.saveAndValidate()) {
+  //     final formData = _formKey.currentState!.value;
 
-      // Prepare custom fields data
-      List<Map<String, dynamic>> customFieldsData = [];
-      for (var question in questions) {
-        Map<String, dynamic> customFieldData = {
-          "label": question.question,
-          //  "type": questionTypeString,
-          // ... other fields ...
-        };
+  //     // Prepare custom fields data
+  //     List<Map<String, dynamic>> customFieldsData = [];
+  //     for (var question in questions) {
+  //       Map<String, dynamic> customFieldData = {
+  //         "label": question.question,
+  //         //  "type": questionTypeString,
+  //         // ... other fields ...
+  //       };
 
-        if (question.type == "QuestionType.text") {
-          customFieldData["short_answer"] = {
-            "text": question.question
-            // Assuming formData contains answers keyed by question
-          };
-        } else if (question.type == "QuestionType.multipleChoice") {
-          List<Map<String, String>> multipleChoiceOptions = [];
-          for (var option in question.options) {
-            multipleChoiceOptions.add({"option": option});
-          }
-          customFieldData["multiple_choice"] = multipleChoiceOptions;
-        }
+  //       if (question.type == "QuestionType.text") {
+  //         customFieldData["short_answer"] = {
+  //           "text": question.question
+  //           // Assuming formData contains answers keyed by question
+  //         };
+  //       } else if (question.type == "QuestionType.multipleChoice") {
+  //         List<Map<String, String>> multipleChoiceOptions = [];
+  //         for (var option in question.options) {
+  //           multipleChoiceOptions.add({"option": option});
+  //         }
+  //         customFieldData["multiple_choice"] = multipleChoiceOptions;
+  //       }
 
-        customFieldsData.add(customFieldData);
-      }
+  //       customFieldsData.add(customFieldData);
+  //     }
 
-      // Prepare the complete request body
-      Map<String, dynamic> requestBody = {
-        "form": {
-          "participant_name": '',
-          "participant_email": '',
-          "participant_phone": 0,
-          "participant_gender": ''
-        },
-        "custom_fields": customFieldsData
-      };
+  //     // Prepare the complete request body
+  //     Map<String, dynamic> requestBody = {
+  //       "form": {
+  //         "participant_name": '',
+  //         "participant_email": '',
+  //         "participant_phone": 0,
+  //         "participant_gender": ''
+  //       },
+  //       "custom_fields": customFieldsData
+  //     };
 
-      // Call your API service with the request body
-      await PostApiService().postRegistration(widget.hackathonId, requestBody);
-      final response = await PostApiService()
-          .postRegistration(widget.hackathonId, requestBody);
-      if (response == 201) {
-        // Assuming 200 is success status code
-        return true;
-      } else {
-        return false;
-      }
-    }
-    return false; // Return false if form validation fails
-  }
+  //     // Call your API service with the request body
+  //     await PostApiService().postRegistration(widget.hackathonId, requestBody);
+  //     final response = await PostApiService()
+  //         .postRegistration(widget.hackathonId, requestBody);
+  //     if (response == 201) {
+  //       // Assuming 200 is success status code
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   }
+  //   return false; // Return false if form validation fails
+  // }
 
-  void handleRegistration() async {
-    bool isSuccess = await submitRegistration();
-    if (isSuccess) {
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Success'),
-            content: const Text('Registration Form created successfully!'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  //  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MainNavigation()), (Route<dynamic> route) => false);
-                  Navigator.pushNamed(context, '/mainNavigation');
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      // Show error dialog or message
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: const Text(
-                'Failed to create Registration Form. Please try again.'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-    }
-  }
+  // void handleRegistration() async {
+  //   bool isSuccess = await submitRegistration();
+  //   if (isSuccess) {
+  //     showDialog(
+  //       context: context,
+  //       barrierDismissible: false,
+  //       builder: (BuildContext context) {
+  //         return AlertDialog(
+  //           title: const Text('Success'),
+  //           content: const Text('Registration Form created successfully!'),
+  //           actions: [
+  //             TextButton(
+  //               onPressed: () {
+  //                 //  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MainNavigation()), (Route<dynamic> route) => false);
+  //                 Navigator.pushNamed(context, '/mainNavigation');
+  //               },
+  //               child: const Text('OK'),
+  //             ),
+  //           ],
+  //         );
+  //       },
+  //     );
+  //   } else {
+  //     // Show error dialog or message
+  //     showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return AlertDialog(
+  //           title: Text('Error'),
+  //           content: const Text(
+  //               'Failed to create Registration Form. Please try again.'),
+  //           actions: [
+  //             TextButton(
+  //               onPressed: () => Navigator.of(context).pop(),
+  //               child: const Text('OK'),
+  //             ),
+  //           ],
+  //         );
+  //       },
+  //     );
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -287,7 +282,7 @@ class _RegistrationFormDesktopBodyState
                     child: regTab == 0
                         ?const  Templates()
                         : regTab == 1
-                            ? RegFormFields(fieldtabController: fieldtabController)
+                            ? RegFormFields(fieldtabController: fieldtabController, hackathonId: widget.hackathonId)
                             :const Templates(),
                   ),
                 )

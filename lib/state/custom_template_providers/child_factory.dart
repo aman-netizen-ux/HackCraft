@@ -31,6 +31,10 @@ class ChildFactory {
         // Add specific properties for Text if necessary
         break;
       case "Row":
+      baseChild[key]!['properties'] = {
+          "mainAxisAlignment": MainAxisAlignment.start,
+          "crossAxisAlignment": CrossAxisAlignment.start,
+        };
         break;
 
       case "Column":
