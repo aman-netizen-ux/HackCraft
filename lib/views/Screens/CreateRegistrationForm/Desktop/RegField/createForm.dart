@@ -145,7 +145,7 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                                                 ),
                                                 enabled: newCurrentTab,
                                                 onTapOutside: (PointerDownEvent e) {
-                                                   print("************************* ${createRegistrationProvider.tabField} ************************************");
+                                                   
                                                   createRegistrationProvider
                                                       .updateKeyAtIndex(index,
                                                           createRegistrationProvider
