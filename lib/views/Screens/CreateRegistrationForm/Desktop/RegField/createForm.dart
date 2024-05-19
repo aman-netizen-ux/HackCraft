@@ -144,11 +144,12 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                                                   fontWeight: FontWeight.w400,
                                                 ),
                                                 enabled: newCurrentTab,
-                                                onChanged: (value) {
+                                                onTapOutside: (PointerDownEvent e) {
                                                    print("************************* ${createRegistrationProvider.tabField} ************************************");
                                                   createRegistrationProvider
                                                       .updateKeyAtIndex(index,
-                                                          value, context);
+                                                          createRegistrationProvider
+                                                        .tab[index].text, context);
                                                 },
                                               )
                                             : Text(keys[index],

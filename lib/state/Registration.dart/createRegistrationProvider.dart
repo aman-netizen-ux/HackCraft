@@ -368,7 +368,10 @@ class CreateRegistrationProvider with ChangeNotifier {
 
   void updateKeyAtIndex(int index, String newKey, BuildContext context) {
     print("******** updating section name $newKey ***********8");
-    if (_tabFields.keys.any((k) => k.trim().toLowerCase() == newKey.trim().toLowerCase())) {
+    bool result = _tabFields.keys.toList().asMap().entries.any((entry) => 
+    entry.value.trim().toLowerCase() == newKey.trim().toLowerCase() && entry.key != index);
+
+    if (result) {
       List<String> keys = _tabFields.keys.toList();
       
       aletDialog(
