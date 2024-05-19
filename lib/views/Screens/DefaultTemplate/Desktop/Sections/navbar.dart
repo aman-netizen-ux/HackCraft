@@ -45,7 +45,7 @@ class NavBar extends StatelessWidget {
                         fit: BoxFit.cover,
                         height: scaleHeight(context, 44),
                       width: scaleHeight(context, 44),
-                      ): Image.network(defaultTemplateModel!.hackathons.logo, fit: BoxFit.cover,
+                      ): defaultTemplateModel!.hackathons.logo.isEmpty?Container(): Image.network(defaultTemplateModel!.hackathons.logo, fit: BoxFit.cover,
                         height: scaleHeight(context, 44),
                       width: scaleHeight(context, 44),),
                     SizedBox(width: scaleWidth(context, 6),),

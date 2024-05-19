@@ -7,11 +7,10 @@ import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:provider/provider.dart';
 
 class DefaultTemplateText extends StatelessWidget {
-  const DefaultTemplateText({super.key,  required this.name, required this.height, this.maxLines, required this.textProperties});
+  const DefaultTemplateText({super.key,  required this.name,  this.maxLines, required this.textProperties});
 
   final TextFieldProperties textProperties;
   final String name;
-  final double height; // later change;
   final int? maxLines;
 
   @override
@@ -56,7 +55,8 @@ class DefaultTemplateText extends StatelessWidget {
             fontWeight: defaultTemplateProvider.fontWeightFromInt(
                 textProperties.fontWeight),
             height: lineHeight(
-                height,
+                textProperties.lineHeight
+                .toDouble(),
                 textProperties.size
                     .toDouble()))));
   }

@@ -5,6 +5,7 @@ import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
+import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/createRegistrationform.dart';
 
 class HomeLanding extends StatelessWidget {
   final VoidCallback onExploreTap;
@@ -24,23 +25,33 @@ class HomeLanding extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: scaleHeight(context, 40),
-                width: scaleWidth(context, 400),
-                margin: EdgeInsets.only(
-                    top: scaleHeight(context, 100),
-                    left: scaleWidth(context, 50)),
-                alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(3))),
-                child: Text(
-                    'Simplify, Customize, Organize: Hackathons, Perfected',
-                    style: GoogleFonts.getFont(fontFamily2,
-                        fontSize: scaleHeight(context, 20),
-                        color: blue,
-                        height: lineHeight(22.4, 20),
-                        fontWeight: FontWeight.w400)),
+              InkWell(
+                onTap: (){
+                 Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RegistrationForm(
+                                hackathonId: "",
+                              )));
+                },
+                child: Container(
+                  height: scaleHeight(context, 40),
+                  width: scaleWidth(context, 400),
+                  margin: EdgeInsets.only(
+                      top: scaleHeight(context, 100),
+                      left: scaleWidth(context, 50)),
+                  alignment: Alignment.center,
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(3))),
+                  child: Text(
+                      'Simplify, Customize, Organize: Hackathons, Perfected',
+                      style: GoogleFonts.getFont(fontFamily2,
+                          fontSize: scaleHeight(context, 20),
+                          color: blue,
+                          height: lineHeight(22.4, 20),
+                          fontWeight: FontWeight.w400)),
+                ),
               ),
               Padding(
                 padding: EdgeInsets.only(

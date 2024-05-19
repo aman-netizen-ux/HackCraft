@@ -82,7 +82,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                                 DefaultTemplateText(
                                   name: widget.defaultTemplateModel!.hackathons.contact1Name,
                                   textProperties: widget.defaultTemplateModel!.fields[10].textProperties,
-                                  height: 29,
+
                                 ),
                                 SizedBox(
                                   height: scaleHeight(context, 5),
@@ -90,7 +90,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                                 DefaultTemplateText(
                                   name: widget.defaultTemplateModel!.hackathons.contact1Number,
                                   textProperties: widget.defaultTemplateModel!.fields[11].textProperties,
-                                  height: 5,
+                                 
                                 ),
                                 
                               ],
@@ -120,7 +120,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                                 DefaultTemplateText(
                                   name: widget.defaultTemplateModel!.hackathons.contact2Name,
                                   textProperties: widget.defaultTemplateModel!.fields[12].textProperties,
-                                  height: 29,
+                                 
                                 ),
                                 
                                 SizedBox(
@@ -130,7 +130,7 @@ class _ContactUsAndFooterSectionState extends State<ContactUsAndFooterSection> {
                                  DefaultTemplateText(
                                   name: widget.defaultTemplateModel!.hackathons.contact2Number,
                                   textProperties: widget.defaultTemplateModel!.fields[13].textProperties,
-                                  height: 5,
+                                  
                                 ),
                                 
                               ],

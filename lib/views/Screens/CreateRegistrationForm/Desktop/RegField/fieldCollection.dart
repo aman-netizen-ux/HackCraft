@@ -125,10 +125,10 @@ class FieldsCollection extends StatelessWidget {
                     Provider.of<CreateRegistrationProvider>(context,
                         listen: false);
                 createRegistrationProvider.setTabField(
-                    "New Tab ${createRegistrationProvider.tabField.length + 1}");
-                createRegistrationProvider.refreshTabs();
-                createRegistrationProvider.formcontroller
-                    .animateTo(createRegistrationProvider.tabField.length - 1);
+                    "New Added Section ${createRegistrationProvider.tabField.length + 1}");
+                // createRegistrationProvider.refreshTabs();
+                // createRegistrationProvider.formcontroller
+                //     .animateTo(createRegistrationProvider.tabField.length - 1);
                 //createRegistrationProvider.resetEditingState(createRegistrationProvider.tabField.length - 1);
               },
               child: Container(
