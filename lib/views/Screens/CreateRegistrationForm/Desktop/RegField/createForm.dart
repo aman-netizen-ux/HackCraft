@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/api/Registartion/postRegistration.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
+import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/state/Registration.dart/createRegistrationProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/sampleTab.dart';
@@ -23,7 +26,7 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
         Provider.of<CreateRegistrationProvider>(context, listen: false);
     List<String> keys = createRegistrationProvider.tabField.keys.toList();
     for (int i = 0; i < createRegistrationProvider.tabField.length; i++) {
-      createRegistrationProvider.edit.add(false);
+      // createRegistrationProvider.edit.add(false);
       createRegistrationProvider.tab.add(TextEditingController(text: keys[i]));
     }
   }
@@ -32,12 +35,12 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final createRegistrationProvider =
         Provider.of<CreateRegistrationProvider>(context, listen: true);
-    if (createRegistrationProvider.edit.length !=
+    if (createRegistrationProvider.tab.length !=
         createRegistrationProvider.tabField.length) {
-      createRegistrationProvider.edit.clear();
+      // createRegistrationProvider.edit.clear();
       createRegistrationProvider.tab.clear();
       for (int i = 0; i < createRegistrationProvider.tabField.length; i++) {
-        createRegistrationProvider.edit.add(false);
+        // createRegistrationProvider.edit.add(false);
 
         createRegistrationProvider.tab.add(TextEditingController(
             text: createRegistrationProvider.tabField.keys.toList()[i]));
@@ -93,36 +96,88 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                         tabs: List.generate(
                             createRegistrationProvider.tabField.length,
                             (index) {
+                          List<String> keys =
+                              createRegistrationProvider.tabField.keys.toList();
+
+                          final bool newCurrentTab = createRegistrationProvider
+                                      .formcontroller.index ==
+                                  index &&
+                              index != 0 &&
+                              index !=
+                                  createRegistrationProvider.tabField.length -
+                                      1;
                           return GestureDetector(
                             onTap: () {
                               createRegistrationProvider.formcontroller
-                                  .animateTo(0);
-                              createRegistrationProvider.resetEditingState(1);
+                                  .animateTo(index);
+                                 
+                              // createRegistrationProvider.resetEditingState(1);
                             },
-                            onDoubleTap: () {
-                              setState(() {
-                                createRegistrationProvider.edit[index] = true;
-                              });
-                            },
+                           
                             child: Tab(
                               child: Padding(
                                 padding: EdgeInsets.only(
                                     bottom: scaleHeight(context, 10),
                                     left: scaleHeight(context, 5)),
                                 child: SizedBox(
-                                  width: 100,
-                                  child: TextField(
-                                    controller:
-                                        createRegistrationProvider.tab[index],
-                                    decoration: const InputDecoration(
-                                        border: InputBorder.none),
-                                    style: GoogleFonts.firaSans(
-                                      color: const Color(0xff000000),
-                                      fontSize: heightScaler(context, 14),
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                    enabled:
-                                        createRegistrationProvider.edit[index],
+                                  width: scaleWidth(
+                                      context, newCurrentTab ? 250 : 100),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: newCurrentTab
+                                            ? TextField(
+                                                textAlign: TextAlign.center,
+                                                controller:
+                                                    createRegistrationProvider
+                                                        .tab[index],
+                                                decoration:
+                                                    const InputDecoration(
+                                                        isDense: true,
+                                                        border:
+                                                            InputBorder.none),
+                                                style: GoogleFonts.firaSans(
+                                                  color:
+                                                      black1,
+                                                  fontSize:
+                                                      heightScaler(context, 14),
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                                enabled: newCurrentTab,
+                                                onChanged: (value) {
+                                                   print("************************* ${createRegistrationProvider.tabField} ************************************");
+                                                  createRegistrationProvider
+                                                      .updateKeyAtIndex(index,
+                                                          value, context);
+                                                },
+                                              )
+                                            : Text(keys[index],
+                                                textAlign: TextAlign.center,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: GoogleFonts.getFont(
+                                                  fontFamily2,
+                                                  fontSize:
+                                                      scaleWidth(context, 14),
+                                                  color: black1,
+                                                  fontWeight: FontWeight.w400,
+                                                )),
+                                      ),
+                                      newCurrentTab
+                                          ? InkWell(
+                                              onTap: () {
+                                                createRegistrationProvider
+                                                    .removeSection(
+                                                        keys[index], index);
+                                              },
+                                              child: SvgPicture.asset(
+                                                'assets/icons/defaultEditPortal/deleteIcon.svg',
+                                                colorFilter:
+                                                    const ColorFilter.mode(
+                                                        grey5, BlendMode.srcIn),
+                                              ),
+                                            )
+                                          : const SizedBox.shrink(),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -136,11 +191,16 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                         children: List.generate(
                             createRegistrationProvider.tabField.length,
                             (index) {
-                          List<List> values = createRegistrationProvider
-                              .tabField.values
-                              .toList();
+                          List<String> keys =
+                              createRegistrationProvider.tabField.keys.toList();
                           return SampleTab(
-                            fieldsList: values[index],
+                            // fieldsList: values[index],
+                            // sectionIndex: index,
+                            sectionName: keys[index],
+                            reorderListDisabled: index == 0 ||
+                                index ==
+                                    createRegistrationProvider.tabField.length -
+                                        1,
                           );
                         })),
                   ),
@@ -266,8 +326,7 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
 
                             PostApiService()
                                 .postRegistration(
-                                    widget.hackathonId,
-                                    formPostBody)
+                                    widget.hackathonId, formPostBody)
                                 .then((value) {
                               if (value) {
                                 ScaffoldMessenger.of(context).showSnackBar(

@@ -130,7 +130,7 @@ class _AddFieldSectionState extends State<AddFieldSection>
                     index: fields.length - 1,
                     onTap: () {
                       
-                           createRegistrationProvider.addField(createRegistrationProvider.getFieldModel(fields[fields.length - 1]['onTap'])    );
+                           createRegistrationProvider.addField(createRegistrationProvider.getFieldModel(fields[fields.length - 1]['onTap'])   , context );
                      
                     },
                   ))
@@ -209,7 +209,7 @@ class FieldsRowButon extends StatelessWidget {
 
                       
 
-                  createRegistrationProvider.addField(createRegistrationProvider.getFieldModel(fields[index1]['onTap'])    );
+                  createRegistrationProvider.addField(createRegistrationProvider.getFieldModel(fields[index1]['onTap'])  , context  );
                   // print(
                   //     "index ${createRegistrationProvider.formcontroller.index}");
 
@@ -234,7 +234,7 @@ class FieldsRowButon extends StatelessWidget {
                   final createRegistrationProvider =
                       Provider.of<CreateRegistrationProvider>(context,
                           listen: false);
-                   createRegistrationProvider.addField(createRegistrationProvider.getFieldModel(fields[index2]['onTap'])    );
+                   createRegistrationProvider.addField(createRegistrationProvider.getFieldModel(fields[index2]['onTap'])  , context  );
                   print(
                       "index ${createRegistrationProvider.formcontroller.index}");
                   print(createRegistrationProvider.tabField);

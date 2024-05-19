@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/api/Registartion/fetchRegistration.dart';
 import 'package:major_project__widget_testing/constants/enums.dart';
 import 'package:major_project__widget_testing/models/Registration/registration_form_model.dart';
+import 'package:major_project__widget_testing/views/Components/dialog_alert.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/RegFieldsCollection/checkbox_ans.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/RegFieldsCollection/dropdown_ans.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/RegFieldsCollection/linearScale_field.dart';
@@ -26,13 +27,13 @@ class CreateRegistrationProvider with ChangeNotifier {
   // }
 
   // new
-  final List<bool> _edit = [];
-  List<bool> get edit => _edit;
+  // final List<bool> _edit = [];
+  // List<bool> get edit => _edit;
 
-  void setEdit(bool input) {
-    edit.add(input);
-    notifyListeners();
-  }
+  // void setEdit(bool input) {
+  //   edit.add(input);
+  //   notifyListeners();
+  // }
 
   // String tabName
   int _currentIndex = -1;
@@ -58,7 +59,7 @@ class CreateRegistrationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  final Map<String, List<dynamic>> _tabFields = {
+  Map<String, List<dynamic>> _tabFields = {
     "General": [
       ShortAnswerFieldModel(
           errorText: "Invalid name",
@@ -104,6 +105,7 @@ class CreateRegistrationProvider with ChangeNotifier {
           validation: "PhoneNumber",
           hint: "Enter Your 10-digit number")
     ],
+    "New Section": [],
     "Team Details": [
       ShortAnswerFieldModel(
           serialNumber: 1,
@@ -127,9 +129,27 @@ class CreateRegistrationProvider with ChangeNotifier {
   Map<String, List<dynamic>> get tabField => _tabFields;
 
   void setTabField(String input) {
-    _tabFields[input] ??= [];
+    List<String> keys = _tabFields.keys.toList();
+    int teamDetailsIndex = keys.indexOf("Team Details");
+    int insertIndex = teamDetailsIndex != -1 ? teamDetailsIndex : keys.length;
+
+    // Insert the new tab at the determined position
+    keys.insert(insertIndex, input);
+
+    // Update the _tabFields map with the new order
+    final newTabFields = Map<String, List<dynamic>>.from(_tabFields);
+    newTabFields[input] = [];
+
+    // Create a new map with the updated order
+    _tabFields
+      ..clear()
+      ..addAll(Map.fromIterable(keys,
+          key: (k) => k, value: (k) => newTabFields[k]!));
 
     notifyListeners();
+
+    refreshTabs();
+    formcontroller.animateTo(insertIndex);
   }
 
   final TickerProvider _vsync;
@@ -137,22 +157,33 @@ class CreateRegistrationProvider with ChangeNotifier {
 
   CreateRegistrationProvider(this._vsync)
       : formcontroller = TabController(length: 0, vsync: _vsync) {
-    initialize();
+    initialize(initialIndex: 1);
   }
-  Future<void> initialize() async {
+  Future<void> initialize({int? initialIndex}) async {
 //  isInitialized = true;
-    _createTabController();
+    _createTabController(initialIndex: initialIndex);
     notifyListeners();
   }
 
   // This function is used to create a new tabcontroller
-  void _createTabController() {
-    formcontroller = TabController(length: _tabFields.length, vsync: _vsync);
-    formcontroller.addListener(() {
-      if (!formcontroller.indexIsChanging) {
-        notifyListeners();
+  void _createTabController({int? initialIndex}) {
+    formcontroller = TabController(
+        length: _tabFields.length,
+        vsync: _vsync,
+        initialIndex: initialIndex ?? 0);
+    formcontroller.addListener(_handleTabChange);
+  }
+
+  // Handle tab index changes
+  void _handleTabChange() {
+    if (!formcontroller.indexIsChanging) {
+      if (_currentKey.isNotEmpty) {
+        currentIndex = -1;
+        currentKey = "";
       }
-    });
+
+      notifyListeners();
+    }
   }
 
   // Refresh tabs function
@@ -163,13 +194,13 @@ class CreateRegistrationProvider with ChangeNotifier {
   }
 
   // Add a function to reset editing state for all tabs except the specified index
-  void resetEditingState(int currentIndex) {
-    List<String> keys = _tabFields.keys.toList();
-    for (int i = 0; i < _tabFields.length; i++) {
-      _edit[i] = currentIndex != 0 ? false : _edit[i];
-    }
-    notifyListeners();
-  }
+  // void resetEditingState(int currentIndex) {
+  //   List<String> keys = _tabFields.keys.toList();
+  //   for (int i = 0; i < _tabFields.length; i++) {
+  //     _edit[i] = currentIndex != 0 ? false : _edit[i];
+  //   }
+  //   notifyListeners();
+  // }
 
   RegistrationFormModel _singleForm = RegistrationFormModel(
       form: FormModel(hackthon: "", numberOfFields: 0),
@@ -310,14 +341,80 @@ class CreateRegistrationProvider with ChangeNotifier {
     }
   }
 
-  void addField(dynamic type) {
-    List<String> keys = _tabFields.keys.toList();
-    _tabFields[keys[formcontroller.index]]!.add(type);
+  void addField(dynamic type, BuildContext context) {
+    if (formcontroller.index != 0 &&
+        formcontroller.index != tabField.length - 1) {
+      List<String> keys = _tabFields.keys.toList();
+      _tabFields[keys[formcontroller.index]]!.add(type);
+    } else {
+      aletDialog(context, 'Field cannot be added to this section', 'Note');
+    }
     notifyListeners();
   }
 
   void notify() {
     notifyListeners();
+  }
+
+  void removeSection(String key, int index) {
+    _tabFields.remove(key);
+    _currentIndex = -1;
+    _currentKey = "";
+
+    notifyListeners();
+    refreshTabs();
+    formcontroller.animateTo(index);
+  }
+
+  void updateKeyAtIndex(int index, String newKey, BuildContext context) {
+    print("******** updating section name $newKey ***********8");
+    if (_tabFields.keys.any((k) => k.trim().toLowerCase() == newKey.trim().toLowerCase())) {
+      List<String> keys = _tabFields.keys.toList();
+      
+      aletDialog(
+          context,
+          "Two sections cannot have same name. Try giving new name or change name of existing section ${keys[index]} $index",
+          "Note");
+
+         _tab[index].text=keys[index];
+
+      return;
+    } 
+    else {
+      List<String> keys = _tabFields.keys.toList();
+      List<dynamic> values = _tabFields.values.toList();
+
+      if (index >= 0 && index < keys.length) {
+        if (keys[index] == newKey ) {
+          return;
+        }else if (newKey.trim().isEmpty){
+           aletDialog(
+          context,
+          "Section name cannot be only space",
+          "Note");
+
+         _tab[index].text=keys[index];
+
+      return;
+        } else {
+          String oldKey = keys[index];
+          dynamic value = _tabFields[oldKey]!;
+
+          keys[index] = newKey;
+
+          Map<String, List<dynamic>> updatedMap = {};
+          for (int i = 0; i < keys.length; i++) {
+            updatedMap[keys[i]] = values[i];
+          }
+
+          _tabFields = updatedMap;
+          if (_currentKey.isNotEmpty) {
+            _currentKey = newKey;
+          }
+          notifyListeners();
+        }
+      }
+    }
   }
 
   dynamic getFieldModel(FieldTypes type) {
