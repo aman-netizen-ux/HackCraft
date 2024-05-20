@@ -58,7 +58,8 @@ class About extends StatelessWidget {
                           '/getRegistration',
                           arguments: {
                             'hackathonId': defaultTemplateModel!.hackathons.id,
-                            'userType': userType
+                            'userType': userType,
+                            'hackathonName': defaultTemplateModel!.hackathons.name
                           },
                         );
                       }

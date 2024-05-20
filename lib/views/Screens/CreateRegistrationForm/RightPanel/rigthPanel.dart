@@ -76,12 +76,12 @@ class _RigthPanelState extends State<RigthPanel> {
         : Container(
             color: lightGrey,
             width: double.infinity,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const Header(),
-                  const QuestionInputForm(),
-                  Visibility(
+            child: Column(
+              children: [
+                const Header(),
+                const QuestionInputForm(),
+                Expanded(
+                  child: Visibility(
                     visible: [
                       FieldTypes.radio,
                       FieldTypes.checkbox,
@@ -103,12 +103,18 @@ class _RigthPanelState extends State<RigthPanel> {
                           SizedBox(
                             height: scaleHeight(context, 10),
                           ),
-                          for (int i = 0; i < options.length; i++)
+                         Expanded(child: SingleChildScrollView(
+                          child:  Column(
+                            children: [
+                               for (int i = 0; i < options.length; i++)
                             OptionExpansionTile(
                               title: options[i],
                               index: i,
                               expandedTitle: "Option ${i + 1}",
                             ),
+                            ],
+                          )
+                         )),
                           createRegistrationProvider
                                       .tabField[createRegistrationProvider
                                               .currentKey]![
@@ -120,9 +126,9 @@ class _RigthPanelState extends State<RigthPanel> {
                               : InkWell(
                                   onTap: () {
                                     // setState(() {
-
+                      
                                     // });
-
+                      
                                     createRegistrationProvider
                                         .tabField[createRegistrationProvider
                                                 .currentKey]![
@@ -149,13 +155,18 @@ class _RigthPanelState extends State<RigthPanel> {
                                             fontSize: scaleHeight(context, 12),
                                             fontWeight: FontWeight.w500)),
                                   ),
-                                )
+                                ),
+
+                               
                         ],
                       ),
                     ),
-                  )
-                ],
-              ),
+                  ),
+                ),
+               SizedBox(
+                                  height:  scaleHeight(context, 9),
+                                )
+              ],
             ),
           );
   }
