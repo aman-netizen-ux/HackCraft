@@ -13,7 +13,6 @@ import 'package:major_project__widget_testing/state/default_template_providers.d
 import 'package:major_project__widget_testing/state/galleryProvider.dart';
 import 'package:major_project__widget_testing/state/loginProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
-import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/default_template.dart';
@@ -45,8 +44,9 @@ class _SidePanelState extends State<SidePanel> {
         Provider.of<HackathonTextPropertiesProvider>(context);
     final hackathonContainerPropertiesProvider =
         Provider.of<HackathonContainerPropertiesProvider>(context);
-         final galleryProvider =
-        Provider.of<GalleryProvider>(context,);
+    final galleryProvider = Provider.of<GalleryProvider>(
+      context,
+    );
 
     List<GlobalKey<State<StatefulWidget>>> keyValues = [
       homeEdit,
@@ -85,7 +85,8 @@ class _SidePanelState extends State<SidePanel> {
                 } else if (result == 'Save') {
                   //TODO
                 } else if (result == 'Host') {
-                  if (widget.formKey.currentState!.validate() && galleryProvider.logoFile.isNotEmpty) {
+                  if (widget.formKey.currentState!.validate() &&
+                      galleryProvider.logoFile.isNotEmpty) {
                     widget.formKey.currentState!.save();
 
                     hostHackathon(
@@ -93,9 +94,9 @@ class _SidePanelState extends State<SidePanel> {
                         hackathonDetailsProvider,
                         hackathonTextPropertiesProvider,
                         hackathonContainerPropertiesProvider);
-                  }else if(galleryProvider.logoFile.isEmpty){
+                  } else if (galleryProvider.logoFile.isEmpty) {
                     print("logo fill kro");
-                    galleryProvider.logoError=true;
+                    galleryProvider.logoError = true;
                   }
                 } else if (result == 'Upload Image') {
                   final galleryProvider =
@@ -222,17 +223,17 @@ class _SidePanelState extends State<SidePanel> {
 
     final galleryProvider =
         Provider.of<GalleryProvider>(context, listen: false);
-        List<String> imageResponse=[];
-         String logoResponse="";
+    List<String> imageResponse = [];
+    String logoResponse = "";
 
     if (galleryProvider.galleryImagesFile.isNotEmpty) {
-       imageResponse = await UploadImageToCloudinary()
+      imageResponse = await UploadImageToCloudinary()
           .uploadImage(galleryProvider.galleryImagesFile);
       print("imageResponse $imageResponse");
     }
 
     if (galleryProvider.logoFile.isNotEmpty) {
-       logoResponse = await UploadImageToCloudinary()
+      logoResponse = await UploadImageToCloudinary()
           .uploadLogo(galleryProvider.logoFile[0]);
       print("logoResponse $logoResponse");
     }
@@ -263,18 +264,21 @@ class _SidePanelState extends State<SidePanel> {
         "logo": logoResponse,
         "name": hackathonDetailsProvider.hackathonName,
         "organisation_name": hackathonDetailsProvider.organisationName,
-        "mode_of_conduct": hackathonDetailsProvider.modeOfConduct,
         "deadline": hackathonDetailsProvider.deadline,
         "team_size": int.parse(hackathonDetailsProvider.teamSize),
-        "visible": "Public",
         "start_date_time":
             "${hackathonDetailsProvider.startDateTime}T00:00:00Z",
+        "brief": hackathonDetailsProvider.brief,
+        "fee": hackathonDetailsProvider.fee,
+        "total_number_rounds": rounds.length
+      },
+      "default": {
+        "mode_of_conduct": hackathonDetailsProvider.modeOfConduct,
+        "visible": "Public",
         "about": hackathonDetailsProvider.about,
         "images": imageResponse,
-        "brief": hackathonDetailsProvider.brief,
-        "website": "https://req",
-        "fee": hackathonDetailsProvider.fee,
         "venue": hackathonDetailsProvider.venue,
+        "website": "https://req",
         "contact1_name": hackathonDetailsProvider.contact1Name,
         "contact1_number": int.parse(hackathonDetailsProvider.contact1Number),
         "contact2_name": hackathonDetailsProvider.contact2Name,
@@ -284,7 +288,7 @@ class _SidePanelState extends State<SidePanel> {
         "email": "",
         "twitter": "",
         "linkedin": "",
-        "total_number_rounds": rounds.length
+        "github": ""
       },
       "round": rounds,
       "fields": fields,
