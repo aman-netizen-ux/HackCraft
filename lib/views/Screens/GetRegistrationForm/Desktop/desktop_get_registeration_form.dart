@@ -20,40 +20,39 @@ class DesktopGetRegisterationForm extends StatefulWidget {
 
 class _DesktopGetRegisterationFormState
     extends State<DesktopGetRegisterationForm> {
-
-
-String userType= "";
-String hackathonId="";
-@override
+  String userType = "";
+  String hackathonId = "";
+  String hackathonName="";
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     print("got into init");
 
-    //TODO:  get the user type from already hit api(or hit if it necessary but ig it wont be possible here due to lack of params)
 
-    userType="firstuser"; //for now
+  
 
-     Future.delayed(Duration.zero, () {
+    Future.delayed(Duration.zero, () {
       print("im in future");
       final args = ModalRoute.of(context)?.settings.arguments as Map?;
       if (args != null && args.containsKey('hackathonId')) {
-        print("args were not null and args['hackathonId']: ${args['hackathonId']} ");
+        print(
+            "args were not null and args['hackathonId']: ${args['hackathonId']} ");
         setState(() {
           hackathonId = args['hackathonId'];
+          userType= args['userType'];
+          hackathonName= args['hackathonName'];
+          
         });
       }
-    }).then((value)async{
-
+    }).then((value) async {
       final getRegistrationFormProvider =
-        Provider.of<GetRegistrationFormProvider>(context,listen:false);
-print("im in then");
-        await getRegistrationFormProvider.getHackathonForm(hackathonId);
+          Provider.of<GetRegistrationFormProvider>(context, listen: false);
+      print("im in then");
+      await getRegistrationFormProvider.getHackathonForm(hackathonId);
+      getRegistrationFormProvider.refreshTabs();
+      //TODO: also hit the prefilled data api
     });
-    
-
-    
-
   }
 
   @override
@@ -82,14 +81,14 @@ print("im in then");
                         child: Row(
                           children: [
                             InkWell(
-                              onTap:(){
-                                Navigator.pop(context);
-                              },
-                              child: const Icon(Icons.arrow_back)),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Icon(Icons.arrow_back)),
                             SizedBox(
                               width: scaleWidth(context, 10.67),
                             ),
-                            Text('Hackathon Name',
+                            Text(hackathonName,
                                 style: GoogleFonts.getFont(
                                   fontFamily2,
                                   fontSize: scaleWidth(context, 20),
@@ -178,8 +177,10 @@ class MiddleFormPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        final getRegistrationFormProvider =
-        Provider.of<GetRegistrationFormProvider>(context,);
+    final getRegistrationFormProvider =
+        Provider.of<GetRegistrationFormProvider>(
+      context,
+    );
     return Container(
       width: double.infinity,
       margin: EdgeInsets.only(left: scaleHeight(context, 30)),
@@ -194,51 +195,40 @@ class MiddleFormPart extends StatelessWidget {
           //TODo: tab bar view
 
           SizedBox(
-            height: scaleHeight(context, 37),
-            child: TabBar(
-               isScrollable: true,
-                tabAlignment: TabAlignment.start,
-                indicatorColor: black1,
-                 controller: getRegistrationFormProvider.getformcontroller,
-
-                tabs: List.generate(getRegistrationFormProvider.sections.length, (index) {
-
-                  return InkWell(
-                    onTap:(){
-                      getRegistrationFormProvider.getformcontroller.animateTo(index);
-                    },
-                    child: Tab(
-
-                      child: Text(
-                        "Tab $index",
-                         style: GoogleFonts.getFont(
+              height: scaleHeight(context, 37),
+              child: TabBar(
+                  isScrollable: true,
+                  tabAlignment: TabAlignment.start,
+                  indicatorColor: black1,
+                  controller: getRegistrationFormProvider.getformcontroller,
+                  tabs: List.generate(
+                      getRegistrationFormProvider.singleForm.sections.length, (index) {
+                    return InkWell(
+                        onTap: () {
+                          getRegistrationFormProvider.getformcontroller
+                              .animateTo(index);
+                        },
+                        child: Tab(
+                            child: Text("Tab $index",
+                                style: GoogleFonts.getFont(
                                   fontFamily2,
                                   fontSize: scaleWidth(context, 18),
                                   color: black1,
                                   fontWeight: FontWeight.w500,
-                                )
-                      )
-
-                    )
-                  );
-
-                })
-            )
-          ),
+                                ))));
+                  }))),
 
           SizedBox(
             height: scaleHeight(context, 36.76),
           ),
           Expanded(
-            child:TabBarView(
-              controller: getRegistrationFormProvider.getformcontroller,
-              children: List.generate(
-                getRegistrationFormProvider.sections.length,
-                 (index) {
-                  return Container( color:Colors.blue[100*(index+1)]);
-
-                 }),
-            ) ),
+              child: TabBarView(
+            controller: getRegistrationFormProvider.getformcontroller,
+            children: List.generate(getRegistrationFormProvider.singleForm.sections.length,
+                (index) {
+              return Container(color: Colors.blue[100 * (index + 1)]);
+            }),
+          )),
           SizedBox(
             height: scaleHeight(context, 44),
           ),

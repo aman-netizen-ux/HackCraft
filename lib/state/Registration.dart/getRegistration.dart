@@ -45,37 +45,10 @@ class GetRegistrationFormProvider with ChangeNotifier {
 
   //newCode
 
-  List<String> sections=["abc", "wow", "ok", "nice"];
+  // List<String> sections=["abc", "wow", "ok", "nice"];
 final TickerProvider _vsync;
   TabController getformcontroller;
 
-  GetRegistrationFormProvider(this._vsync)
-      : getformcontroller = TabController(length: 0, vsync: _vsync) {
-    initialize();
-  }
-
-   Future<void> initialize() async {
-//  isInitialized = true;
-    _createTabController();
-    notifyListeners();
-  }
-
-
-  // This function is used to create a new tabcontroller
-  void _createTabController() {
-    getformcontroller = TabController(length: sections.length, vsync: _vsync);
-    getformcontroller.addListener(() {
-      if (!getformcontroller.indexIsChanging) {
-        notifyListeners();
-      }
-    });
-  }
-
-   Future<void> refreshTabs() async {
-    getformcontroller.dispose();
-    _createTabController();
-    notifyListeners();
-  }
   
  RegistrationFormModel _singleForm = RegistrationFormModel(
       form: FormModel(hackthon: "", numberOfFields: 0),
@@ -99,6 +72,37 @@ RegistrationFormModel get singleForm => _singleForm;
 
     notifyListeners();
   }
+
+
+
+  GetRegistrationFormProvider(this._vsync)
+      : getformcontroller = TabController(length: 0, vsync: _vsync) {
+    initialize();
+  }
+
+   Future<void> initialize() async {
+//  isInitialized = true;
+    _createTabController();
+    notifyListeners();
+  }
+
+
+  // This function is used to create a new tabcontroller
+  void _createTabController() {
+    getformcontroller = TabController(length: singleForm.sections.length+2, vsync: _vsync);
+    getformcontroller.addListener(() {
+      if (!getformcontroller.indexIsChanging) {
+        notifyListeners();
+      }
+    });
+  }
+
+   Future<void> refreshTabs() async {
+    getformcontroller.dispose();
+    _createTabController();
+    notifyListeners();
+  }
+  
 
 }
 
