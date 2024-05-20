@@ -149,7 +149,7 @@ class _SignInState extends State<SignIn> {
                                       .additionalUserInfo!.isNewUser ==
                                   true) {
                                 showSnackBar(
-                                    "No user found for this Gmail.",
+                                    "User does not exist ",
                                     red2,
                                     const Icon(
                                         Icons.report_gmailerrorred_outlined),
@@ -178,7 +178,6 @@ class _SignInState extends State<SignIn> {
                                   });
                                 }
                               }
-                              // User? user = userCredential.user;
                               setState(() {
                                 isLoading = false;
                               });
@@ -226,7 +225,6 @@ class _SignInState extends State<SignIn> {
                         SizedBox(width: widthScaler(context, 10)),
                         Container(
                           height: heightScaler(context, 35),
-                          // width: widthScaler(context, 130),
                           alignment: Alignment.center,
                           child: ElevatedButton(
                             // Handling GitHub sign-in
@@ -240,7 +238,7 @@ class _SignInState extends State<SignIn> {
                                       .additionalUserInfo!.isNewUser ==
                                   true) {
                                 showSnackBar(
-                                    "No user found for this Gmail.",
+                                    "User does not exist ",
                                     red2,
                                     const Icon(
                                         Icons.report_gmailerrorred_outlined),
