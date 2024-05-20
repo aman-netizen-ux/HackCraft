@@ -5,12 +5,12 @@ class Hackathon {
   String organisationName;
   String modeOfConduct;
   String deadline;
-  String teamSize;
+  List<int> teamSize;
   String visible;
   String startDateTime;
   String about;
   String brief;
- List<String> images;
+  List<String> images;
   String website;
   String fee;
   String venue;
@@ -47,9 +47,9 @@ class Hackathon {
         logo: json['logo'],
         name: json['name'],
         organisationName: json['organisation_name'],
-        modeOfConduct: json['mode_of_conduct'],
+        modeOfConduct: json['mode_of_cunduct'],
         deadline: json['deadline'],
-        teamSize: json['team_size'].toString(),
+        teamSize: List<int>.from(json['team_size']),
         visible: json['visible'],
         startDateTime: json['start_date_time'],
         about: json['about'],

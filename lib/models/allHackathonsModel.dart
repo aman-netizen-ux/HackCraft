@@ -4,7 +4,7 @@ class HackathonModel {
   final String organisationName;
   final String modeOfConduct;
   final String startDate;
-  final int teamSize;
+  final List<int> teamSize;
   final String venue;
   final String price;
 
@@ -26,7 +26,7 @@ class HackathonModel {
         organisationName: json['organisation_name'],
         modeOfConduct: json['mode_of_conduct'],
         startDate: json['start_date_time'],
-        teamSize: json['team_size'],
+        teamSize: List<int>.from(json['team_size']),
         venue: json['venue'],
         price: json['price']);
   }

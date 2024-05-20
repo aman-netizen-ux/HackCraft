@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:logger/logger.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:major_project__widget_testing/models/allHackathonsModel.dart';

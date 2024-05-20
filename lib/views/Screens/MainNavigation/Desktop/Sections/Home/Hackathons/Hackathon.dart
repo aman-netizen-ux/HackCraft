@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
-import 'package:major_project__widget_testing/models/allHackathonsModel.dart';
 import 'package:major_project__widget_testing/state/getAllHackathons/getAllHackathonsProvider.dart';
 import 'package:major_project__widget_testing/state/getHackathon/getSingleHackathonProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
@@ -22,6 +21,7 @@ class HomeHackathon extends StatefulWidget {
 
 class _HomeHackathonState extends State<HomeHackathon> {
   bool _isHovering = false;
+  bool _isClicked = false;
   late int _index;
 
   @override
@@ -202,7 +202,7 @@ class _HomeHackathonState extends State<HomeHackathon> {
                                                         lineHeight(22.4, 18),
                                                     fontWeight:
                                                         FontWeight.w300)),
-                                            Text(hackathon.teamSize.toString(),
+                                            Text(hackathon.teamSize.length>1 ? '${hackathon.teamSize[0]} - ${hackathon.teamSize[1]}' :  hackathon.teamSize[0].toString(),
                                                 style: GoogleFonts.getFont(
                                                     fontFamily2,
                                                     fontSize: scaleHeight(
@@ -275,39 +275,55 @@ class _HomeHackathonState extends State<HomeHackathon> {
                                       onExit: (event) =>
                                           _setHovering(index, false),
                                       child: InkWell(
-                                        onTap: () async{
-                                          final singleHackathonProvider =
-                                          Provider.of<SingleHackathonProvider>(
-                                              context,
-                                              listen: false);
+                                        onTap: _isClicked
+                                              ? (){}
+                                              : () async {
+                                                  setState(() {
+                                                    _isClicked = true;
+                                                  });
+                                                  final singleHackathonProvider =
+                                                      Provider.of<SingleHackathonProvider>(
+                                                          context,
+                                                          listen: false);
 
-                                      singleHackathonProvider.setIsLoading =
-                                          true;
+                                                  singleHackathonProvider.setIsLoading =
+                                                      true;
 
-                                      await singleHackathonProvider
-                                          .getSingleHackathonsList(
-                                              hackathon.id);
+                                                  try {
+                                                    await singleHackathonProvider
+                                                        .getSingleHackathonsList(
+                                                            hackathon.id);
 
-                                      final rulesProvider =
-                                          Provider.of<RulesProvider>(context,
-                                              listen: false);
+                                                    final rulesProvider =
+                                                        Provider.of<RulesProvider>(
+                                                            context,
+                                                            listen: false);
 
-                                      rulesProvider.setSelectedIndex(-1);
-                                      rulesProvider.setDescriptionWidget(
-                                          SvgPicture.asset(
-                                              'assets/images/defaultTemplate/clickme.svg'));
+                                                    rulesProvider.setSelectedIndex(-1);
+                                                    rulesProvider.setDescriptionWidget(
+                                                        SvgPicture.asset(
+                                                            'assets/images/defaultTemplate/clickme.svg'));
 
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                DefaultTemplate(
-                                                  defaultTemplateModel:
-                                                      singleHackathonProvider
-                                                          .singleHackathon,
-                                                  isEdit: false,
-                                                )),
-                                      );
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              DefaultTemplate(
+                                                                defaultTemplateModel:
+                                                                    singleHackathonProvider
+                                                                        .singleHackathon,
+                                                                isEdit: false,
+                                                              )),
+                                                    ).then((_) {
+                                                      setState(() {
+                                                        _isClicked = false;
+                                                      });
+                                                    });
+                                                  } catch (error) {
+                                                    setState(() {
+                                                      _isClicked = false;
+                                                    });
+                                                  }
 
                                       // Navigator.pushNamed(
                                       // context, '/singleHackathon');
