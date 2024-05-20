@@ -367,7 +367,7 @@ class CreateRegistrationProvider with ChangeNotifier {
   }
 
   void updateKeyAtIndex(int index, String newKey, BuildContext context) {
-    print("******** updating section name $newKey ***********8");
+    debugPrint("******** updating section name $newKey ***********8");
     bool result = _tabFields.keys.toList().asMap().entries.any((entry) => 
     entry.value.trim().toLowerCase() == newKey.trim().toLowerCase() && entry.key != index);
 
@@ -376,7 +376,7 @@ class CreateRegistrationProvider with ChangeNotifier {
       
       aletDialog(
           context,
-          "Two sections cannot have same name. Try giving new name or change name of existing section ${keys[index]} $index",
+          "Two sections cannot have same name. Try giving new name or change name of existing section : ${keys[index]}",
           "Note");
 
          _tab[index].text=keys[index];
