@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/models/defaulTemplateModels/defaultTemplateModel.dart';
-import 'package:major_project__widget_testing/state/Registration.dart/getRegistration.dart';
+import 'package:major_project__widget_testing/state/Registration.dart/getRegistrationProvider.dart';
 import 'package:major_project__widget_testing/state/defaulttemplateProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
@@ -46,13 +46,7 @@ class About extends StatelessWidget {
                       } else {
                         //go to form screen
 
-                        // final getRegistrationFormProvider =
-                        //   Provider.of<GetRegistrationFormProvider>(context,
-                        //       listen: false);
-
-                        //       getRegistrationFormProvider
-                        //   .getHackathonForm(defaultTemplateModel!.hackathons.id);
-
+                        
                         Navigator.pushNamed(
                           context,
                           '/getRegistration',

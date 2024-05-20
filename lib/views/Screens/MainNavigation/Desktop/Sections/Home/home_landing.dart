@@ -6,6 +6,7 @@ import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/createRegistrationform.dart';
+import 'package:major_project__widget_testing/views/Screens/GetRegistrationForm/getRegistrationForm.dart';
 
 class HomeLanding extends StatelessWidget {
   final VoidCallback onExploreTap;
@@ -30,8 +31,8 @@ class HomeLanding extends StatelessWidget {
                  Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => RegistrationForm(
-                                hackathonId: "",
+                          builder: (context) => GetRegistrationForm(
+                                
                               )));
                 },
                 child: Container(

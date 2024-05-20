@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/responsive/responsive_layout.dart';
-import 'package:major_project__widget_testing/state/Registration.dart/getRegistration.dart';
+import 'package:major_project__widget_testing/state/Registration.dart/getRegistrationProvider.dart';
 import 'package:major_project__widget_testing/views/Screens/GetRegistrationForm/Desktop/desktop_get_form.dart';
 import 'package:major_project__widget_testing/views/Screens/GetRegistrationForm/Desktop/desktop_get_registeration_form.dart';
 import 'package:provider/provider.dart';
