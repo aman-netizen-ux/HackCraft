@@ -135,7 +135,6 @@ class _SignInState extends State<SignIn> {
                       children: [
                         Container(
                           height: heightScaler(context, 35),
-                          // width: widthScaler(context, 130),
                           alignment: Alignment.center,
                           child: ElevatedButton(
                             onPressed: () async {
@@ -149,11 +148,14 @@ class _SignInState extends State<SignIn> {
                                       .additionalUserInfo!.isNewUser ==
                                   true) {
                                 showSnackBar(
-                                    "User does not exist ",
-                                    red2,
-                                    const Icon(
-                                        Icons.report_gmailerrorred_outlined),
-                                    context);
+                                  "User does not exist ",
+                                  red2,
+                                  const Icon(
+                                    Icons.report_gmailerrorred_outlined,
+                                    color: white,
+                                  ),
+                                  context,
+                                );
                                 FirebaseAuth.instance.signOut();
                                 userCredential.user!.delete();
                               } else {
@@ -241,7 +243,9 @@ class _SignInState extends State<SignIn> {
                                     "User does not exist ",
                                     red2,
                                     const Icon(
-                                        Icons.report_gmailerrorred_outlined),
+                                      Icons.report_gmailerrorred_outlined,
+                                      color: white,
+                                    ),
                                     context);
                                 FirebaseAuth.instance.signOut();
                                 userCredential.user!.delete();

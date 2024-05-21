@@ -13,12 +13,13 @@ import 'package:major_project__widget_testing/state/default_template_providers.d
 import 'package:major_project__widget_testing/state/galleryProvider.dart';
 import 'package:major_project__widget_testing/state/loginProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
-import 'package:major_project__widget_testing/utils/defaultTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
+import 'package:major_project__widget_testing/utils/snackBar.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/default_template.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/createRegistrationform.dart';
 import 'package:provider/provider.dart';
+import 'dart:async';
 
 class SidePanel extends StatefulWidget {
   SidePanel({super.key, required this.formKey, this.textinput});
@@ -31,8 +32,6 @@ class SidePanel extends StatefulWidget {
 }
 
 class _SidePanelState extends State<SidePanel> {
-  bool _isLoading = false;
-
   @override
   Widget build(BuildContext context) {
     final hackathonDetailsProvider =
@@ -45,8 +44,9 @@ class _SidePanelState extends State<SidePanel> {
         Provider.of<HackathonTextPropertiesProvider>(context);
     final hackathonContainerPropertiesProvider =
         Provider.of<HackathonContainerPropertiesProvider>(context);
-         final galleryProvider =
-        Provider.of<GalleryProvider>(context,);
+    final galleryProvider = Provider.of<GalleryProvider>(
+      context,
+    );
 
     List<GlobalKey<State<StatefulWidget>>> keyValues = [
       homeEdit,
@@ -56,11 +56,11 @@ class _SidePanelState extends State<SidePanel> {
       contactUsEdit
     ];
 
-    if (_isLoading) {
-      // Show loading indicator
+    // if (hackathonDetailsProvider.loadingPostHackathon) {
+    //   // Show loading indicator
 
-      return Center(child: CircularProgressIndicator());
-    }
+    //   return const Center(child: CircularProgressIndicator());
+    // }
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: scaleHeight(context, 45)),
@@ -85,7 +85,8 @@ class _SidePanelState extends State<SidePanel> {
                 } else if (result == 'Save') {
                   //TODO
                 } else if (result == 'Host') {
-                  if (widget.formKey.currentState!.validate() && galleryProvider.logoFile.isNotEmpty) {
+                  if (widget.formKey.currentState!.validate() &&
+                      galleryProvider.logoFile.isNotEmpty) {
                     widget.formKey.currentState!.save();
 
                     hostHackathon(
@@ -93,9 +94,9 @@ class _SidePanelState extends State<SidePanel> {
                         hackathonDetailsProvider,
                         hackathonTextPropertiesProvider,
                         hackathonContainerPropertiesProvider);
-                  }else if(galleryProvider.logoFile.isEmpty){
+                  } else if (galleryProvider.logoFile.isEmpty) {
                     print("logo fill kro");
-                    galleryProvider.logoError=true;
+                    galleryProvider.logoError = true;
                   }
                 } else if (result == 'Upload Image') {
                   final galleryProvider =
@@ -216,23 +217,42 @@ class _SidePanelState extends State<SidePanel> {
       HackathonContainerPropertiesProvider
           hackathonContainerPropertiesProvider) async {
     final loginProvider = Provider.of<LoginProvider>(context, listen: false);
-    setState(() {
-      _isLoading = true;
+    hackathonDetailsProvider.setLoadingPostHackathon(true);
+    Timer? timer;
+    timer = Timer(const Duration(seconds: 5), () {
+      if (hackathonDetailsProvider.loadingPostHackathon) {
+        showSnackBar(
+            "Error !! Hackthon not created",
+            red2,
+            const Icon(
+              Icons.report_gmailerrorred_outlined,
+              color: white,
+            ),
+            context);
+      }
     });
-
+    if (hackathonDetailsProvider.loadingPostHackathon) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const Center(child: CircularProgressIndicator());
+        },
+      );
+    }
     final galleryProvider =
         Provider.of<GalleryProvider>(context, listen: false);
-        List<String> imageResponse=[];
-         String logoResponse="";
+    List<String> imageResponse = [];
+    String logoResponse = "";
 
     if (galleryProvider.galleryImagesFile.isNotEmpty) {
-       imageResponse = await UploadImageToCloudinary()
+      imageResponse = await UploadImageToCloudinary()
           .uploadImage(galleryProvider.galleryImagesFile);
       print("imageResponse $imageResponse");
     }
 
     if (galleryProvider.logoFile.isNotEmpty) {
-       logoResponse = await UploadImageToCloudinary()
+      logoResponse = await UploadImageToCloudinary()
           .uploadLogo(galleryProvider.logoFile[0]);
       print("logoResponse $logoResponse");
     }
@@ -320,7 +340,10 @@ class _SidePanelState extends State<SidePanel> {
     //   "fields": [],
     //   "containers": []
     // }, context);
+    hackathonDetailsProvider.setLoadingPostHackathon(false);
+    timer.cancel();
 
+    Navigator.pop(context);
     if (hackathonId.isNotEmpty) {
       showDialog(
         context: context,
@@ -352,7 +375,7 @@ class _SidePanelState extends State<SidePanel> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Uhh-Ohh!'),
-            content: const Text('Something wet wrong'),
+            content: const Text('Something went wrong'),
             actions: [
               TextButton(
                 onPressed: () {
@@ -365,10 +388,6 @@ class _SidePanelState extends State<SidePanel> {
         },
       );
     }
-
-    setState(() {
-      _isLoading = false;
-    });
   }
 }
 

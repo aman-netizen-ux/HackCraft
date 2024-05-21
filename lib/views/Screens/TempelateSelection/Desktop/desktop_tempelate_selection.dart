@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/state/templateSelectionprovider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:major_project__widget_testing/utils/snackBar.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
@@ -131,7 +131,9 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
                                     borderRadius:
                                         BorderRadius.circular(rad5_1)),
                                 onChanged: (value) {
-                                  if (templateSelectionProvider.selectedTemplate != 0) {
+                                  if (templateSelectionProvider
+                                          .selectedTemplate !=
+                                      0) {
                                     if (value!) {
                                       // If checkbox is checked, show the terms and conditions popup
                                       showTermsAndConditions(context);
@@ -168,10 +170,6 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
                             ),
                           ],
                         ),
-
-                        //     ),
-                        // ),
-
                         ElevatedButton(
                           onPressed: () {
                             if (templateSelectionProvider.isTnCChecked!) {
@@ -200,8 +198,25 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
                                     context, '/customEditPortal');
                               } else {
                                 // TODO Create something to tell user to select card and check terms and conditions
+                                showSnackBar(
+                                    "Select any of the one card and check",
+                                    red2,
+                                    const Icon(
+                                      Icons.report_gmailerrorred_outlined,
+                                      color: white,
+                                    ),
+                                    context);
                               }
-                            } else {}
+                            } else {
+                              showSnackBar(
+                                  "Please check  the Terms and Condition ",
+                                  red2,
+                                  const Icon(
+                                    Icons.report_gmailerrorred_outlined,
+                                    color: white,
+                                  ),
+                                  context);
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.only(

@@ -8,6 +8,15 @@ import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart'
 import 'package:provider/provider.dart';
 
 class HackathonDetailsProvider with ChangeNotifier {
+  bool _loadingPostHackathon = false;
+
+  bool get loadingPostHackathon => _loadingPostHackathon;
+
+  void setLoadingPostHackathon(bool loading) {
+    _loadingPostHackathon = loading;
+    notifyListeners();
+  }
+
   var logger = Logger();
 //not being used currently
   List<Round> _temporaryRoundList = [
@@ -133,28 +142,27 @@ class HackathonDetailsProvider with ChangeNotifier {
 
   DefaultTemplateApiResponse _hackathonDetails = DefaultTemplateApiResponse(
     hackathons: Hackathon(
-      // Provide default or initial values here
-      id: "",
-      logo:"",
-      name: '',
-      organisationName: '',
-      modeOfConduct: '',
-      deadline: '',
-      teamSize: '',
-      visible: '',
-      startDateTime: '',
-      about: '',
-      brief: '',
-      website: '',
-      fee: '',
-      venue: '',
-      contact1Name: '',
-      contact1Number: '',
-      contact2Name: '',
-      contact2Number: '',
-      totalRounds: '',
-     images: []
-    ),
+        // Provide default or initial values here
+        id: "",
+        logo: "",
+        name: '',
+        organisationName: '',
+        modeOfConduct: '',
+        deadline: '',
+        teamSize: '',
+        visible: '',
+        startDateTime: '',
+        about: '',
+        brief: '',
+        website: '',
+        fee: '',
+        venue: '',
+        contact1Name: '',
+        contact1Number: '',
+        contact2Name: '',
+        contact2Number: '',
+        totalRounds: '',
+        images: []),
     rounds: [
       Round(
           serialNumber: 1,
@@ -179,7 +187,7 @@ class HackathonDetailsProvider with ChangeNotifier {
             textColor: '',
             underline: false,
             upperCase: false,
-            lineHeight:0,
+            lineHeight: 0,
           )),
     ),
     containers: List.generate(
@@ -188,15 +196,14 @@ class HackathonDetailsProvider with ChangeNotifier {
           name: '',
           type: '',
           containerProperties: ContainerProperties(
-            borderColor: '',
-            height: 0,
-            color: '',
-            borderWidth: 0,
-            blurRadius: 0,
-            borderRadius: 0,
-            boxShadowColor: '',
-            focusedBorderColor: ''
-          )),
+              borderColor: '',
+              height: 0,
+              color: '',
+              borderWidth: 0,
+              blurRadius: 0,
+              borderRadius: 0,
+              boxShadowColor: '',
+              focusedBorderColor: '')),
     ),
   );
 
@@ -321,18 +328,17 @@ class HackathonDetailsProvider with ChangeNotifier {
           name: '',
           type: '',
           textProperties: TextFieldProperties(
-            size: 0,
-            align: '',
-            font: '',
-            fontWeight: 0,
-            italics: false,
-            letterSpacing: -1,
-            strikethrogh: false,
-            textColor: '',
-            underline: false,
-            upperCase: false,
-            lineHeight:0
-          )),
+              size: 0,
+              align: '',
+              font: '',
+              fontWeight: 0,
+              italics: false,
+              letterSpacing: -1,
+              strikethrogh: false,
+              textColor: '',
+              underline: false,
+              upperCase: false,
+              lineHeight: 0)),
     ));
   }
 
@@ -349,13 +355,13 @@ class HackathonDetailsProvider with ChangeNotifier {
 
   // Container
 
-  List<ContainerPropertiesArray> get containersProperties => _hackathonDetails.containers;
+  List<ContainerPropertiesArray> get containersProperties =>
+      _hackathonDetails.containers;
 
   set containersProperties(List<ContainerPropertiesArray> value) {
     _hackathonDetails.containers = value;
     notifyListeners();
   }
-
 
   void addContainerPropertiesInFields() {
     _hackathonDetails.containers.addAll(List.generate(
@@ -364,7 +370,14 @@ class HackathonDetailsProvider with ChangeNotifier {
           name: '',
           type: '',
           containerProperties: ContainerProperties(
-              borderColor: '', height: 0, color: '', borderWidth: 0, focusedBorderColor: '', blurRadius: 0, borderRadius: 0, boxShadowColor: '')),
+              borderColor: '',
+              height: 0,
+              color: '',
+              borderWidth: 0,
+              focusedBorderColor: '',
+              blurRadius: 0,
+              borderRadius: 0,
+              boxShadowColor: '')),
     ));
   }
 

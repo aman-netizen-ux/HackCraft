@@ -84,14 +84,14 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                           height: heightScaler(context, 35),
                           // width: widthScaler(context, 130),
                           alignment: Alignment.center,
-                         
+
                           child: ElevatedButton(
                             onPressed: () async {
                               setState(() {
                                 isLoading = true;
                               });
                               UserCredential user = await handleGoogleSignIn();
-                              
+
                               if (user.additionalUserInfo!.isNewUser == false) {
                                 debugPrint(
                                   'An account exits with the given email address.',
@@ -101,11 +101,12 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                     "An account exits with the given email address.",
                                     red2,
                                     const Icon(
-                                        Icons.report_gmailerrorred_outlined),
+                                      Icons.report_gmailerrorred_outlined,
+                                      color: white,
+                                    ),
                                     context);
                                 FirebaseAuth.instance.signOut();
                               } else {
-
                                 //
                                 String? displayName = user.user!.displayName;
                                 loginProvider.setEmail(user.user!.email!);
@@ -200,7 +201,7 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                         Container(
                           height: heightScaler(context, 35),
                           // width: widthScaler(context, 130),
-                           alignment: Alignment.center,
+                          alignment: Alignment.center,
                           child: ElevatedButton(
                             onPressed: () async {
                               setState(() {
@@ -216,7 +217,9 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                     "An account exits with the given email address.",
                                     red2,
                                     const Icon(
-                                        Icons.report_gmailerrorred_outlined),
+                                      Icons.report_gmailerrorred_outlined,
+                                      color: white,
+                                    ),
                                     context);
                                 FirebaseAuth.instance.signOut();
                               } else {
