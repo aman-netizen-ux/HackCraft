@@ -233,6 +233,7 @@ class CustomEditPortal extends ChangeNotifier {
               }
             });
           }
+          debugPrint('at 236 in build widget $node');
           currentWidget = CustomContainer(
               node: node,
               onTap: () {
