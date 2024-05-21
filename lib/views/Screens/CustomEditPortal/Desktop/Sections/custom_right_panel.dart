@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Components/separator.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/custom_canvas.dart';
+import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/DefaultRoundsSection/CustomToolbar/custom_toolbar.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/StackedToolBar/stackedToolBar.dart';
-import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/toolbar.dart';
 
 class CustomRightPanel extends StatefulWidget {
   const CustomRightPanel({super.key});
@@ -30,7 +30,7 @@ class _CustomRightPanelState extends State<CustomRightPanel> {
         children: [
           Column(
             children: [
-              const ToolBar(),
+              const CustomToolBar(),
               Expanded(flex: 0528, child: Container()),
               CustomCanvas(
                   // formKey: widget.formKey,
