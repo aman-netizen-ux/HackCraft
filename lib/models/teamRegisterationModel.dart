@@ -1,3 +1,4 @@
+
 // class TeamRegisterationModel {
 //    TeamModel team;
 //    List<MemberModel> member;
@@ -118,7 +119,40 @@
 // class AdditionalDataModel{
 
 //   String question;
-//   String typr;
+//   String type;
 
-//   AdditionalDataModel({});
+//   AdditionalDataModel({
+//     required this.question,
+//     required this.type
+//   });
+
+//   factory AdditionalDataModel.fromJson(Map<String, dynamic> json) {
+//     switch(json['type']){
+//     case 'date':
+//         return DateFieldAnswerModel.fromJson(json);
+//       case 'file':
+//         return FileFieldAnswerModel.fromJson(json);
+//       case 'longAnswer':
+//         return LongAnswerFieldAnswerModel.fromJson(json);
+//       case 'radio':
+//         return RadioFieldAnswerModel.fromJson(json);
+//       case 'shortAnswer':
+//         return ShortAnswerFieldAnswerModel.fromJson(json);
+//       case 'stepper':
+//         return StepperAnswerModel.fromJson(json);
+//       case 'range':
+//         return RangeAnswerModel.fromJson(json);
+//       case 'slider':
+//         return SliderAnswerModel.fromJson(json);
+//       case 'tag':
+//         return TagAnswerModel.fromJson(json);
+//       case 'linear':
+//         return LinearAnswerModel.fromJson(json);
+//       case 'phone':
+//         return PhoneNumberAnswerModel.fromJson(json);
+//       default:
+//         throw Exception('Invalid field type');
+//     }
+
+//   }
 // }

@@ -52,8 +52,8 @@ class _DesktopGetRegisterationFormState
               : userType == "pending"
                   ? someInt
                   : -1);
-      // await getRegistrationFormProvider.getHackathonForm(hackathonId);
-      // print("section: ${getRegistrationFormProvider.singleForm.sections[0].sectionName}");
+      await getRegistrationFormProvider.getHackathonForm(hackathonId);
+      print("section: ${getRegistrationFormProvider.singleForm.sections[0].sectionName}");
       getRegistrationFormProvider.refreshTabs();
       //TODO: also hit the prefilled data api
     });
