@@ -110,10 +110,9 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                             onTap: () {
                               createRegistrationProvider.formcontroller
                                   .animateTo(index);
-                                 
+
                               // createRegistrationProvider.resetEditingState(1);
                             },
-                           
                             child: Tab(
                               child: Padding(
                                 padding: EdgeInsets.only(
@@ -137,20 +136,22 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                                                         border:
                                                             InputBorder.none),
                                                 style: GoogleFonts.firaSans(
-                                                  color:
-                                                      black1,
+                                                  color: black1,
                                                   fontSize:
                                                       heightScaler(context, 14),
                                                   fontWeight: FontWeight.w400,
                                                 ),
                                                 enabled: newCurrentTab,
-                                                onTapOutside: (PointerDownEvent e) {
-                                                   
+                                                onTapOutside:
+                                                    (PointerDownEvent e) {
                                                   createRegistrationProvider
-                                                      .updateKeyAtIndex(index,
+                                                      .updateKeyAtIndex(
+                                                          index,
                                                           createRegistrationProvider
-                                                        .tab[index].text, context);
-                                                        FocusScope.of(context).unfocus();
+                                                              .tab[index].text,
+                                                          context);
+                                                  FocusScope.of(context)
+                                                      .unfocus();
                                                 },
                                               )
                                             : Text(keys[index],
@@ -308,15 +309,16 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                                 .forEach((key, fields) {
                               if (key != "General" && key != "Team Details") {
                                 int numberOfQuestions = fields.length;
+                                if (numberOfQuestions > 0) {
+                                  Map<String, dynamic> section = {
+                                    "serial_number": serialNumber,
+                                    "section_name": key,
+                                    "number_of_questions": numberOfQuestions
+                                  };
 
-                                Map<String, dynamic> section = {
-                                  "serial_number": serialNumber,
-                                  "section_name": key,
-                                  "number_of_questions": numberOfQuestions
-                                };
-
-                                sections.add(section);
-                                serialNumber++;
+                                  sections.add(section);
+                                  serialNumber++;
+                                }
                               }
                             });
 
