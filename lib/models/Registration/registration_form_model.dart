@@ -101,6 +101,10 @@ class FieldModel {
         return PhoneNumberModel.fromJson(json);
       case 'check':
         return CheckBoxModel.fromJson(json);
+      case 'toggle':
+        return ToggleModel.fromJson(json);
+       case 'dropdown':
+        return DropDownModel.fromJson(json);
       default:
         throw Exception('Invalid field type');
     }
