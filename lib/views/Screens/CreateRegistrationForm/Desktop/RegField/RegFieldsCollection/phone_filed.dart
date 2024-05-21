@@ -59,78 +59,72 @@ class _PhoneFieldState extends State<PhoneField> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            decoration: const BoxDecoration(
-                              color: Color(0xffE6E5E5),
-                              borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(10),
-                                  topLeft: Radius.circular(10)),
+                  Container(
+                    width: scaleWidth(context, 300),
+                    decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          decoration: const BoxDecoration(
+                            color: Color(0xffE6E5E5),
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(10),
+                                topLeft: Radius.circular(10)),
+                          ),
+                          height: scaleHeight(context, 34),
+                          width: scaleWidth(context, 60),
+                          alignment: Alignment.center,
+                          child: Text(
+                            '+91',
+                            style: TextStyle(
+                              fontSize: scaleHeight(context, 14),
+                              fontWeight: FontWeight.w400,
+                              color: black1,
                             ),
+                          ),
+                        ),
+                        Expanded(
+                          child: SizedBox(
                             height: scaleHeight(context, 34),
-                            width: scaleWidth(context, 60),
-                            alignment: Alignment.center,
-                            child: Text(
-                              '+91',
-                              style: TextStyle(
+                            child: TextFormField(
+                              controller: _phoneController,
+                              style: GoogleFonts.firaSans(
                                 fontSize: scaleHeight(context, 14),
                                 fontWeight: FontWeight.w400,
                                 color: black1,
                               ),
-                            ),
-                          ),
-                          Expanded(
-                            child: SizedBox(
-                              height: scaleHeight(context, 34),
-                              child: TextFormField(
-                                controller: _phoneController,
-                                style: GoogleFonts.firaSans(
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: scaleWidth(context, 20),
+                                    vertical: scaleHeight(context, 10)),
+                                isDense: true,
+                                hintText: 'Enter phone number',
+                                hintStyle: GoogleFonts.firaSans(
                                   fontSize: scaleHeight(context, 14),
                                   fontWeight: FontWeight.w400,
-                                  color: black1,
+                                  color: concreteGrey,
                                 ),
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: scaleWidth(context, 20),
-                                      vertical: scaleHeight(context, 10)),
-                                  isDense: true,
-                                  hintText: 'Enter phone number',
-                                  hintStyle: GoogleFonts.firaSans(
-                                    fontSize: scaleHeight(context, 14),
-                                    fontWeight: FontWeight.w400,
-                                    color: concreteGrey,
-                                  ),
-                                  border: InputBorder.none,
-                                ),
-                                enabled: !widget.create,
+                                border: InputBorder.none,
                               ),
+                              enabled: !widget.create,
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                  Expanded(
-                    child: SizedBox(
-                      width: scaleWidth(context, 100),
-                    ),
+                  const Spacer(),
+                 Text(
+                    "REQUIRED",
+                    style: GoogleFonts.getFont(fontFamily2,
+                        fontSize: scaleHeight(context, 16),
+                        color:
+                            widget.required ? midnigthBlue : Colors.transparent,
+                        fontWeight: FontWeight.w500),
                   ),
-                  widget.required
-                      ? Text(
-                          "REQUIRED",
-                          style: GoogleFonts.getFont(fontFamily2,
-                              fontSize: scaleHeight(context, 16),
-                              color: midnigthBlue,
-                              fontWeight: FontWeight.w500),
-                        )
-                      : Container(),
                   SizedBox(
                     width: widget.create ? scaleWidth(context, 50) : 0,
                   )

@@ -152,9 +152,9 @@ class _SignInState extends State<SignIn> {
                                 final status = await registerCheck(_email);
                                 if (status) {
                                   // ignore: use_build_context_synchronously
-                                  Navigator.pushNamed(
+                                  Navigator.pushNamedAndRemoveUntil(
                                     context,
-                                    '/mainNavigation',
+                                    '/mainNavigation' ,(route) => false
                                   );
                                 } else {
                                   loginProvider.setCurrentIndex(2);

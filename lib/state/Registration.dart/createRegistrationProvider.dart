@@ -64,7 +64,7 @@ class CreateRegistrationProvider with ChangeNotifier {
       ShortAnswerFieldModel(
           errorText: "Invalid name",
           hint: "Enter your name registerd using photo id",
-          label: "full name",
+          label: "Full name",
           required: true,
           serialNumber: 1,
           validation: "String",
@@ -79,8 +79,8 @@ class CreateRegistrationProvider with ChangeNotifier {
           type: FieldTypes.shortAnswer),
       ShortAnswerFieldModel(
           errorText: "Invalid college",
-          hint: "Enter your valid College",
-          label: "College name",
+          hint: "Enter your College Name",
+          label: "College Name",
           required: true,
           serialNumber: 3,
           validation: "String",
@@ -93,7 +93,8 @@ class CreateRegistrationProvider with ChangeNotifier {
         type: FieldTypes.dropdown,
         options: [
           RegistrationOption(text: "Male ", serialNumber: 1),
-          RegistrationOption(text: "Female ", serialNumber: 2)
+          RegistrationOption(text: "Female ", serialNumber: 2),
+           RegistrationOption(text: "Other ", serialNumber: 3)
         ],
       ),
       PhoneNumberModel(

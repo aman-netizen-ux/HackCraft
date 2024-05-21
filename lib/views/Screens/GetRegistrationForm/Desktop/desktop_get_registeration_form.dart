@@ -8,6 +8,7 @@ import 'package:major_project__widget_testing/state/Registration.dart/getRegistr
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/views/Components/hollowCircle.dart';
+import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/RegFieldsCollection/short_ans.dart';
 import 'package:provider/provider.dart';
 
 class DesktopGetRegisterationForm extends StatefulWidget {
@@ -22,34 +23,37 @@ class _DesktopGetRegisterationFormState
     extends State<DesktopGetRegisterationForm> {
   String userType = "";
   String hackathonId = "";
-  String hackathonName="";
+  String hackathonName = "";
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("got into init");
-
-
-  
 
     Future.delayed(Duration.zero, () {
-      print("im in future");
       final args = ModalRoute.of(context)?.settings.arguments as Map?;
       if (args != null && args.containsKey('hackathonId')) {
         print(
-            "args were not null and args['hackathonId']: ${args['hackathonId']} ");
+            "args were not null and args['hackathonId']: ${args['hackathonId']} ${args['userType']}  ${args['hackathonName']}");
         setState(() {
           hackathonId = args['hackathonId'];
-          userType= args['userType'];
-          hackathonName= args['hackathonName'];
-          
+          userType = args['userType'];
+          hackathonName = args['hackathonName'];
         });
       }
     }).then((value) async {
       final getRegistrationFormProvider =
           Provider.of<GetRegistrationFormProvider>(context, listen: false);
-      print("im in then");
-      await getRegistrationFormProvider.getHackathonForm(hackathonId);
+
+      int someInt = 2; //TODO: change with member index
+
+      getRegistrationFormProvider
+          .setSelectedParticipantTab(userType == "firstuser"
+              ? 0
+              : userType == "pending"
+                  ? someInt
+                  : -1);
+      // await getRegistrationFormProvider.getHackathonForm(hackathonId);
+      // print("section: ${getRegistrationFormProvider.singleForm.sections[0].sectionName}");
       getRegistrationFormProvider.refreshTabs();
       //TODO: also hit the prefilled data api
     });
@@ -202,7 +206,12 @@ class MiddleFormPart extends StatelessWidget {
                   indicatorColor: black1,
                   controller: getRegistrationFormProvider.getformcontroller,
                   tabs: List.generate(
-                      getRegistrationFormProvider.singleForm.sections.length+2, (index) {
+                      getRegistrationFormProvider.singleForm.sections.length +
+                                  getRegistrationFormProvider
+                                      .selectedParticipantTab ==
+                              0
+                          ? 2
+                          : 1, (index) {
                     return InkWell(
                         onTap: () {
                           getRegistrationFormProvider.getformcontroller
@@ -210,8 +219,20 @@ class MiddleFormPart extends StatelessWidget {
                         },
                         child: Tab(
                             child: Text(
-                              index==0? "General":index==getRegistrationFormProvider.singleForm.sections.length+1?"Team Details":
-                              getRegistrationFormProvider.singleForm.sections[index-1].sectionName,
+                                index == 0
+                                    ? "General"
+                                    : index ==
+                                                getRegistrationFormProvider
+                                                        .singleForm
+                                                        .sections
+                                                        .length +
+                                                    1 &&
+                                            getRegistrationFormProvider
+                                                    .selectedParticipantTab ==
+                                                0
+                                        ? "Team Details"
+                                        : getRegistrationFormProvider.singleForm
+                                            .sections[index - 1].sectionName,
                                 style: GoogleFonts.getFont(
                                   fontFamily2,
                                   fontSize: scaleWidth(context, 18),
@@ -220,15 +241,98 @@ class MiddleFormPart extends StatelessWidget {
                                 ))));
                   }))),
 
-          SizedBox(
-            height: scaleHeight(context, 36.76),
-          ),
           Expanded(
               child: TabBarView(
             controller: getRegistrationFormProvider.getformcontroller,
-            children: List.generate(getRegistrationFormProvider.singleForm.sections.length+2,
-                (index) {
-              return Container(color: Colors.blue[100 * (index + 1)]);
+            children: List.generate(
+                getRegistrationFormProvider.singleForm.sections.length +
+                            getRegistrationFormProvider
+                                .selectedParticipantTab ==
+                        0
+                    ? 2
+                    : 1, (index) {
+              final int sectionIndex =
+                  getRegistrationFormProvider.getformcontroller.index;
+              final List<dynamic> allFieldsList =
+                  getRegistrationFormProvider.singleForm.fields;
+              return Container(
+                  // color: Colors.blue[100 * (index + 1)],
+                  padding: EdgeInsets.only(
+                      left: scaleWidth(context, 159),
+                      right: scaleWidth(context, 5)),
+                  child: SingleChildScrollView(
+                    padding: EdgeInsets.only(right: scaleWidth(context, 108)),
+                    child: Column(children: [
+                      SizedBox(
+                        height: scaleHeight(context, 36.76),
+                      ),
+                      ...List.generate(
+                          sectionIndex == 0
+                              ? getRegistrationFormProvider
+                                  .gereralSectionFieldsList.length
+                              : sectionIndex ==
+                                          getRegistrationFormProvider
+                                                  .singleForm.sections.length +
+                                              1 &&
+                                      getRegistrationFormProvider
+                                              .selectedParticipantTab ==
+                                          0
+                                  ? getRegistrationFormProvider
+                                      .teamDetailsSectionFieldsList.length
+                                  : getRegistrationFormProvider
+                                      .singleForm
+                                      .sections[sectionIndex - 1]
+                                      .numberOfQuestions, (index) {
+                        if (sectionIndex == 0) {
+                          // return Container(height: 50, width: double.infinity, color:Colors.orange, margin: EdgeInsets.all(8),);
+                          return Row(
+                            children: [
+                              getRegistrationFormProvider.getField(
+                                  getRegistrationFormProvider
+                                      .gereralSectionFieldsList[index].type,
+                                  getRegistrationFormProvider
+                                      .gereralSectionFieldsList[index])
+                            ],
+                          );
+                        } else if (sectionIndex ==
+                                getRegistrationFormProvider
+                                        .singleForm.sections.length +
+                                    1 &&
+                            getRegistrationFormProvider
+                                    .selectedParticipantTab ==
+                                0) {
+                          return Row(
+                            children: [
+                              getRegistrationFormProvider.getField(
+                                  getRegistrationFormProvider
+                                      .teamDetailsSectionFieldsList[index].type,
+                                  getRegistrationFormProvider
+                                      .teamDetailsSectionFieldsList[index])
+                            ],
+                          );
+                        } else {
+                          int sumOfFieldsTillPrevSection = sectionIndex - 1 == 0
+                              ? 0
+                              : getRegistrationFormProvider.singleForm.sections
+                                  .sublist(0, sectionIndex - 1)
+                                  .fold(
+                                      0,
+                                      (prev, elem) =>
+                                          prev + elem.numberOfQuestions);
+
+                          int currentFieldIndex =
+                              sectionIndex + index + sumOfFieldsTillPrevSection;
+                          return Row(
+                            children: [
+                              getRegistrationFormProvider.getField(
+                                  allFieldsList[currentFieldIndex].type,
+                                  allFieldsList[currentFieldIndex])
+                            ],
+                          );
+                        }
+                      })
+                    ]),
+                  ));
             }),
           )),
           SizedBox(
@@ -255,22 +359,38 @@ class MiddleFormPart extends StatelessWidget {
                   height: scaleHeight(context, 40),
                   width: scaleWidth(context, 120.85),
                   alignment: Alignment.center,
-                   padding: EdgeInsets.only(left: scaleWidth(context,12.85)),
+                  padding: EdgeInsets.only(left: scaleWidth(context, 12.85)),
                   decoration: BoxDecoration(
-                      color: getRegistrationFormProvider.getformcontroller.index==0? null: const Color(0xFFD9D9D9),
-                      border: getRegistrationFormProvider.getformcontroller.index==0? Border.all(color: const Color(0xFFD9D9D9)): null,
+                      color:
+                          getRegistrationFormProvider.getformcontroller.index ==
+                                  0
+                              ? null
+                              : const Color(0xFFD9D9D9),
+                      border:
+                          getRegistrationFormProvider.getformcontroller.index ==
+                                  0
+                              ? Border.all(color: const Color(0xFFD9D9D9))
+                              : null,
                       borderRadius: BorderRadius.circular(5)),
                   child: Row(
                     children: [
-                       Icon(Icons.arrow_back, 
-                       size: 16,
-                      color:  getRegistrationFormProvider.getformcontroller.index==0?const Color(0xFFD9D9D9):const Color(0xFF3C3C3C)),
+                      Icon(Icons.arrow_back,
+                          size: 16,
+                          color: getRegistrationFormProvider
+                                      .getformcontroller.index ==
+                                  0
+                              ? const Color(0xFFD9D9D9)
+                              : const Color(0xFF3C3C3C)),
                       SizedBox(width: scaleWidth(context, 16)),
                       Text('Previous',
                           style: GoogleFonts.getFont(
                             fontFamily2,
                             fontSize: scaleWidth(context, 16),
-                            color: getRegistrationFormProvider.getformcontroller.index==0?const Color(0xFFD9D9D9):const Color(0xFF3C3C3C),
+                            color: getRegistrationFormProvider
+                                        .getformcontroller.index ==
+                                    0
+                                ? const Color(0xFFD9D9D9)
+                                : const Color(0xFF3C3C3C),
                             fontWeight: FontWeight.w400,
                           )),
                     ],
@@ -288,7 +408,7 @@ class MiddleFormPart extends StatelessWidget {
                   height: scaleHeight(context, 40),
                   width: scaleWidth(context, 120.85),
                   margin: EdgeInsets.only(right: scaleWidth(context, 53.15)),
-                  padding: EdgeInsets.only(right: scaleWidth(context,12.85)),
+                  padding: EdgeInsets.only(right: scaleWidth(context, 12.85)),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       color: const Color(0xFFD9D9D9),
@@ -296,16 +416,21 @@ class MiddleFormPart extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(getRegistrationFormProvider.getformcontroller.index==getRegistrationFormProvider.singleForm.sections.length+1
-                      ?"Submit":  'Next',
+                      Text(
+                          getRegistrationFormProvider.getformcontroller.index ==
+                                  getRegistrationFormProvider
+                                          .singleForm.sections.length +
+                                      1
+                              ? "Submit"
+                              : 'Next',
                           style: GoogleFonts.getFont(
                             fontFamily2,
                             fontSize: scaleWidth(context, 16),
                             color: const Color(0xFF3C3C3C),
                             fontWeight: FontWeight.w400,
                           )),
-                           SizedBox(width: scaleWidth(context, 16)),
-                      const Icon(Icons.arrow_forward, color: black1, size:16),
+                      SizedBox(width: scaleWidth(context, 16)),
+                      const Icon(Icons.arrow_forward, color: black1, size: 16),
                     ],
                   ),
                 ),
