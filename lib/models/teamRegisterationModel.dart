@@ -1,158 +1,389 @@
+import 'package:major_project__widget_testing/constants/enums.dart';
 
-// class TeamRegisterationModel {
-//    TeamModel team;
-//    List<MemberModel> member;
+class TeamRegisterationModel {
+  TeamModel team;
+  List<MemberModel> members;
 
-//   TeamRegisterationModel({
-//     required this.team,
-//     required this.member,
-//   });
+  TeamRegisterationModel({
+    required this.team,
+    required this.members,
+  });
 
-//   factory TeamRegisterationModel.fromJson(Map<String, dynamic> json) {
-//     var membersList = json['members'] as List;
-//     List<MemberModel> members = membersList.map((memberJson) => MemberModel.fromJson(memberJson)).toList();
-//     return TeamRegisterationModel(
-//         team: TeamModel.fromJson(json['team']),
-//         member: members);
-//   }
+  factory TeamRegisterationModel.fromJson(Map<String, dynamic> json) {
+    var membersList = json['members'] as List;
+    List<MemberModel> members = membersList
+        .map((memberJson) => MemberModel.fromJson(memberJson))
+        .toList();
+    return TeamRegisterationModel(
+        team: TeamModel.fromJson(json['team']), members: members);
+  }
 
-  
-// }
+  Map<String, dynamic> toJson() {
+    return {
+      'team': team.toJson(),
+      'members': members.map((member) => member.toJson()).toList(),
+    };
+  }
+}
 
+class TeamModel {
+  String teamName;
+  int teamSize;
 
-// class TeamModel {
-//    String teamName;
-//    int teamSize;
+  TeamModel({
+    required this.teamName,
+    required this.teamSize,
+  });
 
-//   TeamModel({
-//     required this.teamName,
-//     required this.teamSize,
-//   });
+  factory TeamModel.fromJson(Map<String, dynamic> json) {
+    return TeamModel(
+        teamName: json['team_name'], teamSize: json['number_of_member']);
+  }
 
-//   factory TeamModel.fromJson(Map<String, dynamic> json) {
-//     return TeamModel(
-//         teamName: json['team_name'],
-//         teamSize: json['number_of_member']);
-//   }
+   Map<String, dynamic> toJson() {
+    return {
+      'team_name': teamName,
+      'number_of_member': teamSize,
+    };
+  }
+}
 
-  
-// }
+class MemberModel {
+  // This can be a map with dynamic values to handle different structures.
+  Map<String, dynamic> details;
 
-// class MemberModel {
-//    Map<String, List<MemberDataModel>> details;
+  MemberModel({
+    required this.details,
+  });
 
-//   MemberModel({
-//     required this.details,
-//   });
+  factory MemberModel.fromJson(Map<String, dynamic> json) {
+    Map<String, dynamic> detailMap = {};
+    json.forEach((key, value) {
+      if (value is List) {
+        // Check if the items in the list are map (which indicates a group of MemberDataModel)
+        if (value.isNotEmpty && value.first is Map) {
+          // Parse it as a list of MemberDataModel
+          detailMap[key] = value
+              .map((item) =>
+                  MemberDataModel.fromJson(item as Map<String, dynamic>))
+              .toList();
+        } else {
+          // It's a list but not of maps, store directly
+          detailMap[key] = value;
+        }
+      } else {
+        // It's not a list, store the value directly (e.g., string)
+        detailMap[key] = value;
+      }
+    });
+    return MemberModel(details: detailMap);
+  }
 
-//   // factory MemberModel.fromJson(Map<String, dynamic> json) {
-//   //   // Remove the fixed key and store all keys in the map
-//   //   return MemberModel(details: json.map((key, value) => MapEntry(key, value.toString())));
-//   // }
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+    details.forEach((key, value) {
+      if (value is List) {
+        // Check if the items in the list are instances of MemberDataModel
+        if (value.isNotEmpty && value.first is MemberDataModel) {
+          // Serialize it as a list of MemberDataModel
+          json[key] = value.map((item) => (item as MemberDataModel).toJson()).toList();
+        } else {
+          // It's a list but not of MemberDataModel, store directly
+          json[key] = List.from(value);
+        }
+      } else {
+        // It's not a list, store the value directly
+        json[key] = value;
+      }
+    });
+    return json;
+  }
+}
 
-//   factory MemberModel.fromJson(Map<String, dynamic> json) {
-//     var detailMap = <String, List<MemberDataModel>>{};
-//     json.forEach((key, value) {
-//       // Assuming value is a list of maps representing MemberDataModels
-//       List<MemberDataModel> dataList = (value as List)
-//           .map((item) => MemberDataModel.fromJson(item as Map<String, dynamic>))
-//           .toList();
-//       detailMap[key] = dataList;
-//     });
-//     return MemberModel(details: detailMap);
-//   }
-// }
+class MemberDataModel {
+  RequiredDataModel requiredData;
+  bool isLeader;
+  List<dynamic> additionalData;
 
+  MemberDataModel({
+    required this.requiredData,
+    required this.isLeader,
+    required this.additionalData,
+  });
 
-// class MemberDataModel{
-//  RequiredDataModel requiredData;
-//  bool isLeader;
-//  List<dynamic> additionalData;
+  factory MemberDataModel.fromJson(Map<String, dynamic> json) {
+    return MemberDataModel(
+      requiredData: RequiredDataModel.fromJson(json['required_data']),
+      isLeader: json['is_leader'],
+      additionalData: List<dynamic>.from(
+          json['additional_data'].map((x) => AdditionalDataModel.fromJson(x))),
+    );
+  }
+Map<String, dynamic> toJson() {
+    return {
+      'required_data': requiredData.toJson(),
+      'is_leader': isLeader,
+      'additional_data': additionalData.map((x) => x.toJson()).toList(),
+    };
+  }
+   
+}
 
-// MemberDataModel({
-// required this.requiredData,
-// required this.isLeader,
-// required this.additionalData,
-// });
+class RequiredDataModel {
+  String participantEmail;
+  String participantName;
+  String participantPhone;
+  String participantGender;
+  String participantCollege;
 
-// factory MemberDataModel.fromJson(Map<String, dynamic> json) {
-//     return MemberDataModel(
-//         requiredData: RequiredDataModel.fromJson(json['required_data']),
-//         isLeader: json['is_leader'],
-//         additionalData:List<dynamic>.from(json['additional_data'].map((x) => AdditionalDataModel.fromJson(x))),
-       
-//         );
-//   }
+  RequiredDataModel({
+    required this.participantEmail,
+    required this.participantName,
+    required this.participantPhone,
+    required this.participantGender,
+    required this.participantCollege,
+  });
 
-// }
+  factory RequiredDataModel.fromJson(Map<String, dynamic> json) {
+    return RequiredDataModel(
+      participantName: json['participant_name'],
+      participantEmail: json['participant_email'],
+      participantPhone: json['participant_phone'],
+      participantGender: json['participant_gender'],
+      participantCollege: json['participant_college'],
+    );
+  }
 
+   Map<String, dynamic> toJson() {
+    return {
+      'participant_name': participantName,
+      'participant_email': participantEmail,
+       'participant_phone': participantPhone,
+      'participant_gender': participantGender,
+       'participant_college': participantCollege,
+    };
+  }
+}
 
-// class RequiredDataModel{
-//  String participantEmail;
-//  String participantName;
-//  String participantPhone;
-//  String participantGender;
-//  String participantCollege;
+class AdditionalDataModel {
+  String question;
+  FieldTypes type;
+  int serialNumber;
 
-// RequiredDataModel({
-// required this.participantEmail, 
-// required this.participantName, 
-// required this.participantPhone,
-// required  this.participantGender, 
-// required this.participantCollege, 
-// });
+  AdditionalDataModel(
+      {required this.question, required this.type, required this.serialNumber});
 
-// factory RequiredDataModel.fromJson(Map<String, dynamic> json) {
-//     return RequiredDataModel(
-//         participantName: json['participant_name'],
-//          participantEmail: json['participant_email'],
-//           participantPhone: json['participant_phone'],
-//            participantGender: json['participant_gender'],
-//             participantCollege: json['participant_college'],
-//         );
-//   }
+  factory AdditionalDataModel.fromJson(Map<String, dynamic> json) {
+    switch (json['type']) {
+      case 'date':
+        return StringAnswerModel.fromJson(json);
+      // case 'file':
+      //   return FileFieldAnswerModel.fromJson(json);
+      case 'longAnswer':
+        return StringAnswerModel.fromJson(json);
+      case 'radio':
+        return MapAnswerModel.fromJson(json);
+      case 'shortAnswer':
+        return StringAnswerModel.fromJson(json);
+      case 'stepper':
+        return OneIntAnswerModel.fromJson(json);
+      case 'range':
+        return TwoIntAnswerModel.fromJson(json);
+      case 'slider':
+        return OneIntAnswerModel.fromJson(json);
+      case 'tag':
+        return MapAnswerModel.fromJson(json);
+      case 'linear':
+        return OneIntAnswerModel.fromJson(json); //TODO: need to update
+      case 'phone':
+        return StringAnswerModel.fromJson(json);
+      case 'check':
+        return MapAnswerModel.fromJson(json);
+      case 'toggle':
+        return BoolAnswerModel.fromJson(json);
+      // case 'dropdown':
+      //   return DropDownAnswerModel.fromJson(json); //TODO: need to update
+      default:
+        throw Exception('Invalid field type');
+    }
+  }
+}
 
-// }
+class StringAnswerModel extends AdditionalDataModel {
+  String input;
+  StringAnswerModel({
+    required int serialNumber,
+    required String question,
+    required FieldTypes type,
+    required this.input,
+  }) : super(
+          serialNumber: serialNumber,
+          question: question,
+          type: type,
+        );
 
+  factory StringAnswerModel.fromJson(Map<String, dynamic> json) {
+    return StringAnswerModel(
+      serialNumber: json['serial_number'],
+      input: json['input'],
+      type: FieldTypes.values
+          .firstWhere((e) => e.toString().split('.').last == json['type']),
+      question: json['field'],
+    );
+  }
 
+  Map<String, dynamic> toJson() {
+    return {
+    
+      'serial_number': serialNumber,
+      'field': question,
+      'type': type.toString().split('.').last,
+      'input': input,
+    };
+  }
+}
 
-// class AdditionalDataModel{
+class OneIntAnswerModel extends AdditionalDataModel {
+  int input;
+  OneIntAnswerModel({
+    required int serialNumber,
+    required String question,
+    required FieldTypes type,
+    required this.input,
+  }) : super(
+          serialNumber: serialNumber,
+          question: question,
+          type: type,
+        );
 
-//   String question;
-//   String type;
+  factory OneIntAnswerModel.fromJson(Map<String, dynamic> json) {
+    return OneIntAnswerModel(
+      serialNumber: json['serial_number'],
+      input: json['input'],
+      type: FieldTypes.values
+          .firstWhere((e) => e.toString().split('.').last == json['type']),
+      question: json['field'],
+    );
+  }
 
-//   AdditionalDataModel({
-//     required this.question,
-//     required this.type
-//   });
+  Map<String, dynamic> toJson() {
+    return {
+     
+      'serial_number': serialNumber,
+      'field': question,
+      'type': type.toString().split('.').last,
+      'input': input,
+    };
+  }
+}
 
-//   factory AdditionalDataModel.fromJson(Map<String, dynamic> json) {
-//     switch(json['type']){
-//     case 'date':
-//         return DateFieldAnswerModel.fromJson(json);
-//       case 'file':
-//         return FileFieldAnswerModel.fromJson(json);
-//       case 'longAnswer':
-//         return LongAnswerFieldAnswerModel.fromJson(json);
-//       case 'radio':
-//         return RadioFieldAnswerModel.fromJson(json);
-//       case 'shortAnswer':
-//         return ShortAnswerFieldAnswerModel.fromJson(json);
-//       case 'stepper':
-//         return StepperAnswerModel.fromJson(json);
-//       case 'range':
-//         return RangeAnswerModel.fromJson(json);
-//       case 'slider':
-//         return SliderAnswerModel.fromJson(json);
-//       case 'tag':
-//         return TagAnswerModel.fromJson(json);
-//       case 'linear':
-//         return LinearAnswerModel.fromJson(json);
-//       case 'phone':
-//         return PhoneNumberAnswerModel.fromJson(json);
-//       default:
-//         throw Exception('Invalid field type');
-//     }
+class TwoIntAnswerModel extends AdditionalDataModel {
+  int input1;
+  int input2;
+  TwoIntAnswerModel({
+    required int serialNumber,
+    required String question,
+    required FieldTypes type,
+    required this.input1,
+    required this.input2,
+  }) : super(
+          serialNumber: serialNumber,
+          question: question,
+          type: type,
+        );
 
-//   }
-// }
+  factory TwoIntAnswerModel.fromJson(Map<String, dynamic> json) {
+    return TwoIntAnswerModel(
+      serialNumber: json['serial_number'],
+      input1: json['input1'],
+      input2: json['input2'],
+      type: FieldTypes.values
+          .firstWhere((e) => e.toString().split('.').last == json['type']),
+      question: json['field'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+    
+      'serial_number': serialNumber,
+      'field': question,
+      'type': type.toString().split('.').last,
+      'input1': input1,
+      'input2': input2,
+    };
+  }
+}
+
+class BoolAnswerModel extends AdditionalDataModel {
+  bool input;
+  BoolAnswerModel({
+    required int serialNumber,
+    required String question,
+    required FieldTypes type,
+    required this.input,
+  }) : super(
+          serialNumber: serialNumber,
+          question: question,
+          type: type,
+        );
+
+  factory BoolAnswerModel.fromJson(Map<String, dynamic> json) {
+    return BoolAnswerModel(
+      serialNumber: json['serial_number'],
+      input: json['input'],
+      type: FieldTypes.values
+          .firstWhere((e) => e.toString().split('.').last == json['type']),
+      question: json['field'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+    
+      'serial_number': serialNumber,
+      'field': question,
+      'type': type.toString().split('.').last,
+      'input': input,
+    };
+  }
+}
+
+class MapAnswerModel extends AdditionalDataModel {
+  Map<String, int> input;
+  MapAnswerModel({
+    required int serialNumber,
+    required String question,
+    required FieldTypes type,
+    required this.input,
+  }) : super(
+          serialNumber: serialNumber,
+          question: question,
+          type: type,
+        );
+
+  factory MapAnswerModel.fromJson(Map<String, dynamic> json) {
+    Map<String, dynamic> inputsJson = json['input'];
+    Map<String, int> input = {};
+    inputsJson.forEach((key, value) {
+      input[key] = value;
+    });
+    return MapAnswerModel(
+      serialNumber: json['serial_number'],
+      input: input,
+      type: FieldTypes.values
+          .firstWhere((e) => e.toString().split('.').last == json['type']),
+      question: json['field'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+     
+      'serial_number': serialNumber,
+      'field': question,
+      'type': type.toString().split('.').last,
+      'input': input,
+    };
+  }
+}
