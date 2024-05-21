@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
-import 'package:major_project__widget_testing/state/Registration.dart/getRegistration.dart';
+import 'package:major_project__widget_testing/state/Registration.dart/getRegistrationProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/views/Components/hollowCircle.dart';
@@ -202,14 +202,16 @@ class MiddleFormPart extends StatelessWidget {
                   indicatorColor: black1,
                   controller: getRegistrationFormProvider.getformcontroller,
                   tabs: List.generate(
-                      getRegistrationFormProvider.singleForm.sections.length, (index) {
+                      getRegistrationFormProvider.singleForm.sections.length+2, (index) {
                     return InkWell(
                         onTap: () {
                           getRegistrationFormProvider.getformcontroller
                               .animateTo(index);
                         },
                         child: Tab(
-                            child: Text("Tab $index",
+                            child: Text(
+                              index==0? "General":index==getRegistrationFormProvider.singleForm.sections.length+1?"Team Details":
+                              getRegistrationFormProvider.singleForm.sections[index-1].sectionName,
                                 style: GoogleFonts.getFont(
                                   fontFamily2,
                                   fontSize: scaleWidth(context, 18),
@@ -224,7 +226,7 @@ class MiddleFormPart extends StatelessWidget {
           Expanded(
               child: TabBarView(
             controller: getRegistrationFormProvider.getformcontroller,
-            children: List.generate(getRegistrationFormProvider.singleForm.sections.length,
+            children: List.generate(getRegistrationFormProvider.singleForm.sections.length+2,
                 (index) {
               return Container(color: Colors.blue[100 * (index + 1)]);
             }),
@@ -253,18 +255,22 @@ class MiddleFormPart extends StatelessWidget {
                   height: scaleHeight(context, 40),
                   width: scaleWidth(context, 120.85),
                   alignment: Alignment.center,
+                   padding: EdgeInsets.only(left: scaleWidth(context,12.85)),
                   decoration: BoxDecoration(
-                      color: const Color(0xFFD9D9D9),
-                      border: Border.all(color: const Color(0xFFD9D9D9)),
+                      color: getRegistrationFormProvider.getformcontroller.index==0? null: const Color(0xFFD9D9D9),
+                      border: getRegistrationFormProvider.getformcontroller.index==0? Border.all(color: const Color(0xFFD9D9D9)): null,
                       borderRadius: BorderRadius.circular(5)),
                   child: Row(
                     children: [
-                      const Icon(Icons.arrow_back, color: Color(0xFFD9D9D9)),
+                       Icon(Icons.arrow_back, 
+                       size: 16,
+                      color:  getRegistrationFormProvider.getformcontroller.index==0?const Color(0xFFD9D9D9):const Color(0xFF3C3C3C)),
+                      SizedBox(width: scaleWidth(context, 16)),
                       Text('Previous',
                           style: GoogleFonts.getFont(
                             fontFamily2,
                             fontSize: scaleWidth(context, 16),
-                            color: const Color(0xFFD9D9D9),
+                            color: getRegistrationFormProvider.getformcontroller.index==0?const Color(0xFFD9D9D9):const Color(0xFF3C3C3C),
                             fontWeight: FontWeight.w400,
                           )),
                     ],
@@ -281,6 +287,8 @@ class MiddleFormPart extends StatelessWidget {
                 child: Container(
                   height: scaleHeight(context, 40),
                   width: scaleWidth(context, 120.85),
+                  margin: EdgeInsets.only(right: scaleWidth(context, 53.15)),
+                  padding: EdgeInsets.only(right: scaleWidth(context,12.85)),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       color: const Color(0xFFD9D9D9),
@@ -288,14 +296,16 @@ class MiddleFormPart extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text('Next',
+                      Text(getRegistrationFormProvider.getformcontroller.index==getRegistrationFormProvider.singleForm.sections.length+1
+                      ?"Submit":  'Next',
                           style: GoogleFonts.getFont(
                             fontFamily2,
                             fontSize: scaleWidth(context, 16),
-                            color: Color(0xFF3C3C3C),
+                            color: const Color(0xFF3C3C3C),
                             fontWeight: FontWeight.w400,
                           )),
-                      const Icon(Icons.arrow_forward, color: black1),
+                           SizedBox(width: scaleWidth(context, 16)),
+                      const Icon(Icons.arrow_forward, color: black1, size:16),
                     ],
                   ),
                 ),

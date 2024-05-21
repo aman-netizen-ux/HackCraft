@@ -30,6 +30,7 @@ class CreateHackathon {
         debugPrint('response : $jsonResponse');
 
         id = jsonResponse['hackathon created']['_id'];
+        debugPrint('id : $id');
         logger.i('Hackathon created successfully');
 
         return id;

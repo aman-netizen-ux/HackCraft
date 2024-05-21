@@ -283,18 +283,21 @@ class _SidePanelState extends State<SidePanel> {
         "logo": logoResponse,
         "name": hackathonDetailsProvider.hackathonName,
         "organisation_name": hackathonDetailsProvider.organisationName,
-        "mode_of_conduct": hackathonDetailsProvider.modeOfConduct,
         "deadline": hackathonDetailsProvider.deadline,
         "team_size": int.parse(hackathonDetailsProvider.teamSize),
-        "visible": "Public",
         "start_date_time":
             "${hackathonDetailsProvider.startDateTime}T00:00:00Z",
+        "brief": hackathonDetailsProvider.brief,
+        "fee": hackathonDetailsProvider.fee,
+        "total_number_rounds": rounds.length
+      },
+      "default": {
+        "mode_of_conduct": hackathonDetailsProvider.modeOfConduct,
+        "visible": "Public",
         "about": hackathonDetailsProvider.about,
         "images": imageResponse,
-        "brief": hackathonDetailsProvider.brief,
-        "website": "https://req",
-        "fee": hackathonDetailsProvider.fee,
         "venue": hackathonDetailsProvider.venue,
+        "website": "https://req",
         "contact1_name": hackathonDetailsProvider.contact1Name,
         "contact1_number": int.parse(hackathonDetailsProvider.contact1Number),
         "contact2_name": hackathonDetailsProvider.contact2Name,
@@ -304,7 +307,7 @@ class _SidePanelState extends State<SidePanel> {
         "email": "",
         "twitter": "",
         "linkedin": "",
-        "total_number_rounds": rounds.length
+        "github": ""
       },
       "round": rounds,
       "fields": fields,

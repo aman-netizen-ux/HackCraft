@@ -149,7 +149,7 @@ class HackathonDetailsProvider with ChangeNotifier {
         organisationName: '',
         modeOfConduct: '',
         deadline: '',
-        teamSize: '',
+        teamSize: [],
         visible: '',
         startDateTime: '',
         about: '',
@@ -244,11 +244,29 @@ class HackathonDetailsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  String get teamSize => _hackathonDetails.hackathons.teamSize;
+  String get teamSize => _hackathonDetails.hackathons.teamSize.isEmpty ? '' : _hackathonDetails.hackathons.teamSize.length > 1
+      ? '${_hackathonDetails.hackathons.teamSize[0]} - ${_hackathonDetails.hackathons.teamSize[1]}'
+      : _hackathonDetails.hackathons.teamSize[0].toString();
 
   set teamSize(String value) {
-    _hackathonDetails.hackathons.teamSize = value;
+    _hackathonDetails.hackathons.teamSize = _parseTeamSize(value);
     notifyListeners();
+  }
+
+   List<int> _parseTeamSize(String value) {
+    List<int> teamSize = [];
+    List<String> parts = value.split(RegExp(r'[-,]')).map((s) => s.trim()).toList();
+
+    if (parts.length > 1) {
+      // Multiple values provided, set min and max
+      teamSize.add(int.parse(parts[0]));
+      teamSize.add(int.parse(parts[1]));
+    } else {
+      // Single value provided
+      teamSize.add(int.parse(parts[0]));
+    }
+
+    return teamSize;
   }
 
   String get venue => _hackathonDetails.hackathons.venue;
