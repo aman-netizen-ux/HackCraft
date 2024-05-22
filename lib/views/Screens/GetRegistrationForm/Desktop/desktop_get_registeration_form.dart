@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/state/Registration.dart/getRegistrationProvider.dart';
+import 'package:major_project__widget_testing/state/loginProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/views/Components/hollowCircle.dart';
@@ -24,12 +25,14 @@ class _DesktopGetRegisterationFormState
   String userType = "";
   String hackathonId = "";
   String hackathonName = "";
+  List<int> teamSize=[];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
     Future.delayed(Duration.zero, () {
+      //got some required details in form of args 
       final args = ModalRoute.of(context)?.settings.arguments as Map?;
       if (args != null && args.containsKey('hackathonId')) {
         print(
@@ -38,24 +41,58 @@ class _DesktopGetRegisterationFormState
           hackathonId = args['hackathonId'];
           userType = args['userType'];
           hackathonName = args['hackathonName'];
+          teamSize= args['teamSize'];
         });
       }
     }).then((value) async {
       final getRegistrationFormProvider =
           Provider.of<GetRegistrationFormProvider>(context, listen: false);
+       final loginProvider = Provider.of<LoginProvider>(context, listen: false);
 
       int someInt = 2; //TODO: change with member index
-
+    
+    //SelectedParticipantTab initial value is set based on usertype
       getRegistrationFormProvider
           .setSelectedParticipantTab(userType == "firstuser"
               ? 0
               : userType == "pending"
                   ? someInt
                   : -1);
+      // api call to get the form
       await getRegistrationFormProvider.getHackathonForm(hackathonId);
       print("section: ${getRegistrationFormProvider.singleForm.sections[0].sectionName}");
-      getRegistrationFormProvider.refreshTabs();
+      getRegistrationFormProvider.refreshTabs();//tabs are refreshed to update tab controller with no. of sections
+
+
+      //team details variable is already there in api
+      // just set that based on the user type and team size with prefilled values 
+      if(userType == "firstuser"){
+        getRegistrationFormProvider.updateTeam("", teamSize.length>1? 0: teamSize[0]);
+
+        if(teamSize.length>1){
+          getRegistrationFormProvider.addMember(loginProvider.emailId, true);
+        }else{
+
+          for(int i=0; i< teamSize[0]; i++){
+
+             getRegistrationFormProvider.addMember(i==0?loginProvider.emailId: "Member $i", i==0?true:false);
+          }
+        }
+
+
+        
+      }else if(userType=="pending"){
+        //TODO: hit the team get api 
+        //TODO: and change the value of key same as current email
+      }
+
+      getRegistrationFormProvider.getPrefilledData(
+        loginProvider.emailId, 
+        userType=="firstuser"? 0:someInt, 
+        );
+
       //TODO: also hit the prefilled data api
+
     });
   }
 

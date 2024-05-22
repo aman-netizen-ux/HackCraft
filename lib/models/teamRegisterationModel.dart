@@ -187,7 +187,7 @@ class AdditionalDataModel {
         return StringAnswerModel.fromJson(json);
       case 'stepper':
         return OneIntAnswerModel.fromJson(json);
-      case 'range':
+      case 'range': 
         return TwoIntAnswerModel.fromJson(json);
       case 'slider':
         return OneIntAnswerModel.fromJson(json);
