@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:major_project__widget_testing/state/loginProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/state/templateSelectionprovider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
@@ -26,6 +27,7 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
     // bool isChecked= false;
     final templateSelectionProvider =
         context.watch<TemplateSelectionProvider>();
+    final loginProvider = Provider.of<LoginProvider>(context);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -195,10 +197,10 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
                               } else if (templateSelectionProvider
                                       .selectedTemplate ==
                                   2) {
-                                // Navigator.pushNamed(
-                                //     context, '/customEditPortal');
+                                Navigator.pushNamed(
+                                    context, '/customEditPortal');
                                 final Uri url = Uri.parse(
-                                    "http://127.0.0.1:5173/");
+                                    "http://127.0.0.1:5173/?${loginProvider.emailId}");
 
                                 if (await canLaunchUrl(url)) {
                                   await launchUrl(url);
