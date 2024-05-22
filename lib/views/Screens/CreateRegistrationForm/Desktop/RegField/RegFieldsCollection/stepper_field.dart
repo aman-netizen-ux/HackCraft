@@ -169,15 +169,14 @@ class _StepperFieldState extends State<StepperField> {
                 SizedBox(
                   width: scaleWidth(context, 16),
                 ),
-                widget.required
-                    ? Text(
-                        "REQUIRED",
-                        style: GoogleFonts.getFont(fontFamily2,
-                            fontSize: scaleHeight(context, 16),
-                            color: midnigthBlue,
-                            fontWeight: FontWeight.w500),
-                      )
-                    : Container(),
+                Text(
+                    "REQUIRED",
+                    style: GoogleFonts.getFont(fontFamily2,
+                        fontSize: scaleHeight(context, 16),
+                        color:
+                            widget.required ? midnigthBlue : Colors.transparent,
+                        fontWeight: FontWeight.w500),
+                  ),
                 SizedBox(
                   width: widget.create ? scaleWidth(context, 50) : 0,
                 )

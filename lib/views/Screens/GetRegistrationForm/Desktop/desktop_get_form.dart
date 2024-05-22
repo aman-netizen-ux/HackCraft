@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/models/Registration/customField.dart';
-import 'package:major_project__widget_testing/state/Registration.dart/getRegistration.dart';
+import 'package:major_project__widget_testing/state/Registration.dart/getRegistrationProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:provider/provider.dart';
 

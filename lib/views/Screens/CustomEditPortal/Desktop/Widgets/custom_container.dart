@@ -17,6 +17,7 @@ class _CustomContainerState extends State<CustomContainer> {
   @override
   Widget build(BuildContext context) {
     final customEditPortalProvider = Provider.of<CustomEditPortal>(context);
+    debugPrint('height in custom container : ${widget.node['properties']['height']}');
     return InkWell(
       onTap: widget.onTap,
       child: Container(

@@ -67,4 +67,6 @@ const indicatorblue = Color(0xff4a6fcf);
 const blueishGray = Color(0xFFD6DDF1);
 const midnigthBlue = Color(0xff2F394F);
 const goldenYellow = Color(0xffE5BB27);
-
+const slateGray = Color(0xff686A6E);
+const pastelBlueGray = Color(0xffE9ECF3);
+const lightSilverGrey = Color(0xffd9d9d9);

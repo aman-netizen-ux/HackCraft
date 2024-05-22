@@ -7,7 +7,6 @@ import 'package:major_project__widget_testing/state/mainNavigationProvider.dart'
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/views/Screens/MainNavigation/Desktop/Sections/Home/home.dart';
-import 'package:major_project__widget_testing/views/Screens/MainNavigation/Desktop/Sections/Profile/profile.dart';
 import 'package:major_project__widget_testing/views/Screens/MainNavigation/Desktop/Sections/Sponsors/sponsors.dart';
 import 'package:provider/provider.dart';
 

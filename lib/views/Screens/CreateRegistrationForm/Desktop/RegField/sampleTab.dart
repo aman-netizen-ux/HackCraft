@@ -101,6 +101,6 @@ class _SampleTabState extends State<SampleTab> {
           )
         : _contents.isEmpty
         ?Center(child: Text('Add a field', style: GoogleFonts.getFont(fontFamily2, color: black1, fontSize: scaleHeight(context, 18)),))
-        : ReorderableListView(onReorder: _onReorder, children: _contents);
+        : ReorderableListView(onReorder: _onReorder, children: _contents, padding: EdgeInsets.zero,);
   }
 }

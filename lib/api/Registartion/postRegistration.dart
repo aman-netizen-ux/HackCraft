@@ -6,7 +6,8 @@ import 'package:logger/logger.dart';
 
 class PostApiService {
   var logger = Logger();
-  Future<bool> postRegistration(String hackathonId, Map<String, dynamic> params) async {
+  Future<bool> postRegistration(
+      String hackathonId, Map<String, dynamic> params) async {
     final String baseUrl = dotenv.get("registration");
     final String url = '$baseUrl$hackathonId';
 
@@ -24,9 +25,9 @@ class PostApiService {
       },
       body: jsonEncode(params),
     );
-
+    print("form status ${response.statusCode}");
     try {
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         logger.i('Registration success');
         debugPrint('Registration success');
         return true;
@@ -41,7 +42,6 @@ class PostApiService {
         return false;
       }
     } catch (e) {
-      
       logger.e("Error message : $e, ${response.body} ");
       debugPrint(response.body);
       // log("*********${response.body}*********8");

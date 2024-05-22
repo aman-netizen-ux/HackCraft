@@ -99,6 +99,8 @@ class FieldModel {
         return LinearModel.fromJson(json);
       case 'phone':
         return PhoneNumberModel.fromJson(json);
+      case 'check':
+        return CheckBoxModel.fromJson(json);
       default:
         throw Exception('Invalid field type');
     }

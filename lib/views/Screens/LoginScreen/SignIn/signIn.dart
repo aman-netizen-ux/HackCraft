@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,7 +10,6 @@ import 'package:major_project__widget_testing/utils/snackBar.dart';
 import 'package:major_project__widget_testing/views/Screens/LoginScreen/SignIn/githubSignIn.dart';
 import 'package:major_project__widget_testing/views/Screens/LoginScreen/desktop_login.dart';
 import 'package:major_project__widget_testing/views/Screens/LoginScreen/registerCheck.dart';
-import 'package:major_project__widget_testing/views/Screens/LoginScreen/screenChange.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'googleSignIn.dart';
@@ -22,6 +23,7 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   bool isError = false;
+  bool isLoading = false;
   bool passwordVisible = true;
   final TextEditingController _emailText = TextEditingController();
   final TextEditingController _passwordText = TextEditingController();
@@ -60,7 +62,6 @@ class _SignInState extends State<SignIn> {
               Icons.report_gmailerrorred_outlined,
               color: white,
             ),
-            // ignore: use_build_context_synchronously
             context);
         debugPrint("No user found on that email");
       } else if (e.code == "invalid-credential") {
@@ -71,7 +72,6 @@ class _SignInState extends State<SignIn> {
               Icons.report_gmailerrorred_outlined,
               color: white,
             ),
-            // ignore: use_build_context_synchronously
             context);
         debugPrint("Invalid Credentials");
       } else {
@@ -82,7 +82,6 @@ class _SignInState extends State<SignIn> {
               Icons.report_gmailerrorred_outlined,
               color: white,
             ),
-            // ignore: use_build_context_synchronously
             context);
         debugPrint("Invalid ");
       }
@@ -136,45 +135,55 @@ class _SignInState extends State<SignIn> {
                       children: [
                         Container(
                           height: heightScaler(context, 35),
-                          // width: widthScaler(context, 130),
-                           alignment: Alignment.center,
+                          alignment: Alignment.center,
                           child: ElevatedButton(
                             onPressed: () async {
                               // Handling Google sign-in
+                              setState(() {
+                                isLoading = true;
+                              });
                               UserCredential userCredential =
                                   await handleGoogleSignIn();
-                              User? user = userCredential.user;
-                              if (user != null) {
-                                String firebaseUUID = user.uid;
-                                String _email = user.email!;
-                                storeUserUid(firebaseUUID, _email);
-                                loginProvider.setUuid(firebaseUUID, _email);
-                                final status = await registerCheck(_email);
+                              if (userCredential
+                                      .additionalUserInfo!.isNewUser ==
+                                  true) {
+                                showSnackBar(
+                                  "User does not exist ",
+                                  red2,
+                                  const Icon(
+                                    Icons.report_gmailerrorred_outlined,
+                                    color: white,
+                                  ),
+                                  context,
+                                );
+                                FirebaseAuth.instance.signOut();
+                                userCredential.user!.delete();
+                              } else {
+                                String firebaseUUID = userCredential.user!.uid;
+                                String? email = userCredential.user!.email;
+                                storeUserUid(firebaseUUID, email!);
+                                loginProvider.setUuid(firebaseUUID, email);
+                                final status = await registerCheck(email);
                                 if (status) {
                                   // ignore: use_build_context_synchronously
-                                  Navigator.pushNamed(
+                                  Navigator.pushNamedAndRemoveUntil(
                                     context,
-                                    '/mainNavigation',
+                                    '/mainNavigation' ,(route) => false
                                   );
+                                  setState(() {
+                                    isLoading = false;
+                                  });
                                 } else {
                                   loginProvider.setCurrentIndex(2);
                                   tabController.animateTo(1);
+                                  setState(() {
+                                    isLoading = false;
+                                  });
                                 }
-                              } else {
-                                // Handle sign-in failure
-                                debugPrint(
-                                  'No user found for this Gmail.',
-                                );
-                                // ignore: use_build_context_synchronously
-                                showSnackBar(
-                                    "No user found for this Gmail.",
-                                    red2,
-                                    const Icon(
-                                        Icons.report_gmailerrorred_outlined),
-                                    context);
-                                FirebaseAuth.instance.signOut();
-                                user!.delete();
                               }
+                              setState(() {
+                                isLoading = false;
+                              });
                             },
 
                             style: ButtonStyle(
@@ -219,43 +228,51 @@ class _SignInState extends State<SignIn> {
                         SizedBox(width: widthScaler(context, 10)),
                         Container(
                           height: heightScaler(context, 35),
-                          // width: widthScaler(context, 130),
-                           alignment: Alignment.center,
+                          alignment: Alignment.center,
                           child: ElevatedButton(
                             // Handling GitHub sign-in
                             onPressed: () async {
+                              setState(() {
+                                isLoading = true;
+                              });
                               UserCredential userCredential =
                                   await signInWithGitHub();
-                              User? user = userCredential.user;
-                              if (user != null) {
-                                String firebaseUUID = user.uid;
-                                String _email = user.email!;
-                                storeUserUid(firebaseUUID, _email);
-                                loginProvider.setUuid(firebaseUUID, _email);
-                                final status = await registerCheck(_email);
+                              if (userCredential
+                                      .additionalUserInfo!.isNewUser ==
+                                  true) {
+                                showSnackBar(
+                                    "User does not exist ",
+                                    red2,
+                                    const Icon(
+                                      Icons.report_gmailerrorred_outlined,
+                                      color: white,
+                                    ),
+                                    context);
+                                FirebaseAuth.instance.signOut();
+                                userCredential.user!.delete();
+                              } else {
+                                String firebaseUUID = userCredential.user!.uid;
+                                String email = userCredential.user!.email!;
+                                storeUserUid(firebaseUUID, email);
+                                loginProvider.setUuid(firebaseUUID, email);
+                                final status = await registerCheck(email);
                                 if (status) {
-                                  // ignore: use_build_context_synchronously
                                   Navigator.pushNamed(
                                     context,
                                     '/mainNavigation',
                                   );
+                                  setState(() {
+                                    isLoading = false;
+                                  });
                                 } else {
                                   // moves on to register screen
 
                                   loginProvider.setCurrentIndex(2);
                                   tabController.animateTo(1);
+                                  setState(() {
+                                    isLoading = false;
+                                  });
                                 }
-                              } else {
-                                // Handle sign-in failure
-                                // ignore: use_build_context_synchronously
-                                showSnackBar(
-                                    "No user found for this Gmail.",
-                                    red2,
-                                    const Icon(
-                                        Icons.report_gmailerrorred_outlined),
-                                    context);
-                                FirebaseAuth.instance.signOut();
-                                user!.delete();
                               }
                             },
                             style: ButtonStyle(
@@ -460,6 +477,9 @@ class _SignInState extends State<SignIn> {
               child: ElevatedButton(
                   onPressed: () async {
                     // Handling sign-in with email and password
+                    setState(() {
+                      isLoading = true;
+                    });
                     String email = _emailText.text;
                     String password = _passwordText.text;
                     if (email.isEmpty) {
@@ -492,11 +512,10 @@ class _SignInState extends State<SignIn> {
                       );
                       if (user != null) {
                         String firebaseUUID = user.uid;
-                        storeUserUid(firebaseUUID,_emailText.text);
+                        storeUserUid(firebaseUUID, _emailText.text);
                         loginProvider.setUuid(firebaseUUID, _emailText.text);
                         final status = await registerCheck(email);
                         if (status) {
-                          // ignore: use_build_context_synchronously
                           Navigator.pushNamed(
                             context,
                             '/mainNavigation',
@@ -508,6 +527,9 @@ class _SignInState extends State<SignIn> {
                         }
                       }
                     }
+                    setState(() {
+                      isLoading = false;
+                    });
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
@@ -522,13 +544,17 @@ class _SignInState extends State<SignIn> {
                     fixedSize:
                         MaterialStateProperty.all<Size>(const Size(160, 50)),
                   ),
-                  child: Text(
-                    "Login",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: heightScaler(context, 18),
-                        fontWeight: FontWeight.w500),
-                  ))),
+                  child: isLoading
+                      ? const CircularProgressIndicator(
+                          color: white,
+                        )
+                      : Text(
+                          "Login",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: heightScaler(context, 18),
+                              fontWeight: FontWeight.w500),
+                        ))),
         ),
       ],
     );

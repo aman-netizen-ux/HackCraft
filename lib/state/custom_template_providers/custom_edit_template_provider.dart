@@ -215,7 +215,8 @@ class CustomEditPortal extends ChangeNotifier {
     Widget buildWidget(
       dynamic node,
     ) {
-      if (!node.containsKey('type')) return SizedBox();
+      debugPrint('node in buildwidgets : $node');
+      if (!node.containsKey('type')) return const SizedBox();
 
       Widget currentWidget;
       log(node['type']);
@@ -232,6 +233,7 @@ class CustomEditPortal extends ChangeNotifier {
               }
             });
           }
+          debugPrint('at 236 in build widget $node');
           currentWidget = CustomContainer(
               node: node,
               onTap: () {
@@ -565,6 +567,80 @@ class CustomEditPortal extends ChangeNotifier {
     return widgets;
   }
 
+  dynamic getPropertyValue(
+    dynamic node,
+    String key,
+    String property,
+  ) {
+    // Recursive function to search for the node with the given key
+    dynamic searchNode(dynamic node, String key, int depth) {
+      if (node is Map) {
+        debugPrint('entered here');
+        debugPrint('node before function: $node');
+        if (node.containsKey(key)) {
+          debugPrint('at 574');
+          debugPrint('node : $node');
+          if (node[key]['properties'] != null) {
+            return node[key]['properties'][property];
+          }
+          // return node; TODO
+        } else {
+          for (var value in node.values) {
+            var result = searchNode(value, key, depth + 1);
+            if (result != null) {
+              return result;
+            }
+          }
+        }
+        // if (node.containsKey('children')) {
+        //   for (var child in node['children']) {
+        //     debugPrint('at 580');
+        //     var result = searchNode(child, key);
+        //     if (result != null) {
+        //       return result;
+        //     }
+        //   }
+        // }
+
+        //  else if (node.containsKey('child') && node['child'].isNotEmpty()) {
+        //   debugPrint('at 588');
+        //   for (var child in node['child']) {
+        //     debugPrint('at 590');
+        //     var result = searchNode(child, key);
+        //     if (result != null) {
+        //       return result;
+        //     }
+        //   }
+        // }
+      } else if (node is List) {
+        for (var element in node) {
+          var result = searchNode(element, key, depth + 1);
+          if (result != null) {
+            return result;
+          }
+        }
+      }
+      return null;
+    }
+
+    debugPrint('at 602');
+    return searchNode(_jsonObject['children'], key, 0);
+
+    // Search for the node with the given key
+    // var targetNode = searchNode(node, key);
+    // debugPrint('target node : $targetNode');
+    // debugPrint('target node key : ${targetNode[key]['properties']} ');
+
+    // // Return the value of the specified property if the node is found
+    // if (targetNode != null && targetNode[key].containsKey('properties')) {
+    //   debugPrint('at 606');
+    //   return targetNode[key]['properties'][property];
+    // }
+
+    // Return null if the node or property is not found
+    //return null;
+  }
+
   bool addPropertyByKey(
       String globalKey, String propertyType, dynamic property) {
     bool _searchAndAdd(
@@ -572,20 +648,22 @@ class CustomEditPortal extends ChangeNotifier {
       String key,
       int depth,
     ) {
-      print('here starting');
+      debugPrint('here starting');
+      debugPrint('property value : $property');
 
       if (node is Map) {
-        print('map is there');
+        debugPrint('map is there');
         if (node.containsKey(key)) {
-          print('key found');
-          print('node ; $node');
+          debugPrint('key found');
+          debugPrint('node ; $node');
           // print('prop. : ${node['key']['properties']}');
           // print('height : ${node['key']['properties']['height']}');
           if (node[key]['properties'] != null) {
             node[key]['properties'][propertyType] = property;
-          }
-
+            notifyListeners();
           return true;
+          }
+          
         } else {
           log(" doesn't contained key");
           // Recursively search each value if the key is not found at this level
@@ -603,9 +681,9 @@ class CustomEditPortal extends ChangeNotifier {
           }
         }
       } else if (node is List) {
-        print('entered in here');
+        debugPrint('entered in here');
         for (var element in node) {
-          print(" elemet: $element");
+          debugPrint(" elemet: $element");
           if (_searchAndAdd(
             element,
             key,
@@ -625,4 +703,10 @@ class CustomEditPortal extends ChangeNotifier {
       0,
     );
   }
+
+  void triggerUIUpdate() {
+    notifyListeners();
+  }
 }
+
+
