@@ -197,8 +197,8 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
                               } else if (templateSelectionProvider
                                       .selectedTemplate ==
                                   2) {
-                                Navigator.pushNamed(
-                                    context, '/customEditPortal');
+                                // Navigator.pushNamed(
+                                //     context, '/customEditPortal');
                                 final Uri url = Uri.parse(
                                     "http://127.0.0.1:5173/?${loginProvider.emailId}");
 
