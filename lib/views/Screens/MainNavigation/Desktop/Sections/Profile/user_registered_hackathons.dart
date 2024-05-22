@@ -114,10 +114,10 @@ class _RegistrationsState extends State<Registrations> {
                                 _loadHackathonData();
                               },
                               items: <String>[
-                                'all',
-                                'closed',
-                                'open',
-                                'live'
+                                'All',
+                                'Close',
+                                'Open',
+                                'Live'
                               ].map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
@@ -187,8 +187,8 @@ class _RegistrationsState extends State<Registrations> {
                                 _loadHackathonData();
                               },
                               items: <String>[
-                                'latest',
-                                'oldest'
+                                'Latest',
+                                'Oldest'
                               ].map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
@@ -223,7 +223,7 @@ class _RegistrationsState extends State<Registrations> {
                                             hackathon.userRegisteredDate),
                                         hackathon.tag,
                                         "",
-                                        100 // TODO : Placeholder for progress, adjust as needed,
+                                        hackathon.percentage,
                                         );
                                   },
                                 ),
@@ -271,9 +271,9 @@ class _RegistrationsState extends State<Registrations> {
       String teamName,
       String deadline,
       String registeredDate,
-      String tag,
+      List<String> tags,
       String logo,
-      int progress) {
+      double progress) {
     return Container(
         width: double.infinity,
         padding: const EdgeInsets.all(25),
@@ -310,7 +310,7 @@ class _RegistrationsState extends State<Registrations> {
                             color: const Color(0xff1a202c),
                             height: lineHeight(25.2, 19),
                             fontWeight: FontWeight.w500)),
-                    Container(
+                    ...tags.map((tag) => Container(
                       padding: EdgeInsets.symmetric(
                           horizontal: scaleWidth(context, 13),
                           vertical: scaleHeight(context, 1)),
@@ -325,7 +325,8 @@ class _RegistrationsState extends State<Registrations> {
                                   : const Color(0xffe7d3ff),
                           borderRadius:
                               const BorderRadius.all(Radius.circular(5))),
-                      child: Text(tag,
+                      child: 
+                      Text(tag,
                           style: GoogleFonts.getFont(fontFamily2,
                               fontSize: scaleWidth(context, 12),
                               color: tag == "open"
@@ -335,7 +336,8 @@ class _RegistrationsState extends State<Registrations> {
                                       : const Color(0xff7537c5),
                               height: lineHeight(16.8, 12),
                               fontWeight: FontWeight.w600)),
-                    ),
+                    )).toList(),
+                 
                     progress != 100
                         ? Stack(
                             children: [
