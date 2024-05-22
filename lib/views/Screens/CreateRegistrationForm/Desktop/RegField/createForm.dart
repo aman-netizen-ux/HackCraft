@@ -19,6 +19,7 @@ class CreateForm extends StatefulWidget {
 }
 
 class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
+  bool isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -278,6 +279,9 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                               ),
                         InkWell(
                           onTap: () async {
+                            setState(() {
+                              isLoading = true;
+                            });
                             final singleHackathonProvider =
                                 Provider.of<CreateRegistrationProvider>(context,
                                     listen: false);
@@ -333,6 +337,12 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                                     widget.hackathonId, formPostBody)
                                 .then((value) {
                               if (value) {
+                                //  Navigator.pushNamed(context, '/mainNavigation');
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  '/mainNavigation',
+                                  (route) => false,
+                                );
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text('Form Created'),
@@ -340,6 +350,9 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                                   ),
                                 );
                               }
+                            });
+                            setState(() {
+                              isLoading = false;
                             });
 
                             // print(singleHackathonProvider
@@ -354,14 +367,16 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                             decoration: BoxDecoration(
                                 color: lightSilver,
                                 borderRadius: BorderRadius.circular(5)),
-                            child: Text(
-                              "Submit",
-                              style: GoogleFonts.firaSans(
-                                fontWeight: FontWeight.w500,
-                                color: darkCharcoal,
-                                fontSize: scaleHeight(context, 14),
-                              ),
-                            ),
+                            child: isLoading
+                                ? const CircularProgressIndicator()
+                                : Text(
+                                    "Submit",
+                                    style: GoogleFonts.firaSans(
+                                      fontWeight: FontWeight.w500,
+                                      color: darkCharcoal,
+                                      fontSize: scaleHeight(context, 14),
+                                    ),
+                                  ),
                           ),
                         )
                       ],

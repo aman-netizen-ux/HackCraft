@@ -25,6 +25,7 @@ class _OTPFileState extends State<OTPFile> {
   int _secondsRemaining = 60;
   bool _timerActive = true;
   bool otpCheck = false;
+  bool isLoading = false;
 
   Future<SharedPreferences> getLocalStorage() async {
     return await SharedPreferences.getInstance();
@@ -99,6 +100,7 @@ class _OTPFileState extends State<OTPFile> {
   @override
   Widget build(BuildContext context) {
     final loginProvider = Provider.of<LoginProvider>(context, listen: false);
+
     return Column(
       children: [
         Padding(
@@ -263,15 +265,22 @@ class _OTPFileState extends State<OTPFile> {
             margin: EdgeInsets.symmetric(vertical: widthScaler(context, 20)),
             child: ElevatedButton(
                 onPressed: () async {
+                  // Verrify otp
+
                   final otpId = loginProvider.otpId;
                   print(code);
                   final status = await verifyOTP(code, otpId);
+
                   if (status == true) {
+                    setState(() {
+                      isLoading = true;
+                    });
                     User? user = await createUserWithEmailAndPassword(
                       email: loginProvider.emailId,
                       password: loginProvider.password,
                       context: context,
                     );
+
                     String firebaseUUID = user!.uid;
                     sendUserPost({
                       "first_name": loginProvider.firstName,
@@ -279,20 +288,38 @@ class _OTPFileState extends State<OTPFile> {
                       "email": loginProvider.emailId,
                       "user_type": ""
                     }).then((value) {
-                      if(value){
+                      if (value) {
                         storeUserUid(firebaseUUID, loginProvider.emailId);
-                    loginProvider.setUuid(firebaseUUID, loginProvider.emailId);
-                    loginProvider.setOtpId(0);
-                    loginProvider.setCurrentIndex(2);
+                        loginProvider.setUuid(
+                            firebaseUUID, loginProvider.emailId);
+                        loginProvider.setOtpId(0);
+                        loginProvider.setCurrentIndex(2);
+                        setState(() {
+                          isLoading = false;
+                        });
+                      } else {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        showSnackBar(
+                            'User Profile not created',
+                            red2,
+                            const Icon(
+                              Icons.warning,
+                              color: white,
+                            ),
+                            context);
                       }
                     });
-                    
                   } else {
                     setState(() {
                       otpCheck = true;
                     });
                     code = "";
                   }
+                  setState(() {
+                    isLoading = false;
+                  });
                 },
                 style: ButtonStyle(
                   backgroundColor:
@@ -307,14 +334,18 @@ class _OTPFileState extends State<OTPFile> {
                   fixedSize:
                       MaterialStateProperty.all<Size>(const Size(160, 50)),
                 ),
-                child: const Text(
-                  "Next ",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    color: white,
-                  ),
-                )))
+                child: isLoading
+                    ? const CircularProgressIndicator(
+                        color: white,
+                      )
+                    : const Text(
+                        "Next ",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          color: white,
+                        ),
+                      )))
       ],
     );
   }

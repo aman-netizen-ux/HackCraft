@@ -8,6 +8,15 @@ import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart'
 import 'package:provider/provider.dart';
 
 class HackathonDetailsProvider with ChangeNotifier {
+  bool _loadingPostHackathon = false;
+
+  bool get loadingPostHackathon => _loadingPostHackathon;
+
+  void setLoadingPostHackathon(bool loading) {
+    _loadingPostHackathon = loading;
+    notifyListeners();
+  }
+
   var logger = Logger();
 //not being used currently
   List<Round> _temporaryRoundList = [

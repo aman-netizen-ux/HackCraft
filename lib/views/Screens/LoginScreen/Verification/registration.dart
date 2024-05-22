@@ -16,6 +16,7 @@ class _RegisterUserState extends State<RegisterUser> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? selectedUserType;
   String? selectedGender;
+  bool isLoading = false;
   final TextEditingController organizationController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
@@ -292,6 +293,9 @@ class _RegisterUserState extends State<RegisterUser> {
           margin: EdgeInsets.symmetric(vertical: widthScaler(context, 20)),
           child: ElevatedButton(
             onPressed: () {
+              setState(() {
+                isLoading = true;
+              });
               final loginProvider =
                   Provider.of<LoginProvider>(context, listen: false);
               String username = usernameController.text;
@@ -316,6 +320,9 @@ class _RegisterUserState extends State<RegisterUser> {
               loginProvider.setOtpId(0);
               loginProvider.setPassword('');
               loginProvider.setCurrentIndex(0);
+              setState(() {
+                isLoading = true;
+              });
             },
             style: ButtonStyle(
               backgroundColor:
@@ -332,10 +339,17 @@ class _RegisterUserState extends State<RegisterUser> {
                 const Size(160, 50),
               ),
             ),
-            child: const Text(
-              "Next ",
-              style: TextStyle( color: white, fontSize: 20, fontWeight: FontWeight.w500),
-            ),
+            child: isLoading
+                ? const CircularProgressIndicator(
+                    color: white,
+                  )
+                : const Text(
+                    "Next ",
+                    style: TextStyle(
+                        color: white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500),
+                  ),
           ),
         ),
       ],
