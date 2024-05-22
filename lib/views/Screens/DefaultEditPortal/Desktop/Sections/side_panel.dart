@@ -277,6 +277,21 @@ class _SidePanelState extends State<SidePanel> {
     containers = hackathonContainerPropertiesProvider
         .addRoundsContainerProperties(containers);
 
+    int teamSizeMin;
+    int teamSizeMax; // Default value for max
+
+  List<String> teamSizeParts = hackathonDetailsProvider.teamSize.split(RegExp(r'[-,]'));
+
+  if (teamSizeParts.length > 1) {
+    teamSizeMin = int.parse(teamSizeParts[0].trim());
+    teamSizeMax = int.parse(teamSizeParts[1].trim());
+  } else {
+    // Single value provided
+    teamSizeMin = int.parse(teamSizeParts[0].trim());
+    teamSizeMax = 0; 
+  }
+
+
     final hackathonId = await CreateHackathon().postSingleHackathon({
       "hackathon": {
         "created_by": loginProvider.emailId,
@@ -284,8 +299,9 @@ class _SidePanelState extends State<SidePanel> {
         "name": hackathonDetailsProvider.hackathonName,
         "organisation_name": hackathonDetailsProvider.organisationName,
         "deadline": hackathonDetailsProvider.deadline,
-        "team_size": int.parse(hackathonDetailsProvider.teamSize),
-        "start_date_time":
+        "team_size_min": teamSizeMin,
+        "team_size_max": teamSizeMax,
+        "start_date_time": 
             "${hackathonDetailsProvider.startDateTime}T00:00:00Z",
         "brief": hackathonDetailsProvider.brief,
         "fee": hackathonDetailsProvider.fee,

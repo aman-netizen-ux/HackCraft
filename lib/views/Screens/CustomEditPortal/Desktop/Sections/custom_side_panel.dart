@@ -40,7 +40,7 @@ class _CustomSidePanelState extends State<CustomSidePanel> {
   ];
   @override
   Widget build(BuildContext context) {
-  //  final customEditProvider = Provider.of<CustomEditPortal>(context);
+    final customEditProvider = Provider.of<CustomEditPortal>(context);
     return Column(
       children: [
         Container(
@@ -85,6 +85,12 @@ class _CustomSidePanelState extends State<CustomSidePanel> {
                   ],
                 )),
             SizedBox(height: scaleHeight(context, 30)),
+            //  ElevatedButton(onPressed: (){
+              
+            //   customEditProvider.addPropertyByKey(customEditProvider.selectedWidgetKey == null ? customColumnKey.toString() : customEditProvider.selectedWidgetKey.toString(), 'mainAxisAlignment', MainAxisAlignment.center);
+            //   customEditProvider.dynamicWidgets = customEditProvider.buildWidgetsFromJson(customEditProvider.jsonObject);
+            //   debugPrint('dynamic widgets : ${customEditProvider.dynamicWidgets}');
+            //  }, child: Text('UPDATE')),
             SizedBox(
               height: scaleHeight(context, 680),
               child: GridView.builder(
@@ -502,10 +508,7 @@ class _CustomSidePanelState extends State<CustomSidePanel> {
         //  Expanded(flex:1,child: SingleChildScrollView(child: Column(
         //    children: [
         //      SelectableText(customEditProvider.jsonObject.toString()),
-        //      ElevatedButton(onPressed: (){
-        //       customEditProvider.addPropertyByKey(customEditProvider.selectedWidgetKey == null ? customColumnKey.toString() : customEditProvider.selectedWidgetKey.toString(), 'mainAxisAlignment', MainAxisAlignment.center);
-        //       customEditProvider.dynamicWidgets = customEditProvider.buildWidgetsFromJson(customEditProvider.jsonObject);
-        //      }, child: Text('UPDATE'))
+            
         //    ],
         //  )))
       ],

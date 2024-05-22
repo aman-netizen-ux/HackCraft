@@ -165,9 +165,10 @@ class _SignInState extends State<SignIn> {
                                 loginProvider.setUuid(firebaseUUID, email);
                                 final status = await registerCheck(email);
                                 if (status) {
-                                  Navigator.pushNamed(
+                                  // ignore: use_build_context_synchronously
+                                  Navigator.pushNamedAndRemoveUntil(
                                     context,
-                                    '/mainNavigation',
+                                    '/mainNavigation' ,(route) => false
                                   );
                                   setState(() {
                                     isLoading = false;

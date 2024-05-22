@@ -31,8 +31,8 @@ class HomeLanding extends StatelessWidget {
                  Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => GetRegistrationForm(
-                                
+                          builder: (context) => RegistrationForm(
+                                hackathonId: "",
                               )));
                 },
                 child: Container(
