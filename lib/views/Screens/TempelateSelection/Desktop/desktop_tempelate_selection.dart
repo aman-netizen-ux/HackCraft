@@ -11,6 +11,7 @@ import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:provider/provider.dart';
 import 'package:major_project__widget_testing/views/Screens/TempelateSelection/Desktop/terms_and_conditions_popup.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TemplateSelectionBody extends StatefulWidget {
   const TemplateSelectionBody({super.key});
@@ -171,7 +172,7 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
                           ],
                         ),
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (templateSelectionProvider.isTnCChecked!) {
                               if (templateSelectionProvider.selectedTemplate ==
                                   1) {
@@ -194,8 +195,17 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
                               } else if (templateSelectionProvider
                                       .selectedTemplate ==
                                   2) {
-                                Navigator.pushNamed(
-                                    context, '/customEditPortal');
+                                // Navigator.pushNamed(
+                                //     context, '/customEditPortal');
+                                final Uri url = Uri.parse(
+                                    "http://127.0.0.1:5173/");
+
+                                if (await canLaunchUrl(url)) {
+                                  await launchUrl(url);
+                                } else {
+                                  // Can't launch the URL, handle the error
+                                  debugPrint('Could not launch $url');
+                                }
                               } else {
                                 // TODO Create something to tell user to select card and check terms and conditions
                                 showSnackBar(

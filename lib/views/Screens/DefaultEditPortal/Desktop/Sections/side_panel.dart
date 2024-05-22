@@ -219,7 +219,7 @@ class _SidePanelState extends State<SidePanel> {
     final loginProvider = Provider.of<LoginProvider>(context, listen: false);
     hackathonDetailsProvider.setLoadingPostHackathon(true);
     Timer? timer;
-    timer = Timer(const Duration(seconds: 5), () {
+    timer = Timer(const Duration(seconds: 20), () {
       if (hackathonDetailsProvider.loadingPostHackathon) {
         showSnackBar(
             "Error !! Hackthon not created",
