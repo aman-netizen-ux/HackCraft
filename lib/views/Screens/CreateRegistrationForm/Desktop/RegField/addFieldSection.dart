@@ -235,9 +235,8 @@ class FieldsRowButon extends StatelessWidget {
                       Provider.of<CreateRegistrationProvider>(context,
                           listen: false);
                    createRegistrationProvider.addField(createRegistrationProvider.getFieldModel(fields[index2]['onTap'])  , context  );
-                  print(
-                      "index ${createRegistrationProvider.formcontroller.index}");
-                  print(createRegistrationProvider.tabField);
+                   
+                  
                 },
               )),
         ],

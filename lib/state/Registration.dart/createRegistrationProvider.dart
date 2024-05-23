@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/api/Registartion/fetchRegistration.dart';
 import 'package:major_project__widget_testing/constants/enums.dart';
@@ -272,8 +274,8 @@ class CreateRegistrationProvider with ChangeNotifier {
           create: true,
           labels: field.labels.keys.toList(),
           required: field.required,
-          min: 10,
-          max: 20,
+          min: field.labels.values.first,
+          max: field.labels.values.last,
           question: field.label,
           error: field.errorText,
         );
@@ -347,6 +349,8 @@ class CreateRegistrationProvider with ChangeNotifier {
         formcontroller.index != tabField.length - 1) {
       List<String> keys = _tabFields.keys.toList();
       _tabFields[keys[formcontroller.index]]!.add(type);
+      print("**********\n ${jsonEncode(_tabFields[keys[formcontroller.index]]!.last.toJson())}");
+     
     } else {
       aletDialog(context, 'Field cannot be added to this section', 'Note');
     }

@@ -73,6 +73,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
   int get selectedParticipantTab => _selectedParticipantTab;
 
   final List<dynamic> _gereralSectionFieldsList = [
+   
     ShortAnswerFieldModel(
         errorText: "Please fill the name",
         hint: "Enter your name",
@@ -141,6 +142,15 @@ class GetRegistrationFormProvider with ChangeNotifier {
   TeamRegisterationModel _teamData = TeamRegisterationModel(
       team: TeamModel(teamName: "", teamSize: 0), members: []);
 
+  int _sectionsCount=0;
+
+  int get sectionsCount=> _sectionsCount;
+
+  void setSectionsCount(int value){
+    _sectionsCount=value;
+    notifyListeners();
+  }
+
   TeamRegisterationModel get teamData => _teamData;
 
   void setTeamData(TeamRegisterationModel value) {
@@ -177,6 +187,65 @@ class GetRegistrationFormProvider with ChangeNotifier {
     _teamData.members.add(member);
     notifyListeners(); // Notifies all listening widgets of a change.
   }
+
+
+  bool isMemberDataComplete( int index) {
+    TeamRegisterationModel model= _teamData;
+  if (index >= model.members.length) {
+    print("Index out of bounds.");
+    return false;
+  }
+
+  MemberModel member = model.members[index];
+  bool isComplete = true;
+
+  // Loop through each key in the member details
+  member.details.forEach((key, value) {
+    if (value is List<MemberDataModel>) {
+      // It's a list of MemberDataModel
+      for (MemberDataModel dataModel in value) {
+        // Check required data fields
+        if (dataModel.requiredData.participantName.isEmpty ||
+            dataModel.requiredData.participantEmail.isEmpty ||
+            dataModel.requiredData.participantPhone.isEmpty ||
+            dataModel.requiredData.participantGender.isEmpty ||
+            dataModel.requiredData.participantCollege.isEmpty) {
+          isComplete = false;
+          return;
+        }
+
+        // Check additional data fields based on type
+        for (var additionalData in dataModel.additionalData) {
+          if (additionalData is StringAnswerModel && additionalData.input.isEmpty) {
+            isComplete = false;
+            return;
+          } else if (additionalData is OneIntAnswerModel && additionalData.input == null) {
+            isComplete = false;
+            return;
+          } else if (additionalData is TwoIntAnswerModel && (additionalData.input1 == null || additionalData.input2 == null)) {
+            isComplete = false;
+            return;
+          } else if (additionalData is BoolAnswerModel && additionalData.input == null) {
+            isComplete = false;
+            return;
+          } else if (additionalData is MapAnswerModel && additionalData.input.isEmpty) {
+            isComplete = false;
+            return;
+          }
+        }
+      }
+    } else {
+      // If any other data type needs to be validated, add here.
+      if (value.toString().isEmpty) {
+        isComplete = false;
+        return;
+      }
+    }
+  });
+
+  return isComplete;
+}
+
 
   List<dynamic> get gereralSectionFieldsList => _gereralSectionFieldsList;
   List<dynamic> get teamDetailsSectionFieldsList =>
@@ -236,12 +305,12 @@ Future<void> getPrefilledData( String email, int index,)async {
 
   // This function is used to create a new tabcontroller
   void _createTabController() {
-    int count = _selectedParticipantTab == 0 ? 2 : 1;
-    print(
-        "_selectedParticipantTab in create tab controller $_selectedParticipantTab  tidk $count");
+    // int count = _selectedParticipantTab == 0 ? 2 : 1;
+    // print(
+    //     "_selectedParticipantTab in create tab controller $_selectedParticipantTab  tidk $count");
 
     getformcontroller = TabController(
-        length: singleForm.sections.length + count, vsync: _vsync);
+        length: _sectionsCount, vsync: _vsync);
     getformcontroller.addListener(() {
       if (!getformcontroller.indexIsChanging) {
         notifyListeners();
@@ -303,8 +372,8 @@ Future<void> getPrefilledData( String email, int index,)async {
           create: false,
           labels: field.labels.keys.toList(),
           required: field.required,
-          max: field.max_value,
-          min: field.min_value,
+          max: field.labels.values.last,
+          min: field.labels.values.first,
           question: field.label,
           error: field.errorText,
         );
