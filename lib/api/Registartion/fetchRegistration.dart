@@ -53,7 +53,7 @@ class GetRegistratioForm {
       }
     } catch (e) {
       var logger = Logger();
-      logger.e("Error message : $e");
+      logger.e("Error message in fetch form api : $e");
       print("eorr ");
       return null;
     }

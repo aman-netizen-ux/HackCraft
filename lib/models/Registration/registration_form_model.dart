@@ -77,10 +77,10 @@ class FieldModel {
 
   factory FieldModel.fromJson(Map<String, dynamic> json) {
     switch (json['type']) {
-      case 'date':
-        return DateFieldModel.fromJson(json);
-      case 'file':
-        return FileFieldModel.fromJson(json);
+      // case 'date':
+      //   return DateFieldModel.fromJson(json);
+      // case 'file':
+      //   return FileFieldModel.fromJson(json);
       case 'longAnswer':
         return LongAnswerFieldModel.fromJson(json);
       case 'radio':
@@ -97,12 +97,16 @@ class FieldModel {
         return TagModel.fromJson(json);
       case 'linear':
         return LinearModel.fromJson(json);
-      case 'phone':
-        return PhoneNumberModel.fromJson(json);
-      case 'check':
+      // case 'phone':
+      //   return PhoneNumberModel.fromJson(json);
+      case 'checkbox':
         return CheckBoxModel.fromJson(json);
+      case 'toggle':
+        return ToggleModel.fromJson(json);
+       case 'dropdown':
+        return DropDownModel.fromJson(json);
       default:
-        throw Exception('Invalid field type');
+        throw Exception('Invalid field type ${json['type']}');
     }
   }
 }
@@ -287,7 +291,7 @@ class LongAnswerFieldModel extends FieldModel {
       'label': label,
       'error_text': errorText,
       'required': required,
-      // 'form': form,
+      'hint': hint,
       'type': type.toString().split('.').last,
       'word_limit': wordLimit,
     };
@@ -328,7 +332,8 @@ class RadioFieldModel extends FieldModel {
       required: json['required'] ?? false,
       // form: json['form'],
       type:FieldTypes.values.firstWhere((e) => e.toString().split('.').last == json['type']),
-      options: List<RegistrationOption>.from(json['options']),
+      options: List<RegistrationOption>.from(
+        json['options'].map((optionJson) => RegistrationOption.fromJson(optionJson)))
     );
   }
 
@@ -342,7 +347,7 @@ class RadioFieldModel extends FieldModel {
       'required': required,
       // 'form': form,
       'type': type.toString().split('.').last,
-      'options': options,
+      'options':options.map((option) => option.toJson()).toList(),
     };
   }
 }
@@ -381,7 +386,8 @@ class CheckBoxModel extends FieldModel {
       required: json['required'] ?? false,
       // form: json['form'],
       type: FieldTypes.values.firstWhere((e) => e.toString().split('.').last == json['type']),
-      options: List<RegistrationOption>.from(json['options']),
+      options: List<RegistrationOption>.from(
+        json['options'].map((optionJson) => RegistrationOption.fromJson(optionJson)))
     );
   }
 
@@ -395,7 +401,7 @@ class CheckBoxModel extends FieldModel {
       'required': required,
       // 'form': form,
       'type': type.toString().split('.').last,
-      'options': options,
+      'options':options.map((option) => option.toJson()).toList(),
     };
   }
 }
@@ -555,12 +561,13 @@ class StepperModel extends FieldModel {
   Map<String, dynamic> toJson() {
     return {
       // '_id': id,
-      // 'created': created,
+     
       'serial_number': serialNumber,
       'label': label,
       'error_text': errorText,
       'required': required,
-      // 'form': form,
+      'max_value': max_value,
+       'min_value': min_value,
       'type': type.toString().split('.').last,
     };
   }
@@ -615,7 +622,7 @@ class RangeModel extends FieldModel {
       'label': label,
       'error_text': errorText,
       'required': required,
-      // 'form': form,
+      'labels': labels,
       'type': type.toString().split('.').last,
     };
   }
@@ -726,7 +733,7 @@ class SliderModel extends FieldModel {
       'label': label,
       'error_text': errorText,
       'required': required,
-      // 'form': form,
+      'labels': labels,
       'type': type.toString().split('.').last,
     };
   }
@@ -806,7 +813,8 @@ class DropDownModel extends FieldModel {
       required: json['required'] ?? false,
       // form: json['form'],
       type: FieldTypes.values.firstWhere((e) => e.toString().split('.').last == json['type']),
-      options: List<RegistrationOption>.from(json['options']),
+      options: List<RegistrationOption>.from(
+        json['options'].map((optionJson) => RegistrationOption.fromJson(optionJson)))
     );
   }
   Map<String, dynamic> toJson() {
@@ -819,7 +827,7 @@ class DropDownModel extends FieldModel {
       'required': required,
       // 'form': form,
       'type': type.toString().split('.').last,
-      'options': options,
+      'options':options.map((option) => option.toJson()).toList(),
     };
   }
 }

@@ -41,6 +41,7 @@ class About extends StatelessWidget {
                               listen: false);
                       String userType = singleHackathonProvider.userType;
 
+                      //based on the usetype user is navigated to that screen
                       if (userType == "leader" || userType == "member") {
                         logger.i("participant details screen");
                       } else {
@@ -53,7 +54,8 @@ class About extends StatelessWidget {
                             'hackathonId': defaultTemplateModel!.hackathons.id,
                             'userType': userType,
                             'hackathonName':
-                                defaultTemplateModel!.hackathons.name
+                                defaultTemplateModel!.hackathons.name,
+                            'teamSize': defaultTemplateModel!.hackathons.teamSize
                           },
                         );
                       }

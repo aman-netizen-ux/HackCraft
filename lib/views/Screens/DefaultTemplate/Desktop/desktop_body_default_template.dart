@@ -40,7 +40,7 @@ class _DefaultTemplateDesktopBodyState
    
 
     try {
-
+      //api call to  get the usertype of this user for this hackathon
        await singleHackathonProvider.getUserType(
         widget.defaultTemplateModel!.hackathons.id, loginProvider.emailId);
 

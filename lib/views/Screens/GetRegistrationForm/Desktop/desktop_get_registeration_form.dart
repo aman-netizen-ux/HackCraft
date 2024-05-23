@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -5,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/state/Registration.dart/getRegistrationProvider.dart';
+import 'package:major_project__widget_testing/state/loginProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/views/Components/hollowCircle.dart';
@@ -24,12 +27,14 @@ class _DesktopGetRegisterationFormState
   String userType = "";
   String hackathonId = "";
   String hackathonName = "";
+  List<int> teamSize=[];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
     Future.delayed(Duration.zero, () {
+      //got some required details in form of args 
       final args = ModalRoute.of(context)?.settings.arguments as Map?;
       if (args != null && args.containsKey('hackathonId')) {
         print(
@@ -38,24 +43,69 @@ class _DesktopGetRegisterationFormState
           hackathonId = args['hackathonId'];
           userType = args['userType'];
           hackathonName = args['hackathonName'];
+          teamSize= args['teamSize'];
         });
       }
     }).then((value) async {
       final getRegistrationFormProvider =
           Provider.of<GetRegistrationFormProvider>(context, listen: false);
+       final loginProvider = Provider.of<LoginProvider>(context, listen: false);
 
       int someInt = 2; //TODO: change with member index
-
+    
+    //SelectedParticipantTab initial value is set based on usertype
       getRegistrationFormProvider
           .setSelectedParticipantTab(userType == "firstuser"
               ? 0
               : userType == "pending"
                   ? someInt
                   : -1);
+        print("sected participant tab ${getRegistrationFormProvider.selectedParticipantTab}");
+      getRegistrationFormProvider.setSectionsCount(getRegistrationFormProvider.selectedParticipantTab == 0 ? 2 : 1);
+       getRegistrationFormProvider.refreshTabs();
+      // api call to get the form
       await getRegistrationFormProvider.getHackathonForm(hackathonId);
-      print("section: ${getRegistrationFormProvider.singleForm.sections[0].sectionName}");
-      getRegistrationFormProvider.refreshTabs();
+      // print("section: ${getRegistrationFormProvider.singleForm.sections[0].sectionName}");
+      getRegistrationFormProvider.setSectionsCount(
+        getRegistrationFormProvider.singleForm.sections.length+
+        getRegistrationFormProvider.sectionsCount
+      );
+      getRegistrationFormProvider.refreshTabs();//tabs are refreshed to update tab controller with no. of sections
+
+
+      //team details variable is already there in api
+      // just set that based on the user type and team size with prefilled values 
+  //     if(userType == "firstuser"){
+  //       getRegistrationFormProvider.updateTeam("", teamSize.length>1? 0: teamSize[0]);
+
+  //       if(teamSize.length>1){
+  //         getRegistrationFormProvider.addMember(loginProvider.emailId, true);
+  //       }else{
+
+  //         for(int i=0; i< teamSize[0]; i++){
+
+  //            getRegistrationFormProvider.addMember(i==0?loginProvider.emailId: "Member $i", i==0?true:false);
+  //         }
+  //       }
+
+
+        
+  //     }else if(userType=="pending"){
+  //       //TODO: hit the team get api 
+  //       //TODO: and change the value of key same as current email
+           //TODO: for pending user also create memberdatamodel type object and set only email in there
+  //     }
+
+  //     getRegistrationFormProvider.getPrefilledData(
+  //       loginProvider.emailId, 
+  //       userType=="firstuser"? 0:someInt, 
+  //       );
+
+  //       String jsonOutput = jsonEncode(getRegistrationFormProvider.teamData.toJson());
+  // print(jsonOutput); // Yeh JSON string ko print karega
+
       //TODO: also hit the prefilled data api
+
     });
   }
 
@@ -206,12 +256,7 @@ class MiddleFormPart extends StatelessWidget {
                   indicatorColor: black1,
                   controller: getRegistrationFormProvider.getformcontroller,
                   tabs: List.generate(
-                      getRegistrationFormProvider.singleForm.sections.length +
-                                  getRegistrationFormProvider
-                                      .selectedParticipantTab ==
-                              0
-                          ? 2
-                          : 1, (index) {
+                      getRegistrationFormProvider.sectionsCount, (index) {
                     return InkWell(
                         onTap: () {
                           getRegistrationFormProvider.getformcontroller
@@ -245,12 +290,7 @@ class MiddleFormPart extends StatelessWidget {
               child: TabBarView(
             controller: getRegistrationFormProvider.getformcontroller,
             children: List.generate(
-                getRegistrationFormProvider.singleForm.sections.length +
-                            getRegistrationFormProvider
-                                .selectedParticipantTab ==
-                        0
-                    ? 2
-                    : 1, (index) {
+               getRegistrationFormProvider.sectionsCount, (index) {
               final int sectionIndex =
                   getRegistrationFormProvider.getformcontroller.index;
               final List<dynamic> allFieldsList =
@@ -320,10 +360,12 @@ class MiddleFormPart extends StatelessWidget {
                                       (prev, elem) =>
                                           prev + elem.numberOfQuestions);
 
-                          int currentFieldIndex =
-                              sectionIndex + index + sumOfFieldsTillPrevSection;
+                                          print("sumOfFieldsTillPrevSection :$sumOfFieldsTillPrevSection");
+
+                          int currentFieldIndex =sumOfFieldsTillPrevSection+index;
                           return Row(
                             children: [
+                              
                               getRegistrationFormProvider.getField(
                                   allFieldsList[currentFieldIndex].type,
                                   allFieldsList[currentFieldIndex])
@@ -452,52 +494,59 @@ class ParticipantsListSide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final getRegistrationFormProvider =
+        Provider.of<GetRegistrationFormProvider>(
+      context,
+    );
     return SingleChildScrollView(
       child: Column(
         children: [
-          ...List.generate(10, (index) {
+          ...List.generate(getRegistrationFormProvider.teamData.members.length, (index) {
             return Padding(
               // color: Colors.pink.shade100,
               padding: EdgeInsets.only(
                   top: scaleHeight(context, index == 0 ? 0 : 25),
                   bottom: scaleHeight(context, index == 9 ? 0 : 25)),
-              child: Row(
-                children: [
-                  SizedBox(width: scaleWidth(context, 59)),
-                  Text(
-                      index == 0
-                          ? "Team Leader Details"
-                          : "Participant ${index + 1} Details",
-                      style: GoogleFonts.getFont(fontFamily2,
-                          fontSize: scaleWidth(context, 14),
-                          color: black1,
-                          fontWeight: FontWeight.w400,
-                          height: lineHeight(22.4, 18))),
-                  const Spacer(),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: Container(
-                      height: scaleHeight(context, 60),
-                      width: scaleHeight(context, 60),
-                      decoration: BoxDecoration(
-                          color:
-                              index < 2 ? Color(0xFF44D152) : Color(0xFFFFFBFB),
-                          shape: BoxShape.circle,
-                          border: index == 3
-                              ? Border.all(color: Color(0xFF44D152))
-                              : null,
-                          boxShadow: index < 2
-                              ? null
-                              : [
-                                  BoxShadow(
-                                      offset: Offset(4, 0),
-                                      blurRadius: 15,
-                                      spreadRadius: 0,
-                                      color: Colors.black.withOpacity(0.25))
-                                ]),
+              child: InkWell(
+                onTap: (){
+                  getRegistrationFormProvider.setSelectedParticipantTab(index);
+                },
+                child: Row(
+                  children: [
+                    SizedBox(width: scaleWidth(context, 59)),
+                    Text(
+                        index == 0
+                            ? "Team Leader Details"
+                            : "Participant ${index + 1} Details",
+                        style: GoogleFonts.getFont(fontFamily2,
+                            fontSize: scaleWidth(context, 14),
+                            color: black1,
+                            fontWeight: FontWeight.w400,
+                            height: lineHeight(22.4, 18))),
+                    const Spacer(),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Container(
+                        height: scaleHeight(context, 60),
+                        width: scaleHeight(context, 60),
+                        decoration: BoxDecoration(
+                            color:
+                               getRegistrationFormProvider.isMemberDataComplete(index) ?const Color(0xFF44D152) :const Color(0xFFFFFBFB),
+                            shape: BoxShape.circle,
+                            border: getRegistrationFormProvider.selectedParticipantTab==index
+                                ? Border.all(color:const Color.fromARGB(255, 44, 116, 51), width: 5)
+                                : null,
+                            boxShadow: [
+                                    BoxShadow(
+                                        offset: const Offset(4, 0),
+                                        blurRadius: 15,
+                                        spreadRadius: 0,
+                                        color: Colors.black.withOpacity(0.25))
+                                  ]),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           })
