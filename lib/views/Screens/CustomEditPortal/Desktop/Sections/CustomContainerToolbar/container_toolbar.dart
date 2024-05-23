@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:major_project__widget_testing/constants/enums.dart';
-import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonContainerPropertiesProvider.dart';
+// import 'package:major_project__widget_testing/constants/enums.dart';
+// import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonContainerPropertiesProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
-import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/CustomContainerToolbar/custom_container_size_widget.dart';
-import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/ContainerToolbar/container_bg_color.dart';
-import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/ContainerToolbar/container_blur_radius.dart';
-import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/ContainerToolbar/container_border_radius.dart';
-import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/ContainerToolbar/container_border_width.dart';
-import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/ContainerToolbar/container_size_widget.dart';
+import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CustomContainerToolbar/custom_container_bg_color.dart';
+import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CustomContainerToolbar/custom_container_height_widget.dart'; import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CustomContainerToolbar/custom_container_width.dart';
+// import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/ContainerToolbar/container_bg_color.dart';
+// import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/ContainerToolbar/container_blur_radius.dart';
+// import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/ContainerToolbar/container_border_radius.dart';
+// import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/ContainerToolbar/container_border_width.dart';
+// import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/ContainerToolbar/container_size_widget.dart';
 
 class PropertiesPanelWidget extends StatelessWidget {
   const PropertiesPanelWidget({
@@ -19,7 +20,15 @@ class PropertiesPanelWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomContainerSizeWidget();
+    return Row(
+      children: [
+        const CustomContainerHeightWidget(),
+         SizedBox(width: scaleWidth(context, 20)),
+         const CustomContainerWidthWidget(),
+         SizedBox(width: scaleWidth(context, 20)),
+         const CustomContainerBgColorWidget()
+      ],
+    );
     // int colorNumber = hackathonContainerProvider.countElements(
     //     hackathonContainerProvider
     //         .containerPropertiesMap[

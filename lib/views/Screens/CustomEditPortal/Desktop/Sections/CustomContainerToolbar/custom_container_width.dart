@@ -6,25 +6,24 @@ import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:major_project__widget_testing/state/custom_template_providers/custom_edit_template_provider.dart';
-import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonContainerPropertiesProvider.dart';
 import 'package:major_project__widget_testing/utils/customTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/views/Components/toolTip_custom_decoration.dart';
 import 'package:provider/provider.dart';
 
-class CustomContainerSizeWidget extends StatefulWidget {
-  const CustomContainerSizeWidget({
+class CustomContainerWidthWidget extends StatefulWidget {
+  const CustomContainerWidthWidget({
     super.key,
   });
 
   @override
-  State<CustomContainerSizeWidget> createState() =>
-      _CustomContainerSizeWidgetState();
+  State<CustomContainerWidthWidget> createState() =>
+      _CustomContainerWidthWidgetState();
 }
 
-class _CustomContainerSizeWidgetState extends State<CustomContainerSizeWidget> {
-  late TextEditingController containerHeightController;
+class _CustomContainerWidthWidgetState extends State<CustomContainerWidthWidget> {
+  late TextEditingController customContainerWidthController;
 
   bool subtractHover = false;
   bool addHover = false;
@@ -33,12 +32,12 @@ class _CustomContainerSizeWidgetState extends State<CustomContainerSizeWidget> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    containerHeightController = TextEditingController();
+    customContainerWidthController = TextEditingController();
   }
 
   @override
   void dispose() {
-    containerHeightController.dispose();
+    customContainerWidthController.dispose();
     // TODO: implement dispose
     super.dispose();
   }
@@ -46,18 +45,16 @@ class _CustomContainerSizeWidgetState extends State<CustomContainerSizeWidget> {
   @override
   Widget build(BuildContext context) {
     final customEditPortalProvider = Provider.of<CustomEditPortal>(context);
-    // final hackathonContainerPropertiesProvider =
-    //     Provider.of<HackathonContainerPropertiesProvider>(context);
-    // if (hackathonContainerPropertiesProvider.selectedContainerKey != null) {
-    //   if (hackathonContainerPropertiesProvider
-    //           .containerPropertiesMap[
-    //               hackathonContainerPropertiesProvider.selectedContainerKey]!.height > 0) {
-    //     containerHeightController.text = hackathonContainerPropertiesProvider
-    //         .containerPropertiesMap[hackathonContainerPropertiesProvider.selectedContainerKey]!
-    //         .height
-    //         .toString();
-    //   }
-    // }
+
+    if (customEditPortalProvider.selectedWidgetKey != null) {
+      final currWidth = customEditPortalProvider.getPropertyValue(
+          customEditPortalProvider.jsonObject,
+          customEditPortalProvider.selectedWidgetKey.toString(),
+          "width");
+      if (currWidth > 0) {
+        customContainerWidthController.text = currWidth.toString();
+      }
+    }
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(rad5_1),
@@ -65,7 +62,7 @@ class _CustomContainerSizeWidgetState extends State<CustomContainerSizeWidget> {
       child: Row(
         children: [
           Tooltip(
-            message: "Decrease Container Height",
+            message: "Decrease Container Width",
             verticalOffset: 5,
             decoration: const ShapeDecoration(
               shape: ToolTipCustomDecoration(
@@ -77,26 +74,22 @@ class _CustomContainerSizeWidgetState extends State<CustomContainerSizeWidget> {
               onExit: (_) => setState(() => subtractHover = false),
               child: InkWell(
                 onTap: () {
-                  final currHeight = customEditPortalProvider.getPropertyValue(
-                              customEditPortalProvider.jsonObject,
-                              customEditPortalProvider.selectedWidgetKey
-                                  .toString(),
-                              "height") ;
+                  final currWidth = customEditPortalProvider.getPropertyValue(
+                      customEditPortalProvider.jsonObject,
+                      customEditPortalProvider.selectedWidgetKey.toString(),
+                      "width");
                   customEditPortalProvider.addPropertyByKey(
                       customEditPortalProvider.selectedWidgetKey == null
                           ? customColumnKey.toString()
                           : customEditPortalProvider.selectedWidgetKey
                               .toString(),
-                      'height',
-                      currHeight -
-                          30);
-                          
+                      'width',
+                      currWidth - 30);
+
                   customEditPortalProvider.dynamicWidgets =
                       customEditPortalProvider.buildWidgetsFromJson(
                           customEditPortalProvider.jsonObject);
-                          customEditPortalProvider.triggerUIUpdate();
-
-                          
+                  customEditPortalProvider.triggerUIUpdate();
                 },
                 child: Container(
                     height: scaleHeight(context, 37),
@@ -115,7 +108,7 @@ class _CustomContainerSizeWidgetState extends State<CustomContainerSizeWidget> {
             thickness: 1,
           ),
           Tooltip(
-            message: "Container Height",
+            message: "Container Width",
             verticalOffset: 5,
             decoration: const ShapeDecoration(
               shape: ToolTipCustomDecoration(
@@ -126,7 +119,7 @@ class _CustomContainerSizeWidgetState extends State<CustomContainerSizeWidget> {
               height: scaleHeight(context, 37),
               width: scaleHeight(context, 56),
               child: TextField(
-                controller: containerHeightController,
+                controller: customContainerWidthController,
                 cursorColor: Colors.white,
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
@@ -152,6 +145,19 @@ class _CustomContainerSizeWidgetState extends State<CustomContainerSizeWidget> {
                     height: lineHeight(23, 20)),
                 onSubmitted: (value) {
                   //  hackathonContainerPropertiesProvider.setContainerHeight(value);
+                  // final currHeight = customEditPortalProvider.getPropertyValue(
+                  //             customEditPortalProvider.jsonObject,
+                  //             customEditPortalProvider.selectedWidgetKey
+                  //                 .toString(),
+                  //             "height") ;
+                  double? width = double.tryParse(value);
+                  customEditPortalProvider.addPropertyByKey(
+                      customEditPortalProvider.selectedWidgetKey == null
+                          ? customColumnKey.toString()
+                          : customEditPortalProvider.selectedWidgetKey
+                              .toString(),
+                      'width',
+                     width);
                 },
               ),
             ),
@@ -162,7 +168,7 @@ class _CustomContainerSizeWidgetState extends State<CustomContainerSizeWidget> {
             thickness: 1,
           ),
           Tooltip(
-            message: "Increase Container Height",
+            message: "Increase Container Width",
             verticalOffset: 5,
             decoration: const ShapeDecoration(
               shape: ToolTipCustomDecoration(
@@ -174,7 +180,17 @@ class _CustomContainerSizeWidgetState extends State<CustomContainerSizeWidget> {
               onExit: (_) => setState(() => addHover = false),
               child: InkWell(
                 onTap: () {
-                  // hackathonContainerPropertiesProvider.increaseContainerHeight();
+                  final currWidth = customEditPortalProvider.getPropertyValue(
+                      customEditPortalProvider.jsonObject,
+                      customEditPortalProvider.selectedWidgetKey.toString(),
+                      "width");
+                  customEditPortalProvider.addPropertyByKey(
+                      customEditPortalProvider.selectedWidgetKey == null
+                          ? customColumnKey.toString()
+                          : customEditPortalProvider.selectedWidgetKey
+                              .toString(),
+                      'width',
+                      currWidth + 30);
                 },
                 child: Container(
                     height: scaleHeight(context, 37),

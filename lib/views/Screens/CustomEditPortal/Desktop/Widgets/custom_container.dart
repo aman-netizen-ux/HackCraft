@@ -24,8 +24,9 @@ class _CustomContainerState extends State<CustomContainer> {
         height: widget.node['properties']['height'],
         width: widget.node['properties']['width'],
         margin: EdgeInsets.all(widget.node['properties']['margin']),
+        alignment: Alignment.center,
         color: customEditPortalProvider.stringToColor(widget.node['properties']
-            ['color']), // Example: Set a default color, customize as needed
+            ['color']), 
         child: widget.childWidgets.isEmpty
             ? null
             : (widget.childWidgets.length == 1

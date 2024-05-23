@@ -28,8 +28,38 @@ import 'package:timeline_tile/timeline_tile.dart';
 //TODO: clean up the code
 
 class CustomEditPortal extends ChangeNotifier {
+
+  bool _isColorSelected = false;
+  bool _isColorPickerSelected = false;
+  int _selectedColorTool = 2;
+  final List<Color> _colors = [];
+  
+  final int _maxCapacity = 16;
+
   List<Widget> _dynamicWidgets = [const SizedBox()];
   List<Widget> get dynamicWidgets => _dynamicWidgets;
+
+  
+  int get selectedColorTool => _selectedColorTool;
+  List<Color> get colors => _colors;
+
+  void addColor(Color color) {
+    if (_colors.length < _maxCapacity) {
+      _colors.add(color);
+    } else {
+      // Once we reach max capacity, we start replacing from the beginning
+      _colors.removeAt(0); // Remove the first element
+      _colors.add(color); // Add the new color
+    }
+    notifyListeners(); // Notify listeners about the change
+  }
+
+
+
+   void setSelectedColorTool(int value) {
+    _selectedColorTool = value;
+    notifyListeners();
+  }
 
   set dynamicWidgets(List<Widget> widgets) {
     _dynamicWidgets = widgets;
@@ -705,6 +735,19 @@ class CustomEditPortal extends ChangeNotifier {
   }
 
   void triggerUIUpdate() {
+    notifyListeners();
+  }
+
+   bool get isColorSelected => _isColorSelected;
+  bool get isColorPickerSelected => _isColorPickerSelected;
+
+  void setIsColorSelected() {
+    _isColorSelected = !_isColorSelected;
+    notifyListeners();
+  }
+
+  void setIsColorPickerSelected() {
+    _isColorPickerSelected = !_isColorPickerSelected;
     notifyListeners();
   }
 }
