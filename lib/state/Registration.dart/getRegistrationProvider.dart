@@ -179,8 +179,10 @@ class GetRegistrationFormProvider with ChangeNotifier {
             isLeader: isLeader,
             additionalData: List.generate(
               _singleForm.fields.length, (index) {
-                getAnswerModel(_singleForm.fields[index].type, _singleForm.fields[index], index);
-              }))
+                
+              
+                return getAnswerModel(_singleForm.fields[index].type, _singleForm.fields[index], index);}
+              ))
       ]
     });
 
@@ -189,62 +191,56 @@ class GetRegistrationFormProvider with ChangeNotifier {
   }
 
 
-  bool isMemberDataComplete( int index) {
-    TeamRegisterationModel model= _teamData;
-  if (index >= model.members.length) {
-    print("Index out of bounds.");
-    return false;
-  }
-
-  MemberModel member = model.members[index];
-  bool isComplete = true;
-
-  // Loop through each key in the member details
-  member.details.forEach((key, value) {
-    if (value is List<MemberDataModel>) {
-      // It's a list of MemberDataModel
-      for (MemberDataModel dataModel in value) {
-        // Check required data fields
-        if (dataModel.requiredData.participantName.isEmpty ||
-            dataModel.requiredData.participantEmail.isEmpty ||
-            dataModel.requiredData.participantPhone.isEmpty ||
-            dataModel.requiredData.participantGender.isEmpty ||
-            dataModel.requiredData.participantCollege.isEmpty) {
-          isComplete = false;
-          return;
-        }
-
-        // Check additional data fields based on type
-        for (var additionalData in dataModel.additionalData) {
-          if (additionalData is StringAnswerModel && additionalData.input.isEmpty) {
-            isComplete = false;
-            return;
-          } else if (additionalData is OneIntAnswerModel && additionalData.input == null) {
-            isComplete = false;
-            return;
-          } else if (additionalData is TwoIntAnswerModel && (additionalData.input1 == null || additionalData.input2 == null)) {
-            isComplete = false;
-            return;
-          } else if (additionalData is BoolAnswerModel && additionalData.input == null) {
-            isComplete = false;
-            return;
-          } else if (additionalData is MapAnswerModel && additionalData.input.isEmpty) {
-            isComplete = false;
-            return;
-          }
-        }
-      }
-    } else {
-      // If any other data type needs to be validated, add here.
-      if (value.toString().isEmpty) {
-        isComplete = false;
-        return;
-      }
+ bool isMemberDataComplete(int index) {
+    TeamRegisterationModel model = _teamData;
+    if (index >= model.members.length) {
+        print("Index out of bounds.");
+        return false;
     }
-  });
 
-  return isComplete;
+    MemberModel member = model.members[index];
+   
+
+    bool isComplete = true;
+    var value = member.details.values.toList()[0];
+
+    if (value is List<MemberDataModel>) {
+        // It's a list of MemberDataModel
+        for (MemberDataModel dataModel in value) {
+            // Check required data fields
+            if (dataModel.requiredData.participantName.isEmpty ||
+                dataModel.requiredData.participantEmail.isEmpty ||
+                dataModel.requiredData.participantPhone.isEmpty ||
+                dataModel.requiredData.participantGender.isEmpty ||
+                dataModel.requiredData.participantCollege.isEmpty) {
+                isComplete = false;
+                return false; // exits the entire function
+            }
+
+            // Check additional data fields based on type
+            for (var additionalData in dataModel.additionalData) {
+             
+                if (additionalData is StringAnswerModel && additionalData.input.isEmpty) {
+                    isComplete = false;
+                    return false; // exits the entire function
+                } else if (additionalData is MapAnswerModel && additionalData.input.isEmpty) {
+                    isComplete = false;
+                    return false; // exits the entire function
+                }
+            }
+        }
+    } else {
+      print("im inelse kyuuuuuuuuuuuuuuu $value");
+        // If any other data type needs to be validated, add here.
+        if (value.toString().isEmpty) {
+            isComplete = false;
+            return false; // exits the entire function
+        }
+    }
+
+    return isComplete;
 }
+
 
 
   List<dynamic> get gereralSectionFieldsList => _gereralSectionFieldsList;
@@ -285,7 +281,7 @@ Future<void> getPrefilledData( String email, int index,)async {
          _teamData.members[index].details[email][0].requiredData.participantPhone=response.phone;
            _teamData.members[index].details[email][0].requiredData.participantCollege=response.organisation;
              _teamData.members[index].details[email][0].requiredData.participantGender=response.gender;
-       
+       print("set");
     }else{
       print("some problem ocurred in getting prefilled data");
     }
@@ -466,6 +462,14 @@ Future<void> getPrefilledData( String email, int index,)async {
           question: field.label,
           type: FieldTypes.radio
         );
+
+         case FieldTypes.dropdown:
+        return  MapAnswerModel(
+          input: {},
+          serialNumber: index,
+          question: field.label,
+          type: FieldTypes.dropdown
+        );
          case FieldTypes.shortAnswer:
         return  StringAnswerModel(
           input: "",
@@ -475,15 +479,15 @@ Future<void> getPrefilledData( String email, int index,)async {
         );
          case FieldTypes.stepper:
         return  OneIntAnswerModel(
-          input: -1,
+          input: -1,//TODO
           serialNumber: index,
           question: field.label,
           type: FieldTypes.stepper
         );
          case FieldTypes.range:
         return  TwoIntAnswerModel(
-          input1: -1,
-          input2: -1,
+          input1: -1,//TODO
+          input2: -1,//TODO
           serialNumber: index,
           question: field.label,
           type: FieldTypes.range
@@ -491,7 +495,7 @@ Future<void> getPrefilledData( String email, int index,)async {
 
          case FieldTypes.slider:
         return  OneIntAnswerModel(
-          input: -1,
+          input: -1,//TODO
           serialNumber: index,
           question: field.label,
           type: FieldTypes.slider
@@ -506,7 +510,7 @@ Future<void> getPrefilledData( String email, int index,)async {
 
          case FieldTypes.linear:
         return  OneIntAnswerModel(
-          input: -1,
+          input: -1,//TODO
           serialNumber: index,
           question: field.label,
           type: FieldTypes.linear
@@ -533,8 +537,10 @@ Future<void> getPrefilledData( String email, int index,)async {
           question: field.label,
           type: FieldTypes.toggle
         );
+
+
       default:
-        throw Exception('Invalid field type');
+        throw Exception('Invalid field type $type');
     }
   }
 }

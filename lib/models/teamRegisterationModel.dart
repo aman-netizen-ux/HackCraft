@@ -194,15 +194,15 @@ class AdditionalDataModel {
       case 'tag':
         return MapAnswerModel.fromJson(json);
       case 'linear':
-        return OneIntAnswerModel.fromJson(json); //TODO: need to update
+        return OneIntAnswerModel.fromJson(json); //TODO: need to update  and as well in get regprovider
       case 'phone':
         return StringAnswerModel.fromJson(json);
       case 'check':
         return MapAnswerModel.fromJson(json);
       case 'toggle':
         return BoolAnswerModel.fromJson(json);
-      // case 'dropdown':
-      //   return DropDownAnswerModel.fromJson(json); //TODO: need to update
+      case 'dropdown':
+        return MapAnswerModel.fromJson(json); //TODO: need to update and as well in get regprovider
       default:
         throw Exception('Invalid field type');
     }

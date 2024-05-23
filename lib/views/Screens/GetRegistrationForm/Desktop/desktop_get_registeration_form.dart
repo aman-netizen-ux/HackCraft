@@ -75,36 +75,36 @@ class _DesktopGetRegisterationFormState
 
       //team details variable is already there in api
       // just set that based on the user type and team size with prefilled values 
-  //     if(userType == "firstuser"){
-  //       getRegistrationFormProvider.updateTeam("", teamSize.length>1? 0: teamSize[0]);
+      if(userType == "firstuser"){
+        getRegistrationFormProvider.updateTeam("", teamSize.length>1? 0: teamSize[0]);
 
-  //       if(teamSize.length>1){
-  //         getRegistrationFormProvider.addMember(loginProvider.emailId, true);
-  //       }else{
+        if(teamSize.length>1){
+          getRegistrationFormProvider.addMember(loginProvider.emailId, true);
+        }else{
 
-  //         for(int i=0; i< teamSize[0]; i++){
+          for(int i=0; i< teamSize[0]; i++){
 
-  //            getRegistrationFormProvider.addMember(i==0?loginProvider.emailId: "Member $i", i==0?true:false);
-  //         }
-  //       }
+             getRegistrationFormProvider.addMember(i==0?loginProvider.emailId: "Member $i", i==0?true:false);
+          }
+        }
 
 
         
-  //     }else if(userType=="pending"){
+      }else if(userType=="pending"){
   //       //TODO: hit the team get api 
   //       //TODO: and change the value of key same as current email
            //TODO: for pending user also create memberdatamodel type object and set only email in there
-  //     }
+      }
 
-  //     getRegistrationFormProvider.getPrefilledData(
-  //       loginProvider.emailId, 
-  //       userType=="firstuser"? 0:someInt, 
-  //       );
+     await getRegistrationFormProvider.getPrefilledData(
+        loginProvider.emailId, 
+        userType=="firstuser"? 0:someInt, 
+        );
 
-  //       String jsonOutput = jsonEncode(getRegistrationFormProvider.teamData.toJson());
-  // print(jsonOutput); // Yeh JSON string ko print karega
+        
+        // String jsonOutput = jsonEncode(getRegistrationFormProvider.teamData.team.toJson());
+  // print("jsonOutput $jsonOutput ..................................\n ${jsonEncode(getRegistrationFormProvider.teamData.members[0].toJson())}"); 
 
-      //TODO: also hit the prefilled data api
 
     });
   }
@@ -510,6 +510,10 @@ class ParticipantsListSide extends StatelessWidget {
               child: InkWell(
                 onTap: (){
                   getRegistrationFormProvider.setSelectedParticipantTab(index);
+                  getRegistrationFormProvider.setSectionsCount(
+                    getRegistrationFormProvider.singleForm.sections.length+
+                    getRegistrationFormProvider.selectedParticipantTab == 0 ? 2 : 1);
+       getRegistrationFormProvider.refreshTabs();
                 },
                 child: Row(
                   children: [
