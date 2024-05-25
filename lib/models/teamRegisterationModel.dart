@@ -350,7 +350,7 @@ class BoolAnswerModel extends AdditionalDataModel {
 }
 
 class MapAnswerModel extends AdditionalDataModel {
-  Map<String, int> input;
+  Map<String, String> input;
   MapAnswerModel({
     required int serialNumber,
     required String question,
@@ -364,7 +364,7 @@ class MapAnswerModel extends AdditionalDataModel {
 
   factory MapAnswerModel.fromJson(Map<String, dynamic> json) {
     Map<String, dynamic> inputsJson = json['input'];
-    Map<String, int> input = {};
+    Map<String, String> input = {};
     inputsJson.forEach((key, value) {
       input[key] = value;
     });
@@ -386,4 +386,46 @@ class MapAnswerModel extends AdditionalDataModel {
       'input': input,
     };
   }
+
+  
+}
+class MapIntAnswerModel extends AdditionalDataModel {
+  Map<String, int> input;
+  MapIntAnswerModel({
+    required int serialNumber,
+    required String question,
+    required FieldTypes type,
+    required this.input,
+  }) : super(
+          serialNumber: serialNumber,
+          question: question,
+          type: type,
+        );
+
+  factory MapIntAnswerModel.fromJson(Map<String, dynamic> json) {
+    Map<String, dynamic> inputsJson = json['input'];
+    Map<String, int> input = {};
+    inputsJson.forEach((key, value) {
+      input[key] = value;
+    });
+    return MapIntAnswerModel(
+      serialNumber: json['serial_number'],
+      input: input,
+      type: FieldTypes.values
+          .firstWhere((e) => e.toString().split('.').last == json['type']),
+      question: json['field'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+     
+      'serial_number': serialNumber,
+      'field': question,
+      'type': type.toString().split('.').last,
+      'input': input,
+    };
+  }
+
+  
 }

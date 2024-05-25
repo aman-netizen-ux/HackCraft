@@ -73,7 +73,6 @@ class GetRegistrationFormProvider with ChangeNotifier {
   int get selectedParticipantTab => _selectedParticipantTab;
 
   final List<dynamic> _gereralSectionFieldsList = [
-   
     ShortAnswerFieldModel(
         errorText: "Please fill the name",
         hint: "Enter your name",
@@ -92,7 +91,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
         type: FieldTypes.shortAnswer),
     ShortAnswerFieldModel(
         errorText: "Please enter your college",
-        hint: "Enter your College Name",
+        hint: "Enter your College/ Organization Name",
         label: "College Name",
         required: true,
         serialNumber: 3,
@@ -142,12 +141,12 @@ class GetRegistrationFormProvider with ChangeNotifier {
   TeamRegisterationModel _teamData = TeamRegisterationModel(
       team: TeamModel(teamName: "", teamSize: 0), members: []);
 
-  int _sectionsCount=0;
+  int _sectionsCount = 0;
 
-  int get sectionsCount=> _sectionsCount;
+  int get sectionsCount => _sectionsCount;
 
-  void setSectionsCount(int value){
-    _sectionsCount=value;
+  void setSectionsCount(int value) {
+    _sectionsCount = value;
     notifyListeners();
   }
 
@@ -177,12 +176,10 @@ class GetRegistrationFormProvider with ChangeNotifier {
                 participantGender: "",
                 participantCollege: ""),
             isLeader: isLeader,
-            additionalData: List.generate(
-              _singleForm.fields.length, (index) {
-                
-              
-                return getAnswerModel(_singleForm.fields[index].type, _singleForm.fields[index], index);}
-              ))
+            additionalData: List.generate(_singleForm.fields.length, (index) {
+              return getAnswerModel(_singleForm.fields[index].type,
+                  _singleForm.fields[index], index);
+            }))
       ]
     });
 
@@ -190,58 +187,55 @@ class GetRegistrationFormProvider with ChangeNotifier {
     notifyListeners(); // Notifies all listening widgets of a change.
   }
 
-
- bool isMemberDataComplete(int index) {
+  bool isMemberDataComplete(int index) {
     TeamRegisterationModel model = _teamData;
     if (index >= model.members.length) {
-        print("Index out of bounds.");
-        return false;
+      print("Index out of bounds.");
+      return false;
     }
 
     MemberModel member = model.members[index];
-   
 
     bool isComplete = true;
     var value = member.details.values.toList()[0];
 
     if (value is List<MemberDataModel>) {
-        // It's a list of MemberDataModel
-        for (MemberDataModel dataModel in value) {
-            // Check required data fields
-            if (dataModel.requiredData.participantName.isEmpty ||
-                dataModel.requiredData.participantEmail.isEmpty ||
-                dataModel.requiredData.participantPhone.isEmpty ||
-                dataModel.requiredData.participantGender.isEmpty ||
-                dataModel.requiredData.participantCollege.isEmpty) {
-                isComplete = false;
-                return false; // exits the entire function
-            }
-
-            // Check additional data fields based on type
-            for (var additionalData in dataModel.additionalData) {
-             
-                if (additionalData is StringAnswerModel && additionalData.input.isEmpty) {
-                    isComplete = false;
-                    return false; // exits the entire function
-                } else if (additionalData is MapAnswerModel && additionalData.input.isEmpty) {
-                    isComplete = false;
-                    return false; // exits the entire function
-                }
-            }
+      // It's a list of MemberDataModel
+      for (MemberDataModel dataModel in value) {
+        // Check required data fields
+        if (dataModel.requiredData.participantName.isEmpty ||
+            dataModel.requiredData.participantEmail.isEmpty ||
+            dataModel.requiredData.participantPhone.isEmpty ||
+            dataModel.requiredData.participantGender.isEmpty ||
+            dataModel.requiredData.participantCollege.isEmpty) {
+          isComplete = false;
+          return false; // exits the entire function
         }
-    } else {
-      print("im inelse kyuuuuuuuuuuuuuuu $value");
-        // If any other data type needs to be validated, add here.
-        if (value.toString().isEmpty) {
+
+        // Check additional data fields based on type
+        for (var additionalData in dataModel.additionalData) {
+          if (additionalData is StringAnswerModel &&
+              additionalData.input.isEmpty) {
             isComplete = false;
             return false; // exits the entire function
+          } else if (additionalData is MapAnswerModel &&
+              additionalData.input.isEmpty) {
+            isComplete = false;
+            return false; // exits the entire function
+          }
         }
+      }
+    } else {
+      print("im inelse kyuuuuuuuuuuuuuuu $value");
+      // If any other data type needs to be validated, add here.
+      if (value.toString().isEmpty) {
+        isComplete = false;
+        return false; // exits the entire function
+      }
     }
 
     return isComplete;
-}
-
-
+  }
 
   List<dynamic> get gereralSectionFieldsList => _gereralSectionFieldsList;
   List<dynamic> get teamDetailsSectionFieldsList =>
@@ -270,23 +264,32 @@ class GetRegistrationFormProvider with ChangeNotifier {
     notifyListeners();
   }
 
-Future<void> getPrefilledData( String email, int index,)async {
-    final response= await GetPrefilledData().getprefilledData(email);
+  Future<void> getPrefilledData(
+    String email,
+    int index,
+  ) async {
+    final response = await GetPrefilledData().getprefilledData(email);
     print("Im in usertype fun");
 
-    if(response!=null){
-       print("Im in usertype fun response not null ${response.email}, ${response.firstName}, ${response.gender}, ${response.lastName},${response.organisation}, ${response.phone}");
-      _teamData.members[index].details[email][0].requiredData.participantName= "${response.firstName} ${response.lastName}";
-       _teamData.members[index].details[email][0].requiredData.participantEmail=response.email;
-         _teamData.members[index].details[email][0].requiredData.participantPhone=response.phone;
-           _teamData.members[index].details[email][0].requiredData.participantCollege=response.organisation;
-             _teamData.members[index].details[email][0].requiredData.participantGender=response.gender;
-       print("set");
-    }else{
+    if (response != null) {
+      print(
+          "Im in usertype fun response not null ${response.email}, ${response.firstName}, ${response.gender}, ${response.lastName},${response.organisation}, ${response.phone}");
+      _teamData.members[index].details[email][0].requiredData.participantName =
+          "${response.firstName} ${response.lastName}";
+      _teamData.members[index].details[email][0].requiredData.participantEmail =
+          response.email;
+      _teamData.members[index].details[email][0].requiredData.participantPhone =
+          response.phone;
+      _teamData.members[index].details[email][0].requiredData
+          .participantCollege = response.organisation;
+      _teamData.members[index].details[email][0].requiredData
+          .participantGender = response.gender;
+    } else {
       print("some problem ocurred in getting prefilled data");
     }
     notifyListeners();
   }
+
   GetRegistrationFormProvider(this._vsync)
       : getformcontroller = TabController(length: 0, vsync: _vsync) {
     initialize();
@@ -304,9 +307,8 @@ Future<void> getPrefilledData( String email, int index,)async {
     // int count = _selectedParticipantTab == 0 ? 2 : 1;
     // print(
     //     "_selectedParticipantTab in create tab controller $_selectedParticipantTab  tidk $count");
-
-    getformcontroller = TabController(
-        length: _sectionsCount, vsync: _vsync);
+    print("_sectionsCount in provider ${_sectionsCount}");
+    getformcontroller = TabController(length: _sectionsCount, vsync: _vsync);
     getformcontroller.addListener(() {
       if (!getformcontroller.indexIsChanging) {
         notifyListeners();
@@ -321,20 +323,86 @@ Future<void> getPrefilledData( String email, int index,)async {
     notifyListeners();
   }
 
-  dynamic getField(FieldTypes type, dynamic field) {
+  void updateDetails(String input,
+      {int? serialNumber,
+      String? modelType,
+      String? isRequiredData,
+      String? requiredType}) {
+    MemberDataModel model =
+        _teamData.members[selectedParticipantTab].details.values.toList()[0][0];
+
+        print("input in provider *********** $input, $serialNumber, $modelType");
+
+    if (isRequiredData != null && requiredType != null) {
+      if (requiredType == "phone") {
+        model.requiredData.participantPhone = input;
+      } else if (requiredType == "email") {
+        model.requiredData.participantEmail = input;
+      }
+    } else if (serialNumber != null && modelType != null) {
+      if (modelType == "StringAnswerModel") {
+        print("Im in string model");
+         print(" before updation: ${ model.additionalData[serialNumber].input}");
+        model.additionalData[serialNumber].input = input;
+        print(" after updation: ${ model.additionalData[serialNumber].input}");
+      } else if (modelType == "MapAnswerModel") {
+         print("Im in map model");
+        //  if(input.contains(','))
+        // {
+
+          List<String> options= input.split(',');
+          print("options $options");
+
+          Map<String, String> optionList= {};
+
+          for(int i=0; i<options.length; i++){
+            optionList["Option ${i+1}"]= options[i];
+          }
+
+          model.additionalData[serialNumber].input=optionList;
+
+          print(" after updation map: ${ model.additionalData[serialNumber].input}");
+        // }else{
+        //   model.additionalData[serialNumber].input = {
+        //   'Option 1': input,
+        // };
+        // }
+      }
+    }
+
+    notifyListeners();
+  }
+
+  dynamic getField(
+      {required FieldTypes type,
+      required dynamic field,
+      required String initialAnswer,
+      required bool isDisabled,
+      int? serialNumber,
+      String? modelType,
+      String? isRequiredData,
+      String? requiredType}) {
+
     switch (type) {
       case FieldTypes.date:
         return 0;
       case FieldTypes.file:
         return 0;
       case FieldTypes.longAnswer:
+        print('initial long answer in provider $initialAnswer');
         return LongAnsField(
           create: false,
           hint: field.hint,
+          isDisabled: isDisabled,
           error: field.errorText,
           limit: field.wordLimit,
           question: field.label,
           required: field.required,
+           isRequiredData: isRequiredData,
+          requiredType: requiredType,
+          serialNumber: serialNumber,
+          modelType: modelType,
+           initialAnswer: initialAnswer,
         );
       case FieldTypes.radio || FieldTypes.yesNo:
         List<RegistrationOption> options =
@@ -342,18 +410,33 @@ Future<void> getPrefilledData( String email, int index,)async {
 
         List<String> textList = options.map((option) => option.text).toList();
         return MultipleChoiceField(
-            question: field.label,
-            create: false,
-            error: field.errorText,
-            options: textList,
-            required: field.required);
+          question: field.label,
+          create: false,
+          error: field.errorText,
+          options: textList,
+          required: field.required,
+          isRequiredData: isRequiredData,
+          requiredType: requiredType,
+          serialNumber: serialNumber,
+          modelType: modelType,
+          isDisabled: isDisabled,
+           initialAnswer: initialAnswer,
+        );
       case FieldTypes.shortAnswer:
         return ShortAnsField(
-            create: false,
-            error: field.errorText,
-            hint: field.hint,
-            question: field.label,
-            required: field.required);
+          create: false,
+          isDisabled: isDisabled,
+          initialAnswer: initialAnswer,
+          error: field.errorText,
+          hint: field.hint,
+          question: field.label,
+          required: field.required,
+          isRequiredData: isRequiredData,
+          requiredType: requiredType,
+          serialNumber: serialNumber,
+          modelType: modelType,
+          validation: field.validation,
+        );
       case FieldTypes.stepper:
         return StepperField(
           create: false,
@@ -412,7 +495,14 @@ Future<void> getPrefilledData( String email, int index,)async {
             create: false,
             error: field.errorText,
             options: textList,
-            required: field.required);
+            required: field.required,
+            isRequiredData: isRequiredData,
+          requiredType: requiredType,
+          serialNumber: serialNumber,
+          modelType: modelType,
+          isDisabled: isDisabled,
+           initialAnswer: initialAnswer,
+            );
       case FieldTypes.toggle:
         return ToogleYNField(
           create: false,
@@ -421,8 +511,18 @@ Future<void> getPrefilledData( String email, int index,)async {
           required: field.required,
         );
       case FieldTypes.phoneNumber:
+        print(' phone value ${initialAnswer}');
         return PhoneField(
-            question: field.label, create: false, required: field.required);
+          question: field.label,
+          create: false,
+          initialAnswer: initialAnswer,
+          isDisabled: isDisabled,
+          required: field.required,
+          isRequiredData: isRequiredData,
+          requiredType: requiredType,
+          serialNumber: serialNumber,
+          modelType: modelType,
+        );
       case FieldTypes.slider:
         return SliderField(
           create: false,
@@ -438,106 +538,92 @@ Future<void> getPrefilledData( String email, int index,)async {
     }
   }
 
-  dynamic getAnswerModel(FieldTypes type, dynamic field, int index){
-    switch(type){
+  dynamic getAnswerModel(FieldTypes type, dynamic field, int index) {
+    switch (type) {
       case FieldTypes.date:
         return StringAnswerModel(
-          input: "",
-          serialNumber: index,
-          question: field.label,
-          type: FieldTypes.date
-        );
-        case FieldTypes.longAnswer:
-        return  StringAnswerModel(
-          input: "",
-          serialNumber: index,
-          question: field.label,
-          type: FieldTypes.longAnswer
-        );
-
-         case FieldTypes.radio:
-        return  MapAnswerModel(
-          input: {},
-          serialNumber: index,
-          question: field.label,
-          type: FieldTypes.radio
-        );
-
-         case FieldTypes.dropdown:
-        return  MapAnswerModel(
-          input: {},
-          serialNumber: index,
-          question: field.label,
-          type: FieldTypes.dropdown
-        );
-         case FieldTypes.shortAnswer:
-        return  StringAnswerModel(
-          input: "",
-          serialNumber: index,
-          question: field.label,
-          type: FieldTypes.shortAnswer
-        );
-         case FieldTypes.stepper:
-        return  OneIntAnswerModel(
-          input: -1,//TODO
-          serialNumber: index,
-          question: field.label,
-          type: FieldTypes.stepper
-        );
-         case FieldTypes.range:
-        return  TwoIntAnswerModel(
-          input1: -1,//TODO
-          input2: -1,//TODO
-          serialNumber: index,
-          question: field.label,
-          type: FieldTypes.range
-        );
-
-         case FieldTypes.slider:
-        return  OneIntAnswerModel(
-          input: -1,//TODO
-          serialNumber: index,
-          question: field.label,
-          type: FieldTypes.slider
-        );
-         case FieldTypes.tag:
-        return MapAnswerModel(
-          input: {},
-          serialNumber: index,
-          question: field.label,
-          type: FieldTypes.tag
-        );
-
-         case FieldTypes.linear:
-        return  OneIntAnswerModel(
-          input: -1,//TODO
-          serialNumber: index,
-          question: field.label,
-          type: FieldTypes.linear
-        );
-         case FieldTypes.phoneNumber:
+            input: "",
+            serialNumber: index,
+            question: field.label,
+            type: FieldTypes.date);
+      case FieldTypes.longAnswer:
         return StringAnswerModel(
-          input: "",
-          serialNumber: index,
-          question: field.label,
-          type: FieldTypes.phoneNumber
-        );
-         case FieldTypes.checkbox:
+            input: "",
+            serialNumber: index,
+            question: field.label,
+            type: FieldTypes.longAnswer);
+
+      case FieldTypes.radio:
         return MapAnswerModel(
-          input: {},
-          serialNumber: index,
-          question: field.label,
-          type: FieldTypes.checkbox
-        );
+            input: {},
+            serialNumber: index,
+            question: field.label,
+            type: FieldTypes.radio);
 
-         case FieldTypes.toggle:
-        return  BoolAnswerModel(
-          input: false,
-          serialNumber: index,
-          question: field.label,
-          type: FieldTypes.toggle
-        );
+      case FieldTypes.dropdown:
+        return MapAnswerModel(
+            input: {},
+            serialNumber: index,
+            question: field.label,
+            type: FieldTypes.dropdown);
+      case FieldTypes.shortAnswer:
+        return StringAnswerModel(
+            input: "",
+            serialNumber: index,
+            question: field.label,
+            type: FieldTypes.shortAnswer);
+      case FieldTypes.stepper:
+        return OneIntAnswerModel(
+            input: -1, //TODO
+            serialNumber: index,
+            question: field.label,
+            type: FieldTypes.stepper);
+      case FieldTypes.range:
+        return TwoIntAnswerModel(
+            input1: -1, //TODO
+            input2: -1, //TODO
+            serialNumber: index,
+            question: field.label,
+            type: FieldTypes.range);
 
+      case FieldTypes.slider:
+        return OneIntAnswerModel(
+            input: -1, //TODO
+            serialNumber: index,
+            question: field.label,
+            type: FieldTypes.slider);
+      case FieldTypes.tag:
+        return MapAnswerModel(
+            input: {},
+            serialNumber: index,
+            question: field.label,
+            type: FieldTypes.tag);
+
+      case FieldTypes.linear:
+        return OneIntAnswerModel(
+            input: -1, //TODO
+            serialNumber: index,
+            question: field.label,
+            type: FieldTypes.linear);
+      case FieldTypes.phoneNumber:
+        return StringAnswerModel(
+            input: "",
+            serialNumber: index,
+            question: field.label,
+            type: FieldTypes.phoneNumber);
+      case FieldTypes.checkbox:
+        return MapAnswerModel(
+            input: {},
+            serialNumber: index,
+            question: field.label,
+            type: FieldTypes.checkbox,);
+
+      case FieldTypes.toggle:
+        return BoolAnswerModel(
+            input: false,
+            serialNumber: index,
+            question: field.label,
+            type: FieldTypes.toggle);
 
       default:
         throw Exception('Invalid field type $type');
