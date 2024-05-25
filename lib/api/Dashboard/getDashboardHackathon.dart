@@ -7,12 +7,14 @@ import 'package:major_project__widget_testing/models/DashboardModel/hackathonMod
 class GetDashboardHackathon {
   Future<Map<String, List<HackathonModel>>> fetchHackathons(
       String email) async {
+    print("api s");
     try {
       final String baseUrl = dotenv.get('getDashboardHackathon');
       final String url = '$baseUrl$email';
+      print("url $url");
       final response = await http.get(Uri.parse(url));
-      // print("response code${response.statusCode}");
-      // print("response of list of hackathon ${response.body}");
+      print("response code${response.statusCode}");
+      print("response of list of hackathon ${response.body}");
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         final List<dynamic> liveData = responseData['live'];

@@ -27,7 +27,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final loginProvider = Provider.of<LoginProvider>(context, listen: false);
     super.initState();
     GetDashboardHackathon()
-        .fetchHackathons("guramrit1066@gmail.com")
+        .fetchHackathons(loginProvider.emailId)
         .then((hackathons) {
       setState(() {
         liveHackathons = hackathons['live'];
