@@ -18,9 +18,11 @@ class RegisteredHackathon {
   final String organizationName;
   final String teamName;
   final String hackathonDeadline;
-  final String tag;
+  final List<String> tag;
+  final double percentage;
 
   RegisteredHackathon({
+    required this.percentage, 
     required this.name,
     required this.hackathonHostDate,
     required this.userRegisteredDate,
@@ -38,7 +40,8 @@ class RegisteredHackathon {
       organizationName: json['organisation'],
       teamName: json['team'],
       hackathonDeadline: json['hackathon_deadline'],
-      tag: json['tag']
+      tag: List<String>.from(json['tag']),
+      percentage:json['percentage']
     );
   }
 }

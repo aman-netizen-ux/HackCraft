@@ -60,7 +60,7 @@ dependencies:
   intl: ^0.18.1
   
   quiver: ^3.2.1
-  drag_and_drop_lists: ^0.3.3
+  # drag_and_drop_lists: ^0.3.3
   shared_preferences: ^2.2.3
   barcode_widget: ^2.0.4
   syncfusion_flutter_charts: ^25.2.3+1

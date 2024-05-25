@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/api/Registartion/postRegistration.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
+import 'package:major_project__widget_testing/constants/enums.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/state/Registration.dart/createRegistrationProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
@@ -297,6 +298,9 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                                 .forEach((key, fields) {
                               if (key != "General" && key != "Team Details") {
                                 for (var field in fields) {
+                                  if (field.type == FieldTypes.yesNo) {
+                                    field.type = FieldTypes.radio;
+                                  }
                                   count++;
                                   field.serialNumber = nextSerialNumber;
                                   nextSerialNumber++;
@@ -313,15 +317,16 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                                 .forEach((key, fields) {
                               if (key != "General" && key != "Team Details") {
                                 int numberOfQuestions = fields.length;
+                                if (numberOfQuestions > 0) {
+                                  Map<String, dynamic> section = {
+                                    "serial_number": serialNumber,
+                                    "section_name": key,
+                                    "number_of_questions": numberOfQuestions
+                                  };
 
-                                Map<String, dynamic> section = {
-                                  "serial_number": serialNumber,
-                                  "section_name": key,
-                                  "number_of_questions": numberOfQuestions
-                                };
-
-                                sections.add(section);
-                                serialNumber++;
+                                  sections.add(section);
+                                  serialNumber++;
+                                }
                               }
                             });
 

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:major_project__widget_testing/api/Registartion/fetchRegistration.dart';
+import 'package:major_project__widget_testing/api/get_prefilled_data.dart';
 import 'package:major_project__widget_testing/constants/enums.dart';
 import 'package:major_project__widget_testing/models/Registration/customField.dart';
 import 'package:major_project__widget_testing/models/Registration/registration_form_model.dart';
+import 'package:major_project__widget_testing/models/teamRegisterationModel.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/RegFieldsCollection/checkbox_ans.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/RegFieldsCollection/dropdown_ans.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/RegFieldsCollection/linearScale_field.dart';
@@ -55,104 +57,203 @@ class GetRegistrationFormProvider with ChangeNotifier {
     }
   }
 
-
   //newCode
 
   // List<String> sections=["abc", "wow", "ok", "nice"];
-final TickerProvider _vsync;
+  final TickerProvider _vsync;
   TabController getformcontroller;
 
-  
- RegistrationFormModel _singleForm = RegistrationFormModel(
+  RegistrationFormModel _singleForm = RegistrationFormModel(
       form: FormModel(hackthon: "", numberOfFields: 0),
       fields: [],
       sections: []);
 
-  int _selectedParticipantTab= -1;
+  int _selectedParticipantTab = -1;
 
-  int get selectedParticipantTab=> _selectedParticipantTab;
+  int get selectedParticipantTab => _selectedParticipantTab;
 
-  final List<dynamic> _gereralSectionFieldsList=
-   [
-ShortAnswerFieldModel(
-          errorText: "Please fill the name",
-          hint: "Enter your name",
-          label: "Full name",
-          required: true,
-          serialNumber: 1,
-          validation: "String",
-          type: FieldTypes.shortAnswer),
-
-          ShortAnswerFieldModel(
-          errorText: "Plrase enter your email",
-          hint: "Enter your valid email id",
-          label: "Email id ",
-          required: true,
-          serialNumber: 2,
-          validation: "Email",
-          type: FieldTypes.shortAnswer),
-
-
-          ShortAnswerFieldModel(
-          errorText: "Please enter your college",
-          hint: "Enter your College Name",
-          label: "College Name",
-          required: true,
-          serialNumber: 3,
-          validation: "String",
-          type: FieldTypes.shortAnswer),
-      DropDownModel(
-        serialNumber: 4,
-        label: "Gender",
-        errorText: "Please select you gender",
-        required: true,
-        type: FieldTypes.dropdown,
-        options: [
-          RegistrationOption(text: "Male ", serialNumber: 1),
-          RegistrationOption(text: "Female ", serialNumber: 2),
-           RegistrationOption(text: "Other ", serialNumber: 3)
-        ],
-      ),
-
-      PhoneNumberModel(
-          serialNumber: 5,
-          label: "Phone Number",
-          errorText: "Please enter your Phone Number",
-          required: true,
-          type: FieldTypes.phoneNumber,
-          validation: "PhoneNumber",
-          hint: "Enter Your 10-digit number")
-  ];
-
-  final List<dynamic> _teamDetailsSectionFieldsList=[
+  final List<dynamic> _gereralSectionFieldsList = [
+   
     ShortAnswerFieldModel(
-          serialNumber: 1,
-          label: "Team Name",
-          errorText: "lease enter your Team Name",
-          required: true,
-          type: FieldTypes.shortAnswer,
-          validation: "String",
-          hint: "Enter your team name"),
-      StepperModel(
-          serialNumber: 1,
-          label: "Team Member",
-          errorText: "Please enter your team member",
-          required: true,
-          type: FieldTypes.stepper,
-          max_value: 5,
-          min_value: 0)
+        errorText: "Please fill the name",
+        hint: "Enter your name",
+        label: "Full name",
+        required: true,
+        serialNumber: 1,
+        validation: "String",
+        type: FieldTypes.shortAnswer),
+    ShortAnswerFieldModel(
+        errorText: "Plrase enter your email",
+        hint: "Enter your valid email id",
+        label: "Email id ",
+        required: true,
+        serialNumber: 2,
+        validation: "Email",
+        type: FieldTypes.shortAnswer),
+    ShortAnswerFieldModel(
+        errorText: "Please enter your college",
+        hint: "Enter your College Name",
+        label: "College Name",
+        required: true,
+        serialNumber: 3,
+        validation: "String",
+        type: FieldTypes.shortAnswer),
+    DropDownModel(
+      serialNumber: 4,
+      label: "Gender",
+      errorText: "Please select you gender",
+      required: true,
+      type: FieldTypes.dropdown,
+      options: [
+        RegistrationOption(text: "Male ", serialNumber: 1),
+        RegistrationOption(text: "Female ", serialNumber: 2),
+        RegistrationOption(text: "Other ", serialNumber: 3)
+      ],
+    ),
+    PhoneNumberModel(
+        serialNumber: 5,
+        label: "Phone Number",
+        errorText: "Please enter your Phone Number",
+        required: true,
+        type: FieldTypes.phoneNumber,
+        validation: "PhoneNumber",
+        hint: "Enter Your 10-digit number")
   ];
 
-  List<dynamic> get gereralSectionFieldsList=>_gereralSectionFieldsList;
-  List<dynamic> get teamDetailsSectionFieldsList=>_teamDetailsSectionFieldsList;
+  final List<dynamic> _teamDetailsSectionFieldsList = [
+    ShortAnswerFieldModel(
+        serialNumber: 1,
+        label: "Team Name",
+        errorText: "lease enter your Team Name",
+        required: true,
+        type: FieldTypes.shortAnswer,
+        validation: "String",
+        hint: "Enter your team name"),
+    StepperModel(
+        serialNumber: 1,
+        label: "Team Member",
+        errorText: "Please enter your team member",
+        required: true,
+        type: FieldTypes.stepper,
+        max_value: 5,
+        min_value: 0)
+  ];
 
-  void setSelectedParticipantTab(int value){
-    _selectedParticipantTab=value;
+  TeamRegisterationModel _teamData = TeamRegisterationModel(
+      team: TeamModel(teamName: "", teamSize: 0), members: []);
+
+  int _sectionsCount=0;
+
+  int get sectionsCount=> _sectionsCount;
+
+  void setSectionsCount(int value){
+    _sectionsCount=value;
     notifyListeners();
   }
 
-RegistrationFormModel get singleForm => _singleForm;
-    Future<void> getHackathonForm(String id) async {
+  TeamRegisterationModel get teamData => _teamData;
+
+  void setTeamData(TeamRegisterationModel value) {
+    _teamData = value;
+    notifyListeners();
+  }
+
+  // Method to update the team details
+  void updateTeam(String teamName, int teamSize) {
+    _teamData.team.teamName = teamName;
+    _teamData.team.teamSize = teamSize;
+    notifyListeners(); // Notifies all listening widgets of a change.
+  }
+
+  // Method to add a member
+  void addMember(String emailId, bool isLeader) {
+    MemberModel member = MemberModel(details: {
+      emailId: [
+        MemberDataModel(
+            requiredData: RequiredDataModel(
+                participantEmail: "",
+                participantName: "",
+                participantPhone: "",
+                participantGender: "",
+                participantCollege: ""),
+            isLeader: isLeader,
+            additionalData: List.generate(
+              _singleForm.fields.length, (index) {
+                
+              
+                return getAnswerModel(_singleForm.fields[index].type, _singleForm.fields[index], index);}
+              ))
+      ]
+    });
+
+    _teamData.members.add(member);
+    notifyListeners(); // Notifies all listening widgets of a change.
+  }
+
+
+ bool isMemberDataComplete(int index) {
+    TeamRegisterationModel model = _teamData;
+    if (index >= model.members.length) {
+        print("Index out of bounds.");
+        return false;
+    }
+
+    MemberModel member = model.members[index];
+   
+
+    bool isComplete = true;
+    var value = member.details.values.toList()[0];
+
+    if (value is List<MemberDataModel>) {
+        // It's a list of MemberDataModel
+        for (MemberDataModel dataModel in value) {
+            // Check required data fields
+            if (dataModel.requiredData.participantName.isEmpty ||
+                dataModel.requiredData.participantEmail.isEmpty ||
+                dataModel.requiredData.participantPhone.isEmpty ||
+                dataModel.requiredData.participantGender.isEmpty ||
+                dataModel.requiredData.participantCollege.isEmpty) {
+                isComplete = false;
+                return false; // exits the entire function
+            }
+
+            // Check additional data fields based on type
+            for (var additionalData in dataModel.additionalData) {
+             
+                if (additionalData is StringAnswerModel && additionalData.input.isEmpty) {
+                    isComplete = false;
+                    return false; // exits the entire function
+                } else if (additionalData is MapAnswerModel && additionalData.input.isEmpty) {
+                    isComplete = false;
+                    return false; // exits the entire function
+                }
+            }
+        }
+    } else {
+      print("im inelse kyuuuuuuuuuuuuuuu $value");
+        // If any other data type needs to be validated, add here.
+        if (value.toString().isEmpty) {
+            isComplete = false;
+            return false; // exits the entire function
+        }
+    }
+
+    return isComplete;
+}
+
+
+
+  List<dynamic> get gereralSectionFieldsList => _gereralSectionFieldsList;
+  List<dynamic> get teamDetailsSectionFieldsList =>
+      _teamDetailsSectionFieldsList;
+
+  void setSelectedParticipantTab(int value) {
+    _selectedParticipantTab = value;
+    notifyListeners();
+  }
+
+  RegistrationFormModel get singleForm => _singleForm;
+  Future<void> getHackathonForm(String id) async {
     final response = await GetRegistratioForm().getRegistratioForm(id);
     if (response != null && response is RegistrationFormModel) {
       _singleForm = response;
@@ -169,27 +270,43 @@ RegistrationFormModel get singleForm => _singleForm;
     notifyListeners();
   }
 
+Future<void> getPrefilledData( String email, int index,)async {
+    final response= await GetPrefilledData().getprefilledData(email);
+    print("Im in usertype fun");
 
-
+    if(response!=null){
+       print("Im in usertype fun response not null ${response.email}, ${response.firstName}, ${response.gender}, ${response.lastName},${response.organisation}, ${response.phone}");
+      _teamData.members[index].details[email][0].requiredData.participantName= "${response.firstName} ${response.lastName}";
+       _teamData.members[index].details[email][0].requiredData.participantEmail=response.email;
+         _teamData.members[index].details[email][0].requiredData.participantPhone=response.phone;
+           _teamData.members[index].details[email][0].requiredData.participantCollege=response.organisation;
+             _teamData.members[index].details[email][0].requiredData.participantGender=response.gender;
+       print("set");
+    }else{
+      print("some problem ocurred in getting prefilled data");
+    }
+    notifyListeners();
+  }
   GetRegistrationFormProvider(this._vsync)
       : getformcontroller = TabController(length: 0, vsync: _vsync) {
     initialize();
     print(" initial controller");
   }
 
-   Future<void> initialize() async {
+  Future<void> initialize() async {
 //  isInitialized = true;
     _createTabController();
     notifyListeners();
   }
 
-
   // This function is used to create a new tabcontroller
   void _createTabController() {
-    int count = _selectedParticipantTab==0? 2: 1;
-    print("_selectedParticipantTab in create tab controller $_selectedParticipantTab  tidk $count");
-    
-    getformcontroller = TabController(length: singleForm.sections.length+ count, vsync: _vsync);
+    // int count = _selectedParticipantTab == 0 ? 2 : 1;
+    // print(
+    //     "_selectedParticipantTab in create tab controller $_selectedParticipantTab  tidk $count");
+
+    getformcontroller = TabController(
+        length: _sectionsCount, vsync: _vsync);
     getformcontroller.addListener(() {
       if (!getformcontroller.indexIsChanging) {
         notifyListeners();
@@ -197,13 +314,12 @@ RegistrationFormModel get singleForm => _singleForm;
     });
   }
 
-   Future<void> refreshTabs() async {
+  Future<void> refreshTabs() async {
     getformcontroller.dispose();
     // print("inrefresh $_selectedParticipantTab");
     _createTabController();
     notifyListeners();
   }
-
 
   dynamic getField(FieldTypes type, dynamic field) {
     switch (type) {
@@ -247,13 +363,13 @@ RegistrationFormModel get singleForm => _singleForm;
           required: field.required,
         );
       case FieldTypes.range:
-      //TODO:check min max of this 
+        //TODO:check min max of this
         return RangeSliderField(
           create: false,
           labels: field.labels.keys.toList(),
           required: field.required,
-         max: field.max_value,
-          min: field.min_value,
+          max: field.labels.values.last,
+          min: field.labels.values.first,
           question: field.label,
           error: field.errorText,
         );
@@ -321,8 +437,112 @@ RegistrationFormModel get singleForm => _singleForm;
         throw Exception('Invalid field type');
     }
   }
-  
 
+  dynamic getAnswerModel(FieldTypes type, dynamic field, int index){
+    switch(type){
+      case FieldTypes.date:
+        return StringAnswerModel(
+          input: "",
+          serialNumber: index,
+          question: field.label,
+          type: FieldTypes.date
+        );
+        case FieldTypes.longAnswer:
+        return  StringAnswerModel(
+          input: "",
+          serialNumber: index,
+          question: field.label,
+          type: FieldTypes.longAnswer
+        );
+
+         case FieldTypes.radio:
+        return  MapAnswerModel(
+          input: {},
+          serialNumber: index,
+          question: field.label,
+          type: FieldTypes.radio
+        );
+
+         case FieldTypes.dropdown:
+        return  MapAnswerModel(
+          input: {},
+          serialNumber: index,
+          question: field.label,
+          type: FieldTypes.dropdown
+        );
+         case FieldTypes.shortAnswer:
+        return  StringAnswerModel(
+          input: "",
+          serialNumber: index,
+          question: field.label,
+          type: FieldTypes.shortAnswer
+        );
+         case FieldTypes.stepper:
+        return  OneIntAnswerModel(
+          input: -1,//TODO
+          serialNumber: index,
+          question: field.label,
+          type: FieldTypes.stepper
+        );
+         case FieldTypes.range:
+        return  TwoIntAnswerModel(
+          input1: -1,//TODO
+          input2: -1,//TODO
+          serialNumber: index,
+          question: field.label,
+          type: FieldTypes.range
+        );
+
+         case FieldTypes.slider:
+        return  OneIntAnswerModel(
+          input: -1,//TODO
+          serialNumber: index,
+          question: field.label,
+          type: FieldTypes.slider
+        );
+         case FieldTypes.tag:
+        return MapAnswerModel(
+          input: {},
+          serialNumber: index,
+          question: field.label,
+          type: FieldTypes.tag
+        );
+
+         case FieldTypes.linear:
+        return  OneIntAnswerModel(
+          input: -1,//TODO
+          serialNumber: index,
+          question: field.label,
+          type: FieldTypes.linear
+        );
+         case FieldTypes.phoneNumber:
+        return StringAnswerModel(
+          input: "",
+          serialNumber: index,
+          question: field.label,
+          type: FieldTypes.phoneNumber
+        );
+         case FieldTypes.checkbox:
+        return MapAnswerModel(
+          input: {},
+          serialNumber: index,
+          question: field.label,
+          type: FieldTypes.checkbox
+        );
+
+         case FieldTypes.toggle:
+        return  BoolAnswerModel(
+          input: false,
+          serialNumber: index,
+          question: field.label,
+          type: FieldTypes.toggle
+        );
+
+
+      default:
+        throw Exception('Invalid field type $type');
+    }
+  }
 }
 
 // cae9be78-910b-4fd4-82c6-22a547fce01c

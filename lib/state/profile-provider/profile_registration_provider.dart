@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ProfileRegProvider extends ChangeNotifier {
-  String _dropdownValue = 'all';
+  String _dropdownValue = 'All';
 
   String get dropdownValue => _dropdownValue;
 
@@ -19,7 +19,7 @@ class ProfileRegProvider extends ChangeNotifier {
   //   notifyListeners();
   // }
 
-  String _sortValue = 'latest';
+  String _sortValue = 'Latest';
 
   String get sortValue => _sortValue;
 
