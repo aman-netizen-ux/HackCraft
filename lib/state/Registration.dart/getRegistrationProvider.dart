@@ -123,7 +123,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
     ShortAnswerFieldModel(
         serialNumber: 1,
         label: "Team Name",
-        errorText: "lease enter your Team Name",
+        errorText: "This field is required",
         required: true,
         type: FieldTypes.shortAnswer,
         validation: "String",
@@ -131,12 +131,27 @@ class GetRegistrationFormProvider with ChangeNotifier {
     StepperModel(
         serialNumber: 1,
         label: "Team Member",
-        errorText: "Please enter your team member",
+        errorText: "This field is required",
         required: true,
         type: FieldTypes.stepper,
         max_value: 5,
         min_value: 0)
   ];
+
+  void addEmailFields_inTeamDetails(int index){
+    _teamDetailsSectionFieldsList.add(
+      
+       ShortAnswerFieldModel(
+        serialNumber: 1,
+        label: "Participant ${index+1} email",
+        errorText: "This field is required",
+        required: true,
+        type: FieldTypes.shortAnswer,
+        validation: "Email",
+        hint: "Please enter your participant ${index+1} email"),
+    );
+    notifyListeners();
+  }
 
   TeamRegisterationModel _teamData = TeamRegisterationModel(
       team: TeamModel(teamName: "", teamSize: 0), members: []);
@@ -214,12 +229,16 @@ class GetRegistrationFormProvider with ChangeNotifier {
 
         // Check additional data fields based on type
         for (var additionalData in dataModel.additionalData) {
-          if (additionalData is StringAnswerModel &&
+          if ((additionalData is StringAnswerModel ||additionalData is OneIntAnswerModel|| additionalData is BoolAnswerModel) &&
               additionalData.input.isEmpty) {
             isComplete = false;
             return false; // exits the entire function
-          } else if (additionalData is MapAnswerModel &&
+          } else if ((additionalData is MapAnswerModel|| additionalData is MapIntAnswerModel) &&
               additionalData.input.isEmpty) {
+            isComplete = false;
+            return false; // exits the entire function
+          }else if (additionalData is TwoIntAnswerModel &&
+              additionalData.input1.isEmpty && additionalData.input2.isEmpty) {
             isComplete = false;
             return false; // exits the entire function
           }
@@ -334,13 +353,26 @@ class GetRegistrationFormProvider with ChangeNotifier {
         print("input in provider *********** $input, $serialNumber, $modelType");
 
     if (isRequiredData != null && requiredType != null) {
-      if (requiredType == "phone") {
+      if(isRequiredData=="GeneralData"){
+        if (requiredType == "phone") {
         model.requiredData.participantPhone = input;
       } else if (requiredType == "email") {
         model.requiredData.participantEmail = input;
       }
-    } else if (serialNumber != null && modelType != null) {
-      if (modelType == "StringAnswerModel") {
+      }else  if(isRequiredData=="TeamData"){
+
+        if (requiredType == "teamname") {
+        _teamData.team.teamName = input;
+      } else if (requiredType == "teamsize") {
+        _teamData.team.teamSize = int.tryParse(input)??0;
+      } 
+      }
+    } 
+    
+    
+    
+    else if (serialNumber != null && modelType != null) {
+      if (modelType == "StringAnswerModel"||modelType == "OneIntAnswerModel"||modelType == "BoolAnswerModel") {
         print("Im in string model");
          print(" before updation: ${ model.additionalData[serialNumber].input}");
         model.additionalData[serialNumber].input = input;
@@ -444,6 +476,13 @@ class GetRegistrationFormProvider with ChangeNotifier {
           min: field.min_value,
           question: field.label,
           required: field.required,
+          error: field.errorText,
+          isRequiredData: isRequiredData,
+          requiredType: requiredType,
+          serialNumber: serialNumber,
+          modelType: modelType,
+          isDisabled: isDisabled,
+           initialAnswer: initialAnswer,
         );
       case FieldTypes.range:
         //TODO:check min max of this
@@ -509,6 +548,12 @@ class GetRegistrationFormProvider with ChangeNotifier {
           error: field.errorText,
           question: field.label,
           required: field.required,
+          isRequiredData: isRequiredData,
+          requiredType: requiredType,
+          serialNumber: serialNumber,
+          modelType: modelType,
+          isDisabled: isDisabled,
+           initialAnswer: initialAnswer,
         );
       case FieldTypes.phoneNumber:
         print(' phone value ${initialAnswer}');
@@ -574,21 +619,21 @@ class GetRegistrationFormProvider with ChangeNotifier {
             type: FieldTypes.shortAnswer);
       case FieldTypes.stepper:
         return OneIntAnswerModel(
-            input: -1, //TODO
+            input: "", //TODO
             serialNumber: index,
             question: field.label,
             type: FieldTypes.stepper);
       case FieldTypes.range:
         return TwoIntAnswerModel(
-            input1: -1, //TODO
-            input2: -1, //TODO
+            input1: "", //TODO
+            input2: "", //TODO
             serialNumber: index,
             question: field.label,
             type: FieldTypes.range);
 
       case FieldTypes.slider:
         return OneIntAnswerModel(
-            input: -1, //TODO
+            input: "", //TODO
             serialNumber: index,
             question: field.label,
             type: FieldTypes.slider);
@@ -601,7 +646,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
 
       case FieldTypes.linear:
         return OneIntAnswerModel(
-            input: -1, //TODO
+            input: "", //TODO
             serialNumber: index,
             question: field.label,
             type: FieldTypes.linear);
@@ -620,7 +665,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
 
       case FieldTypes.toggle:
         return BoolAnswerModel(
-            input: false,
+            input: "",
             serialNumber: index,
             question: field.label,
             type: FieldTypes.toggle);

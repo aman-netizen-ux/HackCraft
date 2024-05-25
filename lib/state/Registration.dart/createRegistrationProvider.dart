@@ -268,6 +268,7 @@ class CreateRegistrationProvider with ChangeNotifier {
           min: field.min_value,
           question: field.label,
           required: field.required,
+          error: field.errorText,
         );
       case FieldTypes.range:
         return RangeSliderField(

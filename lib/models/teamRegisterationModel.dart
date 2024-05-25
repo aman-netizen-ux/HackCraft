@@ -244,7 +244,7 @@ class StringAnswerModel extends AdditionalDataModel {
 }
 
 class OneIntAnswerModel extends AdditionalDataModel {
-  int input;
+  String input;
   OneIntAnswerModel({
     required int serialNumber,
     required String question,
@@ -259,7 +259,7 @@ class OneIntAnswerModel extends AdditionalDataModel {
   factory OneIntAnswerModel.fromJson(Map<String, dynamic> json) {
     return OneIntAnswerModel(
       serialNumber: json['serial_number'],
-      input: json['input'],
+      input: json['input'].toString(),
       type: FieldTypes.values
           .firstWhere((e) => e.toString().split('.').last == json['type']),
       question: json['field'],
@@ -272,14 +272,14 @@ class OneIntAnswerModel extends AdditionalDataModel {
       'serial_number': serialNumber,
       'field': question,
       'type': type.toString().split('.').last,
-      'input': input,
+      'input': int.tryParse(input) ?? 0,
     };
   }
 }
 
 class TwoIntAnswerModel extends AdditionalDataModel {
-  int input1;
-  int input2;
+  String input1;
+  String input2;
   TwoIntAnswerModel({
     required int serialNumber,
     required String question,
@@ -295,8 +295,8 @@ class TwoIntAnswerModel extends AdditionalDataModel {
   factory TwoIntAnswerModel.fromJson(Map<String, dynamic> json) {
     return TwoIntAnswerModel(
       serialNumber: json['serial_number'],
-      input1: json['input1'],
-      input2: json['input2'],
+      input1: json['input1'].toString(),
+      input2: json['input2'].toString(),
       type: FieldTypes.values
           .firstWhere((e) => e.toString().split('.').last == json['type']),
       question: json['field'],
@@ -309,14 +309,14 @@ class TwoIntAnswerModel extends AdditionalDataModel {
       'serial_number': serialNumber,
       'field': question,
       'type': type.toString().split('.').last,
-      'input1': input1,
-      'input2': input2,
+      'input1': int.tryParse(input1) ?? 0,
+      'input2': int.tryParse(input2) ?? 0,
     };
   }
 }
 
 class BoolAnswerModel extends AdditionalDataModel {
-  bool input;
+  String input;
   BoolAnswerModel({
     required int serialNumber,
     required String question,
@@ -344,7 +344,7 @@ class BoolAnswerModel extends AdditionalDataModel {
       'serial_number': serialNumber,
       'field': question,
       'type': type.toString().split('.').last,
-      'input': input,
+      'input': input=="true",
     };
   }
 }
@@ -390,7 +390,8 @@ class MapAnswerModel extends AdditionalDataModel {
   
 }
 class MapIntAnswerModel extends AdditionalDataModel {
-  Map<String, int> input;
+  Map<String, String> input; // Change to Map<String, String>
+
   MapIntAnswerModel({
     required int serialNumber,
     required String question,
@@ -404,9 +405,9 @@ class MapIntAnswerModel extends AdditionalDataModel {
 
   factory MapIntAnswerModel.fromJson(Map<String, dynamic> json) {
     Map<String, dynamic> inputsJson = json['input'];
-    Map<String, int> input = {};
+    Map<String, String> input = {};
     inputsJson.forEach((key, value) {
-      input[key] = value;
+      input[key] = value.toString(); // Convert int to String
     });
     return MapIntAnswerModel(
       serialNumber: json['serial_number'],
@@ -418,14 +419,15 @@ class MapIntAnswerModel extends AdditionalDataModel {
   }
 
   Map<String, dynamic> toJson() {
+    Map<String, dynamic> output = {};
+    input.forEach((key, value) {
+      output[key] = int.tryParse(value) ?? 0; // Convert String to int, default to 0 if not a valid int
+    });
     return {
-     
       'serial_number': serialNumber,
       'field': question,
       'type': type.toString().split('.').last,
-      'input': input,
+      'input': output, // Now Map<String, int>
     };
   }
-
-  
 }

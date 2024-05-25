@@ -52,13 +52,10 @@ class _DesktopGetRegisterationFormState
           Provider.of<GetRegistrationFormProvider>(context, listen: false);
       final loginProvider = Provider.of<LoginProvider>(context, listen: false);
 
-
-       //TODO: change with member index: and keep this saved in provider, 
-       // and update few things in below code based on this(like disable enable and all, etc.)
-       // inde value pasing while calling prefilled api
+      //TODO: change with member index: and keep this saved in provider,
+      // and update few things in below code based on this(like disable enable and all, etc.)
+      // inde value pasing while calling prefilled api
       int someInt = 2;
-
-
 
       //SelectedParticipantTab initial value is set based on usertype
       getRegistrationFormProvider
@@ -68,12 +65,10 @@ class _DesktopGetRegisterationFormState
                   ? someInt
                   : -1);
 
-                  
-     //tabs need to be initialized before api call as well
+      //tabs need to be initialized before api call as well
       getRegistrationFormProvider.setSectionsCount(
           getRegistrationFormProvider.selectedParticipantTab == 0 ? 2 : 1);
       getRegistrationFormProvider.refreshTabs();
-
 
       // api call to get the form
       await getRegistrationFormProvider.getHackathonForm(hackathonId);
@@ -82,8 +77,6 @@ class _DesktopGetRegisterationFormState
               getRegistrationFormProvider.sectionsCount);
       getRegistrationFormProvider
           .refreshTabs(); //tabs are refreshed to update tab controller with no. of sections
-
-
 
       //team details variable is already there in api
       // just set that based on the user type and team size with prefilled values
@@ -98,6 +91,10 @@ class _DesktopGetRegisterationFormState
             getRegistrationFormProvider.addMember(
                 i == 0 ? loginProvider.emailId : "Member $i",
                 i == 0 ? true : false);
+
+            if (i > 0) {
+              getRegistrationFormProvider.addEmailFields_inTeamDetails(i);
+            }
           }
         }
       } else if (userType == "pending") {
@@ -105,8 +102,6 @@ class _DesktopGetRegisterationFormState
         //       //TODO: and change the value of key same as current email
         //TODO: for pending user also create memberdatamodel type object and set only email in there
       }
-
-
 
       await getRegistrationFormProvider.getPrefilledData(
         loginProvider.emailId,
@@ -334,7 +329,7 @@ class MiddleFormPart extends StatelessWidget {
                         height: scaleHeight(context, 36.76),
                       ),
                       ...List.generate(
-                        //getting list of fields based on selected setion => general list, team data list, sections questions list(api)
+                          //getting list of fields based on selected setion => general list, team data list, sections questions list(api)
                           sectionIndex == 0
                               ? getRegistrationFormProvider
                                   .gereralSectionFieldsList.length
@@ -352,7 +347,6 @@ class MiddleFormPart extends StatelessWidget {
                                       .sections[sectionIndex - 1]
                                       .numberOfQuestions, (index) {
                         if (sectionIndex == 0) {
-
                           //General Section case
 
                           RequiredDataModel requiredData =
@@ -389,7 +383,7 @@ class MiddleFormPart extends StatelessWidget {
                                               0
                                       ? false
                                       : true, //TODO: update 0 it with someint
-                                  isRequiredData: "true",
+                                  isRequiredData: "GeneralData",
                                   requiredType: "phone")
                             ],
                           );
@@ -400,6 +394,8 @@ class MiddleFormPart extends StatelessWidget {
                             getRegistrationFormProvider
                                     .selectedParticipantTab ==
                                 0) {
+                          TeamModel teamData =
+                              getRegistrationFormProvider.teamData.team;
                           return Row(
                             children: [
                               getRegistrationFormProvider.getField(
@@ -407,8 +403,20 @@ class MiddleFormPart extends StatelessWidget {
                                       .teamDetailsSectionFieldsList[index].type,
                                   field: getRegistrationFormProvider
                                       .teamDetailsSectionFieldsList[index],
-                                  initialAnswer: "hey",
-                                  isDisabled: false)
+                                  initialAnswer: index == 0
+                                      ? teamData.teamName
+                                      : index == 1
+                                          ? teamData.teamSize.toString()
+                                          : "",
+                                  isDisabled: false,
+                                  isRequiredData: index == 0 || index == 1
+                                      ? "TeamData"
+                                      : "",
+                                  requiredType: index == 0
+                                      ? "teamname"
+                                      : index == 1
+                                          ? "teamsize"
+                                          : "")
                             ],
                           );
                         } else {
@@ -442,23 +450,36 @@ class MiddleFormPart extends StatelessWidget {
                                 type: allFieldsList[currentFieldIndex].type,
                                 field: allFieldsList[currentFieldIndex],
                                 initialAnswer:
-                                    additionalData is StringAnswerModel
+                                    additionalData is StringAnswerModel||additionalData is OneIntAnswerModel||additionalData is BoolAnswerModel
                                         ? additionalData.input
-                                        : additionalData is MapAnswerModel
+                                        : additionalData is MapAnswerModel||additionalData is MapIntAnswerModel
                                             ? additionalData.input.values
                                                     .toList()
                                                     .isNotEmpty
                                                 ? additionalData.input.values
                                                     .join(',')
                                                 : ""
-                                            : "hola",
+                                            : additionalData is TwoIntAnswerModel
+                                            ?"${additionalData.input1},${additionalData.input2}"
+                                            :"hola",
                                 isDisabled: false,
                                 serialNumber: currentFieldIndex,
                                 modelType: additionalData is StringAnswerModel
                                     ? "StringAnswerModel"
                                     : additionalData is MapAnswerModel
                                         ? "MapAnswerModel"
-                                        : "hola",
+                                        : additionalData is OneIntAnswerModel
+                                            ? "OneIntAnswerModel"
+                                            : additionalData
+                                                    is TwoIntAnswerModel
+                                                ? "TwoIntAnswerModel"
+                                                : additionalData
+                                                        is BoolAnswerModel
+                                                    ? "BoolAnswerModel"
+                                                    : additionalData
+                                                            is MapIntAnswerModel
+                                                        ? "MapIntAnswerModel"
+                                                        : "hola",
                               )
                             ],
                           );
@@ -595,7 +616,6 @@ class ParticipantsListSide extends StatelessWidget {
           ...List.generate(getRegistrationFormProvider.teamData.members.length,
               (index) {
             return Padding(
-              
               padding: EdgeInsets.only(
                   top: scaleHeight(context, index == 0 ? 0 : 25),
                   bottom: scaleHeight(context, index == 9 ? 0 : 25)),
@@ -608,12 +628,9 @@ class ParticipantsListSide extends StatelessWidget {
                           ? 2
                           : 1;
 
-                 
                   getRegistrationFormProvider.setSectionsCount(
                       getRegistrationFormProvider.singleForm.sections.length +
                           count);
-
-        
 
                   await getRegistrationFormProvider.refreshTabs();
                 },
