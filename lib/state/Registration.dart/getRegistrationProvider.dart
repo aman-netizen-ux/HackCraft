@@ -164,6 +164,15 @@ class GetRegistrationFormProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  int _initiallMemberIndex=0;
+
+  int get initialmemberIndex=> _initiallMemberIndex;
+
+  void setInitiallMemberIndex(int value){
+    _initiallMemberIndex=value;
+    notifyListeners();
+  }
+
   TeamRegisterationModel get teamData => _teamData;
 
   void setTeamData(TeamRegisterationModel value) {
@@ -372,11 +381,11 @@ class GetRegistrationFormProvider with ChangeNotifier {
           if (teamEmailList.isEmpty) {
             for (int i = 1; i < _teamData.team.teamSize; i++) {
               addTeamFields(i);
-              addMember("Member $i", false);
+              addMember("Member ${i+1}", false);
             }
           } else if (_teamData.team.teamSize > teamEmailList.length) {
             addTeamFields(_teamData.team.teamSize - 1);
-            addMember("Member ${_teamData.team.teamSize - 1}", false);
+            addMember("Member ${_teamData.team.teamSize}", false);
           } else if (_teamData.team.teamSize < teamEmailList.length) {
             teamEmailList.removeLast();
             _teamData.members.removeLast();
@@ -406,6 +415,8 @@ class GetRegistrationFormProvider with ChangeNotifier {
         });
 
         _teamData.members[index] = member;
+         _teamData.members[index].details[input][0].requiredData.participantEmail =
+         input;
         await getPrefilledData(input,index);
       }
     } else if (serialNumber != null && modelType != null) {

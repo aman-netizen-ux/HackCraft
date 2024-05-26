@@ -59,13 +59,15 @@ class _DesktopGetRegisterationFormState
       // inde value pasing while calling prefilled api
       int someInt = 2;
 
-      //SelectedParticipantTab initial value is set based on usertype
-      getRegistrationFormProvider
-          .setSelectedParticipantTab(userType == "firstuser"
-              ? 0
-              : userType == "pending"
-                  ? someInt
-                  : -1);
+      getRegistrationFormProvider.setInitiallMemberIndex(userType == "firstuser"
+          ? 0
+          : userType == "pending"
+              ? someInt
+              : -1);
+
+      //SelectedParticipantTab initial value is set same as initialmemberIndex
+      getRegistrationFormProvider.setSelectedParticipantTab(
+          getRegistrationFormProvider.initialmemberIndex);
 
       //tabs need to be initialized before api call as well
       getRegistrationFormProvider.setSectionsCount(
@@ -115,7 +117,7 @@ class _DesktopGetRegisterationFormState
 
       await getRegistrationFormProvider.getPrefilledData(
         loginProvider.emailId,
-        userType == "firstuser" ? 0 : someInt,
+        getRegistrationFormProvider.initialmemberIndex,
       );
 
       print("set");
@@ -364,7 +366,14 @@ class MiddleFormPart extends StatelessWidget {
                                     : index == 1
                                         ? teamData.teamSize.toString()
                                         : "",
-                                isDisabled: false,
+                                isDisabled: getRegistrationFormProvider
+                                                .initialmemberIndex ==
+                                            0 &&
+                                        getRegistrationFormProvider
+                                                .selectedParticipantTab ==
+                                            0
+                                    ? false
+                                    : true,
                                 isRequiredData:
                                     index == 0 || index == 1 ? "TeamData" : "",
                                 requiredType: index == 0
@@ -427,9 +436,10 @@ class MiddleFormPart extends StatelessWidget {
                                   isDisabled: index == 4 &&
                                           getRegistrationFormProvider
                                                   .selectedParticipantTab ==
-                                              0
+                                              getRegistrationFormProvider
+                                                  .initialmemberIndex
                                       ? false
-                                      : true, //TODO: update 0 it with someint
+                                      : true,
                                   isRequiredData: "GeneralData",
                                   requiredType: "phone")
                             ],
@@ -450,10 +460,12 @@ class MiddleFormPart extends StatelessWidget {
                                       .teamEmailList[index].type,
                                   field: getRegistrationFormProvider
                                       .teamEmailList[index],
-                                  initialAnswer: getRegistrationFormProvider.teamData.members[index+1].details.keys.toList()[0],
+                                  initialAnswer: getRegistrationFormProvider
+                                      .teamData.members[index + 1].details.keys
+                                      .toList()[0],
                                   isDisabled: false,
                                   isRequiredData: "MemberEmails",
-                                  requiredType: "${index+1}")
+                                  requiredType: "${index + 1}")
                             ],
                           );
                         } else {
@@ -480,6 +492,8 @@ class MiddleFormPart extends StatelessWidget {
                               .values
                               .toList()[0][0]
                               .additionalData[currentFieldIndex];
+                          print(
+                              "((((((((((((((((((((((((((((   ${getRegistrationFormProvider.selectedParticipantTab == getRegistrationFormProvider.initialmemberIndex}   ))))))))))))))))))))))))))))");
 
                           return Row(
                             children: [
@@ -502,7 +516,10 @@ class MiddleFormPart extends StatelessWidget {
                                         : additionalData is TwoIntAnswerModel
                                             ? "${additionalData.input1},${additionalData.input2}"
                                             : "hola",
-                                isDisabled: false,
+                                isDisabled: getRegistrationFormProvider
+                                        .selectedParticipantTab !=
+                                    getRegistrationFormProvider
+                                        .initialmemberIndex,
                                 serialNumber: currentFieldIndex,
                                 modelType: additionalData is StringAnswerModel
                                     ? "StringAnswerModel"
@@ -548,43 +565,43 @@ class MiddleFormPart extends StatelessWidget {
               ),
               const Spacer(),
               InkWell(
-                onTap: () {},
+                onTap: _isPreviousDisabled(getRegistrationFormProvider)
+                    ? null
+                    : () {
+                        _previous(
+                            getRegistrationFormProvider.selectedParticipantTab,
+                            getRegistrationFormProvider);
+                      },
                 child: Container(
                   height: scaleHeight(context, 40),
                   width: scaleWidth(context, 120.85),
                   alignment: Alignment.center,
                   padding: EdgeInsets.only(left: scaleWidth(context, 12.85)),
                   decoration: BoxDecoration(
-                      color:
-                          getRegistrationFormProvider.getformcontroller.index ==
-                                  0
-                              ? null
-                              : const Color(0xFFD9D9D9),
-                      border:
-                          getRegistrationFormProvider.getformcontroller.index ==
-                                  0
-                              ? Border.all(color: const Color(0xFFD9D9D9))
-                              : null,
+                      color: _isPreviousDisabled(getRegistrationFormProvider)
+                          ? null
+                          : const Color(0xFFD9D9D9),
+                      border: _isPreviousDisabled(getRegistrationFormProvider)
+                          ? Border.all(color: const Color(0xFFD9D9D9))
+                          : null,
                       borderRadius: BorderRadius.circular(5)),
                   child: Row(
                     children: [
                       Icon(Icons.arrow_back,
                           size: 16,
-                          color: getRegistrationFormProvider
-                                      .getformcontroller.index ==
-                                  0
-                              ? const Color(0xFFD9D9D9)
-                              : const Color(0xFF3C3C3C)),
+                          color:
+                              _isPreviousDisabled(getRegistrationFormProvider)
+                                  ? const Color(0xFFD9D9D9)
+                                  : const Color(0xFF3C3C3C)),
                       SizedBox(width: scaleWidth(context, 16)),
                       Text('Previous',
                           style: GoogleFonts.getFont(
                             fontFamily2,
                             fontSize: scaleWidth(context, 16),
-                            color: getRegistrationFormProvider
-                                        .getformcontroller.index ==
-                                    0
-                                ? const Color(0xFFD9D9D9)
-                                : const Color(0xFF3C3C3C),
+                            color:
+                                _isPreviousDisabled(getRegistrationFormProvider)
+                                    ? const Color(0xFFD9D9D9)
+                                    : const Color(0xFF3C3C3C),
                             fontWeight: FontWeight.w400,
                           )),
                     ],
@@ -595,9 +612,13 @@ class MiddleFormPart extends StatelessWidget {
                 width: scaleWidth(context, 12.15),
               ),
               InkWell(
-                onTap: () {
-                  getRegistrationFormProvider.getHackathonForm("");
-                },
+                onTap: _isNextDiasabled(getRegistrationFormProvider)
+                    ? null
+                    : () {
+                        _next(
+                            getRegistrationFormProvider.selectedParticipantTab,
+                            getRegistrationFormProvider);
+                      },
                 child: Container(
                   height: scaleHeight(context, 40),
                   width: scaleWidth(context, 120.85),
@@ -605,26 +626,34 @@ class MiddleFormPart extends StatelessWidget {
                   padding: EdgeInsets.only(right: scaleWidth(context, 12.85)),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: const Color(0xFFD9D9D9),
+                      color: _isNextDiasabled(getRegistrationFormProvider)
+                          ? null
+                          : const Color(0xFFD9D9D9),
+                      border: _isNextDiasabled(getRegistrationFormProvider)
+                          ? Border.all(color: const Color(0xFFD9D9D9))
+                          : null,
                       borderRadius: BorderRadius.circular(5)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                          getRegistrationFormProvider.getformcontroller.index ==
-                                  getRegistrationFormProvider
-                                          .singleForm.sections.length +
-                                      1
+                          _isSubmitEnabled(getRegistrationFormProvider)
                               ? "Submit"
                               : 'Next',
                           style: GoogleFonts.getFont(
                             fontFamily2,
                             fontSize: scaleWidth(context, 16),
-                            color: const Color(0xFF3C3C3C),
+                            color: _isNextDiasabled(getRegistrationFormProvider)
+                                ? const Color(0xFFD9D9D9)
+                                : const Color(0xFF3C3C3C),
                             fontWeight: FontWeight.w400,
                           )),
                       SizedBox(width: scaleWidth(context, 16)),
-                      const Icon(Icons.arrow_forward, color: black1, size: 16),
+                      Icon(Icons.arrow_forward,
+                          color: _isNextDiasabled(getRegistrationFormProvider)
+                              ? const Color(0xFFD9D9D9)
+                              : const Color(0xFF3C3C3C),
+                          size: 16),
                     ],
                   ),
                 ),
@@ -639,7 +668,273 @@ class MiddleFormPart extends StatelessWidget {
       ),
     );
   }
+
+  // void _previous(int selectedTab, GetRegistrationFormProvider provider) async {
+  //   int sectionIndex = provider.getformcontroller.index;
+  //   debugPrint(
+  //       "$selectedTab  $sectionIndex ${provider.initialmemberIndex} in previous");
+  //   if (selectedTab == provider.initialmemberIndex) {
+  //     if (sectionIndex > 0)
+  //       provider.getformcontroller.animateTo(sectionIndex--);
+  //   } else if (provider.initialmemberIndex == 0) {
+  //     if (selectedTab == 1) {
+  //       if (sectionIndex == 0) {
+  //         provider.setSelectedParticipantTab(selectedTab - 1);
+  //         await refreshSectionCounts(provider);
+  //         provider.getformcontroller
+  //             .animateTo(provider.singleForm.sections.length + 1);
+  //       } else if (sectionIndex > 0) {
+  //         provider.getformcontroller.animateTo(sectionIndex - 1);
+  //       }
+  //     } else if (selectedTab > 1) {
+  //       if (sectionIndex == 0) {
+  //         provider.setSelectedParticipantTab(selectedTab - 1);
+  //         await refreshSectionCounts(provider);
+  //         provider.getformcontroller
+  //             .animateTo(provider.singleForm.sections.length - 1);
+  //       } else if (sectionIndex > 0) {
+  //         provider.getformcontroller.animateTo(sectionIndex - 1);
+  //       }
+  //     }
+  //   } else if (provider.initialmemberIndex > 0) {
+  //     if (selectedTab > provider.initialmemberIndex &&
+  //         selectedTab <= provider.teamData.members.length - 1) {
+  //       provider.setSelectedParticipantTab(provider.initialmemberIndex);
+  //       await refreshSectionCounts(provider);
+  //       provider.getformcontroller.animateTo(0);
+  //     }
+  //   }
+  // }
+
+
+  void _previous(int selectedTab, GetRegistrationFormProvider provider,) async {
+  int sectionIndex = provider.getformcontroller.index;
+   int lastTab = provider.teamData.members.length -1;
+  debugPrint("Current state -> selectedTab: $selectedTab, sectionIndex: $sectionIndex, initialMemberIndex: ${provider.initialmemberIndex}");
+
+  if (provider.initialmemberIndex == 0) {
+    if (selectedTab == 0) {
+      if (sectionIndex == 0) {
+        debugPrint("Action disabled");
+      } else {
+        provider.getformcontroller.animateTo(sectionIndex - 1);
+      }
+    } else if (selectedTab == 1) {
+      if (sectionIndex == 0) {
+        provider.setSelectedParticipantTab(0);
+        await refreshSectionCounts(provider);
+        provider.getformcontroller.animateTo(provider.singleForm.sections.length + 1);
+      } else {
+        provider.getformcontroller.animateTo(sectionIndex - 1);
+      }
+    } else if (selectedTab > 1) {
+      if (sectionIndex == 0) {
+        provider.setSelectedParticipantTab(selectedTab - 1);
+        await refreshSectionCounts(provider);
+        provider.getformcontroller.animateTo(0);
+      } else {
+        provider.getformcontroller.animateTo(sectionIndex - 1);
+      }
+    }
+  } else { // Cases when initialMemberIndex > 0
+    if (selectedTab < provider.initialmemberIndex) {
+      debugPrint("Action disabled");
+    } else if (selectedTab > provider.initialmemberIndex && selectedTab <= lastTab) {
+      provider.setSelectedParticipantTab(provider.initialmemberIndex);
+      await refreshSectionCounts(provider);
+      provider.getformcontroller.animateTo(0);
+    } else if (selectedTab == provider.initialmemberIndex) {
+      if (sectionIndex == 0) {
+        debugPrint("Action disabled");
+      } else {
+        provider.getformcontroller.animateTo(sectionIndex - 1);
+      }
+    }
+  }
 }
+
+
+ 
+
+  void _next(int selectedTab, GetRegistrationFormProvider provider) async {
+    int sectionIndex = provider.getformcontroller.index;
+    int lastTab = provider.teamData.members.length -1;
+    int teamsize= provider.teamData.team.teamSize;
+
+    debugPrint(
+        "Current state -> selectedTab: $selectedTab, sectionIndex: $sectionIndex, initialMemberIndex: ${provider.initialmemberIndex}");
+
+    // Case 1, 2, 5, 7: Animating to the next section based on sectionIndex constraints
+    if (provider.initialmemberIndex == 0 &&
+        ((selectedTab == 0 &&
+                sectionIndex < provider.singleForm.sections.length + 1) ||
+            ((selectedTab > 0 && selectedTab <= lastTab) &&
+                (sectionIndex < provider.singleForm.sections.length ) && (sectionIndex>0)))) {
+                  debugPrint("case 1");
+      provider.getformcontroller.animateTo(sectionIndex + 1);
+    } 
+    
+     // Case 3:
+    else if (provider.initialmemberIndex == 0 &&
+        selectedTab == 0 &&
+        sectionIndex == provider.singleForm.sections.length + 1) {
+           debugPrint("case 2");
+      
+      if (teamsize == 0) {
+        debugPrint("Action disabled");
+         debugPrint("case 2a");
+      } else if (teamsize == 1) {
+        // _postLeaderDetails(); or another submission logic  //TODO
+        debugPrint("case 2b");
+      } else if (teamsize > 1) {
+        provider.setSelectedParticipantTab(selectedTab + 1);
+        await refreshSectionCounts(provider);
+        provider.getformcontroller.animateTo(0);
+      }
+    }
+    
+    // Case 6: Submit function for the last tab and section boundary conditions
+     else if ((provider.initialmemberIndex == 0 && selectedTab == lastTab) &&
+        (sectionIndex == 0 ||
+            sectionIndex == provider.singleForm.sections.length )) {
+      
+      // _postLeaderDetails(); or another submission logic //TODO
+      
+    } 
+    
+    // Case 4: Change to the next participant at the boundaries
+    else if (provider.initialmemberIndex == 0 &&
+        (selectedTab > 0 && selectedTab < lastTab) &&
+        (sectionIndex == 0 ||
+            sectionIndex == provider.singleForm.sections.length)) {
+      
+      provider.setSelectedParticipantTab(selectedTab + 1);
+      await refreshSectionCounts(provider);
+      provider.getformcontroller.animateTo(0);
+    } 
+    
+    //below cases are for member
+    // Case 8: Reset to the initial participant if the selectedTab is less
+    else if (provider.initialmemberIndex > 0 &&
+        selectedTab < provider.initialmemberIndex) {
+      
+      provider.setSelectedParticipantTab(provider.initialmemberIndex);
+      await refreshSectionCounts(provider);
+      provider.getformcontroller.animateTo(0);
+    }
+    
+    // Case 10: Animate within the sections of the initial member when the sectionIndex is less
+     else if (provider.initialmemberIndex > 0 &&
+        selectedTab == provider.initialmemberIndex &&
+        sectionIndex < provider.singleForm.sections.length ) {
+      
+      provider.getformcontroller.animateTo(sectionIndex + 1);
+    }
+    
+    // Case 9: Print disabled when selected tab is outside valid range
+     else if (provider.initialmemberIndex > 0 &&
+        selectedTab > provider.initialmemberIndex &&
+        selectedTab <= lastTab) {
+      
+      debugPrint("Action disabled");
+    } 
+    
+    // End of the form sections for initial member, call submit function
+    else if (provider.initialmemberIndex > 0 &&
+        selectedTab == provider.initialmemberIndex &&
+        sectionIndex == provider.singleForm.sections.length ) {
+      
+      // _postMemberDetails(); or another submission logic//TODO
+    }
+  }
+
+  Future<void> refreshSectionCounts(
+      GetRegistrationFormProvider provider) async {
+    int count = provider.selectedParticipantTab == 0 ? 2 : 1;
+
+    provider.setSectionsCount(provider.singleForm.sections.length + count);
+
+    await provider.refreshTabs();
+  }
+
+  bool _isPreviousDisabled(GetRegistrationFormProvider provider) {
+    return (provider.selectedParticipantTab == provider.initialmemberIndex &&
+            provider.getformcontroller.index == 0) ||
+        (provider.initialmemberIndex > 0 &&
+            
+            provider.selectedParticipantTab < provider.initialmemberIndex);
+  }
+
+  bool _isNextDiasabled(GetRegistrationFormProvider provider) {
+     int sectionIndex = provider.getformcontroller.index;
+    int lastTab = provider.teamData.members.length -1;
+    int teamsize= provider.teamData.team.teamSize;
+    int selectedTab= provider.selectedParticipantTab;
+
+
+    return (provider.initialmemberIndex == 0 &&
+        selectedTab == 0 &&
+        sectionIndex == provider.singleForm.sections.length + 1 &&teamsize == 0) ||(provider.initialmemberIndex > 0 &&
+        selectedTab > provider.initialmemberIndex &&
+        selectedTab <= lastTab);
+  }
+
+
+
+
+
+
+bool _isSubmitEnabled(GetRegistrationFormProvider provider) {
+  int sectionIndex = provider.getformcontroller.index;
+  int lastTab = provider.teamData.members.length - 1;
+  int teamSize = provider.teamData.team.teamSize;
+  int selectedTab = provider.selectedParticipantTab;
+  int totalSections = provider.singleForm.sections.length;
+  int initialMemberIndex = provider.initialmemberIndex;
+
+  // Debug current state
+  debugPrint("Current state -> selectedTab: $selectedTab, sectionIndex: $sectionIndex, initialMemberIndex: $initialMemberIndex");
+
+  // Handle cases for the team leader
+  if (initialMemberIndex == 0) {
+    // Handle navigation and submit cases for the team leader
+    if (selectedTab == 0) {
+      if (sectionIndex <= totalSections) {
+        debugPrint("Navigating within leader's sections");
+        return false;
+      } else if (sectionIndex == totalSections + 1) {
+        debugPrint("Leader's form submit decision");
+        return teamSize == 1;  // Submit only if single-member team
+      }
+    } else if (selectedTab >= 1 && selectedTab <= lastTab) {
+      if (selectedTab == lastTab && (sectionIndex == 0 || sectionIndex == totalSections)) {
+        debugPrint("Submitting leader's details on last tab");
+        return true;  // Submit leader's details on last tab
+      } else {
+        debugPrint("Navigating within leader's multiple member tabs");
+        return false;  // Navigate within other tabs
+      }
+    }
+  } else {
+    // Handle cases for other members
+    if (selectedTab < initialMemberIndex || (selectedTab > initialMemberIndex && selectedTab <= lastTab)) {
+      debugPrint("Navigation control for team members");
+      return false;  // Control navigation for other team members
+    } else if (selectedTab == initialMemberIndex) {
+      if (sectionIndex < totalSections) {
+        debugPrint("Navigating within member's sections");
+        return false;
+      } else if (sectionIndex == totalSections) {
+        debugPrint("Submitting member's details");
+        return true;  // Submit current member's details
+      }
+    }
+  }
+  return false;
+}
+}
+
+
 
 class ParticipantsListSide extends StatelessWidget {
   const ParticipantsListSide({super.key});
