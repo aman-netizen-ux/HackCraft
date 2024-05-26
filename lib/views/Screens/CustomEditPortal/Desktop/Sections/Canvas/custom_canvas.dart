@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/state/custom_template_providers/custom_edit_template_provider.dart';
 import 'package:provider/provider.dart';
 

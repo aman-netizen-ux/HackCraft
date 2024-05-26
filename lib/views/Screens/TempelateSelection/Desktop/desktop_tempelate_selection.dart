@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
+import 'package:major_project__widget_testing/state/loginProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/state/templateSelectionprovider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:major_project__widget_testing/utils/snackBar.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:provider/provider.dart';
 import 'package:major_project__widget_testing/views/Screens/TempelateSelection/Desktop/terms_and_conditions_popup.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TemplateSelectionBody extends StatefulWidget {
   const TemplateSelectionBody({super.key});
@@ -25,6 +27,7 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
     // bool isChecked= false;
     final templateSelectionProvider =
         context.watch<TemplateSelectionProvider>();
+    final loginProvider = Provider.of<LoginProvider>(context);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -131,7 +134,9 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
                                     borderRadius:
                                         BorderRadius.circular(rad5_1)),
                                 onChanged: (value) {
-                                  if (templateSelectionProvider.selectedTemplate != 0) {
+                                  if (templateSelectionProvider
+                                          .selectedTemplate !=
+                                      0) {
                                     if (value!) {
                                       // If checkbox is checked, show the terms and conditions popup
                                       showTermsAndConditions(context);
@@ -168,12 +173,8 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
                             ),
                           ],
                         ),
-
-                        //     ),
-                        // ),
-
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (templateSelectionProvider.isTnCChecked!) {
                               if (templateSelectionProvider.selectedTemplate ==
                                   1) {
@@ -198,10 +199,36 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
                                   2) {
                                 Navigator.pushNamed(
                                     context, '/customEditPortal');
+                                // final Uri url = Uri.parse(
+                                //     "http://127.0.0.1:5173/?${loginProvider.emailId}");
+
+                                // if (await canLaunchUrl(url)) {
+                                //   await launchUrl(url);
+                                // } else {
+                                //   // Can't launch the URL, handle the error
+                                //   debugPrint('Could not launch $url');
+                                // }
                               } else {
                                 // TODO Create something to tell user to select card and check terms and conditions
+                                showSnackBar(
+                                    "Select any of the one card and check",
+                                    red2,
+                                    const Icon(
+                                      Icons.report_gmailerrorred_outlined,
+                                      color: white,
+                                    ),
+                                    context);
                               }
-                            } else {}
+                            } else {
+                              showSnackBar(
+                                  "Please check  the Terms and Condition ",
+                                  red2,
+                                  const Icon(
+                                    Icons.report_gmailerrorred_outlined,
+                                    color: white,
+                                  ),
+                                  context);
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.only(

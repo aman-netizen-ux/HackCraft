@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,6 +28,7 @@ class _SignUpDetailsState extends State<SignUpDetails> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool passwordVisible = true;
+  bool isLoading = false;
   String otp = '';
   int otpId = 0;
 
@@ -84,10 +84,14 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                           height: heightScaler(context, 35),
                           // width: widthScaler(context, 130),
                           alignment: Alignment.center,
-                         
+
                           child: ElevatedButton(
                             onPressed: () async {
+                              setState(() {
+                                isLoading = true;
+                              });
                               UserCredential user = await handleGoogleSignIn();
+
                               if (user.additionalUserInfo!.isNewUser == false) {
                                 debugPrint(
                                   'An account exits with the given email address.',
@@ -97,7 +101,9 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                     "An account exits with the given email address.",
                                     red2,
                                     const Icon(
-                                        Icons.report_gmailerrorred_outlined),
+                                      Icons.report_gmailerrorred_outlined,
+                                      color: white,
+                                    ),
                                     context);
                                 FirebaseAuth.instance.signOut();
                               } else {
@@ -121,7 +127,8 @@ class _SignUpDetailsState extends State<SignUpDetails> {
 
                                   String firebaseUUID = user.user!.uid;
                                   storeUserUid(firebaseUUID, user.user!.email!);
-                                  loginProvider.setUuid(firebaseUUID, user.user!.email.toString());
+                                  loginProvider.setUuid(firebaseUUID,
+                                      user.user!.email.toString());
                                 } else {
                                   debugPrint(
                                       'Google User name is not available');
@@ -133,11 +140,23 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                   "email": loginProvider.emailId,
                                   "user_type": ""
                                 }).then((value) {
-                                  if(value){
+                                  if (value) {
                                     loginProvider.setCurrentIndex(2);
+                                  } else {
+                                    showSnackBar(
+                                        'User Profile not created',
+                                        red2,
+                                        const Icon(
+                                          Icons.warning,
+                                          color: white,
+                                        ),
+                                        context);
                                   }
                                 });
                               }
+                              setState(() {
+                                isLoading = false;
+                              });
                             },
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
@@ -182,9 +201,12 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                         Container(
                           height: heightScaler(context, 35),
                           // width: widthScaler(context, 130),
-                           alignment: Alignment.center,
+                          alignment: Alignment.center,
                           child: ElevatedButton(
                             onPressed: () async {
+                              setState(() {
+                                isLoading = true;
+                              });
                               UserCredential user = await signInWithGitHub();
                               if (user.additionalUserInfo!.isNewUser == false) {
                                 debugPrint(
@@ -195,7 +217,9 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                     "An account exits with the given email address.",
                                     red2,
                                     const Icon(
-                                        Icons.report_gmailerrorred_outlined),
+                                      Icons.report_gmailerrorred_outlined,
+                                      color: white,
+                                    ),
                                     context);
                                 FirebaseAuth.instance.signOut();
                               } else {
@@ -215,7 +239,8 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                       lastName.substring(1).toLowerCase();
                                   String firebaseUUID = user.user!.uid;
                                   storeUserUid(firebaseUUID, user.user!.email!);
-                                  loginProvider.setUuid(firebaseUUID, user.user!.email!);
+                                  loginProvider.setUuid(
+                                      firebaseUUID, user.user!.email!);
                                   loginProvider.getFirstName(firstName);
                                   loginProvider.getLastName(lastName);
                                 } else {
@@ -239,11 +264,23 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                   "email": loginProvider.emailId,
                                   "user_type": ""
                                 }).then((value) {
-                                  if(value){
+                                  if (value) {
                                     loginProvider.setCurrentIndex(2);
+                                  } else {
+                                    showSnackBar(
+                                        'User Profile not created',
+                                        red2,
+                                        const Icon(
+                                          Icons.warning,
+                                          color: white,
+                                        ),
+                                        context);
                                   }
                                 });
                               }
+                              setState(() {
+                                isLoading = false;
+                              });
                             },
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
@@ -536,6 +573,9 @@ class _SignUpDetailsState extends State<SignUpDetails> {
             margin: const EdgeInsets.symmetric(vertical: 20),
             child: ElevatedButton(
                 onPressed: () async {
+                  setState(() {
+                    isLoading = true;
+                  });
                   String email = _emailText.text;
                   String password = _passwordText.text;
                   String firstName = _firstNametext.text;
@@ -582,6 +622,9 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                       loginProvider.setCurrentIndex(1);
                     }
                   }
+                  setState(() {
+                    isLoading = false;
+                  });
                 },
                 style: ButtonStyle(
                   backgroundColor:
@@ -596,13 +639,17 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                   fixedSize:
                       MaterialStateProperty.all<Size>(const Size(160, 50)),
                 ),
-                child: Text(
-                  "Next ",
-                  style: GoogleFonts.firaSans(
-                      color: white,
-                      fontSize: heightScaler(context, 18),
-                      fontWeight: FontWeight.w500),
-                ))),
+                child: isLoading
+                    ? const CircularProgressIndicator(
+                        color: white,
+                      )
+                    : Text(
+                        "Next ",
+                        style: GoogleFonts.firaSans(
+                            color: white,
+                            fontSize: heightScaler(context, 18),
+                            fontWeight: FontWeight.w500),
+                      ))),
       ],
     );
   }

@@ -1,9 +1,7 @@
 import 'dart:math' as math;
 import 'dart:developer';
-import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:major_project__widget_testing/state/custom_template_providers/child_factory.dart';
 import 'package:major_project__widget_testing/utils/customTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Widgets/custom_circle_image.dart';
@@ -28,8 +26,34 @@ import 'package:timeline_tile/timeline_tile.dart';
 //TODO: clean up the code
 
 class CustomEditPortal extends ChangeNotifier {
+  bool _isColorSelected = false;
+  bool _isColorPickerSelected = false;
+  int _selectedColorTool = 2;
+  final List<Color> _colors = [];
+
+  final int _maxCapacity = 16;
+
   List<Widget> _dynamicWidgets = [const SizedBox()];
   List<Widget> get dynamicWidgets => _dynamicWidgets;
+
+  int get selectedColorTool => _selectedColorTool;
+  List<Color> get colors => _colors;
+
+  void addColor(Color color) {
+    if (_colors.length < _maxCapacity) {
+      _colors.add(color);
+    } else {
+      // Once we reach max capacity, we start replacing from the beginning
+      _colors.removeAt(0); // Remove the first element
+      _colors.add(color); // Add the new color
+    }
+    notifyListeners(); // Notify listeners about the change
+  }
+
+  void setSelectedColorTool(int value) {
+    _selectedColorTool = value;
+    notifyListeners();
+  }
 
   set dynamicWidgets(List<Widget> widgets) {
     _dynamicWidgets = widgets;
@@ -40,10 +64,90 @@ class CustomEditPortal extends ChangeNotifier {
 
   GlobalKey? get selectedWidgetKey => _selectedWidgetKey;
 
+  String _selectedWidgetType = '';
+  String get selectedWidgetType => _selectedWidgetType;
+
   set selectedWidgetKey(GlobalKey? value) {
     _selectedWidgetKey = value;
     notifyListeners();
   }
+
+  final List<String> mainAxisAlignments = [
+    "Start",
+    "Center", 
+    "Space Around",
+    "Space Between",
+    "Space Evenly",
+    "End"
+  ];
+
+  final List<String> crossAxisAlignments = [
+    "Start",
+    "Center", 
+    "Baseline",
+    "Stretch",
+    "End"
+  ];
+
+
+  String _selectedRowAlignment = 'Start';
+
+  String get selectedRowAlignment => _selectedRowAlignment;
+
+  void setSelectedRowAlignment(String value) {
+    _selectedRowAlignment = value;
+    notifyListeners();
+  }
+
+  String _selectedRowCrossAlignment = 'Start';
+
+  String get selectedRowCrossAlignment => _selectedRowCrossAlignment;
+
+  void setSelectedRowCrossAlignment(String value) {
+    _selectedRowCrossAlignment = value;
+    notifyListeners();
+  }
+
+
+  MainAxisAlignment mainAxisAlignmentFromString(String alignment) {
+    switch (alignment) {
+      case 'Start':
+        return MainAxisAlignment.start;
+      case 'End':
+        return MainAxisAlignment.end;
+      case 'Space Evenly':
+        return MainAxisAlignment.spaceEvenly;
+      case 'Space Around':
+        return MainAxisAlignment.spaceAround;
+      case 'Space Between':
+        return MainAxisAlignment.spaceBetween;
+      case 'Center':
+        return MainAxisAlignment.center;
+     
+      default:
+        return MainAxisAlignment.start;
+    }
+  }
+
+  CrossAxisAlignment crossAxisAlignmentFromString(String alignment) {
+    switch (alignment) {
+      case 'Start':
+        return CrossAxisAlignment.start;
+      case 'End':
+        return CrossAxisAlignment.end;
+      case 'Stretch':
+        return CrossAxisAlignment.stretch;
+      case 'Baseline':
+        return CrossAxisAlignment.baseline;
+      case 'Center':
+        return CrossAxisAlignment.center;
+     
+      default:
+        return CrossAxisAlignment.start;
+    }
+  }
+
+
 
   Map<String, dynamic> _jsonObject = {
     "id": 78,
@@ -111,17 +215,10 @@ class CustomEditPortal extends ChangeNotifier {
 
         if (node.containsKey(key)) {
           // Check if 'child' related to this key is empty
-
           log("Hellllllllllllllllllo contaqins key : ${node[key]['type']}");
           String parentType = node[key]['type'];
           childToAdd = ChildFactory()
               .createChild(type, newglobalKey.toString(), id, true);
-
-          log("type : $type");
-          log(" demn ${node[key]['child']} ");
-          log(" ohh $childToAdd   ");
-
-          log(" mad  ${node[key]['child'].isEmpty}  ");
 
           if (node[key]['child'].isEmpty && childToAdd != null) {
             // The 'child' list is empty, and we have a new child to add
@@ -215,7 +312,6 @@ class CustomEditPortal extends ChangeNotifier {
     Widget buildWidget(
       dynamic node,
     ) {
-      debugPrint('node in buildwidgets : $node');
       if (!node.containsKey('type')) return const SizedBox();
 
       Widget currentWidget;
@@ -233,12 +329,13 @@ class CustomEditPortal extends ChangeNotifier {
               }
             });
           }
-          debugPrint('at 236 in build widget $node');
           currentWidget = CustomContainer(
               node: node,
               onTap: () {
                 int? index = node['id'];
                 final currentKey = customWidgetsGlobalKeysMap[index];
+                final type = node['type'];
+                _selectedWidgetType = type;
                 _selectedWidgetKey = currentKey;
                 notifyListeners();
               },
@@ -247,7 +344,14 @@ class CustomEditPortal extends ChangeNotifier {
         case 'Text':
           currentWidget = CustomText(
               node: node,
-              onTap: () {}); // Example: Set a default text, customize as needed
+              onTap: () {
+                int? index = node['id'];
+                final currentKey = customWidgetsGlobalKeysMap[index];
+                final type = node['type'];
+                _selectedWidgetType = type;
+                _selectedWidgetKey = currentKey;
+                notifyListeners();
+              }); // Example: Set a default text, customize as needed
           break;
 
         case 'Row':
@@ -264,6 +368,8 @@ class CustomEditPortal extends ChangeNotifier {
               onTap: () {
                 int? index = node['id'];
                 final currentKey = customWidgetsGlobalKeysMap[index];
+                final type = node['type'];
+                _selectedWidgetType = type;
                 _selectedWidgetKey = currentKey;
                 notifyListeners();
               },
@@ -575,11 +681,7 @@ class CustomEditPortal extends ChangeNotifier {
     // Recursive function to search for the node with the given key
     dynamic searchNode(dynamic node, String key, int depth) {
       if (node is Map) {
-        debugPrint('entered here');
-        debugPrint('node before function: $node');
         if (node.containsKey(key)) {
-          debugPrint('at 574');
-          debugPrint('node : $node');
           if (node[key]['properties'] != null) {
             return node[key]['properties'][property];
           }
@@ -623,7 +725,6 @@ class CustomEditPortal extends ChangeNotifier {
       return null;
     }
 
-    debugPrint('at 602');
     return searchNode(_jsonObject['children'], key, 0);
 
     // Search for the node with the given key
@@ -648,22 +749,15 @@ class CustomEditPortal extends ChangeNotifier {
       String key,
       int depth,
     ) {
-      debugPrint('here starting');
-      debugPrint('property value : $property');
-
       if (node is Map) {
-        debugPrint('map is there');
         if (node.containsKey(key)) {
-          debugPrint('key found');
-          debugPrint('node ; $node');
           // print('prop. : ${node['key']['properties']}');
           // print('height : ${node['key']['properties']['height']}');
           if (node[key]['properties'] != null) {
             node[key]['properties'][propertyType] = property;
             notifyListeners();
-          return true;
+            return true;
           }
-          
         } else {
           log(" doesn't contained key");
           // Recursively search each value if the key is not found at this level
@@ -681,9 +775,7 @@ class CustomEditPortal extends ChangeNotifier {
           }
         }
       } else if (node is List) {
-        debugPrint('entered in here');
         for (var element in node) {
-          debugPrint(" elemet: $element");
           if (_searchAndAdd(
             element,
             key,
@@ -707,6 +799,240 @@ class CustomEditPortal extends ChangeNotifier {
   void triggerUIUpdate() {
     notifyListeners();
   }
+
+  bool get isColorSelected => _isColorSelected;
+  bool get isColorPickerSelected => _isColorPickerSelected;
+
+  void setIsColorSelected() {
+    _isColorSelected = !_isColorSelected;
+    notifyListeners();
+  }
+
+  void setIsColorPickerSelected() {
+    _isColorPickerSelected = !_isColorPickerSelected;
+    notifyListeners();
+  }
+
+  String _selectedFont = 'Fira Sans';
+
+  String get selectedFont => _selectedFont;
+
+  void setSelectedFont(String value) {
+    _selectedFont = value;
+    notifyListeners();
+  }
+
+  Map<GlobalKey, String> _originalTexts = {};
+
+  // void convertAndRevertBackFromUpperCase(
+  //     TextEditingController controller, String value) {
+  //   var upperCase = getPropertyValue(jsonObject,selectedWidgetKey.toString(),
+  //         "uppercase");
+
+  //   if (upperCase) {
+  //       // Store the original text before converting to uppercase
+  //      addPropertyByKey(selectedWidgetKey == null
+  //           ? customColumnKey.toString() : selectedWidgetKey.toString(),
+  //       "uppercase",
+  //       controller.text);
+
+  //     controller.text = controller.text.toUpperCase();
+  //   } else {
+  //     // Transition from uppercase to non-uppercase
+  //     if (_originalTexts.containsKey(key)) {
+  //       String originalText = _originalTexts[key]!;
+  //       String currentText = controller.text;
+
+  //       // Reconstruct the text by applying deletions and additions to the original text
+  //       String reconstructedText = reconstructText(originalText, currentText);
+
+  //       controller.text = reconstructedText;
+  //       _originalTexts.remove(key);
+  //     }
+  //   }
+  // }
+
+  String reconstructText(String originalText, String currentText) {
+    // Convert the original text to uppercase for comparison
+    String originalTextUpper = originalText.toUpperCase();
+
+    // Find the common prefix and suffix between the original (in uppercase) and current text
+    int prefixLength = 0;
+    while (prefixLength < originalTextUpper.length &&
+        prefixLength < currentText.length &&
+        originalTextUpper[prefixLength] == currentText[prefixLength]) {
+      prefixLength++;
+    }
+
+    int suffixLength = 0;
+    while (suffixLength + prefixLength < originalTextUpper.length &&
+        suffixLength + prefixLength < currentText.length &&
+        originalTextUpper[originalTextUpper.length - suffixLength - 1] ==
+            currentText[currentText.length - suffixLength - 1]) {
+      suffixLength++;
+    }
+
+    // Reconstruct the text by keeping the original (non-uppercase) prefix and suffix,
+    // and using the current text for the middle part
+    String prefix = originalText.substring(0, prefixLength);
+    String middle =
+        currentText.substring(prefixLength, currentText.length - suffixLength);
+    String suffix = originalText.substring(originalText.length - suffixLength);
+
+    return prefix + middle + suffix;
+  }
+
+  bool _isBoldSelected = false;
+
+  bool get isBoldSelected => _isBoldSelected;
+
+  void setBoldSelection() {
+    _isBoldSelected = !_isBoldSelected;
+    notifyListeners();
+  }
+
+  Map<String, FontWeight> fontWeightMapping = {
+    'Thin': FontWeight.w100,
+    'Extra Light': FontWeight.w200,
+    'Light': FontWeight.w300,
+    'Regular': FontWeight.w400,
+    'Medium': FontWeight.w500,
+    'Semi Bold': FontWeight.w600,
+    'Bold': FontWeight.w700,
+    'Extra Bold': FontWeight.w800,
+    'Black': FontWeight.w900,
+  };
+
+  void updateFontWeight(String fontWeightName) {
+    final fontWeight = fontWeightMapping[fontWeightName];
+    if (fontWeight != null && _selectedWidgetKey != null) {
+      addPropertyByKey(
+          selectedWidgetKey == null
+              ? customColumnKey.toString()
+              : selectedWidgetKey.toString(),
+          'fontWeight',
+          fontWeight.index * 100 + 100);
+      notifyListeners();
+    }
+  }
+
+  bool isFontWeightSelected(String fontWeightName) {
+    if (_selectedWidgetKey != null) {
+      final currentWeight = getPropertyValue(
+          jsonObject, selectedWidgetKey.toString(), "fontWeight");
+      return currentWeight == fontWeightMapping[fontWeightName];
+    }
+    return false;
+  }
+
+  FontWeight getSelectedTextFieldFontWeight(GlobalKey key) {
+    int weightIndex = getPropertyValue(
+        jsonObject, selectedWidgetKey.toString(), "fontWeight");
+    return fontWeightFromInt(weightIndex);
+  }
+
+  FontWeight fontWeightFromInt(int weight) {
+    switch (weight) {
+      case 100:
+        return FontWeight.w100;
+      case 200:
+        return FontWeight.w200;
+      case 300:
+        return FontWeight.w300;
+      case 400:
+        return FontWeight.w400;
+      case 500:
+        return FontWeight.w500;
+      case 600:
+        return FontWeight.w600;
+      case 700:
+        return FontWeight.w700;
+      case 800:
+        return FontWeight.w800;
+      case 900:
+        return FontWeight.w900;
+      default:
+        return FontWeight.normal;
+    }
+  }
+
+  void toggleTextAlignment() {
+    if (_selectedWidgetKey != null) {
+      var currentAlignment =
+          getPropertyValue(jsonObject, selectedWidgetKey.toString(), "align");
+
+      switch (currentAlignment) {
+        case 'left':
+          addPropertyByKey(
+              selectedWidgetKey == null
+                  ? customColumnKey.toString()
+                  : selectedWidgetKey.toString(),
+              'align',
+              'center');
+          break;
+        case 'center':
+          addPropertyByKey(
+              selectedWidgetKey == null
+                  ? customColumnKey.toString()
+                  : selectedWidgetKey.toString(),
+              'align',
+              'right');
+          break;
+        case 'right':
+          addPropertyByKey(
+              selectedWidgetKey == null
+                  ? customColumnKey.toString()
+                  : selectedWidgetKey.toString(),
+              'align',
+              'justify');
+          break;
+        case 'justify':
+          addPropertyByKey(
+              selectedWidgetKey == null
+                  ? customColumnKey.toString()
+                  : selectedWidgetKey.toString(),
+              'align',
+              'left');
+          break;
+        default:
+          addPropertyByKey(
+              selectedWidgetKey == null
+                  ? customColumnKey.toString()
+                  : selectedWidgetKey.toString(),
+              'align',
+              'left');
+          break;
+      }
+      notifyListeners();
+    }
+  }
+
+  //Alignment icon for the respective alignment
+  IconData getAlignmentIcon() {
+    if (_selectedWidgetKey != null) {
+      var currentAlignment =
+          getPropertyValue(jsonObject, selectedWidgetKey.toString(), "align");
+
+      switch (currentAlignment) {
+        case 'left':
+          return Icons.format_align_left_rounded;
+        case 'right':
+          return Icons.format_align_right_rounded;
+        case 'center':
+          return Icons.format_align_center_rounded;
+        case 'justify':
+          return Icons.format_align_justify_rounded;
+      }
+    }
+    return Icons.format_align_center_rounded;
+  }
+
+  bool _isTextColorSelected = false;
+
+  bool get isTextColorSelected => _isTextColorSelected;
+
+  void setIsTextColorSelected() {
+    _isTextColorSelected = !_isTextColorSelected;
+    notifyListeners();
+  }
 }
-
-

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:major_project__widget_testing/state/custom_template_providers/custom_edit_template_provider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Components/separator.dart';
-import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/custom_canvas.dart';
-import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/DefaultRoundsSection/CustomToolbar/custom_toolbar.dart';
-import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/StackedToolBar/stackedToolBar.dart';
+import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/Canvas/custom_canvas.dart';
+import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/Canvas/CustomToolbar/custom_toolbar.dart';
+import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CustomStackedToolbar/custom_stacked_toolbar.dart';
+import 'package:provider/provider.dart';
 
 class CustomRightPanel extends StatefulWidget {
   const CustomRightPanel({super.key});
@@ -14,7 +16,8 @@ class CustomRightPanel extends StatefulWidget {
 
 class _CustomRightPanelState extends State<CustomRightPanel> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {   
+    final customEditPortalProvider = Provider.of<CustomEditPortal>(context);
     return Container(
       height: double.infinity,
       width: double.infinity,
@@ -30,22 +33,26 @@ class _CustomRightPanelState extends State<CustomRightPanel> {
         children: [
           Column(
             children: [
-              const CustomToolBar(),
+              Expanded(flex: 0774, child: Container()),
               Expanded(flex: 0528, child: Container()),
-              CustomCanvas(
+              const CustomCanvas(
                   // formKey: widget.formKey,
                   // textinput: widget.textinput,
                   )
             ],
           ),
-          Visibility(
-            visible: true,
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Padding(
-                  padding: EdgeInsets.only(top: scaleHeight(context, 60)),
-                  child: const StackedToolBar()),
-            ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Padding(
+                padding: EdgeInsets.only(top: scaleHeight(context, 0)),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const CustomToolBar(),
+                    Visibility(visible: customEditPortalProvider.isColorSelected &&
+                    customEditPortalProvider.selectedWidgetKey != null, child: const CustomStackedToolBar()),
+                  ],
+                )),
           ),
           Align(
             alignment: Alignment.bottomCenter,

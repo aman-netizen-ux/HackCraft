@@ -15,9 +15,11 @@ import 'package:major_project__widget_testing/state/loginProvider.dart';
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/scroll_Controller.dart';
+import 'package:major_project__widget_testing/utils/snackBar.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/default_template.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/createRegistrationform.dart';
 import 'package:provider/provider.dart';
+import 'dart:async';
 
 class SidePanel extends StatefulWidget {
   SidePanel({super.key, required this.formKey, this.textinput});
@@ -30,8 +32,6 @@ class SidePanel extends StatefulWidget {
 }
 
 class _SidePanelState extends State<SidePanel> {
-  bool _isLoading = false;
-
   @override
   Widget build(BuildContext context) {
     final hackathonDetailsProvider =
@@ -56,11 +56,11 @@ class _SidePanelState extends State<SidePanel> {
       contactUsEdit
     ];
 
-    if (_isLoading) {
-      // Show loading indicator
+    // if (hackathonDetailsProvider.loadingPostHackathon) {
+    //   // Show loading indicator
 
-      return Center(child: CircularProgressIndicator());
-    }
+    //   return const Center(child: CircularProgressIndicator());
+    // }
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: scaleHeight(context, 45)),
@@ -217,10 +217,29 @@ class _SidePanelState extends State<SidePanel> {
       HackathonContainerPropertiesProvider
           hackathonContainerPropertiesProvider) async {
     final loginProvider = Provider.of<LoginProvider>(context, listen: false);
-    setState(() {
-      _isLoading = true;
+    hackathonDetailsProvider.setLoadingPostHackathon(true);
+    Timer? timer;
+    timer = Timer(const Duration(seconds: 20), () {
+      if (hackathonDetailsProvider.loadingPostHackathon) {
+        showSnackBar(
+            "Error !! Hackthon not created",
+            red2,
+            const Icon(
+              Icons.report_gmailerrorred_outlined,
+              color: white,
+            ),
+            context);
+      }
     });
-
+    if (hackathonDetailsProvider.loadingPostHackathon) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const Center(child: CircularProgressIndicator());
+        },
+      );
+    }
     final galleryProvider =
         Provider.of<GalleryProvider>(context, listen: false);
     List<String> imageResponse = [];
@@ -340,7 +359,10 @@ class _SidePanelState extends State<SidePanel> {
     //   "fields": [],
     //   "containers": []
     // }, context);
+    hackathonDetailsProvider.setLoadingPostHackathon(false);
+    timer.cancel();
 
+    Navigator.pop(context);
     if (hackathonId.isNotEmpty) {
       showDialog(
         context: context,
@@ -372,7 +394,7 @@ class _SidePanelState extends State<SidePanel> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Uhh-Ohh!'),
-            content: const Text('Something wet wrong'),
+            content: const Text('Something went wrong'),
             actions: [
               TextButton(
                 onPressed: () {
@@ -385,10 +407,6 @@ class _SidePanelState extends State<SidePanel> {
         },
       );
     }
-
-    setState(() {
-      _isLoading = false;
-    });
   }
 }
 

@@ -2,13 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/views/Screens/ContactSponsors/contact_sponsors.dart';
-import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/createRegistrationform.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/custom_editPortal.dart';
+import 'package:major_project__widget_testing/views/Screens/Dashboard/dashboard.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/default_editPortal.dart';
 
 import 'package:major_project__widget_testing/views/Screens/GetRegistrationForm/getRegistrationForm.dart';
 import 'package:major_project__widget_testing/views/Screens/HostNavigation/hostNavigation.dart';
-import 'package:major_project__widget_testing/views/Screens/LoginScreen/Verification/registration.dart';
 import 'package:major_project__widget_testing/views/Screens/LoginScreen/desktop_login.dart';
 import 'package:major_project__widget_testing/views/Screens/MainNavigation/Desktop/Sections/Profile/profile.dart';
 import 'package:major_project__widget_testing/views/Screens/MainNavigation/mainNavigation.dart';
@@ -26,6 +25,7 @@ class AppRoutes {
   static const String profile = '/profile';
   static const String getRegistration = '/getRegistration';
   static const String mainNavigation = '/mainNavigation';
+   static const String dashboard = '/dashboard';
 
   static Map<String, Widget Function(BuildContext)> routes = {
     //TODO: NEED TO CHANGE THE STARTING APP ROUTE 
@@ -42,6 +42,7 @@ class AppRoutes {
     customEditPortal: (context) => const CustomEditPortal(),
     defaultEditPortal: (context) => const DefaultEditPortal(),
     profile: (context) => const Profile(),
+    dashboard: (context) => const Dashboard(),
     getRegistration: (context) => const GetRegistrationForm(),
   };
 }
