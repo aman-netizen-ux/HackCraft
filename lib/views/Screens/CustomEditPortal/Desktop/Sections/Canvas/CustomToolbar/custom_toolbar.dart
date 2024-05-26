@@ -37,7 +37,6 @@ class _CustomToolBarState extends State<CustomToolBar> {
                 ? const CustomContainerPropertiesPanelWidget()
                 : customEditPortalProvider.selectedWidgetKey != null &&
                     customEditPortalProvider.selectedWidgetType == "Row"
-                ?  const CustomRowPropertiesPanelWidget() : Container(
-                    height: 100, width: 100, color: Colors.deepPurpleAccent));
+                ?  const CustomRowPropertiesPanelWidget() : Container(height: scaleHeight(context, 30),));
   }
 }

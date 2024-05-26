@@ -351,6 +351,8 @@ class CustomEditPortal extends ChangeNotifier {
                 _selectedWidgetType = type;
                 _selectedWidgetKey = currentKey;
                 notifyListeners();
+
+                debugPrint("${_selectedWidgetType} ${_isColorSelected}");
               }); // Example: Set a default text, customize as needed
           break;
 

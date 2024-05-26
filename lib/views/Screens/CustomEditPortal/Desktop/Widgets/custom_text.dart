@@ -28,7 +28,7 @@ class _CustomTextState extends State<CustomText> {
               fontSize: widget.node['properties']['fontSize'],
               letterSpacing: widget.node['properties']['letterSpacing'],
               color: customEditDefaultProvider
-                  .stringToColor(widget.node['properties']['textColor']),
+                  .stringToColor(widget.node['properties']['color']),
               height: lineHeight(widget.node['properties']['lineHeight'],
                   widget.node['properties']['fontSize']),
               fontStyle: widget.node['properties']['italics']

@@ -32,7 +32,7 @@ class ChildFactory {
         // Add specific properties for Text if necessary
         baseChild[key]!['properties'] = {
           "fontSize": 20,
-          "textColor": "Color(0xff1a202c)",
+          "color": "Color(0xff1a202c)",
           "font": 'Fira Sans',
           "letterSpacing": 0,
           "lineHeight": 0,

@@ -21,7 +21,7 @@ class _CustomColorWidgetState extends State<CustomColorWidget> {
   
   void _handleTap() {
     final customEditPortalProvider =  Provider.of<CustomEditPortal>(context, listen: false);
-    customEditPortalProvider.setIsTextColorSelected();
+    customEditPortalProvider.setIsColorSelected();
     if(customEditPortalProvider.isColorPickerSelected){
       customEditPortalProvider.setIsColorPickerSelected();
     }    
@@ -32,7 +32,7 @@ class _CustomColorWidgetState extends State<CustomColorWidget> {
 
   Color? _determineColor() {
    final customEditPortalProvider =  Provider.of<CustomEditPortal>(context, listen: false);
-    if (customEditPortalProvider.isTextColorSelected) {
+    if (customEditPortalProvider.isColorSelected) {
       return grey5.withOpacity(0.2); 
     } else if (isHover) {
       return grey5.withOpacity(0.1); 
@@ -95,7 +95,7 @@ class _CustomColorWidgetState extends State<CustomColorWidget> {
                         customEditPortalProvider.getPropertyValue(
                       customEditPortalProvider.jsonObject,
                       customEditPortalProvider.selectedWidgetKey.toString(),
-                      "textColor")
+                      "color")
                       )
                       ),
                 )
