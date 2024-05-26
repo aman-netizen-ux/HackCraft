@@ -64,6 +64,7 @@ class CreateRegistrationProvider with ChangeNotifier {
   Map<String, List<dynamic>> _tabFields = {
     "General": [
       ShortAnswerFieldModel(
+        id: "",
           errorText: "Invalid name",
           hint: "Enter your name registerd using photo id",
           label: "Full name",
@@ -72,6 +73,7 @@ class CreateRegistrationProvider with ChangeNotifier {
           validation: "String",
           type: FieldTypes.shortAnswer),
       ShortAnswerFieldModel(
+        id: "",
           errorText: "Invalid email id",
           hint: "Enter your valid email id",
           label: "Email id ",
@@ -80,6 +82,7 @@ class CreateRegistrationProvider with ChangeNotifier {
           validation: "Email",
           type: FieldTypes.shortAnswer),
       ShortAnswerFieldModel(
+        id: "",
           errorText: "Invalid college",
           hint: "Enter your College Name",
           label: "College Name",
@@ -88,6 +91,7 @@ class CreateRegistrationProvider with ChangeNotifier {
           validation: "String",
           type: FieldTypes.shortAnswer),
       DropDownModel(
+        id: "",
         serialNumber: 4,
         label: "Gender",
         errorText: "errorText",
@@ -100,6 +104,7 @@ class CreateRegistrationProvider with ChangeNotifier {
         ],
       ),
       PhoneNumberModel(
+        id: "",
           serialNumber: 5,
           label: "Phone Number",
           errorText: "errorText",
@@ -111,6 +116,7 @@ class CreateRegistrationProvider with ChangeNotifier {
     "New Section": [],
     "Team Details": [
       ShortAnswerFieldModel(
+        id: "",
           serialNumber: 1,
           label: "Team Name ",
           errorText: "errorText",
@@ -119,6 +125,7 @@ class CreateRegistrationProvider with ChangeNotifier {
           validation: "String",
           hint: "Enter your team name"),
       StepperModel(
+        id: "",
           serialNumber: 1,
           label: "Team Member",
           errorText: "errorText",
@@ -206,7 +213,7 @@ class CreateRegistrationProvider with ChangeNotifier {
   // }
 
   RegistrationFormModel _singleForm = RegistrationFormModel(
-      form: FormModel(hackthon: "", numberOfFields: 0),
+      form: FormModel(id:"",hackthon: "", numberOfFields: 0),
       fields: [],
       sections: []);
 
@@ -218,7 +225,7 @@ class CreateRegistrationProvider with ChangeNotifier {
       print("if $_singleForm");
     } else {
       _singleForm = RegistrationFormModel(
-          form: FormModel(hackthon: "", numberOfFields: 0),
+          form: FormModel(id:"",hackthon: "", numberOfFields: 0),
           fields: [],
           sections: []);
 
@@ -430,6 +437,7 @@ class CreateRegistrationProvider with ChangeNotifier {
     switch (type) {
       case FieldTypes.shortAnswer:
         return ShortAnswerFieldModel(
+          id: "",
             errorText: "Invalid Value",
             hint: "Hint",
             label: "Question",
@@ -439,6 +447,7 @@ class CreateRegistrationProvider with ChangeNotifier {
             validation: "String");
       case FieldTypes.longAnswer:
         return LongAnswerFieldModel(
+          id: "",
             errorText: "Invalid Value",
             label: "Question",
             hint: "Hint",
@@ -448,6 +457,7 @@ class CreateRegistrationProvider with ChangeNotifier {
             wordLimit: 500);
       case FieldTypes.radio:
         return RadioFieldModel(
+          id: "",
             errorText: "Invalid Value",
             label: "Question",
             options: [
@@ -460,6 +470,7 @@ class CreateRegistrationProvider with ChangeNotifier {
 
       case FieldTypes.checkbox:
         return CheckBoxModel(
+          id: "",
             errorText: "Invalid Value",
             label: "Question",
             options: [
@@ -471,6 +482,7 @@ class CreateRegistrationProvider with ChangeNotifier {
             type: FieldTypes.checkbox);
       case FieldTypes.yesNo:
         return RadioFieldModel(
+          id: "",
             serialNumber: 4,
             errorText: "Invalid Value",
             label: "Question",
@@ -482,6 +494,7 @@ class CreateRegistrationProvider with ChangeNotifier {
             type: FieldTypes.yesNo);
       case FieldTypes.dropdown:
         return DropDownModel(
+          id: "",
             errorText: "Invalid Value",
             label: "Question",
             required: true,
@@ -494,6 +507,7 @@ class CreateRegistrationProvider with ChangeNotifier {
 
       case FieldTypes.file:
         return FieldModel(
+          id: "",
             serialNumber: 6,
             errorText: "Invalid Value",
             label: "Question",
@@ -501,6 +515,7 @@ class CreateRegistrationProvider with ChangeNotifier {
             type: FieldTypes.file);
       case FieldTypes.linear:
         return LinearModel(
+          id: "",
             errorText: "Invalid Value",
             label: "Question",
             required: true,
@@ -509,6 +524,7 @@ class CreateRegistrationProvider with ChangeNotifier {
             type: FieldTypes.linear);
       case FieldTypes.slider:
         return SliderModel(
+          id: "",
             serialNumber: 1,
             errorText: "Invalid Value",
             label: "Question",
@@ -518,6 +534,7 @@ class CreateRegistrationProvider with ChangeNotifier {
 
       case FieldTypes.range:
         return RangeModel(
+          id: "",
             serialNumber: 4,
             errorText: "Invalid Value",
             label: "Question",
@@ -526,6 +543,7 @@ class CreateRegistrationProvider with ChangeNotifier {
             labels: {"options": 4, "jjjn": 5});
       case FieldTypes.stepper:
         return StepperModel(
+          id: "",
             errorText: "Invalid Value",
             label: "Question",
             max_value: 45,
@@ -535,6 +553,7 @@ class CreateRegistrationProvider with ChangeNotifier {
             type: FieldTypes.stepper);
       case FieldTypes.toggle:
         return ToggleModel(
+          id: "",
             serialNumber: 3,
             errorText: "Invalid Value",
             label: "Question",
@@ -543,6 +562,7 @@ class CreateRegistrationProvider with ChangeNotifier {
 
       case FieldTypes.tag:
         return TagModel(
+          id: "",
           serialNumber: 1,
           errorText: "Invalid Value",
           label: "Question",
@@ -553,6 +573,7 @@ class CreateRegistrationProvider with ChangeNotifier {
 
       case FieldTypes.date:
         return DateFieldModel(
+          id: "",
             serialNumber: 2,
             errorText: "Invalid Value",
             label: "Question",

@@ -35,27 +35,31 @@ class RegistrationFormModel {
 }
 
 class FormModel {
+  String id;
   int numberOfFields;
   String hackthon;
 
-  FormModel({required this.hackthon, required this.numberOfFields});
+  FormModel({required this.hackthon, required this.numberOfFields, required this.id});
 
   factory FormModel.fromJson(Map<String, dynamic> json) {
     return FormModel(
       hackthon: json['hackathon'],
       numberOfFields: json['number_of_fields'],
+      id: json['_id']
+
     );
   }
   Map<String, dynamic> toJson() {
     return {
       'hackathon': hackthon,
       'number_of_fields': numberOfFields,
+      '_id':id
     };
   }
 }
 
 class FieldModel {
-  // String id;
+  String id;
   // String created;
   int serialNumber;
   String label;
@@ -65,7 +69,7 @@ class FieldModel {
   FieldTypes type;
 
   FieldModel({
-    // required this.id,
+    required this.id,
     // required this.created,
     required this.serialNumber,
     required this.label,
@@ -140,7 +144,7 @@ class DateFieldModel extends FieldModel {
   String maxDate;
 
   DateFieldModel({
-    // required String id,
+    required String id,
     // required String created,
     required int serialNumber,
     required String label,
@@ -151,7 +155,7 @@ class DateFieldModel extends FieldModel {
     required this.minDate,
     required this.maxDate,
   }) : super(
-          // id: id,
+          id: id,
           // created: created,
           serialNumber: serialNumber,
           label: label,
@@ -163,7 +167,7 @@ class DateFieldModel extends FieldModel {
 
   factory DateFieldModel.fromJson(Map<String, dynamic> json) {
     return DateFieldModel(
-      // id: json['_id'],
+      id: json['_id'],
       // created: json['created'],
       serialNumber: json['serial_number'],
       label: json['label'],
@@ -195,7 +199,7 @@ class DateFieldModel extends FieldModel {
 class FileFieldModel extends FieldModel {
   String hint;
   FileFieldModel({
-    // required String id,
+    required String id,
     // required String created,
     required int serialNumber,
     required String label,
@@ -205,7 +209,7 @@ class FileFieldModel extends FieldModel {
     required FieldTypes type,
     required this.hint,
   }) : super(
-          // id: id,
+          id: id,
           // created: created,
           serialNumber: serialNumber,
           label: label,
@@ -217,7 +221,7 @@ class FileFieldModel extends FieldModel {
 
   factory FileFieldModel.fromJson(Map<String, dynamic> json) {
     return FileFieldModel(
-      // id: json['_id'],
+      id: json['_id'],
       // created: json['created'],
       serialNumber: json['serial_number'],
       label: json['label'],
@@ -247,7 +251,7 @@ class LongAnswerFieldModel extends FieldModel {
   int wordLimit;
   String hint;
   LongAnswerFieldModel({
-    // required String id,
+    required String id,
     // required String created,
     required int serialNumber,
     required String label,
@@ -258,7 +262,7 @@ class LongAnswerFieldModel extends FieldModel {
     required FieldTypes type,
     required this.wordLimit,
   }) : super(
-          // id: id,
+          id: id,
           // created: created,
           serialNumber: serialNumber,
           label: label,
@@ -270,7 +274,7 @@ class LongAnswerFieldModel extends FieldModel {
 
   factory LongAnswerFieldModel.fromJson(Map<String, dynamic> json) {
     return LongAnswerFieldModel(
-      // id: json['_id'],
+      id: json['_id'],
       // created: json['created'],
       serialNumber: json['serial_number'],
       label: json['label'],
@@ -302,7 +306,7 @@ class RadioFieldModel extends FieldModel {
   List<RegistrationOption> options;
 
   RadioFieldModel({
-    // required String id,
+    required String id,
     // required String created,
     required int serialNumber,
     required String label,
@@ -312,7 +316,7 @@ class RadioFieldModel extends FieldModel {
     required FieldTypes type,
     required this.options,
   }) : super(
-          // id: id,
+          id: id,
           // created: created,
           serialNumber: serialNumber,
           label: label,
@@ -324,7 +328,7 @@ class RadioFieldModel extends FieldModel {
 
   factory RadioFieldModel.fromJson(Map<String, dynamic> json) {
     return RadioFieldModel(
-      // id: json['_id'],
+      id: json['_id'],
       // created: json['created'],
       serialNumber: json['serial_number'],
       label: json['label'],
@@ -356,7 +360,7 @@ class CheckBoxModel extends FieldModel {
   List<RegistrationOption> options;
 
   CheckBoxModel({
-    // required String id,
+    required String id,
     // required String created,
     required int serialNumber,
     required String label,
@@ -366,7 +370,7 @@ class CheckBoxModel extends FieldModel {
     required FieldTypes type,
     required this.options,
   }) : super(
-          // id: id,
+          id: id,
           // created: created,
           serialNumber: serialNumber,
           label: label,
@@ -378,7 +382,7 @@ class CheckBoxModel extends FieldModel {
 
   factory CheckBoxModel.fromJson(Map<String, dynamic> json) {
     return CheckBoxModel(
-      // id: json['_id'],
+      id: json['_id'],
       // created: json['created'],
       serialNumber: json['serial_number'],
       label: json['label'],
@@ -411,7 +415,7 @@ class ShortAnswerFieldModel extends FieldModel {
   String hint;
 
   ShortAnswerFieldModel({
-    // required String id,
+    required String id,
     // required String created,
     required int serialNumber,
     required String label,
@@ -422,7 +426,7 @@ class ShortAnswerFieldModel extends FieldModel {
     required this.validation,
     required this.hint,
   }) : super(
-          // id: id,
+          id: id,
           // created: created,
           serialNumber: serialNumber,
           label: label,
@@ -434,7 +438,7 @@ class ShortAnswerFieldModel extends FieldModel {
 
   factory ShortAnswerFieldModel.fromJson(Map<String, dynamic> json) {
     return ShortAnswerFieldModel(
-      // id: json['_id'],
+      id: json['_id'],
       // created: json['created'],
       serialNumber: json['serial_number'],
       label: json['label'],
@@ -466,7 +470,7 @@ class ShortAnswerFieldModel extends FieldModel {
 class TagModel extends FieldModel {
   List<String> options;
   TagModel({
-    // required String id,
+    required String id,
     // required String created,
     required int serialNumber,
     required String label,
@@ -476,7 +480,7 @@ class TagModel extends FieldModel {
     required FieldTypes type,
     required this.options,
   }) : super(
-          // id: id,
+          id: id,
           // created: created,
           serialNumber: serialNumber,
           label: label,
@@ -494,7 +498,7 @@ class TagModel extends FieldModel {
       });
     }
     return TagModel(
-        // id: json['_id'],
+        id: json['_id'],
         // created: json['created'],
         serialNumber: json['serial_number'],
         label: json['label'],
@@ -523,7 +527,7 @@ class StepperModel extends FieldModel {
   int min_value;
   int max_value;
   StepperModel({
-    // required String id,
+    required String id,
     // required String created,
     required int serialNumber,
     required String label,
@@ -534,7 +538,7 @@ class StepperModel extends FieldModel {
     required this.max_value,
     required this.min_value,
   }) : super(
-          // id: id,
+          id: id,
           // created: created,
           serialNumber: serialNumber,
           label: label,
@@ -546,7 +550,7 @@ class StepperModel extends FieldModel {
 
   factory StepperModel.fromJson(Map<String, dynamic> json) {
     return StepperModel(
-      // id: json['_id'],
+      id: json['_id'],
       // created: json['created'],
       serialNumber: json['serial_number'],
       label: json['label'],
@@ -576,7 +580,7 @@ class StepperModel extends FieldModel {
 class RangeModel extends FieldModel {
   Map<String, int> labels;
   RangeModel({
-    // required String id,
+    required String id,
     // required String created,
     required int serialNumber,
     required String label,
@@ -586,7 +590,7 @@ class RangeModel extends FieldModel {
     required FieldTypes type,
     required this.labels,
   }) : super(
-          // id: id,
+          id: id,
           // created: created,
           serialNumber: serialNumber,
           label: label,
@@ -603,7 +607,7 @@ class RangeModel extends FieldModel {
       labels[key] = value;
     });
     return RangeModel(
-      // id: json['_id'],
+      id: json['_id'],
       // created: json['created'],
       serialNumber: json['serial_number'],
       label: json['label'],
@@ -631,7 +635,7 @@ class RangeModel extends FieldModel {
 class LinearModel extends FieldModel {
   Map<String, int> labels;
   LinearModel({
-    // required String id,
+    required String id,
     // required String created,
     required int serialNumber,
     required String label,
@@ -641,7 +645,7 @@ class LinearModel extends FieldModel {
     required FieldTypes type,
     required this.labels,
   }) : super(
-          // id: id,
+          id: id,
           // created: created,
           serialNumber: serialNumber,
           label: label,
@@ -658,7 +662,7 @@ class LinearModel extends FieldModel {
       labels[key] = value;
     });
     return LinearModel(
-      // id: json['_id'],
+      id: json['_id'],
       // created: json['created'],
       serialNumber: json['serial_number'],
       label: json['label'],
@@ -687,7 +691,7 @@ class LinearModel extends FieldModel {
 class SliderModel extends FieldModel {
   Map<String, int> labels;
   SliderModel({
-    // required String id,
+    required String id,
     // required String created,
     required int serialNumber,
     required String label,
@@ -697,7 +701,7 @@ class SliderModel extends FieldModel {
     required FieldTypes type,
     required this.labels,
   }) : super(
-          // id: id,
+          id: id,
           // created: created,
           serialNumber: serialNumber,
           label: label,
@@ -714,7 +718,7 @@ class SliderModel extends FieldModel {
       labels[key] = value;
     });
     return SliderModel(
-      // id: json['_id'],
+      id: json['_id'],
       // created: json['created'],
       serialNumber: json['serial_number'],
       label: json['label'],
@@ -746,8 +750,9 @@ class ToggleModel extends FieldModel {
     required String errorText,
     required bool required,
     required FieldTypes type,
+    required String id
   }) : super(
-          // id: id,
+          id: id,
           // created: created,
           serialNumber: serialNumber,
           label: label,
@@ -759,7 +764,7 @@ class ToggleModel extends FieldModel {
 
   factory ToggleModel.fromJson(Map<String, dynamic> json) {
     return ToggleModel(
-      // id: json['_id'],
+      id: json['_id'],
       // created: json['created'],
       serialNumber: json['serial_number'],
       label: json['label'],
@@ -792,8 +797,9 @@ class DropDownModel extends FieldModel {
     required bool required,
     required FieldTypes type,
     required this.options,
+    required String id
   }) : super(
-          // id: id,
+          id: id,
           // created: created,
           serialNumber: serialNumber,
           label: label,
@@ -805,7 +811,7 @@ class DropDownModel extends FieldModel {
 
   factory DropDownModel.fromJson(Map<String, dynamic> json) {
     return DropDownModel(
-      // id: json['_id'],
+      id: json['_id'],
       // created: json['created'],
       serialNumber: json['serial_number'],
       label: json['label'],
@@ -837,7 +843,7 @@ class PhoneNumberModel extends FieldModel {
   String hint;
 
   PhoneNumberModel({
-    // required String id,
+    required String id,
     // required String created,
     required int serialNumber,
     required String label,
@@ -848,7 +854,7 @@ class PhoneNumberModel extends FieldModel {
     required this.validation,
     required this.hint,
   }) : super(
-          // id: id,
+          id: id,
           // created: created,
           serialNumber: serialNumber,
           label: label,
@@ -860,7 +866,7 @@ class PhoneNumberModel extends FieldModel {
 
   factory PhoneNumberModel.fromJson(Map<String, dynamic> json) {
     return PhoneNumberModel(
-      // id: json['_id'],
+      id: json['_id'],
       // created: json['created'],
       serialNumber: json['serial_number'],
       label: json['label'],

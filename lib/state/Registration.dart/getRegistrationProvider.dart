@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:major_project__widget_testing/api/Registartion/fetchRegistration.dart';
 import 'package:major_project__widget_testing/api/get_prefilled_data.dart';
+import 'package:major_project__widget_testing/api/post_team_registeration.dart';
 import 'package:major_project__widget_testing/constants/enums.dart';
 import 'package:major_project__widget_testing/models/Registration/customField.dart';
 import 'package:major_project__widget_testing/models/Registration/registration_form_model.dart';
@@ -64,7 +65,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
   TabController getformcontroller;
 
   RegistrationFormModel _singleForm = RegistrationFormModel(
-      form: FormModel(hackthon: "", numberOfFields: 0),
+      form: FormModel(id: "", hackthon: "", numberOfFields: 0),
       fields: [],
       sections: []);
 
@@ -74,6 +75,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
 
   final List<dynamic> _gereralSectionFieldsList = [
     ShortAnswerFieldModel(
+      id: "",
         errorText: "Please fill the name",
         hint: "Enter your name",
         label: "Full name",
@@ -82,6 +84,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
         validation: "String",
         type: FieldTypes.shortAnswer),
     ShortAnswerFieldModel(
+      id: "",
         errorText: "Plrase enter your email",
         hint: "Enter your valid email id",
         label: "Email id ",
@@ -90,6 +93,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
         validation: "Email",
         type: FieldTypes.shortAnswer),
     ShortAnswerFieldModel(
+      id: "",
         errorText: "Please enter your college",
         hint: "Enter your College/ Organization Name",
         label: "College Name",
@@ -98,6 +102,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
         validation: "String",
         type: FieldTypes.shortAnswer),
     DropDownModel(
+      id: "",
       serialNumber: 4,
       label: "Gender",
       errorText: "Please select you gender",
@@ -110,6 +115,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
       ],
     ),
     PhoneNumberModel(
+      id: "",
         serialNumber: 5,
         label: "Phone Number",
         errorText: "Please enter your Phone Number",
@@ -121,6 +127,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
 
   final List<dynamic> _teamDetailsSectionFieldsList = [
     ShortAnswerFieldModel(
+      id: "",
         serialNumber: 1,
         label: "Team Name",
         errorText: "This field is required",
@@ -141,6 +148,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
   void addTeamFields(int index) {
     _teamEmailList.add(
       ShortAnswerFieldModel(
+        id: "",
           serialNumber: 1,
           label: "Participant ${index + 1} email",
           errorText: "This field is required",
@@ -164,12 +172,12 @@ class GetRegistrationFormProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  int _initiallMemberIndex=0;
+  int _initiallMemberIndex = 0;
 
-  int get initialmemberIndex=> _initiallMemberIndex;
+  int get initialmemberIndex => _initiallMemberIndex;
 
-  void setInitiallMemberIndex(int value){
-    _initiallMemberIndex=value;
+  void setInitiallMemberIndex(int value) {
+    _initiallMemberIndex = value;
     notifyListeners();
   }
 
@@ -285,7 +293,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
       print("if $_singleForm");
     } else {
       _singleForm = RegistrationFormModel(
-          form: FormModel(hackthon: "", numberOfFields: 0),
+          form: FormModel(id: "", hackthon: "", numberOfFields: 0),
           fields: [],
           sections: []);
 
@@ -358,7 +366,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
       {int? serialNumber,
       String? modelType,
       String? isRequiredData,
-      String? requiredType})async {
+      String? requiredType}) async {
     MemberDataModel model =
         _teamData.members[selectedParticipantTab].details.values.toList()[0][0];
 
@@ -376,12 +384,13 @@ class GetRegistrationFormProvider with ChangeNotifier {
           _teamData.team.teamName = input;
         } else if (requiredType == "teamsize") {
           _teamData.team.teamSize = int.tryParse(input) ?? 0;
-          print("***************** teamm size ${_teamData.team.teamSize}***********************888");
+          print(
+              "***************** teamm size ${_teamData.team.teamSize}***********************888");
 
           if (teamEmailList.isEmpty) {
             for (int i = 1; i < _teamData.team.teamSize; i++) {
               addTeamFields(i);
-              addMember("Member ${i+1}", false);
+              addMember("Member ${i + 1}", false);
             }
           } else if (_teamData.team.teamSize > teamEmailList.length) {
             addTeamFields(_teamData.team.teamSize - 1);
@@ -409,15 +418,13 @@ class GetRegistrationFormProvider with ChangeNotifier {
                   return getAnswerModel(_singleForm.fields[index].type,
                       _singleForm.fields[index], index);
                 }))
-
-           
           ]
         });
 
         _teamData.members[index] = member;
-         _teamData.members[index].details[input][0].requiredData.participantEmail =
-         input;
-        await getPrefilledData(input,index);
+        _teamData.members[index].details[input][0].requiredData
+            .participantEmail = input;
+        await getPrefilledData(input, index);
       }
     } else if (serialNumber != null && modelType != null) {
       if (modelType == "StringAnswerModel" ||
@@ -724,6 +731,51 @@ class GetRegistrationFormProvider with ChangeNotifier {
       default:
         throw Exception('Invalid field type $type');
     }
+  }
+
+  Future<String> createTeam(String hackathonId) async {
+    List<String> memberEmailsList = [];
+
+    for (int i = 1; i < _teamData.members.length; i++) {
+      memberEmailsList.add(_teamData.members[i].details.keys.toList()[0]);
+    }
+    Map<String, dynamic> params = {
+      "team": {
+        "hackathon": hackathonId,
+        "team_name": _teamData.team.teamName,
+        "number_of_member": _teamData.team.teamSize
+      },
+      "leader": {"email": _teamData.members[0].details.keys.toList()[0]},
+      "emails": memberEmailsList
+    };
+    String result = await CreateTeam().postTeam(params);
+    return result;
+  }
+
+  Future<bool> createParticipant(int index, String memberId) async {
+    RequiredDataModel requiredData =
+        _teamData.members[index].details.values.toList()[0][0].requiredData;
+    List<dynamic> additionalData =
+        _teamData.members[index].details.values.toList()[0][0].additionalData;
+    Map<String, dynamic> params = {
+      "required": {
+        "form": _singleForm.form.id,
+        "participant_name": requiredData.participantName,
+        "participant_email": requiredData.participantEmail,
+        "participant_phone": requiredData.participantPhone,
+        "participant_gender": requiredData.participantGender
+      },
+      "additional": List.generate(additionalData.length, (index) {
+        Map<String, dynamic> additionalDataJson = additionalData[index].toJson();
+
+        additionalDataJson['newKey'] = 'newValue';
+        return additionalDataJson;
+      })
+    };
+
+    debugPrint("params participant $params");
+    bool result = await CreateTeam().postParticipant(params, memberId);
+    return result;
   }
 }
 
