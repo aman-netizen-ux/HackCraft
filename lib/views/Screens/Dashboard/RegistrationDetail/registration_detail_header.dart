@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 
-SizedBox registrationDetailHeader(context) {
-  return SizedBox(
+registrationDetailHeader(context) {
+  return Container(
+    margin: EdgeInsets.only(right: scaleWidth(context, 35)),
     height: scaleHeight(context, 70),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        Expanded(flex: 30, child: Container()),
         Expanded(
-          flex: 349,
+          flex: 319,
           child: Center(
             child: Text(
               'Team Name',
@@ -21,11 +24,11 @@ SizedBox registrationDetailHeader(context) {
                 fontFamily2,
                 fontWeight: FontWeight.w500,
                 color: const Color(0xff686A6E),
-              fontSize: scaleHeight(context, 16),
+                fontSize: scaleHeight(context, 16),
               ),
             ),
           ),
-        ),       
+        ),
         Expanded(
           flex: 93,
           child: Center(
@@ -34,15 +37,15 @@ SizedBox registrationDetailHeader(context) {
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               softWrap: false,
-                style: GoogleFonts.getFont(
+              style: GoogleFonts.getFont(
                 fontFamily2,
                 fontWeight: FontWeight.w500,
                 color: const Color(0xff686A6E),
-               fontSize: scaleHeight(context, 16),
+                fontSize: scaleHeight(context, 16),
               ),
             ),
           ),
-        ), 
+        ),
         Expanded(
           flex: 140,
           child: Text(
@@ -50,12 +53,12 @@ SizedBox registrationDetailHeader(context) {
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             softWrap: false,
-             style: GoogleFonts.getFont(
-                fontFamily2,
-                fontWeight: FontWeight.w500,
-                color:const Color(0xff686A6E),
+            style: GoogleFonts.getFont(
+              fontFamily2,
+              fontWeight: FontWeight.w500,
+              color: const Color(0xff686A6E),
               fontSize: scaleHeight(context, 16),
-              ),
+            ),
           ),
         ),
         Expanded(
@@ -66,11 +69,11 @@ SizedBox registrationDetailHeader(context) {
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               softWrap: false,
-               style: GoogleFonts.getFont(
+              style: GoogleFonts.getFont(
                 fontFamily2,
                 fontWeight: FontWeight.w500,
                 color: const Color(0xff686A6E),
-               fontSize: scaleHeight(context, 16),
+                fontSize: scaleHeight(context, 16),
               ),
             ),
           ),
@@ -83,10 +86,10 @@ SizedBox registrationDetailHeader(context) {
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               softWrap: false,
-                style: GoogleFonts.getFont(
+              style: GoogleFonts.getFont(
                 fontFamily2,
                 fontWeight: FontWeight.w500,
-                color:const Color(0xff686A6E),
+                color: const Color(0xff686A6E),
                 fontSize: scaleHeight(context, 16),
               ),
             ),

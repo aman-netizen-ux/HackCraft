@@ -21,6 +21,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   List<HackathonModel>? openHackathons;
   List<HackathonModel>? closedHackathons;
   late Future<Map<String, List<HackathonModel>>> futureHackathons;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -33,8 +34,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         liveHackathons = hackathons['live'];
         openHackathons = hackathons['open'];
         closedHackathons = hackathons['close'];
+        isLoading = false;
       });
     }).catchError((error) {
+      isLoading = false;
       debugPrint('Error fetching hackathons: $error');
     });
   }
@@ -54,119 +57,133 @@ class _DashboardScreenState extends State<DashboardScreen> {
         child: Padding(
           padding: EdgeInsets.only(
               left: scaleWidth(context, 53), top: scaleHeight(context, 56)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Your Dashboard",
-                style: GoogleFonts.getFont(fontFamily2,
-                    fontSize: scaleHeight(context, 24),
-                    fontWeight: FontWeight.w500,
-                    color: darkCharcoal),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: scaleHeight(context, 6)),
-                child: Text(
-                  "Lorem Ipsum",
-                  style: GoogleFonts.getFont(fontFamily2,
-                      fontSize: scaleHeight(context, 18),
-                      fontWeight: FontWeight.w500,
-                      color: darkCharcoal),
+          child: isLoading
+              ? Container(
+                  decoration: const BoxDecoration(
+                      color: Color(0xfff5f5f5),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(50),
+                        bottomLeft: Radius.circular(50),
+                      )),
+                  width: double.infinity,
+                  height: scaleHeight(context, 820),
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Your Dashboard",
+                      style: GoogleFonts.getFont(fontFamily2,
+                          fontSize: scaleHeight(context, 24),
+                          fontWeight: FontWeight.w500,
+                          color: darkCharcoal),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: scaleHeight(context, 6)),
+                      child: Text(
+                        "Lorem Ipsum",
+                        style: GoogleFonts.getFont(fontFamily2,
+                            fontSize: scaleHeight(context, 18),
+                            fontWeight: FontWeight.w500,
+                            color: darkCharcoal),
+                      ),
+                    ),
+                    // Text(
+                    //   "Pending",
+                    //   style: GoogleFonts.getFont(fontFamily2,
+                    //       fontSize: scaleHeight(context, 18),
+                    //       fontWeight: FontWeight.w500,
+                    //       color: slateGray),
+                    // ),
+                    // SizedBox(
+                    //   height: scaleHeight(context, 16),
+                    // ),
+                    // Wrap(
+                    //   runSpacing: scaleHeight(context, 10),
+                    //   spacing: scaleWidth(context, 10),
+                    //   children: List.generate(2, (index) => DashboardCard()).toList(),
+                    // ),
+                    // SizedBox(
+                    //   height: scaleHeight(context, 38),
+                    // ),
+                    liveHackathons != null
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Live Hackathons',
+                                style: GoogleFonts.getFont(fontFamily2,
+                                    fontSize: scaleHeight(context, 18),
+                                    fontWeight: FontWeight.w500,
+                                    color: slateGray),
+                              ),
+                              const SizedBox(height: 10),
+                              Wrap(
+                                spacing: 10,
+                                children: [
+                                  for (final hackathon in liveHackathons!)
+                                    DashboardCard(hackathon: hackathon),
+                                ],
+                              ),
+                            ],
+                          )
+                        : Container(),
+                    SizedBox(height: scaleHeight(context, 35)),
+                    openHackathons != null
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Open Hackathons',
+                                style: GoogleFonts.getFont(fontFamily2,
+                                    fontSize: scaleHeight(context, 18),
+                                    fontWeight: FontWeight.w500,
+                                    color: slateGray),
+                              ),
+                              SizedBox(height: scaleHeight(context, 10)),
+                              Wrap(
+                                spacing: 10,
+                                children: [
+                                  for (final hackathon in openHackathons!)
+                                    DashboardCard(hackathon: hackathon),
+                                ],
+                              ),
+                            ],
+                          )
+                        : Container(),
+                    SizedBox(
+                      height: scaleHeight(context, 16),
+                    ),
+                    closedHackathons != null
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Closed Hackathons',
+                                style: GoogleFonts.getFont(fontFamily2,
+                                    fontSize: scaleHeight(context, 18),
+                                    fontWeight: FontWeight.w500,
+                                    color: slateGray),
+                              ),
+                              SizedBox(height: scaleHeight(context, 10)),
+                              Wrap(
+                                spacing: 10,
+                                children: [
+                                  for (final hackathon in closedHackathons!)
+                                    DashboardCard(hackathon: hackathon),
+                                ],
+                              ),
+                            ],
+                          )
+                        : Container(),
+                    SizedBox(
+                      height: scaleHeight(context, 40),
+                    ),
+                  ],
                 ),
-              ),
-              // Text(
-              //   "Pending",
-              //   style: GoogleFonts.getFont(fontFamily2,
-              //       fontSize: scaleHeight(context, 18),
-              //       fontWeight: FontWeight.w500,
-              //       color: slateGray),
-              // ),
-              // SizedBox(
-              //   height: scaleHeight(context, 16),
-              // ),
-              // Wrap(
-              //   runSpacing: scaleHeight(context, 10),
-              //   spacing: scaleWidth(context, 10),
-              //   children: List.generate(2, (index) => DashboardCard()).toList(),
-              // ),
-              // SizedBox(
-              //   height: scaleHeight(context, 38),
-              // ),
-              liveHackathons != null
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Live Hackathons',
-                          style: GoogleFonts.getFont(fontFamily2,
-                              fontSize: scaleHeight(context, 18),
-                              fontWeight: FontWeight.w500,
-                              color: slateGray),
-                        ),
-                        const SizedBox(height: 10),
-                        Wrap(
-                          spacing: 10,
-                          children: [
-                            for (final hackathon in liveHackathons!)
-                              DashboardCard(hackathon: hackathon),
-                          ],
-                        ),
-                      ],
-                    )
-                  : Container(),
-              SizedBox(height: scaleHeight(context, 35)),
-              openHackathons != null
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Open Hackathons',
-                          style: GoogleFonts.getFont(fontFamily2,
-                              fontSize: scaleHeight(context, 18),
-                              fontWeight: FontWeight.w500,
-                              color: slateGray),
-                        ),
-                        SizedBox(height: scaleHeight(context, 10)),
-                        Wrap(
-                          spacing: 10,
-                          children: [
-                            for (final hackathon in openHackathons!)
-                              DashboardCard(hackathon: hackathon),
-                          ],
-                        ),
-                      ],
-                    )
-                  : Container(),
-              SizedBox(
-                height: scaleHeight(context, 16),
-              ),
-              closedHackathons != null
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Closed Hackathons',
-                          style: GoogleFonts.getFont(fontFamily2,
-                              fontSize: scaleHeight(context, 18),
-                              fontWeight: FontWeight.w500,
-                              color: slateGray),
-                        ),
-                        SizedBox(height: scaleHeight(context, 10)),
-                        Wrap(
-                          spacing: 10,
-                          children: [
-                            for (final hackathon in closedHackathons!)
-                              DashboardCard(hackathon: hackathon),
-                          ],
-                        ),
-                      ],
-                    )
-                  : Container(),
-              SizedBox(
-                height: scaleHeight(context, 40),
-              ),
-            ],
-          ),
         ),
       ),
     );
