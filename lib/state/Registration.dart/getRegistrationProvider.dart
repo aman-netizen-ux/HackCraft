@@ -308,6 +308,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
     String email,
     int index,
   ) async {
+    print("********$index");
     final response = await GetPrefilledData().getprefilledData(email);
     print("Im in usertype fun");
 
@@ -737,7 +738,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
   Future<String> createTeam(String hackathonId) async {
     List<String> memberEmailsList = [];
 
-    for (int i = 1; i < _teamData.members.length; i++) {
+    for (int i = 0; i < _teamData.members.length; i++) {
       memberEmailsList.add(_teamData.members[i].details.keys.toList()[0]);
     }
     Map<String, dynamic> params = {
@@ -749,6 +750,8 @@ class GetRegistrationFormProvider with ChangeNotifier {
       "leader": {"email": _teamData.members[0].details.keys.toList()[0]},
       "emails": memberEmailsList
     };
+
+    print("params of team $params");
     final result = await CreateTeam().postTeam(params);
 
     return result.leader;
@@ -833,6 +836,7 @@ switch(type){
     if(response!=null){
        debugPrint("Im in get team details function response not null ");
     _teamData=response;
+    print("api executed");
     }else{
       
     }
@@ -861,8 +865,22 @@ switch(type){
       ];
       }
     }
+    debugPrint("initialized members also");
     notifyListeners();
   }
+
+  int findMemberIndex(String emailId) {
+  List<MemberModel> members= _teamData.members;
+  for (int i = 0; i < members.length; i++) {
+    if (members[i].details.containsKey(emailId)) {
+      return i; // Return the index where 'group' key is found
+    }
+  }
+  return -1; // Return -1 if 'group' key is not found
 }
+}
+
+
+
 
 // cae9be78-910b-4fd4-82c6-22a547fce01c

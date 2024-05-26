@@ -32,6 +32,7 @@ class _DesktopGetRegisterationFormState
   String userType = "";
   String hackathonId = "";
   String hackathonName = "";
+  String teamId="";
   List<int> teamSize = [];
   @override
   void initState() {
@@ -48,6 +49,7 @@ class _DesktopGetRegisterationFormState
           userType = args['userType'];
           hackathonName = args['hackathonName'];
           teamSize = args['teamSize'];
+          teamId= args['teamId'];
         });
       }
     }).then((value) async {
@@ -58,12 +60,19 @@ class _DesktopGetRegisterationFormState
       //TODO: change with member index: and keep this saved in provider,
       // and update few things in below code based on this(like disable enable and all, etc.)
       // inde value pasing while calling prefilled api
-      int someInt = 2;
+
+      if (userType == "pending") {
+        await getRegistrationFormProvider.getTeamDetails(teamId);
+        debugPrint("teacm details fetched in desktop");
+       
+    
+      }
+      
 
       getRegistrationFormProvider.setInitiallMemberIndex(userType == "firstuser"
           ? 0
           : userType == "pending"
-              ? someInt
+              ? getRegistrationFormProvider.findMemberIndex(loginProvider.emailId)
               : -1);
 
       //SelectedParticipantTab initial value is set same as initialmemberIndex
@@ -111,8 +120,7 @@ class _DesktopGetRegisterationFormState
             }
           }
         }
-      } else if (userType == "pending") {
-        await getRegistrationFormProvider.getTeamDetails("");
+      }  if (userType == "pending") {
         getRegistrationFormProvider.initializeMemberDataListToMembers();
        
     
