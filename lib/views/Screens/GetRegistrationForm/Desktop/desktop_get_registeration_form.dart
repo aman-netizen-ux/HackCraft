@@ -112,9 +112,10 @@ class _DesktopGetRegisterationFormState
           }
         }
       } else if (userType == "pending") {
-        //       //TODO: hit the team get api
-        //       //TODO: and change the value of key same as current email
-        //TODO: for pending user also create memberdatamodel type object and set only email in there
+        await getRegistrationFormProvider.getTeamDetails("");
+        getRegistrationFormProvider.initializeMemberDataListToMembers();
+       
+    
       }
 
       await getRegistrationFormProvider.getPrefilledData(

@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:major_project__widget_testing/models/teamCreateModel.dart';
 
 class CreateTeam {
-  postTeam(Map<String, dynamic> params, ) async {
+  Future<TeamCreateResponseModel> postTeam(Map<String, dynamic> params, ) async {
     try {
       final String baseUrl = dotenv.get('postteam');
       final response = await http.post(
@@ -19,34 +20,34 @@ class CreateTeam {
 
 
 
-      if (response.statusCode == 201) {
-        final jsonResponse = json.decode(response.body);
+      if (response.statusCode == 200) {
+         final Map<String, dynamic> jsonResponse = json.decode(response.body);
 
         debugPrint('response of team create : $jsonResponse');
 
        
-        return response.body;
+        return TeamCreateResponseModel.fromJson(jsonResponse);
       } else {
-        final errorResponse = jsonDecode(response.body);
-        String errorMessage = '';
-        errorResponse['error'].forEach((k, v) {
-          errorMessage += '$k: ${v.join(', ')}\n';
-        });
+        // final errorResponse = jsonDecode(response.body);
+        // String errorMessage = '';
+        // errorResponse['error'].forEach((k, v) {
+        //   errorMessage += '$k: ${v.join(', ')}\n';
+        // });
+        debugPrint(" normal body : ${response.body}");
+        debugPrint('error at 39 in team create: ${jsonDecode(response.body)} ,  ');
 
-        debugPrint('error at 39 in team create: $errorResponse ,  $errorMessage');
-
-        return "";
+        return TeamCreateResponseModel(leader: "");
       }
     } catch (e) {
       debugPrint('error in catch of team create : $e');
-      return "";
+      return TeamCreateResponseModel(leader: "");
     }
   }
 
 
 
 
-  postParticipant(Map<String, dynamic> params, String memberId) async {
+  Future<bool>postParticipant(Map<String, dynamic> params, String memberId) async {
     try {
       final String baseUrl = dotenv.get('postparticipant');
       final response = await http.post(
@@ -60,7 +61,7 @@ class CreateTeam {
 
 
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
 
         debugPrint('response of post participant : $jsonResponse');
@@ -68,13 +69,13 @@ class CreateTeam {
        
         return true;
       } else {
-        final errorResponse = jsonDecode(response.body);
-        String errorMessage = '';
-        errorResponse['error'].forEach((k, v) {
-          errorMessage += '$k: ${v.join(', ')}\n';
-        });
+        // final errorResponse = jsonDecode(response.body);
+        // String errorMessage = '';
+        // errorResponse['error'].forEach((k, v) {
+        //   errorMessage += '$k: ${v.join(', ')}\n';
+        // });
 
-        debugPrint('error at 77 in post participant: $errorResponse ,  $errorMessage');
+        debugPrint('error at 77 in post participant: ${jsonDecode(response.body)} ,  ');
 
         return false;
       }
@@ -101,7 +102,7 @@ class CreateTeam {
 
 
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
 
         debugPrint('response of  post member : $jsonResponse');
@@ -109,13 +110,9 @@ class CreateTeam {
        
         return true;
       } else {
-        final errorResponse = jsonDecode(response.body);
-        String errorMessage = '';
-        errorResponse['error'].forEach((k, v) {
-          errorMessage += '$k: ${v.join(', ')}\n';
-        });
+        
 
-        debugPrint('error at 118 in post member: $errorResponse ,  $errorMessage');
+        debugPrint('error at 118 in post member: ${jsonDecode(response.body)} ,  ');
 
         return false;
       }
