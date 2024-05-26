@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
+import 'package:major_project__widget_testing/constants/enums.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
+import 'package:major_project__widget_testing/models/Registration/registration_form_model.dart';
 import 'package:major_project__widget_testing/models/teamRegisterationModel.dart';
 import 'package:major_project__widget_testing/state/Registration.dart/getRegistrationProvider.dart';
 import 'package:major_project__widget_testing/state/loginProvider.dart';
@@ -86,6 +88,14 @@ class _DesktopGetRegisterationFormState
 
         if (teamSize.length > 1) {
           getRegistrationFormProvider.addMember(loginProvider.emailId, true);
+          getRegistrationFormProvider.addModelInTeamDetailsList(StepperModel(
+              serialNumber: 1,
+              label: "Team Member (Including leader)",
+              errorText: "This field is required",
+              required: true,
+              type: FieldTypes.stepper,
+              max_value: teamSize[1],
+              min_value: teamSize[0]));
         } else {
           for (int i = 0; i < teamSize[0]; i++) {
             getRegistrationFormProvider.addMember(
@@ -93,7 +103,7 @@ class _DesktopGetRegisterationFormState
                 i == 0 ? true : false);
 
             if (i > 0) {
-              getRegistrationFormProvider.addEmailFields_inTeamDetails(i);
+              getRegistrationFormProvider.addTeamFields(i);
             }
           }
         }
@@ -328,6 +338,43 @@ class MiddleFormPart extends StatelessWidget {
                       SizedBox(
                         height: scaleHeight(context, 36.76),
                       ),
+                      ...List
+                          .generate(
+                              sectionIndex ==
+                                          getRegistrationFormProvider
+                                                  .singleForm.sections.length +
+                                              1 &&
+                                      getRegistrationFormProvider
+                                              .selectedParticipantTab ==
+                                          0
+                                  ? getRegistrationFormProvider
+                                      .teamDetailsSectionFieldsList.length
+                                  : 0, (index) {
+                        TeamModel teamData =
+                            getRegistrationFormProvider.teamData.team;
+                        return Row(
+                          children: [
+                            getRegistrationFormProvider.getField(
+                                type: getRegistrationFormProvider
+                                    .teamDetailsSectionFieldsList[index].type,
+                                field: getRegistrationFormProvider
+                                    .teamDetailsSectionFieldsList[index],
+                                initialAnswer: index == 0
+                                    ? teamData.teamName
+                                    : index == 1
+                                        ? teamData.teamSize.toString()
+                                        : "",
+                                isDisabled: false,
+                                isRequiredData:
+                                    index == 0 || index == 1 ? "TeamData" : "",
+                                requiredType: index == 0
+                                    ? "teamname"
+                                    : index == 1
+                                        ? "teamsize"
+                                        : "")
+                          ],
+                        );
+                      }),
                       ...List.generate(
                           //getting list of fields based on selected setion => general list, team data list, sections questions list(api)
                           sectionIndex == 0
@@ -341,7 +388,7 @@ class MiddleFormPart extends StatelessWidget {
                                               .selectedParticipantTab ==
                                           0
                                   ? getRegistrationFormProvider
-                                      .teamDetailsSectionFieldsList.length
+                                      .teamEmailList.length
                                   : getRegistrationFormProvider
                                       .singleForm
                                       .sections[sectionIndex - 1]
@@ -400,23 +447,13 @@ class MiddleFormPart extends StatelessWidget {
                             children: [
                               getRegistrationFormProvider.getField(
                                   type: getRegistrationFormProvider
-                                      .teamDetailsSectionFieldsList[index].type,
+                                      .teamEmailList[index].type,
                                   field: getRegistrationFormProvider
-                                      .teamDetailsSectionFieldsList[index],
-                                  initialAnswer: index == 0
-                                      ? teamData.teamName
-                                      : index == 1
-                                          ? teamData.teamSize.toString()
-                                          : "",
+                                      .teamEmailList[index],
+                                  initialAnswer: getRegistrationFormProvider.teamData.members[index+1].details.keys.toList()[0],
                                   isDisabled: false,
-                                  isRequiredData: index == 0 || index == 1
-                                      ? "TeamData"
-                                      : "",
-                                  requiredType: index == 0
-                                      ? "teamname"
-                                      : index == 1
-                                          ? "teamsize"
-                                          : "")
+                                  isRequiredData: "MemberEmails",
+                                  requiredType: "${index+1}")
                             ],
                           );
                         } else {
@@ -449,19 +486,22 @@ class MiddleFormPart extends StatelessWidget {
                               getRegistrationFormProvider.getField(
                                 type: allFieldsList[currentFieldIndex].type,
                                 field: allFieldsList[currentFieldIndex],
-                                initialAnswer:
-                                    additionalData is StringAnswerModel||additionalData is OneIntAnswerModel||additionalData is BoolAnswerModel
-                                        ? additionalData.input
-                                        : additionalData is MapAnswerModel||additionalData is MapIntAnswerModel
+                                initialAnswer: additionalData
+                                            is StringAnswerModel ||
+                                        additionalData is OneIntAnswerModel ||
+                                        additionalData is BoolAnswerModel
+                                    ? additionalData.input
+                                    : additionalData is MapAnswerModel ||
+                                            additionalData is MapIntAnswerModel
+                                        ? additionalData.input.values
+                                                .toList()
+                                                .isNotEmpty
                                             ? additionalData.input.values
-                                                    .toList()
-                                                    .isNotEmpty
-                                                ? additionalData.input.values
-                                                    .join(',')
-                                                : ""
-                                            : additionalData is TwoIntAnswerModel
-                                            ?"${additionalData.input1},${additionalData.input2}"
-                                            :"hola",
+                                                .join(',')
+                                            : ""
+                                        : additionalData is TwoIntAnswerModel
+                                            ? "${additionalData.input1},${additionalData.input2}"
+                                            : "hola",
                                 isDisabled: false,
                                 serialNumber: currentFieldIndex,
                                 modelType: additionalData is StringAnswerModel

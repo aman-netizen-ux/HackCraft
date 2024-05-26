@@ -128,27 +128,26 @@ class GetRegistrationFormProvider with ChangeNotifier {
         type: FieldTypes.shortAnswer,
         validation: "String",
         hint: "Enter your team name"),
-    StepperModel(
-        serialNumber: 1,
-        label: "Team Member",
-        errorText: "This field is required",
-        required: true,
-        type: FieldTypes.stepper,
-        max_value: 5,
-        min_value: 0)
   ];
 
-  void addEmailFields_inTeamDetails(int index){
-    _teamDetailsSectionFieldsList.add(
-      
-       ShortAnswerFieldModel(
-        serialNumber: 1,
-        label: "Participant ${index+1} email",
-        errorText: "This field is required",
-        required: true,
-        type: FieldTypes.shortAnswer,
-        validation: "Email",
-        hint: "Please enter your participant ${index+1} email"),
+  void addModelInTeamDetailsList(dynamic input) {
+    _teamDetailsSectionFieldsList.add(input);
+    notifyListeners();
+  }
+
+  final List<dynamic> _teamEmailList = [];
+  List<dynamic> get teamEmailList => _teamEmailList;
+
+  void addTeamFields(int index) {
+    _teamEmailList.add(
+      ShortAnswerFieldModel(
+          serialNumber: 1,
+          label: "Participant ${index + 1} email",
+          errorText: "This field is required",
+          required: true,
+          type: FieldTypes.shortAnswer,
+          validation: "Email",
+          hint: "Please enter your participant ${index + 1} email"),
     );
     notifyListeners();
   }
@@ -229,16 +228,20 @@ class GetRegistrationFormProvider with ChangeNotifier {
 
         // Check additional data fields based on type
         for (var additionalData in dataModel.additionalData) {
-          if ((additionalData is StringAnswerModel ||additionalData is OneIntAnswerModel|| additionalData is BoolAnswerModel) &&
+          if ((additionalData is StringAnswerModel ||
+                  additionalData is OneIntAnswerModel ||
+                  additionalData is BoolAnswerModel) &&
               additionalData.input.isEmpty) {
             isComplete = false;
             return false; // exits the entire function
-          } else if ((additionalData is MapAnswerModel|| additionalData is MapIntAnswerModel) &&
+          } else if ((additionalData is MapAnswerModel ||
+                  additionalData is MapIntAnswerModel) &&
               additionalData.input.isEmpty) {
             isComplete = false;
             return false; // exits the entire function
-          }else if (additionalData is TwoIntAnswerModel &&
-              additionalData.input1.isEmpty && additionalData.input2.isEmpty) {
+          } else if (additionalData is TwoIntAnswerModel &&
+              additionalData.input1.isEmpty &&
+              additionalData.input2.isEmpty) {
             isComplete = false;
             return false; // exits the entire function
           }
@@ -346,54 +349,91 @@ class GetRegistrationFormProvider with ChangeNotifier {
       {int? serialNumber,
       String? modelType,
       String? isRequiredData,
-      String? requiredType}) {
+      String? requiredType})async {
     MemberDataModel model =
         _teamData.members[selectedParticipantTab].details.values.toList()[0][0];
 
-        print("input in provider *********** $input, $serialNumber, $modelType");
+    print("input in provider *********** $input, $serialNumber, $modelType");
 
     if (isRequiredData != null && requiredType != null) {
-      if(isRequiredData=="GeneralData"){
+      if (isRequiredData == "GeneralData") {
         if (requiredType == "phone") {
-        model.requiredData.participantPhone = input;
-      } else if (requiredType == "email") {
-        model.requiredData.participantEmail = input;
-      }
-      }else  if(isRequiredData=="TeamData"){
-
+          model.requiredData.participantPhone = input;
+        } else if (requiredType == "email") {
+          model.requiredData.participantEmail = input;
+        }
+      } else if (isRequiredData == "TeamData") {
         if (requiredType == "teamname") {
-        _teamData.team.teamName = input;
-      } else if (requiredType == "teamsize") {
-        _teamData.team.teamSize = int.tryParse(input)??0;
-      } 
+          _teamData.team.teamName = input;
+        } else if (requiredType == "teamsize") {
+          _teamData.team.teamSize = int.tryParse(input) ?? 0;
+          print("***************** teamm size ${_teamData.team.teamSize}***********************888");
+
+          if (teamEmailList.isEmpty) {
+            for (int i = 1; i < _teamData.team.teamSize; i++) {
+              addTeamFields(i);
+              addMember("Member $i", false);
+            }
+          } else if (_teamData.team.teamSize > teamEmailList.length) {
+            addTeamFields(_teamData.team.teamSize - 1);
+            addMember("Member ${_teamData.team.teamSize - 1}", false);
+          } else if (_teamData.team.teamSize < teamEmailList.length) {
+            teamEmailList.removeLast();
+            _teamData.members.removeLast();
+          }
+        }
+      } else if (isRequiredData == "MemberEmails") {
+        int index = int.tryParse(requiredType) ?? 1;
+
+        MemberModel member = MemberModel(details: {
+          input: [
+            MemberDataModel(
+                requiredData: RequiredDataModel(
+                    participantEmail: "",
+                    participantName: "",
+                    participantPhone: "",
+                    participantGender: "",
+                    participantCollege: ""),
+                isLeader: false,
+                additionalData:
+                    List.generate(_singleForm.fields.length, (index) {
+                  return getAnswerModel(_singleForm.fields[index].type,
+                      _singleForm.fields[index], index);
+                }))
+
+           
+          ]
+        });
+
+        _teamData.members[index] = member;
+        await getPrefilledData(input,index);
       }
-    } 
-    
-    
-    
-    else if (serialNumber != null && modelType != null) {
-      if (modelType == "StringAnswerModel"||modelType == "OneIntAnswerModel"||modelType == "BoolAnswerModel") {
+    } else if (serialNumber != null && modelType != null) {
+      if (modelType == "StringAnswerModel" ||
+          modelType == "OneIntAnswerModel" ||
+          modelType == "BoolAnswerModel") {
         print("Im in string model");
-         print(" before updation: ${ model.additionalData[serialNumber].input}");
+        print(" before updation: ${model.additionalData[serialNumber].input}");
         model.additionalData[serialNumber].input = input;
-        print(" after updation: ${ model.additionalData[serialNumber].input}");
+        print(" after updation: ${model.additionalData[serialNumber].input}");
       } else if (modelType == "MapAnswerModel") {
-         print("Im in map model");
+        print("Im in map model");
         //  if(input.contains(','))
         // {
 
-          List<String> options= input.split(',');
-          print("options $options");
+        List<String> options = input.split(',');
+        print("options $options");
 
-          Map<String, String> optionList= {};
+        Map<String, String> optionList = {};
 
-          for(int i=0; i<options.length; i++){
-            optionList["Option ${i+1}"]= options[i];
-          }
+        for (int i = 0; i < options.length; i++) {
+          optionList["Option ${i + 1}"] = options[i];
+        }
 
-          model.additionalData[serialNumber].input=optionList;
+        model.additionalData[serialNumber].input = optionList;
 
-          print(" after updation map: ${ model.additionalData[serialNumber].input}");
+        print(
+            " after updation map: ${model.additionalData[serialNumber].input}");
         // }else{
         //   model.additionalData[serialNumber].input = {
         //   'Option 1': input,
@@ -414,7 +454,6 @@ class GetRegistrationFormProvider with ChangeNotifier {
       String? modelType,
       String? isRequiredData,
       String? requiredType}) {
-
     switch (type) {
       case FieldTypes.date:
         return 0;
@@ -430,11 +469,11 @@ class GetRegistrationFormProvider with ChangeNotifier {
           limit: field.wordLimit,
           question: field.label,
           required: field.required,
-           isRequiredData: isRequiredData,
+          isRequiredData: isRequiredData,
           requiredType: requiredType,
           serialNumber: serialNumber,
           modelType: modelType,
-           initialAnswer: initialAnswer,
+          initialAnswer: initialAnswer,
         );
       case FieldTypes.radio || FieldTypes.yesNo:
         List<RegistrationOption> options =
@@ -452,7 +491,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
           serialNumber: serialNumber,
           modelType: modelType,
           isDisabled: isDisabled,
-           initialAnswer: initialAnswer,
+          initialAnswer: initialAnswer,
         );
       case FieldTypes.shortAnswer:
         return ShortAnsField(
@@ -482,7 +521,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
           serialNumber: serialNumber,
           modelType: modelType,
           isDisabled: isDisabled,
-           initialAnswer: initialAnswer,
+          initialAnswer: initialAnswer,
         );
       case FieldTypes.range:
         //TODO:check min max of this
@@ -530,18 +569,18 @@ class GetRegistrationFormProvider with ChangeNotifier {
 
         List<String> textList = options.map((option) => option.text).toList();
         return CheckBoxField(
-            question: field.label,
-            create: false,
-            error: field.errorText,
-            options: textList,
-            required: field.required,
-            isRequiredData: isRequiredData,
+          question: field.label,
+          create: false,
+          error: field.errorText,
+          options: textList,
+          required: field.required,
+          isRequiredData: isRequiredData,
           requiredType: requiredType,
           serialNumber: serialNumber,
           modelType: modelType,
           isDisabled: isDisabled,
-           initialAnswer: initialAnswer,
-            );
+          initialAnswer: initialAnswer,
+        );
       case FieldTypes.toggle:
         return ToogleYNField(
           create: false,
@@ -553,7 +592,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
           serialNumber: serialNumber,
           modelType: modelType,
           isDisabled: isDisabled,
-           initialAnswer: initialAnswer,
+          initialAnswer: initialAnswer,
         );
       case FieldTypes.phoneNumber:
         print(' phone value ${initialAnswer}');
@@ -658,10 +697,11 @@ class GetRegistrationFormProvider with ChangeNotifier {
             type: FieldTypes.phoneNumber);
       case FieldTypes.checkbox:
         return MapAnswerModel(
-            input: {},
-            serialNumber: index,
-            question: field.label,
-            type: FieldTypes.checkbox,);
+          input: {},
+          serialNumber: index,
+          question: field.label,
+          type: FieldTypes.checkbox,
+        );
 
       case FieldTypes.toggle:
         return BoolAnswerModel(
