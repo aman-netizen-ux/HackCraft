@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:major_project__widget_testing/state/custom_template_providers/custom_edit_template_provider.dart';
+import 'package:provider/provider.dart';
 
 class CustomRow extends StatefulWidget {
   final dynamic node;
@@ -15,8 +17,10 @@ class CustomRow extends StatefulWidget {
 }
 
 class _CustomRowState extends State<CustomRow> {
+  
   @override
   Widget build(BuildContext context) {
+    final customEditPortalProvider = Provider.of<CustomEditPortal>(context);
     return InkWell(
       onTap: widget.onTap,
       child: Container(
@@ -24,8 +28,8 @@ class _CustomRowState extends State<CustomRow> {
         width: double.infinity,
         decoration: BoxDecoration(border: Border.all(color: Colors.black)),
         child: Row(
-          mainAxisAlignment: widget.node['properties']['mainAxisAlignment'],
-          crossAxisAlignment: widget.node['properties']['crossAxisAlignment'],
+          mainAxisAlignment: customEditPortalProvider.mainAxisAlignmentFromString(widget.node['properties']['mainAxisAlignment']),
+          crossAxisAlignment: customEditPortalProvider.crossAxisAlignmentFromString(widget.node['properties']['crossAxisAlignment']),
           children: [ ...List.generate(widget.childWidgets.length, (index) => widget.childWidgets[index])],
         ),
       ),

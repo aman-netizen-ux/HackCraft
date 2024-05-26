@@ -13,7 +13,8 @@ class ChildFactory {
     return Color.fromARGB(a, r, g, b);
   }
 
-  Map<String, dynamic> createChild(String type, String key, int id, bool isMargin) {
+  Map<String, dynamic> createChild(
+      String type, String key, int id, bool isMargin) {
     Map<String, dynamic> baseChild = {
       key: {"id": id, "type": type, "properties": {}, "child": []}
     };
@@ -29,15 +30,32 @@ class ChildFactory {
         break;
       case "Text":
         // Add specific properties for Text if necessary
+        baseChild[key]!['properties'] = {
+          "fontSize": 20,
+          "textColor": "Color(0xff1a202c)",
+          "font": 'Fira Sans',
+          "letterSpacing": 0,
+          "lineHeight": 0,
+          "strikethrough": false,
+          "italics": false,
+          "underline": false,
+          "fontWeight": 200,
+          "uppercase": false,
+          "align": "left"
+        };
         break;
       case "Row":
-      baseChild[key]!['properties'] = {
-          "mainAxisAlignment": MainAxisAlignment.start,
-          "crossAxisAlignment": CrossAxisAlignment.start,
+        baseChild[key]!['properties'] = {
+          "mainAxisAlignment": 'Start',
+          "crossAxisAlignment": 'Center',
         };
         break;
 
       case "Column":
+        baseChild[key]!['properties'] = {
+          "mainAxisAlignment": 'Start',
+          "crossAxisAlignment": 'End',
+        };
         break;
 
       case "Divider":
@@ -73,7 +91,8 @@ class ChildFactory {
             'Container',
             customWidgetsGlobalKeysMap[customWidgetsGlobalKeysMap.length - 1]!
                 .toString(),
-            id + 1, false);
+            id + 1,
+            false);
         baseChild[key]!['child']!.add(defaultChild);
         break;
 
@@ -84,12 +103,14 @@ class ChildFactory {
             'Container',
             customWidgetsGlobalKeysMap[customWidgetsGlobalKeysMap.length - 2]!
                 .toString(),
-            id + 1, false);
+            id + 1,
+            false);
         var defaultChild2 = createChild(
             'Container',
             customWidgetsGlobalKeysMap[customWidgetsGlobalKeysMap.length - 1]!
                 .toString(),
-            id + 2, false);
+            id + 2,
+            false);
         baseChild[key]!['child']!.add(defaultChild1);
         baseChild[key]!['child']!.add(defaultChild2);
         break;

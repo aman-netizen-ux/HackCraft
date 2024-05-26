@@ -10,8 +10,8 @@ import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Des
 // import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/ContainerToolbar/container_border_width.dart';
 // import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/ContainerToolbar/container_size_widget.dart';
 
-class PropertiesPanelWidget extends StatelessWidget {
-  const PropertiesPanelWidget({
+class CustomContainerPropertiesPanelWidget extends StatelessWidget {
+  const CustomContainerPropertiesPanelWidget({
     super.key,
     //required this.hackathonContainerProvider,
   });

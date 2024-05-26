@@ -33,23 +33,26 @@ class _CustomRightPanelState extends State<CustomRightPanel> {
         children: [
           Column(
             children: [
-              const CustomToolBar(),
+              Expanded(flex: 0774, child: Container()),
               Expanded(flex: 0528, child: Container()),
-              CustomCanvas(
+              const CustomCanvas(
                   // formKey: widget.formKey,
                   // textinput: widget.textinput,
                   )
             ],
           ),
-          Visibility(
-            visible: customEditPortalProvider.isColorSelected &&
-                    customEditPortalProvider.selectedWidgetKey != null,
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Padding(
-                  padding: EdgeInsets.only(top: scaleHeight(context, 60)),
-                  child: const CustomStackedToolBar()),
-            ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Padding(
+                padding: EdgeInsets.only(top: scaleHeight(context, 0)),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const CustomToolBar(),
+                    Visibility(visible: customEditPortalProvider.isColorSelected &&
+                    customEditPortalProvider.selectedWidgetKey != null, child: const CustomStackedToolBar()),
+                  ],
+                )),
           ),
           Align(
             alignment: Alignment.bottomCenter,
