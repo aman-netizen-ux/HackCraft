@@ -15,7 +15,7 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: pastelBlueGray,
+        backgroundColor: const Color(0xff44A6BB).withOpacity(0.4),
         body: ResponsiveLayout(
           mobileBody: const DashboardDesktopBody(), //TODO: Add mobile body
           desktopBody: const DashboardDesktopBody(),

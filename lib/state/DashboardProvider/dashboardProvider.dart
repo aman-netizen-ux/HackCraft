@@ -25,6 +25,12 @@ class DashboardProvider extends ChangeNotifier {
     _name = nam;
   }
 
+  bool _isLoading = false;
+  bool get isLoadin => _isLoading;
+  void setLoading(bool loading) {
+    _isLoading = loading;
+  }
+
   List<Widget> pages = const [
     DashboardScreen(),
     PerformanceMatrix(),
