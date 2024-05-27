@@ -15,6 +15,7 @@ class CustomText extends StatefulWidget {
 }
 
 class _CustomTextState extends State<CustomText> {
+  TextEditingController textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final hackathonTextPropertiesProvider =
@@ -22,9 +23,9 @@ class _CustomTextState extends State<CustomText> {
     final customEditDefaultProvider = Provider.of<CustomEditPortal>(context);
     return InkWell(
       onTap: widget.onTap,
-      child: Text('Dynamic Text',
-          textAlign: hackathonTextPropertiesProvider.getTextAlign(widget.node['properties']['align']),
-          style: GoogleFonts.getFont(widget.node['properties']['font'],
+      child: TextField(
+        controller: textController,
+        style: GoogleFonts.getFont(widget.node['properties']['font'],
               fontSize: widget.node['properties']['fontSize'],
               letterSpacing: widget.node['properties']['letterSpacing'],
               color: customEditDefaultProvider
@@ -43,7 +44,33 @@ class _CustomTextState extends State<CustomText> {
                     : TextDecoration.none,
               ]),
               fontWeight: hackathonTextPropertiesProvider
-                  .fontWeightFromInt(widget.node['properties']['fontWeight']))),
+                  .fontWeightFromInt(widget.node['properties']['fontWeight'])),
+        decoration: InputDecoration(
+          
+          hintText: 'Dynamic Text',
+          hintStyle: GoogleFonts.getFont(widget.node['properties']['font'],
+              fontSize: widget.node['properties']['fontSize'],
+              letterSpacing: widget.node['properties']['letterSpacing'],
+              color: customEditDefaultProvider
+                  .stringToColor(widget.node['properties']['color']),
+              height: lineHeight(widget.node['properties']['lineHeight'],
+                  widget.node['properties']['fontSize']),
+              fontStyle: widget.node['properties']['italics']
+                  ? FontStyle.italic
+                  : FontStyle.normal,
+              decoration: TextDecoration.combine([
+                widget.node['properties']['strikethrough']
+                    ? TextDecoration.lineThrough
+                    : TextDecoration.none,
+                widget.node['properties']['underline']
+                    ? TextDecoration.underline
+                    : TextDecoration.none,
+              ]),
+              fontWeight: hackathonTextPropertiesProvider
+                  .fontWeightFromInt(widget.node['properties']['fontWeight']))
+        ),
+          textAlign: hackathonTextPropertiesProvider.getTextAlign(widget.node['properties']['align']),
+          ),
     );
   }
 }
