@@ -31,6 +31,7 @@ class ChildFactory {
       case "Text":
         // Add specific properties for Text if necessary
         baseChild[key]!['properties'] = {
+          "text": "Dynamic Text",
           "fontSize": 20,
           "color": "Color(0xff1a202c)",
           "font": 'Fira Sans',
