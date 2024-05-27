@@ -23,8 +23,7 @@ class _CustomTextState extends State<CustomText> {
     final customEditDefaultProvider = Provider.of<CustomEditPortal>(context);
     return InkWell(
       onTap: widget.onTap,
-      child: TextField(
-        controller: textController,
+      child: Text('Dynamic Text',
         style: GoogleFonts.getFont(widget.node['properties']['font'],
               fontSize: widget.node['properties']['fontSize'],
               letterSpacing: widget.node['properties']['letterSpacing'],
@@ -45,30 +44,8 @@ class _CustomTextState extends State<CustomText> {
               ]),
               fontWeight: hackathonTextPropertiesProvider
                   .fontWeightFromInt(widget.node['properties']['fontWeight'])),
-        decoration: InputDecoration(
-          
-          hintText: 'Dynamic Text',
-          hintStyle: GoogleFonts.getFont(widget.node['properties']['font'],
-              fontSize: widget.node['properties']['fontSize'],
-              letterSpacing: widget.node['properties']['letterSpacing'],
-              color: customEditDefaultProvider
-                  .stringToColor(widget.node['properties']['color']),
-              height: lineHeight(widget.node['properties']['lineHeight'],
-                  widget.node['properties']['fontSize']),
-              fontStyle: widget.node['properties']['italics']
-                  ? FontStyle.italic
-                  : FontStyle.normal,
-              decoration: TextDecoration.combine([
-                widget.node['properties']['strikethrough']
-                    ? TextDecoration.lineThrough
-                    : TextDecoration.none,
-                widget.node['properties']['underline']
-                    ? TextDecoration.underline
-                    : TextDecoration.none,
-              ]),
-              fontWeight: hackathonTextPropertiesProvider
-                  .fontWeightFromInt(widget.node['properties']['fontWeight']))
-        ),
+        
+        
           textAlign: hackathonTextPropertiesProvider.getTextAlign(widget.node['properties']['align']),
           ),
     );
