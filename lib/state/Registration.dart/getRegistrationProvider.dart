@@ -852,7 +852,7 @@ switch(type){
         member.details[emailKey]= [
         MemberDataModel(
             requiredData: RequiredDataModel(
-                participantEmail:value=="pending"? member.details[emailKey]: "",
+                participantEmail:value=="pendin"? member.details[emailKey]: "",
                 participantName: "",
                 participantPhone: "",
                 participantGender: "",
