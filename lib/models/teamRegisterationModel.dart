@@ -235,8 +235,8 @@ class StringAnswerModel extends AdditionalDataModel {
   Map<String, dynamic> toJson() {
     return {
     
-      'serial_number': serialNumber,
-      'field': question,
+      
+      
       'type': type.toString().split('.').last,
       'input': input,
     };
@@ -269,8 +269,7 @@ class OneIntAnswerModel extends AdditionalDataModel {
   Map<String, dynamic> toJson() {
     return {
      
-      'serial_number': serialNumber,
-      'field': question,
+      
       'type': type.toString().split('.').last,
       'input': int.tryParse(input) ?? 0,
     };
@@ -306,8 +305,7 @@ class TwoIntAnswerModel extends AdditionalDataModel {
   Map<String, dynamic> toJson() {
     return {
     
-      'serial_number': serialNumber,
-      'field': question,
+     
       'type': type.toString().split('.').last,
       'input1': int.tryParse(input1) ?? 0,
       'input2': int.tryParse(input2) ?? 0,
@@ -341,8 +339,7 @@ class BoolAnswerModel extends AdditionalDataModel {
   Map<String, dynamic> toJson() {
     return {
     
-      'serial_number': serialNumber,
-      'field': question,
+      
       'type': type.toString().split('.').last,
       'input': input=="true",
     };
@@ -380,8 +377,7 @@ class MapAnswerModel extends AdditionalDataModel {
   Map<String, dynamic> toJson() {
     return {
      
-      'serial_number': serialNumber,
-      'field': question,
+      
       'type': type.toString().split('.').last,
       'input': input,
     };
@@ -424,8 +420,7 @@ class MapIntAnswerModel extends AdditionalDataModel {
       output[key] = int.tryParse(value) ?? 0; // Convert String to int, default to 0 if not a valid int
     });
     return {
-      'serial_number': serialNumber,
-      'field': question,
+     
       'type': type.toString().split('.').last,
       'input': output, // Now Map<String, int>
     };

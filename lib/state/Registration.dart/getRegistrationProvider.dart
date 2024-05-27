@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:major_project__widget_testing/api/Registartion/fetchRegistration.dart';
 import 'package:major_project__widget_testing/api/get_prefilled_data.dart';
+import 'package:major_project__widget_testing/api/get_teamDetails.dart';
 import 'package:major_project__widget_testing/api/post_team_registeration.dart';
 import 'package:major_project__widget_testing/constants/enums.dart';
 import 'package:major_project__widget_testing/models/Registration/customField.dart';
@@ -307,6 +308,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
     String email,
     int index,
   ) async {
+    print("********$index");
     final response = await GetPrefilledData().getprefilledData(email);
     print("Im in usertype fun");
 
@@ -736,7 +738,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
   Future<String> createTeam(String hackathonId) async {
     List<String> memberEmailsList = [];
 
-    for (int i = 1; i < _teamData.members.length; i++) {
+    for (int i = 0; i < _teamData.members.length; i++) {
       memberEmailsList.add(_teamData.members[i].details.keys.toList()[0]);
     }
     Map<String, dynamic> params = {
@@ -748,11 +750,58 @@ class GetRegistrationFormProvider with ChangeNotifier {
       "leader": {"email": _teamData.members[0].details.keys.toList()[0]},
       "emails": memberEmailsList
     };
-    String result = await CreateTeam().postTeam(params);
-    return result;
+
+    print("params of team $params");
+    final result = await CreateTeam().postTeam(params);
+
+    return result.leader;
   }
 
   Future<bool> createParticipant(int index, String memberId) async {
+
+
+String getType(FieldTypes type){
+switch(type){
+  case FieldTypes.checkbox:
+  return "multiple_field";
+  case FieldTypes.shortAnswer:
+  return "short_field";
+  case FieldTypes.dropdown:
+  return "dropdown_field";
+
+
+  case FieldTypes.date:
+  return "date_field";
+  case FieldTypes.file:
+  return "file_field";
+  case FieldTypes.longAnswer:
+  return "long_field";
+
+  case FieldTypes.radio:
+  return "multiple_field";
+  case FieldTypes.linear:
+  return "slider";
+  case FieldTypes.range:
+  return "slider";
+
+  case FieldTypes.stepper:
+  return "stepper_field";
+  case FieldTypes.tag:
+  return "tags_field";
+  case FieldTypes.toggle:
+  return "toggle";
+
+  case FieldTypes.slider:
+  return "slider";
+  case FieldTypes.phoneNumber:
+  return "phone";
+  default:
+  return "";
+  
+
+}
+}
+
     RequiredDataModel requiredData =
         _teamData.members[index].details.values.toList()[0][0].requiredData;
     List<dynamic> additionalData =
@@ -767,8 +816,10 @@ class GetRegistrationFormProvider with ChangeNotifier {
       },
       "additional": List.generate(additionalData.length, (index) {
         Map<String, dynamic> additionalDataJson = additionalData[index].toJson();
+        
+        String newKey= getType(_singleForm.fields[index].type);
 
-        additionalDataJson['newKey'] = 'newValue';
+        additionalDataJson[newKey] = _singleForm.fields[index].id;
         return additionalDataJson;
       })
     };
@@ -777,6 +828,59 @@ class GetRegistrationFormProvider with ChangeNotifier {
     bool result = await CreateTeam().postParticipant(params, memberId);
     return result;
   }
+
+  Future<void> getTeamDetails(String teamId,)async {
+    final response= await GetTeamDetails().getTeamDetails(teamId);
+    debugPrint("Im in get team details function");
+
+    if(response!=null){
+       debugPrint("Im in get team details function response not null ");
+    _teamData=response;
+    print("api executed");
+    }else{
+      
+    }
+    notifyListeners();
+  }
+
+  void initializeMemberDataListToMembers(){
+    List<MemberModel> membersList= _teamData.members;
+    for(MemberModel member in membersList){
+      String emailKey= member.details.keys.toList()[0];
+      if(member.details[emailKey] is! List){
+        String value= member.details[emailKey];
+        member.details[emailKey]= [
+        MemberDataModel(
+            requiredData: RequiredDataModel(
+                participantEmail:value=="pending"? member.details[emailKey]: "",
+                participantName: "",
+                participantPhone: "",
+                participantGender: "",
+                participantCollege: ""),
+            isLeader: false,
+            additionalData: List.generate(_singleForm.fields.length, (index) {
+              return getAnswerModel(_singleForm.fields[index].type,
+                  _singleForm.fields[index], index);
+            }))
+      ];
+      }
+    }
+    debugPrint("initialized members also");
+    notifyListeners();
+  }
+
+  int findMemberIndex(String emailId) {
+  List<MemberModel> members= _teamData.members;
+  for (int i = 0; i < members.length; i++) {
+    if (members[i].details.containsKey(emailId)) {
+      return i; // Return the index where 'group' key is found
+    }
+  }
+  return -1; // Return -1 if 'group' key is not found
 }
+}
+
+
+
 
 // cae9be78-910b-4fd4-82c6-22a547fce01c

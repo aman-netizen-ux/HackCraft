@@ -55,7 +55,8 @@ class About extends StatelessWidget {
                             'userType': userType,
                             'hackathonName':
                                 defaultTemplateModel!.hackathons.name,
-                            'teamSize': defaultTemplateModel!.hackathons.teamSize
+                            'teamSize': defaultTemplateModel!.hackathons.teamSize,
+                            'teamId':singleHackathonProvider.teamId
                           },
                         );
                       }

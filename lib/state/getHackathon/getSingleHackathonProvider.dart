@@ -36,11 +36,12 @@ class SingleHackathonProvider with ChangeNotifier {
   );
   bool _isLoading = false;
   String _userType = "";
+  String _teamId = "";
 
   DefaultTemplateApiResponse get singleHackathon => _singleHackathon;
   bool get isLoading => _isLoading;
   String get userType => _userType;
-
+ String get teamId => _teamId;
 
   set setIsLoading(bool value) {
     _isLoading = value;
@@ -54,6 +55,7 @@ class SingleHackathonProvider with ChangeNotifier {
     if(response!=null){
        print("Im in usertype fun response not null ${response.role}");
       _userType= response.role;
+      _teamId=response.teamId;
     }else{
       _userType="notdefined";
     }
