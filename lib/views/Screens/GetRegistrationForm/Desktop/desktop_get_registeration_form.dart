@@ -61,7 +61,7 @@ class _DesktopGetRegisterationFormState
       // and update few things in below code based on this(like disable enable and all, etc.)
       // inde value pasing while calling prefilled api
 
-      if (userType == "pending") {
+      if (userType == "pendin") {
         await getRegistrationFormProvider.getTeamDetails(teamId);
         debugPrint("teacm details fetched in desktop");
        
@@ -71,7 +71,7 @@ class _DesktopGetRegisterationFormState
 
       getRegistrationFormProvider.setInitiallMemberIndex(userType == "firstuser"
           ? 0
-          : userType == "pending"
+          : userType == "pendin"
               ? getRegistrationFormProvider.findMemberIndex(loginProvider.emailId)
               : -1);
 
@@ -120,7 +120,7 @@ class _DesktopGetRegisterationFormState
             }
           }
         }
-      }  if (userType == "pending") {
+      }  if (userType == "pendin") {
         getRegistrationFormProvider.initializeMemberDataListToMembers();
        
     

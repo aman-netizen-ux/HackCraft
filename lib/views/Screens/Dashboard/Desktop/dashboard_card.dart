@@ -17,6 +17,7 @@ class DashboardCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         dashboardProvider.setName(hackathon.name);
+        dashboardProvider.setSelectedHackathonId(hackathon.id);
         dashboardProvider.setSelectedIndex(1);
       },
       child: Card(
@@ -39,7 +40,10 @@ class DashboardCard extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: lightSilverGrey,
                         borderRadius: BorderRadius.circular(24)),
-                    //child: Icon(Icons.logo),
+                    child: Image.network(
+                      hackathon.logo,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   Container(
                     height: scaleHeight(context, 16),

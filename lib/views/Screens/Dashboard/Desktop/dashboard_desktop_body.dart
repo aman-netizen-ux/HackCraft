@@ -22,53 +22,50 @@ class _DashboardDesktopBodyState extends State<DashboardDesktopBody> {
       children: [
         Expanded(
           flex: 58,
-          child: Container(
-            color: pastelBlueGray,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: scaleHeight(context, 80),
-                ),
-                TabButton(
-                  icon: Icons.dashboard,
-                  index: 0,
+          child: Column(
+            children: [
+              SizedBox(
+                height: scaleHeight(context, 80),
+              ),
+              TabButton(
+                icon: Icons.dashboard,
+                index: 0,
+                provider: dashboardProvider,
+              ),
+              SizedBox(
+                height: scaleHeight(context, 20),
+              ),
+              Visibility(
+                visible: dashboardProvider.selectedIndex != 0 ,
+                child: TabButton(
+                  icon: Icons.hail,
+                  index: 1,
                   provider: dashboardProvider,
                 ),
-                SizedBox(
-                  height: scaleHeight(context, 20),
-                ),
-                Visibility(
-                  visible: dashboardProvider.selectedIndex == 1,
-                  child: TabButton(
-                    icon: Icons.hail,
-                    index: 1,
-                    provider: dashboardProvider,
-                  ),
-                ),
-                SizedBox(
-                  height: scaleHeight(context, 20),
-                ),
-                Visibility(
-                  visible: dashboardProvider.selectedIndex == 1,
-                  child: TabButton(
-                    icon: Icons.hearing,
-                    index: 2,
-                    provider: dashboardProvider,
-                  ),
-                ),
-                SizedBox(
-                  height: scaleHeight(context, 300),
-                ),
-                TabButton(
+              ),
+              SizedBox(
+                height: scaleHeight(context, 20),
+              ),
+              Visibility(
+                visible: dashboardProvider.selectedIndex != 0,
+                child: TabButton(
                   icon: Icons.hearing,
-                  index: 3,
+                  index: 2,
                   provider: dashboardProvider,
                 ),
-                SizedBox(
-                  height: scaleHeight(context, 54),
-                )
-              ],
-            ),
+              ),
+              SizedBox(
+                height: scaleHeight(context, 300),
+              ),
+              TabButton(
+                icon: Icons.hearing,
+                index: 3,
+                provider: dashboardProvider,
+              ),
+              SizedBox(
+                height: scaleHeight(context, 54),
+              )
+            ],
           ),
         ),
         Expanded(
