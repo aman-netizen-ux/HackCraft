@@ -74,7 +74,7 @@ class CustomEditPortal extends ChangeNotifier {
 
   final List<String> mainAxisAlignments = [
     "Start",
-    "Center", 
+    "Center",
     "Space Around",
     "Space Between",
     "Space Evenly",
@@ -83,12 +83,11 @@ class CustomEditPortal extends ChangeNotifier {
 
   final List<String> crossAxisAlignments = [
     "Start",
-    "Center", 
+    "Center",
     "Baseline",
     "Stretch",
     "End"
   ];
-
 
   String _selectedRowAlignment = 'Start';
 
@@ -108,6 +107,23 @@ class CustomEditPortal extends ChangeNotifier {
     notifyListeners();
   }
 
+  String _selectedColumnAlignment = 'Start';
+
+  String get selectedColumnAlignment => _selectedColumnAlignment;
+
+  void setSelectedColumnAlignment(String value) {
+    _selectedColumnAlignment = value;
+    notifyListeners();
+  }
+
+  String _selectedColumnCrossAlignment = 'Start';
+
+  String get selectedColumnCrossAlignment => _selectedColumnCrossAlignment;
+
+  void setSelectedColumnCrossAlignment(String value) {
+    _selectedColumnCrossAlignment = value;
+    notifyListeners();
+  }
 
   MainAxisAlignment mainAxisAlignmentFromString(String alignment) {
     switch (alignment) {
@@ -123,7 +139,7 @@ class CustomEditPortal extends ChangeNotifier {
         return MainAxisAlignment.spaceBetween;
       case 'Center':
         return MainAxisAlignment.center;
-     
+
       default:
         return MainAxisAlignment.start;
     }
@@ -141,13 +157,11 @@ class CustomEditPortal extends ChangeNotifier {
         return CrossAxisAlignment.baseline;
       case 'Center':
         return CrossAxisAlignment.center;
-     
+
       default:
         return CrossAxisAlignment.start;
     }
   }
-
-
 
   Map<String, dynamic> _jsonObject = {
     "id": 78,
@@ -392,7 +406,8 @@ class CustomEditPortal extends ChangeNotifier {
               node: node,
               onTap: () {
                 int? index = node['id'];
-
+                final type = node['type'];
+                _selectedWidgetType = type;
                 final currentKey = customWidgetsGlobalKeysMap[index];
                 _selectedWidgetKey = currentKey;
                 notifyListeners();
@@ -430,27 +445,29 @@ class CustomEditPortal extends ChangeNotifier {
 //TODO: divider is not visible when it is the direct child of any row we add
 
         case "Divider":
-          currentWidget = CustomDivider(node: node, onTap: () {});
-          // InkWell(
-          //     onTap: () {
-          //       log("divideddddddddddd");
-          //     },
-          //     child: const Divider(
-          //       color: Colors.grey,
-          //       thickness: 1,
-          //     )); // Example: Set a default text, customize as needed
+          currentWidget = CustomDivider(
+              node: node,
+              onTap: () {
+                int? index = node['id'];
+                final type = node['type'];
+                _selectedWidgetType = type;
+                final currentKey = customWidgetsGlobalKeysMap[index];
+                _selectedWidgetKey = currentKey;
+                notifyListeners();
+              });
+
           break;
 //TODO: vertical divider is not visible when it is the direct child of default column
         case "VerticalDivider":
-          currentWidget = CustomVerticalDivider(node: node, onTap: () {});
-          // InkWell(
-          //     onTap: () {
-          //       log("verically divideddddddddddd");
-          //     },
-          //     child: const VerticalDivider(
-          //       color: Colors.grey,
-          //       thickness: 1,
-          //     )); // Example: Set a default text, customize as needed
+          currentWidget = CustomVerticalDivider(node: node, onTap: () {
+            int? index = node['id'];
+                final type = node['type'];
+                _selectedWidgetType = type;
+                final currentKey = customWidgetsGlobalKeysMap[index];
+                _selectedWidgetKey = currentKey;
+                notifyListeners();
+          });
+
           break;
 
         case "Icon":

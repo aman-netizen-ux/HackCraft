@@ -12,59 +12,45 @@ import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/views/Components/toolTip_custom_decoration.dart';
 import 'package:provider/provider.dart';
 
-class CustomContainerHeightWidget extends StatefulWidget {
-  const CustomContainerHeightWidget({
+class CustomDividerHeightWidget extends StatefulWidget {
+  const CustomDividerHeightWidget({
     super.key,
   });
 
   @override
-  State<CustomContainerHeightWidget> createState() =>
-      _CustomContainerHeightWidgetState();
+  State<CustomDividerHeightWidget> createState() =>
+      _CustomDividerHeightWidgetState();
 }
 
-class _CustomContainerHeightWidgetState extends State<CustomContainerHeightWidget> {
-  late TextEditingController customContainerHeightController;
+class _CustomDividerHeightWidgetState extends State<CustomDividerHeightWidget> {
+  late TextEditingController customDividerHeightController;
 
   bool subtractHover = false;
   bool addHover = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    customContainerHeightController = TextEditingController();
+    customDividerHeightController = TextEditingController();
   }
 
   @override
   void dispose() {
-    customContainerHeightController.dispose();
-    // TODO: implement dispose
+    customDividerHeightController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final customEditPortalProvider = Provider.of<CustomEditPortal>(context);
-    // final hackathonContainerPropertiesProvider =
-    //     Provider.of<HackathonContainerPropertiesProvider>(context);
-    // if (hackathonContainerPropertiesProvider.selectedContainerKey != null) {
-    //   if (hackathonContainerPropertiesProvider
-    //           .containerPropertiesMap[
-    //               hackathonContainerPropertiesProvider.selectedContainerKey]!.height > 0) {
-    //     containerHeightController.text = hackathonContainerPropertiesProvider
-    //         .containerPropertiesMap[hackathonContainerPropertiesProvider.selectedContainerKey]!
-    //         .height
-    //         .toString();
-    //   }
-    // }
 
     if (customEditPortalProvider.selectedWidgetKey != null) {
       final currHeight = customEditPortalProvider.getPropertyValue(
           customEditPortalProvider.jsonObject,
           customEditPortalProvider.selectedWidgetKey.toString(),
-          "height");
+          "dividerHeight");
       if (currHeight > 0) {
-        customContainerHeightController.text = currHeight.toString();
+        customDividerHeightController.text = currHeight.toString();
       }
     }
     return Container(
@@ -74,7 +60,7 @@ class _CustomContainerHeightWidgetState extends State<CustomContainerHeightWidge
       child: Row(
         children: [
           Tooltip(
-            message: "Decrease Container Height",
+            message: "Decrease Divider Height",
             verticalOffset: 5,
             decoration: const ShapeDecoration(
               shape: ToolTipCustomDecoration(
@@ -89,14 +75,16 @@ class _CustomContainerHeightWidgetState extends State<CustomContainerHeightWidge
                   final currHeight = customEditPortalProvider.getPropertyValue(
                       customEditPortalProvider.jsonObject,
                       customEditPortalProvider.selectedWidgetKey.toString(),
-                      "height");
-                  customEditPortalProvider.addPropertyByKey(
-                      customEditPortalProvider.selectedWidgetKey == null
-                          ? customColumnKey.toString()
-                          : customEditPortalProvider.selectedWidgetKey
-                              .toString(),
-                      'height',
-                      currHeight - 30);
+                      "dividerHeight");
+                  if (currHeight - 2 > 0) {
+                    customEditPortalProvider.addPropertyByKey(
+                        customEditPortalProvider.selectedWidgetKey == null
+                            ? customColumnKey.toString()
+                            : customEditPortalProvider.selectedWidgetKey
+                                .toString(),
+                        'dividerHeight',
+                        currHeight - 2);
+                  }
 
                   customEditPortalProvider.dynamicWidgets =
                       customEditPortalProvider.buildWidgetsFromJson(
@@ -120,7 +108,7 @@ class _CustomContainerHeightWidgetState extends State<CustomContainerHeightWidge
             thickness: 1,
           ),
           Tooltip(
-            message: "Container Height",
+            message: "Divider Height",
             verticalOffset: 5,
             decoration: const ShapeDecoration(
               shape: ToolTipCustomDecoration(
@@ -131,10 +119,11 @@ class _CustomContainerHeightWidgetState extends State<CustomContainerHeightWidge
               height: scaleHeight(context, 37),
               width: scaleHeight(context, 56),
               child: TextField(
-                controller: customContainerHeightController,
+                controller: customDividerHeightController,
                 cursorColor: Colors.white,
                 textAlign: TextAlign.center,
-                decoration: InputDecoration(
+                decoration: InputDecoration(   
+                  contentPadding: EdgeInsets.only(bottom: scaleHeight(context, 22)),
                   hintText: "",
                   hintStyle: GoogleFonts.getFont(fontFamily1,
                       fontSize: scaleHeight(context, 20),
@@ -156,21 +145,15 @@ class _CustomContainerHeightWidgetState extends State<CustomContainerHeightWidge
                     fontWeight: FontWeight.w400,
                     height: lineHeight(23, 20)),
                 onSubmitted: (value) {
-                  //  hackathonContainerPropertiesProvider.setContainerHeight(value);
-                  // final currHeight = customEditPortalProvider.getPropertyValue(
-                  //             customEditPortalProvider.jsonObject,
-                  //             customEditPortalProvider.selectedWidgetKey
-                  //                 .toString(),
-                  //             "height") ;
                   double? height = double.tryParse(value);
                   customEditPortalProvider.addPropertyByKey(
                       customEditPortalProvider.selectedWidgetKey == null
                           ? customColumnKey.toString()
                           : customEditPortalProvider.selectedWidgetKey
                               .toString(),
-                      'height',
+                      'dividerHeight',
                       height);
-                      customEditPortalProvider.dynamicWidgets =
+                  customEditPortalProvider.dynamicWidgets =
                       customEditPortalProvider.buildWidgetsFromJson(
                           customEditPortalProvider.jsonObject);
                   customEditPortalProvider.triggerUIUpdate();
@@ -184,7 +167,7 @@ class _CustomContainerHeightWidgetState extends State<CustomContainerHeightWidge
             thickness: 1,
           ),
           Tooltip(
-            message: "Increase Container Height",
+            message: "Increase Divider Height",
             verticalOffset: 5,
             decoration: const ShapeDecoration(
               shape: ToolTipCustomDecoration(
@@ -199,15 +182,15 @@ class _CustomContainerHeightWidgetState extends State<CustomContainerHeightWidge
                   final currHeight = customEditPortalProvider.getPropertyValue(
                       customEditPortalProvider.jsonObject,
                       customEditPortalProvider.selectedWidgetKey.toString(),
-                      "height");
+                      "dividerHeight");
                   customEditPortalProvider.addPropertyByKey(
                       customEditPortalProvider.selectedWidgetKey == null
                           ? customColumnKey.toString()
                           : customEditPortalProvider.selectedWidgetKey
                               .toString(),
-                      'height',
-                      currHeight + 30);
-                      customEditPortalProvider.dynamicWidgets =
+                      'dividerHeight',
+                      currHeight + 2);
+                  customEditPortalProvider.dynamicWidgets =
                       customEditPortalProvider.buildWidgetsFromJson(
                           customEditPortalProvider.jsonObject);
                   customEditPortalProvider.triggerUIUpdate();

@@ -14,9 +14,12 @@ class _CustomVerticalDividerState extends State<CustomVerticalDivider> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: widget.onTap,
-      child: const VerticalDivider(
+      child: VerticalDivider(
         color: Colors.grey,
-        thickness: 1,
+        thickness: widget.node['properties']['thickness'],
+        indent: widget.node['properties']['indent'],
+        endIndent: widget.node['properties']['endIndent'],
+        width: widget.node['properties']['verticalDividerWidth'],
       ),
     );
   }
