@@ -48,21 +48,35 @@ class ChildFactory {
       case "Row":
         baseChild[key]!['properties'] = {
           "mainAxisAlignment": 'Start',
-          "crossAxisAlignment": 'Center',
+          "crossAxisAlignment": 'Start',
         };
         break;
 
       case "Column":
         baseChild[key]!['properties'] = {
           "mainAxisAlignment": 'Start',
-          "crossAxisAlignment": 'End',
+          "crossAxisAlignment": 'Start',
         };
         break;
 
       case "Divider":
+        baseChild[key]!['properties'] = {
+          "thickness": 1,
+          //"color": generateRandomColor().toString(),
+          "dividerHeight": 10,
+          "indent": 0,
+          "endIndent":  0
+        };
         break;
 
       case "VerticalDivider":
+      baseChild[key]!['properties'] = {
+          "thickness": 10,
+          //"color": generateRandomColor().toString(),
+          "verticalDividerWidth": 5,
+          "indent": 0,
+          "endIndent":  0
+        };
         break;
 
       case "Icon":
