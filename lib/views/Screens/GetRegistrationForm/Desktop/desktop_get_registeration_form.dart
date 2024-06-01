@@ -971,7 +971,9 @@ class MiddleFormPart extends StatelessWidget {
             // show dialog something went wrong(also think what to do with created team)
             aletDialog(context, "Unable to submit", "Something went wrong");
           }
-        } else {
+        } 
+        
+        else {
           aletDialog(context, "Unable to submit", "Something went wrong");
         }
       }

@@ -738,7 +738,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
   Future<String> createTeam(String hackathonId) async {
     List<String> memberEmailsList = [];
 
-    for (int i = 0; i < _teamData.members.length; i++) {
+    for (int i = 1; i < _teamData.members.length; i++) {
       memberEmailsList.add(_teamData.members[i].details.keys.toList()[0]);
     }
     Map<String, dynamic> params = {
