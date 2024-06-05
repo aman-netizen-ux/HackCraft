@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:major_project__widget_testing/models/memberCreateModel.dart';
 import 'package:major_project__widget_testing/models/teamCreateModel.dart';
 
 class CreateTeam {
@@ -88,7 +89,7 @@ class CreateTeam {
 
 
 
-  postMember(Map<String, dynamic> params) async {
+   Future<MemberCreateResponseModel> postMember(Map<String, dynamic> params) async {
     try {
       final String baseUrl = dotenv.get('postmember');
       final response = await http.post(
@@ -99,7 +100,7 @@ class CreateTeam {
         },
         body: jsonEncode(params),
       );
-
+    debugPrint(" member got ${response.statusCode}");
 
 
       if (response.statusCode == 200) {
@@ -108,17 +109,17 @@ class CreateTeam {
         debugPrint('response of  post member : $jsonResponse');
 
        
-        return true;
+        return MemberCreateResponseModel.fromJson(jsonResponse);
       } else {
         
 
         debugPrint('error at 118 in post member: ${jsonDecode(response.body)} ,  ');
 
-        return false;
+        return MemberCreateResponseModel(memberId: "", message: "");
       }
     } catch (e) {
-      debugPrint('error in catch of post member : $e');
-      return false;
+      print('error in catch of post member : $e');
+      return MemberCreateResponseModel(memberId: "", message: "");
     }
   }
 }

@@ -2,25 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
+import 'package:major_project__widget_testing/state/Registration.dart/getRegistrationProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:provider/provider.dart';
 
 class RangeSliderField extends StatefulWidget {
-  final String question , error;
+  final String question, error;
   final bool create, required;
   final double min;
   final double max;
-  final List<String> labels ;
+  final List<String> labels;
+  final String initialAnswer;
+  final bool isDisabled;
+  final int? serialNumber;
+  final String? modelType;
+  final String? isRequiredData;
+  final String? requiredType;
 
   const RangeSliderField({
     Key? key,
     required this.create,
-  
     required this.required,
     required this.max,
     required this.min,
     required this.question,
     required this.error,
-    required this.labels
+    required this.labels,
+    this.initialAnswer = "",
+    this.isDisabled = false,
+    this.serialNumber,
+    this.modelType,
+    this.isRequiredData,
+    this.requiredType,
   }) : super(key: key);
 
   @override
@@ -30,15 +43,55 @@ class RangeSliderField extends StatefulWidget {
 class _RangeSliderFieldState extends State<RangeSliderField> {
   double _startValue = 20;
   double _endValue = 50;
+
+  @override
   void initState() {
     super.initState();
-    // Initialize _startValue and _endValue within the specified range
-    _startValue = widget.min;
-    _endValue = widget.max;
+
+    if (widget.initialAnswer.isNotEmpty) {
+      List<String> splitStrings = widget.initialAnswer.split(",");
+      setState(() {
+        debugPrint("Im setting value in init in range ");
+        int value1 = int.tryParse(splitStrings[0]) ?? 0;
+        int value2 = int.tryParse(splitStrings[1]) ?? 0;
+        _startValue = value1.toDouble();
+        _endValue = value2.toDouble();
+      });
+    } else {
+      setState(() {
+        _startValue = widget.min;
+        _endValue = widget.max;
+      });
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant RangeSliderField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialAnswer != oldWidget.initialAnswer) {
+      setState(() {
+        if (widget.initialAnswer.isNotEmpty) {
+          List<String> splitStrings = widget.initialAnswer.split(",");
+          setState(() {
+            debugPrint("Im setting value in init in range ");
+            int value1 = int.tryParse(splitStrings[0]) ?? 0;
+            int value2 = int.tryParse(splitStrings[1]) ?? 0;
+            _startValue = value1.toDouble();
+            _endValue = value2.toDouble();
+          });
+        } else {
+          setState(() {
+            _startValue = widget.min;
+            _endValue = widget.max;
+          });
+        }
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+      debugPrint("initial ans ${widget.initialAnswer}, startvalue $_startValue, endvalue $_endValue");
     return Expanded(
       child: SizedBox(
         width: double.infinity,
@@ -74,12 +127,11 @@ class _RangeSliderFieldState extends State<RangeSliderField> {
                           SliderTheme(
                             data: SliderTheme.of(context).copyWith(
                                 activeTrackColor: goldenYellow,
-                                inactiveTrackColor:const Color(0xffAFAFAF),
+                                inactiveTrackColor: const Color(0xffAFAFAF),
                                 thumbColor: indicatorblue,
                                 overlayColor: indicatorblue.withOpacity(0.2),
                                 trackHeight: 3),
                             child: RangeSlider(
-
                               values: RangeValues(_startValue, _endValue),
                               min: widget.min.toDouble(),
                               max: widget.max.toDouble(),
@@ -89,8 +141,20 @@ class _RangeSliderFieldState extends State<RangeSliderField> {
                                         _startValue = values.start;
                                         _endValue = values.end;
                                       });
+
+                                       final getFormProvider = Provider.of<
+                                              GetRegistrationFormProvider>(
+                                          context,
+                                          listen: false);
+
+                                      getFormProvider.updateDetails(
+                                        "${_startValue.toInt()},${_endValue.toInt()}",
+                                          isRequiredData: widget.isRequiredData,
+                                          requiredType: widget.requiredType,
+                                          serialNumber: widget.serialNumber,
+                                          modelType: widget.modelType);
                                     }
-                                  : (RangeValues values){},
+                                  : (RangeValues values) {},
                             ),
                           ),
                           Positioned(
@@ -110,7 +174,7 @@ class _RangeSliderFieldState extends State<RangeSliderField> {
                             right: scaleWidth(context, 18),
                             bottom: 0 - 5,
                             child: Text(
-                              "${widget.labels[1]} (${ widget.max.toDouble()})",
+                              "${widget.labels[1]} (${widget.max.toDouble()})",
                               style: GoogleFonts.getFont(
                                 fontFamily2,
                                 fontSize: heightScaler(context, 14),
@@ -125,10 +189,8 @@ class _RangeSliderFieldState extends State<RangeSliderField> {
                   ),
                   Container(
                     padding: EdgeInsets.symmetric(
-                      horizontal: scaleWidth(context, 24), 
-                      vertical: scaleHeight(context, 18)
-                    ),
-                   
+                        horizontal: scaleWidth(context, 24),
+                        vertical: scaleHeight(context, 18)),
                     decoration: BoxDecoration(
                       color: indicatorblue,
                       borderRadius: BorderRadius.circular(50),
@@ -143,7 +205,7 @@ class _RangeSliderFieldState extends State<RangeSliderField> {
                   SizedBox(
                     width: scaleWidth(context, 16),
                   ),
-                 Text(
+                  Text(
                     "REQUIRED",
                     style: GoogleFonts.getFont(fontFamily2,
                         fontSize: scaleHeight(context, 16),
@@ -156,7 +218,6 @@ class _RangeSliderFieldState extends State<RangeSliderField> {
                   )
                 ],
               ),
-             
             ],
           ),
         ),

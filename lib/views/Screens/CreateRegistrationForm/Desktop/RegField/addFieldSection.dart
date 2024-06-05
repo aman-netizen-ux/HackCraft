@@ -47,16 +47,16 @@ class _AddFieldSectionState extends State<AddFieldSection>
       'icon': Icons.arrow_drop_down_circle_outlined,
       "onTap":FieldTypes.dropdown
     },
-    {
-      'title': 'File Upload',
-      'icon': Icons.cloud_upload_outlined,
-      "onTap": FieldTypes.file
-    },
-    {
-      'title': 'Linear Scale',
-      'icon': Icons.linear_scale_outlined,
-      "onTap": FieldTypes.linear
-    },
+    // {
+    //   'title': 'File Upload',
+    //   'icon': Icons.cloud_upload_outlined,
+    //   "onTap": FieldTypes.file
+    // },
+    // {
+    //   'title': 'Linear Scale',
+    //   'icon': Icons.linear_scale_outlined,
+    //   "onTap": FieldTypes.linear
+    // },
     {
       'title': 'Slider',
       'icon': Icons.slideshow,
@@ -77,16 +77,16 @@ class _AddFieldSectionState extends State<AddFieldSection>
       'icon': Icons.toggle_on,
       "onTap": FieldTypes.toggle
     },
-    {
-      'title': 'Tags',
-      'icon': Icons.tag,
-      "onTap": FieldTypes.tag
-    },
-    {
-      'title': 'Date',
-      'icon': Icons.date_range,
-      "onTap":FieldTypes.date
-    },
+    // {
+    //   'title': 'Tags',
+    //   'icon': Icons.tag,
+    //   "onTap": FieldTypes.tag
+    // },
+    // {
+    //   'title': 'Date',
+    //   'icon': Icons.date_range,
+    //   "onTap":FieldTypes.date
+    // },
   ];
 
 
@@ -102,7 +102,7 @@ class _AddFieldSectionState extends State<AddFieldSection>
     return SingleChildScrollView(
       child: Container(
         width: scaleWidth(context, 204),
-        height: scaleHeight(context, 692),
+        // height: scaleHeight(context, 692),
         color: lightGrey,
         child: Column(children: [
           ...List.generate(count, (index) {

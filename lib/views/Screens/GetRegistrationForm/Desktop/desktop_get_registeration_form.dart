@@ -32,7 +32,7 @@ class _DesktopGetRegisterationFormState
   String userType = "";
   String hackathonId = "";
   String hackathonName = "";
-  String teamId="";
+  String teamId = "";
   List<int> teamSize = [];
   @override
   void initState() {
@@ -49,7 +49,7 @@ class _DesktopGetRegisterationFormState
           userType = args['userType'];
           hackathonName = args['hackathonName'];
           teamSize = args['teamSize'];
-          teamId= args['teamId'];
+          teamId = args['teamId'];
         });
       }
     }).then((value) async {
@@ -64,15 +64,13 @@ class _DesktopGetRegisterationFormState
       if (userType == "pendin") {
         await getRegistrationFormProvider.getTeamDetails(teamId);
         debugPrint("teacm details fetched in desktop");
-       
-    
       }
-      
 
       getRegistrationFormProvider.setInitiallMemberIndex(userType == "firstuser"
           ? 0
           : userType == "pendin"
-              ? getRegistrationFormProvider.findMemberIndex(loginProvider.emailId)
+              ? getRegistrationFormProvider
+                  .findMemberIndex(loginProvider.emailId)
               : -1);
 
       //SelectedParticipantTab initial value is set same as initialmemberIndex
@@ -101,7 +99,7 @@ class _DesktopGetRegisterationFormState
         if (teamSize.length > 1) {
           getRegistrationFormProvider.addMember(loginProvider.emailId, true);
           getRegistrationFormProvider.addModelInTeamDetailsList(StepperModel(
-            id: "",
+              id: "",
               serialNumber: 1,
               label: "Team Member (Including leader)",
               errorText: "This field is required",
@@ -120,10 +118,9 @@ class _DesktopGetRegisterationFormState
             }
           }
         }
-      }  if (userType == "pendin") {
+      }
+      if (userType == "pendin") {
         getRegistrationFormProvider.initializeMemberDataListToMembers();
-       
-    
       }
 
       await getRegistrationFormProvider.getPrefilledData(
@@ -143,165 +140,172 @@ class _DesktopGetRegisterationFormState
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Row(
-          children: [
-            Expanded(
-              flex: 256,
-              child: Container(
-                  width: double.infinity,
-                  height: scaleHeight(context, 820),
-                  decoration: const BoxDecoration(
-                      color: dblue,
-                      borderRadius:
-                          BorderRadius.horizontal(right: Radius.circular(35))),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        top: scaleHeight(context, 34),
-                        right: scaleWidth(context, 98),
-                        left: scaleWidth(context, 36)),
-                    child: Column(children: [
-                      SizedBox(
-                        height: scaleHeight(context, 48),
-                        child: Row(
-                          children: [
-                            InkWell(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Icon(Icons.arrow_back)),
+    return isloading
+        ? const Center(child: CircularProgressIndicator())
+        : Stack(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    flex: 256,
+                    child: Container(
+                        width: double.infinity,
+                        height: scaleHeight(context, 820),
+                        decoration: const BoxDecoration(
+                            color: dblue,
+                            borderRadius: BorderRadius.horizontal(
+                                right: Radius.circular(35))),
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              top: scaleHeight(context, 34),
+                              right: scaleWidth(context, 98),
+                              left: scaleWidth(context, 36)),
+                          child: Column(children: [
                             SizedBox(
-                              width: scaleWidth(context, 10.67),
-                            ),
-                            Text(hackathonName,
-                                style: GoogleFonts.getFont(
-                                  fontFamily2,
-                                  fontSize: scaleWidth(context, 20),
-                                  color: black1,
-                                  fontWeight: FontWeight.w400,
-                                )),
-                          ],
-                        ),
-                      ),
-                    ]),
-                  )),
-            ),
-            Expanded(
-              flex: 744,
-              child: Container(
-                  
-                  alignment: Alignment.center,
-                  color: const Color(0xFFEDECF2),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ClipRRect(
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                                  widthFactor: 0.5,
-                          child: Container(
-                            height: scaleHeight(context, 820),
-                                            width:  scaleHeight(context, 820),
-                            decoration:const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: indicatorblue
-                              
-                            ),
-                            child:  Container(
-                            height: scaleHeight(context, 820),
-                                            width:  scaleHeight(context, 820),
-                                            margin: EdgeInsets.all(scaleHeight(context, 120)),
-                            decoration:const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color:  Color(0xFFEDECF2)
-                              
-                            ),
-                            
-                          ),
-                          ),
-                        ),
-                      )
-                      // HollowCircle(
-                      //   diameter: scaleHeight(context, 820),
-                      //   side: 'left',
-                      //   width: scaleWidth(context, 100),
-                      //   color: dblue,
-                      //   isSemicircle: true,
-                      // ),
-                    ],
-                  )),
-            )
-          ],
-        ),
-        Positioned(
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Padding(
-                padding:
-                    EdgeInsets.symmetric(vertical: scaleHeight(context, 82)),
-                child: Row(
-                  children: [
-                    Expanded(
-                        flex: 930,
-                        child: Stack(
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(flex: 214, child: Container()),
-                                Expanded(
-                                    flex: 786,
-                                    child: isloading
-                                        ? Container(
-                                            width: double.infinity,
-                                            margin: EdgeInsets.only(
-                                                left: scaleHeight(context, 30)),
-                                            decoration: const BoxDecoration(
-                                                color: Color(0xFFF9F9F9),
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(15))),
-                                          )
-                                        : MiddleFormPart(
-                                            hackathonId: hackathonId,
-                                          ))
-                              ],
-                            ),
-                            Positioned(
-                                top: 0,
-                                bottom: 0,
-                                left: 0,
-                                right: 0,
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      top: scaleHeight(context, 90),
-                                      bottom: scaleWidth(context, 49)),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                          flex: 254,
-                                          child: isloading
-                                              ? Container()
-                                              : const ParticipantsListSide()),
-                                      Expanded(flex: 766, child: Container())
-                                    ],
+                              height: scaleHeight(context, 48),
+                              child: Row(
+                                children: [
+                                  InkWell(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Icon(Icons.arrow_back)),
+                                  SizedBox(
+                                    width: scaleWidth(context, 10.67),
                                   ),
-                                ))
+                                  Text(hackathonName,
+                                      style: GoogleFonts.getFont(
+                                        fontFamily2,
+                                        fontSize: scaleWidth(context, 20),
+                                        color: black1,
+                                        fontWeight: FontWeight.w400,
+                                      )),
+                                ],
+                              ),
+                            ),
+                          ]),
+                        )),
+                  ),
+                  Expanded(
+                    flex: 744,
+                    child: Container(
+                        alignment: Alignment.center,
+                        color: const Color(0xFFEDECF2),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            ClipRRect(
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                widthFactor: 0.5,
+                                child: Container(
+                                  height: scaleHeight(context, 820),
+                                  width: scaleHeight(context, 820),
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: indicatorblue),
+                                  child: Container(
+                                    height: scaleHeight(context, 820),
+                                    width: scaleHeight(context, 820),
+                                    margin: EdgeInsets.all(
+                                        scaleHeight(context, 120)),
+                                    decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Color(0xFFEDECF2)),
+                                  ),
+                                ),
+                              ),
+                            )
+                            // HollowCircle(
+                            //   diameter: scaleHeight(context, 820),
+                            //   side: 'left',
+                            //   width: scaleWidth(context, 100),
+                            //   color: dblue,
+                            //   isSemicircle: true,
+                            // ),
                           ],
                         )),
-                    Expanded(flex: 070, child: Container())
-                  ],
-                )))
-      ],
-    );
+                  )
+                ],
+              ),
+              Positioned(
+                  top: 0,
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: scaleHeight(context, 82)),
+                      child: Row(
+                        children: [
+                          Expanded(
+                              flex: 930,
+                              child: Stack(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(flex: 214, child: Container()),
+                                      Expanded(
+                                          flex: 786,
+                                          child: isloading
+                                              ? Container(
+                                                  width: double.infinity,
+                                                  margin: EdgeInsets.only(
+                                                      left: scaleHeight(
+                                                          context, 30)),
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          color:
+                                                              Color(0xFFF9F9F9),
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          15))),
+                                                )
+                                              : MiddleFormPart(
+                                                  hackathonId: hackathonId,
+                                                  teamId: teamId,
+                                                ))
+                                    ],
+                                  ),
+                                  Positioned(
+                                      top: 0,
+                                      bottom: 0,
+                                      left: 0,
+                                      right: 0,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            top: scaleHeight(context, 90),
+                                            bottom: scaleWidth(context, 49)),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                                flex: 254,
+                                                child: isloading
+                                                    ? Container()
+                                                    : const ParticipantsListSide()),
+                                            Expanded(
+                                                flex: 766, child: Container())
+                                          ],
+                                        ),
+                                      ))
+                                ],
+                              )),
+                          Expanded(flex: 070, child: Container())
+                        ],
+                      )))
+            ],
+          );
   }
 }
 
 class MiddleFormPart extends StatelessWidget {
-  const MiddleFormPart({super.key, required this.hackathonId});
+  const MiddleFormPart(
+      {super.key, required this.hackathonId, required this.teamId});
 
   final String hackathonId;
+  final String teamId;
 
   @override
   Widget build(BuildContext context) {
@@ -554,7 +558,12 @@ class MiddleFormPart extends StatelessWidget {
                                                 .join(',')
                                             : ""
                                         : additionalData is TwoIntAnswerModel
-                                            ? "${additionalData.input1},${additionalData.input2}"
+                                            ? additionalData
+                                                        .input1.isNotEmpty &&
+                                                    additionalData
+                                                        .input2.isNotEmpty
+                                                ? "${additionalData.input1},${additionalData.input2}"
+                                                : ""
                                             : "hola",
                                 isDisabled: getRegistrationFormProvider
                                         .selectedParticipantTab !=
@@ -847,6 +856,7 @@ class MiddleFormPart extends StatelessWidget {
         selectedTab == provider.initialmemberIndex &&
         sectionIndex == provider.singleForm.sections.length) {
       // _postMemberDetails(); or another submission logic//TODO
+      postMemberDetails(provider,context);
     }
   }
 
@@ -959,21 +969,65 @@ class MiddleFormPart extends StatelessWidget {
           if (isParticipationDone) {
             //show dialog box of success and on its ok redirect to details screen
             // invitaion api is on hold ig
-          await askUserDialog(
+            await askUserDialog(
                 context, "Your form is submitted successfully", "Success",
                 cancel: false);
-                Navigator.pop(context);
-                Navigator.pop(context);
-
+            Navigator.pop(context);
+            Navigator.pop(context);
 
             print("Yuhooooooooooooooooooooooooo new screen");
           } else {
             // show dialog something went wrong(also think what to do with created team)
             aletDialog(context, "Unable to submit", "Something went wrong");
           }
-        } 
-        
-        else {
+        } else {
+          aletDialog(context, "Unable to submit", "Something went wrong");
+        }
+      }
+    } else {
+      aletDialog(
+          context, "Fill all the necessary details", "Details not filled");
+      //show errors on such places or do something
+    }
+  }
+
+  void postMemberDetails(
+      GetRegistrationFormProvider provider, BuildContext context) async {
+    final allDetailsFilled =
+        provider.isMemberDataComplete(provider.initialmemberIndex);
+
+    if (allDetailsFilled) {
+      //show dialog box are u sure?
+      final result = await askUserDialog(
+        context,
+        "Are you sure you want to submit",
+        "This action can't be undone",
+      );
+
+      if (result) {
+        final memberId =
+            await provider.createMember(teamId, provider.initialmemberIndex);
+        debugPrint("isMemberCreated in desktop $memberId");
+        if (memberId.isNotEmpty) {
+          // call api participant
+          final isParticipationDone = await provider.createParticipant(
+              provider.initialmemberIndex, memberId);
+
+          if (isParticipationDone) {
+            //show dialog box of success and on its ok redirect to details screen
+            // invitaion api is on hold ig
+            await askUserDialog(
+                context, "Your form is submitted successfully", "Success",
+                cancel: false);
+            Navigator.pop(context);
+            Navigator.pop(context);
+
+            print("Yuhooooooooooooooooooooooooo new screen");
+          } else {
+            // show dialog something went wrong(also think what to do with created team)
+            aletDialog(context, "Unable to submit", "Something went wrong");
+          }
+        } else {
           aletDialog(context, "Unable to submit", "Something went wrong");
         }
       }

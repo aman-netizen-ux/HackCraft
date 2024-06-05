@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
+import 'package:major_project__widget_testing/state/Registration.dart/getRegistrationProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:provider/provider.dart';
 
 class SliderField extends StatefulWidget {
   final double min;
@@ -10,6 +12,12 @@ class SliderField extends StatefulWidget {
   final bool create, required;
   final String question, error;
   final List<String> labels;
+  final String initialAnswer;
+  final bool isDisabled;
+  final int? serialNumber;
+  final String? modelType;
+  final String? isRequiredData;
+  final String? requiredType;
 
   const SliderField(
       {Key? key,
@@ -19,6 +27,12 @@ class SliderField extends StatefulWidget {
       required this.required,
       required this.error,
       required this.question,
+      this.initialAnswer = "",
+      this.isDisabled = false,
+      this.serialNumber,
+      this.modelType,
+      this.isRequiredData,
+      this.requiredType,
       required this.labels})
       : super(key: key);
 
@@ -28,31 +42,50 @@ class SliderField extends StatefulWidget {
 
 class _SliderFieldState extends State<SliderField> {
   double _value = 0;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    print("max ${widget.max} min ${widget.min}");
-    setState(() {
-      _value = (widget.max + widget.min) / 2;
-      print("value in set $_value");
-    });
-    print("value outside set $_value");
-  }
-  @override
-void didUpdateWidget(covariant SliderField oldWidget) {
-  super.didUpdateWidget(oldWidget);
-  if (widget.min != oldWidget.min || widget.max != oldWidget.max) {
-    setState(() {
-      _value = (widget.max + widget.min) / 2;
-    });
-  }
-}
 
+    if (widget.initialAnswer.isNotEmpty) {
+      setState(() {
+        debugPrint("Im setting value in init");
+        int ans = int.tryParse(widget.initialAnswer)??0;
+      _value= ans.toDouble();
+      });
+    } else {
+      setState(() {
+        _value = (widget.max + widget.min) / 2;
+      });
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant SliderField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialAnswer != oldWidget.initialAnswer) {
+      setState(() {
+        if (widget.initialAnswer.isNotEmpty) {
+          setState(() {
+        debugPrint("Im setting value in updated widget");
+        int ans = int.tryParse(widget.initialAnswer)??0;
+      _value= ans.toDouble();
+      });
+        } else {
+          if (widget.min != oldWidget.min || widget.max != oldWidget.max) {
+            setState(() {
+              _value = (widget.max + widget.min) / 2;
+            });
+          }
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     print("max ${widget.max} min ${widget.min}");
+    debugPrint("initial ans ${widget.initialAnswer}, value: $_value");
     return Expanded(
       child: SizedBox(
         width: double.infinity,
@@ -98,6 +131,20 @@ void didUpdateWidget(covariant SliderField oldWidget) {
                                       setState(() {
                                         _value = values;
                                       });
+
+                                      debugPrint(" I got changed");
+
+                                      final getFormProvider = Provider.of<
+                                              GetRegistrationFormProvider>(
+                                          context,
+                                          listen: false);
+
+                                      getFormProvider.updateDetails(
+                                         _value.toInt().toString(),
+                                          isRequiredData: widget.isRequiredData,
+                                          requiredType: widget.requiredType,
+                                          serialNumber: widget.serialNumber,
+                                          modelType: widget.modelType);
                                     }
                                   : (double values) {},
                               value: _value,

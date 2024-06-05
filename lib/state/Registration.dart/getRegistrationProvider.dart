@@ -233,11 +233,13 @@ class GetRegistrationFormProvider with ChangeNotifier {
 
     if (value is List<MemberDataModel>) {
       // It's a list of MemberDataModel
+
+     
       for (MemberDataModel dataModel in value) {
         // Check required data fields
         if (dataModel.requiredData.participantName.isEmpty ||
             dataModel.requiredData.participantEmail.isEmpty ||
-            dataModel.requiredData.participantPhone.isEmpty ||
+            dataModel.requiredData.participantPhone.trim().isEmpty ||
             dataModel.requiredData.participantGender.isEmpty ||
             dataModel.requiredData.participantCollege.isEmpty) {
           isComplete = false;
@@ -459,6 +461,10 @@ class GetRegistrationFormProvider with ChangeNotifier {
         //   'Option 1': input,
         // };
         // }
+      }if( modelType == "TwoIntAnswerModel"){
+         List<String> values = input.split(',');
+          model.additionalData[serialNumber].input1 = values[0];
+          model.additionalData[serialNumber].input2 = values[1];
       }
     }
 
@@ -553,6 +559,12 @@ class GetRegistrationFormProvider with ChangeNotifier {
           min: field.labels.values.first,
           question: field.label,
           error: field.errorText,
+           isRequiredData: isRequiredData,
+          requiredType: requiredType,
+          serialNumber: serialNumber,
+          modelType: modelType,
+          isDisabled: isDisabled,
+          initialAnswer: initialAnswer,
         );
       case FieldTypes.tag:
         return TagField(
@@ -636,6 +648,12 @@ class GetRegistrationFormProvider with ChangeNotifier {
           required: field.required,
           question: field.label,
           error: field.errorText,
+          isRequiredData: isRequiredData,
+          requiredType: requiredType,
+          serialNumber: serialNumber,
+          modelType: modelType,
+          isDisabled: isDisabled,
+          initialAnswer: initialAnswer,
         );
       default:
         throw Exception('Invalid field type');
@@ -755,6 +773,24 @@ class GetRegistrationFormProvider with ChangeNotifier {
     final result = await CreateTeam().postTeam(params);
 
     return result.leader;
+  }
+
+
+  Future<String> createMember(String teamId, int index)async{
+    String participantEmail =
+        _teamData.members[index].details.values.toList()[0][0].requiredData.participantEmail;
+
+     Map<String, dynamic> params = {
+      "user": participantEmail,
+      "team": teamId
+     };
+
+    print("params of member $params");
+
+    final result = await CreateTeam().postMember(params);
+
+    return result.memberId;
+
   }
 
   Future<bool> createParticipant(int index, String memberId) async {

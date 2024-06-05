@@ -148,7 +148,7 @@ class RequiredDataModel {
     return RequiredDataModel(
       participantName: json['participant_name'],
       participantEmail: json['participant_email'],
-      participantPhone: json['participant_phone'],
+      participantPhone: json['participant_phone'].toString(),
       participantGender: json['participant_gender'],
       participantCollege: json['participant_college'],
     );
@@ -179,11 +179,11 @@ class AdditionalDataModel {
         return StringAnswerModel.fromJson(json);
       // case 'file':
       //   return FileFieldAnswerModel.fromJson(json);
-      case 'longAnswer':
+      case 'long':
         return StringAnswerModel.fromJson(json);
       case 'radio':
         return MapAnswerModel.fromJson(json);
-      case 'shortAnswer':
+      case 'short':
         return StringAnswerModel.fromJson(json);
       case 'stepper':
         return OneIntAnswerModel.fromJson(json);
@@ -223,11 +223,23 @@ class StringAnswerModel extends AdditionalDataModel {
         );
 
   factory StringAnswerModel.fromJson(Map<String, dynamic> json) {
+    String fieldType = json['type'];
+  
+  FieldTypes parsedType = FieldTypes.values.firstWhere(
+    (e) => e.toString().split('.').last == fieldType,
+    orElse: () {
+      if (fieldType == 'short') {
+        return FieldTypes.shortAnswer; // Assuming shortAnswer is a valid enum value.
+      } else if (fieldType == 'long') {
+        return FieldTypes.longAnswer; // Assuming longAnswer is a valid enum value.
+      }
+      throw Exception('Unsupported field type: $fieldType');
+    },
+  );
     return StringAnswerModel(
       serialNumber: json['serial_number'],
       input: json['input'],
-      type: FieldTypes.values
-          .firstWhere((e) => e.toString().split('.').last == json['type']),
+      type: parsedType,
       question: json['field'],
     );
   }
@@ -329,7 +341,7 @@ class BoolAnswerModel extends AdditionalDataModel {
   factory BoolAnswerModel.fromJson(Map<String, dynamic> json) {
     return BoolAnswerModel(
       serialNumber: json['serial_number'],
-      input: json['input'],
+      input: json['input'].toString(),
       type: FieldTypes.values
           .firstWhere((e) => e.toString().split('.').last == json['type']),
       question: json['field'],
