@@ -30,6 +30,7 @@ class CustomEditPortal extends ChangeNotifier {
     bool _isPaddingSelected = false;
     bool _isMarginSelected=false;
   bool _isColorPickerSelected = false;
+   bool _isAlignmentSelected = false;
   int _selectedColorTool = 2;
   final List<Color> _colors = [];
 
@@ -833,6 +834,13 @@ class CustomEditPortal extends ChangeNotifier {
 
   void setPaddingSelected() {
     _isPaddingSelected = !_isPaddingSelected;
+    notifyListeners();
+  }
+
+   bool get isAlignemntSelected => _isAlignmentSelected;
+
+  void setIsAlignmentSelected() {
+    _isAlignmentSelected = !_isAlignmentSelected;
     notifyListeners();
   }
 

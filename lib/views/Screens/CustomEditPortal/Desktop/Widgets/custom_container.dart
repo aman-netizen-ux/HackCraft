@@ -71,7 +71,7 @@ late EdgeInsets margin;
         width: widget.node['properties']['width'],
         margin: margin,
         padding: padding,
-       alignment: Alignment.center,// TODO: GIVE ALIGNMENT TO THE CONTAINER
+       alignment: Alignment(widget.node['properties']['alignment'][0],widget.node['properties']['alignment'][1] ),// TODO: GIVE ALIGNMENT TO THE CONTAINER
         color: customEditPortalProvider.stringToColor(widget.node['properties']
             ['color']), 
         child: widget.childWidgets.isEmpty
