@@ -9,9 +9,11 @@ import 'package:provider/provider.dart';
 
 class CustomContainerBgColorWidget extends StatefulWidget {
   const CustomContainerBgColorWidget({
-    super.key,
+    super.key, required this.index, required this.title, required this.property,
   });
-
+ final int index;
+  final String title;
+  final String property;
  
 
   @override
@@ -23,10 +25,33 @@ class _CustomContainerBgColorWidgetState extends State<CustomContainerBgColorWid
    void _handleTap() {
     final customEditTemplateProvider =
         Provider.of<CustomEditPortal>(context, listen: false);
-    customEditTemplateProvider.setIsColorSelected();
-    if(customEditTemplateProvider.isColorPickerSelected){
-      customEditTemplateProvider.setIsColorPickerSelected();
-    }    
+    // customEditTemplateProvider.setIsColorSelected();
+    // if(customEditTemplateProvider.isColorPickerSelected){
+    //   customEditTemplateProvider.setIsColorPickerSelected();
+    // }  
+    
+    
+    if (customEditTemplateProvider.activeIndex == widget.index) {
+      if (customEditTemplateProvider.isColorPickerSelected) {
+
+        customEditTemplateProvider
+            .setIsColorPickerSelected();
+      }
+      customEditTemplateProvider.setActiveIndex(-1);
+    }  else{
+      customEditTemplateProvider.setActiveIndex(widget.index);
+   
+    customEditTemplateProvider.setPropertyType(widget.property);
+   
+    }
+
+
+
+
+
+
+
+
     // if(customEditTemplateProvider.isBoldSelected){
     //   customEditTemplateProvider.setBoldSelection();
     // }
@@ -35,7 +60,7 @@ class _CustomContainerBgColorWidgetState extends State<CustomContainerBgColorWid
   Color? _determineColor() {
     final customEditTemplateProvider =
         Provider.of<CustomEditPortal>(context, listen: false);
-    if (customEditTemplateProvider.isColorSelected) {
+    if (customEditTemplateProvider.activeIndex == widget.index) {
       return grey5.withOpacity(0.2); // Color when clicked
     } else if (isHover) {
       return grey5.withOpacity(0.1); // Color when hovered
@@ -44,24 +69,13 @@ class _CustomContainerBgColorWidgetState extends State<CustomContainerBgColorWid
     }
   }
 
-  String getTooltipMessage(ContainerColorProperties type){
-    switch(type) {
-      case ContainerColorProperties.containerBorderColor :
-        return 'Border Color';
-      case ContainerColorProperties.containerFocusedBorderColor :
-        return 'Focused Border Color';
-      case ContainerColorProperties.boxShadowColor :
-        return 'Box Shadow Color';
-      default: 
-        return 'Container Color';
-    }
-  }
+  
 
   @override
   Widget build(BuildContext context) {
     final customEditPortalProvider = Provider.of<CustomEditPortal>(context);
     return Tooltip(
-      message: "Container Color",
+      message: widget.title,
       verticalOffset: 5,
       decoration: const ShapeDecoration(
         shape: ToolTipCustomDecoration(
@@ -96,7 +110,7 @@ class _CustomContainerBgColorWidgetState extends State<CustomContainerBgColorWid
                           customEditPortalProvider.getPropertyValue(
                       customEditPortalProvider.jsonObject,
                       customEditPortalProvider.selectedWidgetKey.toString(),
-                      "color"))),
+                      widget.property))),
             ),
           ),
         ),

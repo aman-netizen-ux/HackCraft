@@ -34,7 +34,7 @@ class CustomContainerPropertiesPanelWidget extends StatelessWidget {
              "shape");
 
              print("shapeeeeeee$shape");
-    return Row(
+    return Wrap(
       children: [
         const   ContainerShapeTool(),
          SizedBox(width: scaleWidth(context, 20)),
@@ -43,7 +43,11 @@ class CustomContainerPropertiesPanelWidget extends StatelessWidget {
          SizedBox(width: scaleWidth(context, 20)),
         shape=="circle"?  Container():const CustomContainerWidthWidget(property: "width",title: "Container Width",),
           shape=="circle"? Container():SizedBox(width: scaleWidth(context, 20)),
-         const CustomContainerBgColorWidget(),
+         const CustomContainerBgColorWidget(
+          index: 0,
+          property: "color",
+          title: "Container Color",
+         ),
          SizedBox(width: scaleWidth(context, 20)),
          const PaddingTool(),
           SizedBox(width: scaleWidth(context, 20)),
@@ -54,7 +58,25 @@ class CustomContainerPropertiesPanelWidget extends StatelessWidget {
         //  const ContainerBorderWidthWidget(),
          SizedBox(width: scaleWidth(context, 20)),
          const CustomContainerWidthWidget(property: "borderWidth",title: "Border Width" ,),
-       
+        shape=="circle"?  Container():  SizedBox(width: scaleWidth(context, 20)),
+         shape=="circle"?  Container():const CustomContainerWidthWidget(property: "borderRadius",title: "Border Radius" ,),
+
+         SizedBox(width: scaleWidth(context, 20)),
+         
+       const CustomContainerBgColorWidget(
+          index: 1,
+          property: "borderColor",
+          title: "Border Color",
+         ),
+
+
+          SizedBox(width: scaleWidth(context, 20)),
+         
+       const CustomContainerBgColorWidget(
+          index: 2,
+          property: "shadowColor",
+          title: "Shadow Color",
+         ),
 
 
          

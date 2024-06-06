@@ -1131,4 +1131,26 @@ bool get isMarginSelected => _isMarginSelected;
     _isTextColorSelected = !_isTextColorSelected;
     notifyListeners();
   }
+
+  int _activeIndex = -1;
+
+
+get activeIndex => _activeIndex;
+
+  void setActiveIndex(int index){
+    _activeIndex = index;
+    notifyListeners();
+  }
+
+
+  String _propertyType = "";
+
+  String get propertyType => _propertyType;
+
+  void setPropertyType(String value){
+    _propertyType = value;
+    notifyListeners();
+  }
+
 }
+ 

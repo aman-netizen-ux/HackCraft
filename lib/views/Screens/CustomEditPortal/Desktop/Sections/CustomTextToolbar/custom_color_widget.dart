@@ -22,6 +22,11 @@ class _CustomColorWidgetState extends State<CustomColorWidget> {
   void _handleTap() {
     final customEditPortalProvider =  Provider.of<CustomEditPortal>(context, listen: false);
     customEditPortalProvider.setIsColorSelected();
+    if(customEditPortalProvider.isColorSelected){
+      customEditPortalProvider.setPropertyType("color");
+    }else{
+      customEditPortalProvider.setPropertyType("");
+    }
     if(customEditPortalProvider.isColorPickerSelected){
       customEditPortalProvider.setIsColorPickerSelected();
     }    

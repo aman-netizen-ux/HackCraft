@@ -74,6 +74,7 @@ class _CustomContainerHeightWidgetState extends State<CustomContainerHeightWidge
           borderRadius: BorderRadius.circular(rad5_1),
           border: Border.all(color: greyish3, width: 1)),
       child: Row(
+         mainAxisSize: MainAxisSize.min,
         children: [
           Tooltip(
             message: "Decrease ${widget.title}",

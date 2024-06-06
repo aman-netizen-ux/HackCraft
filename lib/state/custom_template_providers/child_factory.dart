@@ -29,7 +29,10 @@ class ChildFactory {
           "padding": [0,0,0,0],
           "alignment": [0,0],
           "shape": "square",
-          "borderWidth":0
+          "borderWidth":0,
+          "borderRadius": 0,
+          "borderColor": generateRandomColor().toString(),
+          "shadowColor": generateRandomColor().toString(),
         };
         break;
       case "Text":

@@ -77,9 +77,20 @@ late EdgeInsets margin;
             ['color']), 
             shape: widget.node['properties']['shape']=="circle"? BoxShape.circle: BoxShape.rectangle,
             border: Border.all(
-              color: Colors.pink.shade100,
+             color: customEditPortalProvider.stringToColor(widget.node['properties']
+            ['borderColor']), 
               width:  widget.node['properties']['borderWidth']
-            )
+            ),
+            borderRadius:  widget.node['properties']['shape']=="circle"?null:BorderRadius.circular(widget.node['properties']['borderRadius']),
+
+            boxShadow: [
+              BoxShadow(
+                color: customEditPortalProvider.stringToColor(widget.node['properties']
+            ['shadowColor']),
+            blurRadius: 10,
+            offset: Offset(5, 25)
+              )
+            ]
        ),
         child: widget.childWidgets.isEmpty
             ? null

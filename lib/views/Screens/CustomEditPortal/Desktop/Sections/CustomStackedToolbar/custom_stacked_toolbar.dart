@@ -32,7 +32,7 @@ class _CustomStackedToolBarState extends State<CustomStackedToolBar> {
     customEditPortalProvider.isBoldSelected
         ? const CustomFontWeightPanelWidget()
         : 
-       customEditPortalProvider.isColorSelected
+       customEditPortalProvider.isColorSelected|| customEditPortalProvider.activeIndex > -1
             ? const CustomColorPickerWidget()
             : customEditPortalProvider.isPaddingSelected
             ?const PaddingValuesWidget(property: "padding")
