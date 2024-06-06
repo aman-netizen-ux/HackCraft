@@ -17,6 +17,7 @@ import 'package:major_project__widget_testing/utils/snackBar.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/views/Components/dialog_alert.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/createRegistrationform.dart';
+import 'package:major_project__widget_testing/views/Screens/CustomTemplate/custom_template.dart';
 import 'package:provider/provider.dart';
 
 class CustomSidePanel extends StatefulWidget {
@@ -616,6 +617,13 @@ class CustomMenu extends StatelessWidget {
         offset: Offset(scaleWidth(context, 50), 0),
         onSelected: (String result) async {
           if (result == 'SavePreview') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const CustomTemplate(
+                        isEdit: true,
+                      )),
+            );
           } else if (result == 'Save') {
             //TODO
           } else if (result == 'Host') {
@@ -689,11 +697,12 @@ class CustomMenu extends StatelessWidget {
       );
     }
 
-     int teamSizeMin;
+    int teamSizeMin;
     int teamSizeMax; // Default value for max
 
-    List<String> teamSizeParts =
-        customEditPortalProvider.requiredHackathonDetails["Team Size"].split(RegExp(r'[-,]'));
+    List<String> teamSizeParts = customEditPortalProvider
+        .requiredHackathonDetails["Team Size"]
+        .split(RegExp(r'[-,]'));
 
     if (teamSizeParts.length > 1) {
       teamSizeMin = int.parse(teamSizeParts[0].trim());
@@ -704,21 +713,25 @@ class CustomMenu extends StatelessWidget {
       teamSizeMax = 0;
     }
 
-
     final hackathonId = await CreateHackathon().postCustomSingleHackathon(
       {
         "hackathon": {
           "created_by": loginProvider.emailId,
           "logo": "it is a logo",
-          "name": customEditPortalProvider.requiredHackathonDetails["Hackathon Name"],
-          "organisation_name": customEditPortalProvider.requiredHackathonDetails["Organization Name"],
-          "deadline": customEditPortalProvider.requiredHackathonDetails["Deadline"],
+          "name": customEditPortalProvider
+              .requiredHackathonDetails["Hackathon Name"],
+          "organisation_name": customEditPortalProvider
+              .requiredHackathonDetails["Organization Name"],
+          "deadline":
+              customEditPortalProvider.requiredHackathonDetails["Deadline"],
           "team_size_min": teamSizeMin,
           "team_size_max": teamSizeMax,
-          "start_date_time": "${customEditPortalProvider.requiredHackathonDetails["Start Date"]}T00:00:00Z",
+          "start_date_time":
+              "${customEditPortalProvider.requiredHackathonDetails["Start Date"]}T00:00:00Z",
           "brief": customEditPortalProvider.requiredHackathonDetails["Brief"],
           "fee": customEditPortalProvider.requiredHackathonDetails["Fee"],
-          "total_number_rounds": int.tryParse(customEditPortalProvider.requiredHackathonDetails["Total Rounds"])
+          "total_number_rounds": int.tryParse(
+              customEditPortalProvider.requiredHackathonDetails["Total Rounds"])
         },
         "custom": {
           "widget": {
@@ -786,21 +799,17 @@ Widget buildWidgetContainer(
     BuildContext context, String widgetType, String label, String icon) {
   final customEditProvider = Provider.of<CustomEditPortal>(context);
   final isRequiredData =
-          customEditProvider.requiredHackathonDetails.containsKey(widgetType);
-      bool isRequireDataAdded=false;
-      if (isRequiredData) {
-        isRequireDataAdded =
-            customEditProvider.checkIsRequireDataAdded(widgetType);
-      }
+      customEditProvider.requiredHackathonDetails.containsKey(widgetType);
+  bool isRequireDataAdded = false;
+  if (isRequiredData) {
+    isRequireDataAdded = customEditProvider.checkIsRequireDataAdded(widgetType);
+  }
   return InkWell(
     onTap: () {
-      
-
       if (!isRequiredData || (isRequiredData && !isRequireDataAdded)) {
-
-if(isRequiredData && !isRequireDataAdded){
-customEditProvider.setRequiredHackathonDetailsAdded(widgetType, true);
-}
+        if (isRequiredData && !isRequireDataAdded) {
+          customEditProvider.setRequiredHackathonDetailsAdded(widgetType, true);
+        }
 
         log('containerlength before: ${customWidgetsGlobalKeysMap.length}');
         addCustomGlobalKeys(customWidgetsGlobalKeysMap.length);
@@ -833,7 +842,9 @@ customEditProvider.setRequiredHackathonDetailsAdded(widgetType, true);
       width: scaleWidth(context, 120),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color:!isRequiredData || (isRequiredData && !isRequireDataAdded)? const Color(0xff373636): Color(0xff373636).withOpacity(0.4),
+        color: !isRequiredData || (isRequiredData && !isRequireDataAdded)
+            ? const Color(0xff373636)
+            : Color(0xff373636).withOpacity(0.4),
         borderRadius: BorderRadius.circular(15),
       ),
       child: Center(
@@ -841,8 +852,9 @@ customEditProvider.setRequiredHackathonDetailsAdded(widgetType, true);
           label,
           textAlign: TextAlign.center,
           style: TextStyle(
-            
-            color:!isRequiredData || (isRequiredData && !isRequireDataAdded)? Colors.white: Colors.white.withOpacity(0.4)),
+              color: !isRequiredData || (isRequiredData && !isRequireDataAdded)
+                  ? Colors.white
+                  : Colors.white.withOpacity(0.4)),
         ),
       ),
     ),

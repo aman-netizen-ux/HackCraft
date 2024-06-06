@@ -9,6 +9,7 @@ import 'package:major_project__widget_testing/state/getHackathon/getSingleHackat
 import 'package:major_project__widget_testing/state/rulesAndRoundsProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
+import 'package:major_project__widget_testing/views/Screens/CustomTemplate/custom_template.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultTemplate/default_template.dart';
 import 'package:provider/provider.dart';
 
@@ -89,11 +90,10 @@ class _HomeHackathonState extends State<HomeHackathon> {
                     vertical: scaleHeight(context, 25)),
                 itemCount: hackathonsProvider.allHackathons.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 20,
-                  mainAxisExtent: 230,
-                  mainAxisSpacing: 20
-                ),
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 20,
+                    mainAxisExtent: 230,
+                    mainAxisSpacing: 20),
                 itemBuilder: (BuildContext context, int index) {
                   final hackathon = hackathonsProvider.allHackathons[index];
                   Color? cardColor = getRandomPastelColor();
@@ -202,7 +202,11 @@ class _HomeHackathonState extends State<HomeHackathon> {
                                                         lineHeight(22.4, 18),
                                                     fontWeight:
                                                         FontWeight.w300)),
-                                            Text(hackathon.teamSize.length>1 ? '${hackathon.teamSize[0]} - ${hackathon.teamSize[1]}' :  hackathon.teamSize[0].toString(),
+                                            Text(
+                                                hackathon.teamSize.length > 1
+                                                    ? '${hackathon.teamSize[0]} - ${hackathon.teamSize[1]}'
+                                                    : hackathon.teamSize[0]
+                                                        .toString(),
                                                 style: GoogleFonts.getFont(
                                                     fontFamily2,
                                                     fontSize: scaleHeight(
@@ -276,34 +280,65 @@ class _HomeHackathonState extends State<HomeHackathon> {
                                           _setHovering(index, false),
                                       child: InkWell(
                                         onTap: _isClicked
-                                              ? (){}
-                                              : () async {
-                                                  setState(() {
-                                                    _isClicked = true;
-                                                  });
-                                                  final singleHackathonProvider =
-                                                      Provider.of<SingleHackathonProvider>(
+                                            ? () {}
+                                            : () async {
+                                                setState(() {
+                                                  _isClicked = true;
+                                                });
+                                                final singleHackathonProvider =
+                                                    Provider.of<
+                                                            SingleHackathonProvider>(
+                                                        context,
+                                                        listen: false);
+
+                                                singleHackathonProvider
+                                                    .setIsLoading = true;
+
+                                                try {
+
+
+                                                  
+
+                                                  final hackathonType =
+                                                      "Custom";
+
+                                                  if (hackathonType ==
+                                                      "Custom") {
+
+                                                        await singleHackathonProvider
+                                                      .getCustomSingleHackathonsList(
+                                                          hackathon.id);
+
+                                                         Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const CustomTemplate(
+                                                               
+                                                                isEdit: false,
+                                                              )),
+                                                    ).then((_) {
+                                                      setState(() {
+                                                        _isClicked = false;
+                                                      });
+                                                    });
+                                                  } else {
+
+                                                    await singleHackathonProvider
+                                                      .getSingleHackathonsList(
+                                                          hackathon.id);
+
+                                                  final rulesProvider = Provider
+                                                      .of<RulesProvider>(
                                                           context,
                                                           listen: false);
 
-                                                  singleHackathonProvider.setIsLoading =
-                                                      true;
-
-                                                  try {
-                                                    await singleHackathonProvider
-                                                        .getSingleHackathonsList(
-                                                            hackathon.id);
-
-                                                    final rulesProvider =
-                                                        Provider.of<RulesProvider>(
-                                                            context,
-                                                            listen: false);
-
-                                                    rulesProvider.setSelectedIndex(-1);
-                                                    rulesProvider.setDescriptionWidget(
-                                                        SvgPicture.asset(
-                                                            'assets/images/defaultTemplate/clickme.svg'));
-
+                                                  rulesProvider
+                                                      .setSelectedIndex(-1);
+                                                  rulesProvider
+                                                      .setDescriptionWidget(
+                                                          SvgPicture.asset(
+                                                              'assets/images/defaultTemplate/clickme.svg'));
                                                     Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
@@ -319,25 +354,27 @@ class _HomeHackathonState extends State<HomeHackathon> {
                                                         _isClicked = false;
                                                       });
                                                     });
-                                                  } catch (error) {
-                                                    setState(() {
-                                                      _isClicked = false;
-                                                    });
                                                   }
+                                                } catch (error) {
+                                                  setState(() {
+                                                    _isClicked = false;
+                                                  });
+                                                }
 
-                                      // Navigator.pushNamed(
-                                      // context, '/singleHackathon');
-                                    },
-                                    child: Center(
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: scaleHeight(context, 50),
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(25)),
-                                          color:
-                                              _isHovering && (index == _index)
+                                                // Navigator.pushNamed(
+                                                // context, '/singleHackathon');
+                                              },
+                                        child: Center(
+                                          child: Container(
+                                            width: double.infinity,
+                                            height: scaleHeight(context, 50),
+                                            alignment: Alignment.center,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(25)),
+                                              color: _isHovering &&
+                                                      (index == _index)
                                                   ? darkBlue
                                                   : Colors.white,
                                               border:
@@ -367,7 +404,6 @@ class _HomeHackathonState extends State<HomeHackathon> {
                       ));
                 }),
           ),
-         
         ]);
   }
 }

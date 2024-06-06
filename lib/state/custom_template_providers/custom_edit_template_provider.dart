@@ -859,7 +859,9 @@ return  _requiredHackathonDetailsAdded[key]??false;
     }
 
     // Start building widgets from the root 'children'
+    print("line 862");
     if (node.containsKey('children') && node['children'] is List) {
+       print("line 864");
       for (var child in node['children']) {
         for (var entry in child.entries) {
           widgets.add(buildWidget(
