@@ -34,7 +34,7 @@ class _CustomTextState extends State<CustomText> {
         Provider.of<HackathonTextPropertiesProvider>(context);
     final customEditDefaultProvider = Provider.of<CustomEditPortal>(context);
     return Container(
-      decoration: customEditDefaultProvider.selectedWidgetKey != null
+      decoration: customEditDefaultProvider.selectedWidgetKey != null &&  customEditDefaultProvider.selectedWidgetKey == customWidgetsGlobalKeysMap[widget.node["id"]]
           ? const CircleCornerBoxDecoration(
               circleBorder: blue,
               circleFill: Colors.white,
