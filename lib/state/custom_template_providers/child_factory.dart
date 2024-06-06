@@ -52,6 +52,7 @@ class ChildFactory {
           "align": "left"
         };
         break;
+    
       case "Row":
         baseChild[key]!['properties'] = {
           "mainAxisAlignment": 'Start',
@@ -144,6 +145,82 @@ class ChildFactory {
         break;
 
       case "Tabbar":
+        break;
+
+
+
+        case "Hackathon Name":
+        // Add specific properties for Text if necessary
+        baseChild[key]!['properties'] = {
+          "text": "Add your Hackathon Name",
+          "fontSize": 20,
+          "color": "Color(0xff1a202c)",
+          "font": 'Fira Sans',
+          "letterSpacing": 0,
+          "lineHeight": 19,
+          "strikethrough": false,
+          "italics": false,
+          "underline": false,
+          "fontWeight": 200,
+          "uppercase": false,
+          "align": "left"
+        };
+        break;
+
+        case "Start Date":
+        // Add specific properties for Text if necessary
+        baseChild[key]!['properties'] = {
+          "text": "Add hackathon start date",
+          "fontSize": 20,
+          "color": "Color(0xff1a202c)",
+          "font": 'Fira Sans',
+          "letterSpacing": 0,
+          "lineHeight": 19,
+          "strikethrough": false,
+          "italics": false,
+          "underline": false,
+          "fontWeight": 200,
+          "uppercase": false,
+          "align": "left"
+        };
+        break;
+
+
+        case "Organization Name":
+        // Add specific properties for Text if necessary
+        baseChild[key]!['properties'] = {
+          "text": "Add your oranization name",
+          "fontSize": 20,
+          "color": "Color(0xff1a202c)",
+          "font": 'Fira Sans',
+          "letterSpacing": 0,
+          "lineHeight": 19,
+          "strikethrough": false,
+          "italics": false,
+          "underline": false,
+          "fontWeight": 200,
+          "uppercase": false,
+          "align": "left"
+        };
+        break;
+
+
+        case "Venue":
+        // Add specific properties for Text if necessary
+        baseChild[key]!['properties'] = {
+          "text": "Add hackathon venue",
+          "fontSize": 20,
+          "color": "Color(0xff1a202c)",
+          "font": 'Fira Sans',
+          "letterSpacing": 0,
+          "lineHeight": 19,
+          "strikethrough": false,
+          "italics": false,
+          "underline": false,
+          "fontWeight": 200,
+          "uppercase": false,
+          "align": "left"
+        };
         break;
       // Add other cases for each type
     }

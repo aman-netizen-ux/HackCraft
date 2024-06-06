@@ -33,6 +33,19 @@ class CustomEditPortal extends ChangeNotifier {
    bool _isAlignmentSelected = false;
   int _selectedColorTool = 2;
   final List<Color> _colors = [];
+  Map<String, dynamic> _requiredHackathonDetails={
+     "Hackathon Name":"",    
+    "Organization Name":"",
+    "Start Date":"",
+    "Venue":""
+  };
+
+  Map<String, dynamic> get requiredHackathonDetails=> _requiredHackathonDetails;
+  void setRequiredHackathonDetails(String key, dynamic value){
+    _requiredHackathonDetails[key]=value;
+    print("_requiredHackathonDetails $_requiredHackathonDetails");
+    notifyListeners();
+  }
 
   final int _maxCapacity = 16;
 
@@ -332,7 +345,7 @@ class CustomEditPortal extends ChangeNotifier {
       if (!node.containsKey('type')) return const SizedBox();
 
       Widget currentWidget;
-      log(node['type']);
+      debugPrint("type in buildig ${node['type']}");
 
       switch (node['type']) {
         case 'Container':
@@ -672,6 +685,72 @@ class CustomEditPortal extends ChangeNotifier {
           currentWidget = CustomTabbar(
               node: node,
               onTap: () {}); // Example: Set a default text, customize as needed
+          break;
+
+
+
+
+           case 'Hackathon Name':
+           print("Im in switch hackathon name");
+          currentWidget = CustomText(
+              node: node,
+              onTap: () {
+                int? index = node['id'];
+                final currentKey = customWidgetsGlobalKeysMap[index];
+                final type = node['type'];
+                _selectedWidgetType = type;
+                _selectedWidgetKey = currentKey;
+                notifyListeners();
+
+                debugPrint("${_selectedWidgetType} ${_isColorSelected}");
+              }); // Example: Set a default text, customize as needed
+          break;
+
+           case 'Organization Name':
+          currentWidget = CustomText(
+              node: node,
+              onTap: () {
+                int? index = node['id'];
+                final currentKey = customWidgetsGlobalKeysMap[index];
+                final type = node['type'];
+                _selectedWidgetType = type;
+                _selectedWidgetKey = currentKey;
+                notifyListeners();
+
+                debugPrint("${_selectedWidgetType} ${_isColorSelected}");
+              }); // Example: Set a default text, customize as needed
+          break;
+
+
+           case 'Start Date':
+          currentWidget = CustomText(
+              node: node,
+              onTap: () {
+                int? index = node['id'];
+                final currentKey = customWidgetsGlobalKeysMap[index];
+                final type = node['type'];
+                _selectedWidgetType = type;
+                _selectedWidgetKey = currentKey;
+                notifyListeners();
+
+                debugPrint("${_selectedWidgetType} ${_isColorSelected}");
+              }); // Example: Set a default text, customize as needed
+          break;
+
+
+           case 'Venue':
+          currentWidget = CustomText(
+              node: node,
+              onTap: () {
+                int? index = node['id'];
+                final currentKey = customWidgetsGlobalKeysMap[index];
+                final type = node['type'];
+                _selectedWidgetType = type;
+                _selectedWidgetKey = currentKey;
+                notifyListeners();
+
+                debugPrint("${_selectedWidgetType} ${_isColorSelected}");
+              }); // Example: Set a default text, customize as needed
           break;
 
         default:

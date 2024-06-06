@@ -23,7 +23,17 @@ class CustomSidePanel extends StatefulWidget {
   State<CustomSidePanel> createState() => _CustomSidePanelState();
 }
 
-class _CustomSidePanelState extends State<CustomSidePanel> {
+class _CustomSidePanelState extends State<CustomSidePanel>
+    with SingleTickerProviderStateMixin {
+
+       final List<String> requiredDataList = [
+    
+    "Hackathon Name",    
+    "Organization Name",
+    "Start Date",
+    "Venue"
+  ];
+
   final List<String> widgets = [
     "Container",
     "Text",
@@ -43,6 +53,24 @@ class _CustomSidePanelState extends State<CustomSidePanel> {
     "PDFViewer",
     "Tabbar"
   ];
+
+
+
+
+  TabController? _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: 2);
+  }
+
+  @override
+  void dispose() {
+    _tabController?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final customEditProvider = Provider.of<CustomEditPortal>(context);
@@ -108,21 +136,66 @@ class _CustomSidePanelState extends State<CustomSidePanel> {
             //   debugPrint('dynamic widgets : ${customEditProvider.dynamicWidgets}');
             //  }, child: Text('UPDATE')),
             SizedBox(
-              height: scaleHeight(context, 680),
-              child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // Number of columns
-                    crossAxisSpacing: scaleWidth(
-                        context, 13), // Horizontal space between items
-                    mainAxisSpacing: scaleHeight(
-                        context, 12), // Vertical space between items
-                  ),
-                  itemCount: widgets.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return buildWidgetContainer(
-                        context, widgets[index], widgets[index], "");
-                  }),
-            ),
+                height: scaleHeight(context, 680),
+                child: Column(
+                  children: [
+                    TabBar(
+                      isScrollable: true,
+                      tabAlignment: TabAlignment.start,
+                      indicatorColor: black1,
+                      controller: _tabController,
+                      tabs: const [
+                        Tab(
+                          child: Text("Required Data"),
+                        ),
+                        Tab(
+                          child: Text("Other Widgets"),
+                        )
+                      ],
+                    ),
+
+                    SizedBox(height: scaleHeight(context,24)),
+                    Expanded(
+                      child: TabBarView(
+                        controller: _tabController,
+                        children:  [
+                          GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2, // Number of columns
+                          crossAxisSpacing: scaleWidth(
+                              context, 13), // Horizontal space between items
+                          mainAxisSpacing: scaleHeight(
+                              context, 12), // Vertical space between items
+                        ),
+                        itemCount: requiredDataList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return buildWidgetContainer(
+                              context, requiredDataList[index], requiredDataList[index], "");
+                        }),
+                        
+                        
+
+
+                         GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2, // Number of columns
+                          crossAxisSpacing: scaleWidth(
+                              context, 13), // Horizontal space between items
+                          mainAxisSpacing: scaleHeight(
+                              context, 12), // Vertical space between items
+                        ),
+                        itemCount: widgets.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return buildWidgetContainer(
+                              context, widgets[index], widgets[index], "");
+                        }),
+                      
+                        ],
+                      ),
+                    ),
+                   
+                  ],
+                )),
             //   Row(
             //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             //     children: [
@@ -595,12 +668,12 @@ class CustomMenu extends StatelessWidget {
     debugPrint(" hola");
     final customEditPortalProvider =
         Provider.of<CustomEditPortal>(context, listen: false);
-        final hackathonDetailsProvider =
+    final hackathonDetailsProvider =
         Provider.of<HackathonDetailsProvider>(context, listen: false);
     Timer? timer;
-    timer = Timer(const Duration(seconds: 20), ()  {
+    timer = Timer(const Duration(seconds: 20), () {
       debugPrint(" hola from timer");
-        if (hackathonDetailsProvider.loadingPostHackathon) {
+      if (hackathonDetailsProvider.loadingPostHackathon) {
         showSnackBar(
             "Error !! Hackthon not created",
             red2,
@@ -620,32 +693,30 @@ class CustomMenu extends StatelessWidget {
         },
       );
     }
-      final hackathonId = await CreateHackathon().postCustomSingleHackathon(
-        {
-          "hackathon": {
-            "created_by": "notebox101@gmail.com",
-            "logo": "it is a logo",
-            "name": "name",
-            "organisation_name": "poll presents",
-            "deadline": "2023-10-10",
-            "team_size_min": 1,
-            "team_size_max": 7,
-            "start_date_time":
-                "2023-10-10T00:00:00Z",
-            "brief": "hackathonDetailsProvider.brief",
-            "fee": "200",
-            "total_number_rounds": 3
-          },
-          "custom": {
-            "widget": {
-              "id": 78,
-              "key": customColumnKey.toString(),
-              "children": customEditPortalProvider.jsonObject["children"],
-            }
-          }
+    final hackathonId = await CreateHackathon().postCustomSingleHackathon(
+      {
+        "hackathon": {
+          "created_by": "notebox101@gmail.com",
+          "logo": "it is a logo",
+          "name": "name",
+          "organisation_name": "poll presents",
+          "deadline": "2023-10-10",
+          "team_size_min": 1,
+          "team_size_max": 7,
+          "start_date_time": "2023-10-10T00:00:00Z",
+          "brief": "hackathonDetailsProvider.brief",
+          "fee": "200",
+          "total_number_rounds": 3
         },
-      );
-   
+        "custom": {
+          "widget": {
+            "id": 78,
+            "key": customColumnKey.toString(),
+            "children": customEditPortalProvider.jsonObject["children"],
+          }
+        }
+      },
+    );
   }
 }
 
@@ -670,7 +741,7 @@ Widget buildWidgetContainer(
               : customEditProvider.selectedWidgetKey.toString(),
           widgetType);
 
-      log('json opbject : ${customEditProvider.jsonObject}');
+      print('json opbject : ${customEditProvider.jsonObject}');
       log('containerlength after : ${customWidgetsGlobalKeysMap.length}');
       log(" customWidgetsGlobalKeysMap length ${customWidgetsGlobalKeysMap.length}");
 

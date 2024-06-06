@@ -34,7 +34,7 @@ class _CustomToolBarState extends State<CustomToolBar> {
             borderRadius: BorderRadius.circular(rad5_2),
             border: Border.all(color: greyish3)),
         child: customEditPortalProvider.selectedWidgetKey != null &&
-                customEditPortalProvider.selectedWidgetType == "Text"
+                customEditPortalProvider.selectedWidgetType == "Text"||customEditPortalProvider.selectedWidgetType == "Venue"||customEditPortalProvider.selectedWidgetType =="Hackathon Name"||customEditPortalProvider.selectedWidgetType == "Organization Name"||customEditPortalProvider.selectedWidgetType == "Start Date"
             ? const CustomTextPropertiesPanelWidget()
             : customEditPortalProvider.selectedWidgetKey != null &&
                     customEditPortalProvider.selectedWidgetType == "Container"

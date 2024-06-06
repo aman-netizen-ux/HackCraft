@@ -42,7 +42,7 @@ class _CustomTextState extends State<CustomText> {
           : null,
       child: ConstrainedBox(
         constraints: const BoxConstraints(
-          maxWidth: 150,
+          maxWidth: double.infinity,
         ),
         child: IntrinsicWidth(
           stepWidth: 10,
@@ -90,6 +90,10 @@ class _CustomTextState extends State<CustomText> {
           customEditPortalProvider.dynamicWidgets = customEditPortalProvider
               .buildWidgetsFromJson(customEditPortalProvider.jsonObject);
           customEditPortalProvider.triggerUIUpdate();
+
+          if(widget.node['type']=="Hackathon Name"){
+            customEditPortalProvider.setRequiredHackathonDetails("Hackathon Name", value);
+          }
             },
            
           ),
