@@ -40,7 +40,7 @@ class _CustomToolBarState extends State<CustomToolBar> {
                     "Hackathon Name" ||
                 customEditPortalProvider.selectedWidgetType ==
                     "Organization Name" ||
-                customEditPortalProvider.selectedWidgetType == "Start Date" ||
+                customEditPortalProvider.selectedWidgetType == "Start Date" || customEditPortalProvider.selectedWidgetType == "Team Size"||
                 customEditPortalProvider.selectedWidgetType == "Fee" ||
                 customEditPortalProvider.selectedWidgetType == "Brief" || customEditPortalProvider.selectedWidgetType == "Total Rounds"
             ? const CustomTextPropertiesPanelWidget()

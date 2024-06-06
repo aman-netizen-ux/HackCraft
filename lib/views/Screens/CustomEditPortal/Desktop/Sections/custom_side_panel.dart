@@ -10,10 +10,12 @@ import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/state/custom_template_providers/custom_edit_template_provider.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonDetailsProvider.dart';
+import 'package:major_project__widget_testing/state/loginProvider.dart';
 import 'package:major_project__widget_testing/utils/customTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/snackBar.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
+import 'package:major_project__widget_testing/views/Components/dialog_alert.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/createRegistrationform.dart';
 import 'package:provider/provider.dart';
 
@@ -26,13 +28,15 @@ class CustomSidePanel extends StatefulWidget {
 
 class _CustomSidePanelState extends State<CustomSidePanel>
     with SingleTickerProviderStateMixin {
-
-       final List<String> requiredDataList = [
-    
-    "Hackathon Name",    
+  final List<String> requiredDataList = [
+    "Hackathon Name",
     "Organization Name",
     "Start Date",
-    "Venue"
+    "Deadline",
+    "Team Size",
+    "Brief",
+    "Fee",
+    "Total Rounds"
   ];
 
   final List<String> widgets = [
@@ -54,9 +58,6 @@ class _CustomSidePanelState extends State<CustomSidePanel>
     "PDFViewer",
     "Tabbar"
   ];
-
-
-
 
   TabController? _tabController;
 
@@ -154,47 +155,45 @@ class _CustomSidePanelState extends State<CustomSidePanel>
                         )
                       ],
                     ),
-
-                    SizedBox(height: scaleHeight(context,24)),
+                    SizedBox(height: scaleHeight(context, 24)),
                     Expanded(
                       child: TabBarView(
                         controller: _tabController,
-                        children:  [
+                        children: [
                           GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2, // Number of columns
-                          crossAxisSpacing: scaleWidth(
-                              context, 13), // Horizontal space between items
-                          mainAxisSpacing: scaleHeight(
-                              context, 12), // Vertical space between items
-                        ),
-                        itemCount: requiredDataList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return buildWidgetContainer(
-                              context, requiredDataList[index], requiredDataList[index], "");
-                        }),
-                        
-                        
-
-
-                         GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2, // Number of columns
-                          crossAxisSpacing: scaleWidth(
-                              context, 13), // Horizontal space between items
-                          mainAxisSpacing: scaleHeight(
-                              context, 12), // Vertical space between items
-                        ),
-                        itemCount: widgets.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return buildWidgetContainer(
-                              context, widgets[index], widgets[index], "");
-                        }),
-                      
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2, // Number of columns
+                                crossAxisSpacing: scaleWidth(context,
+                                    13), // Horizontal space between items
+                                mainAxisSpacing: scaleHeight(context,
+                                    12), // Vertical space between items
+                              ),
+                              itemCount: requiredDataList.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return buildWidgetContainer(
+                                    context,
+                                    requiredDataList[index],
+                                    requiredDataList[index],
+                                    "");
+                              }),
+                          GridView.builder(
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2, // Number of columns
+                                crossAxisSpacing: scaleWidth(context,
+                                    13), // Horizontal space between items
+                                mainAxisSpacing: scaleHeight(context,
+                                    12), // Vertical space between items
+                              ),
+                              itemCount: widgets.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return buildWidgetContainer(context,
+                                    widgets[index], widgets[index], "");
+                              }),
                         ],
                       ),
                     ),
-                   
                   ],
                 )),
             //   Row(
@@ -620,12 +619,16 @@ class CustomMenu extends StatelessWidget {
           } else if (result == 'Save') {
             //TODO
           } else if (result == 'Host') {
-           final customEditPortalProvider =
-        Provider.of<CustomEditPortal>(context, listen: false);
+            final customEditPortalProvider =
+                Provider.of<CustomEditPortal>(context, listen: false);
 
-           
-
-            hostHackathon(context);
+            List<String> unfilledKeys =
+                customEditPortalProvider.checkForEmptyFields();
+            if (unfilledKeys.isEmpty) {
+              hostHackathon(context);
+            } else {
+              aletDialog(context, "The $unfilledKeys are required", "Uhh ohh");
+            }
           } else {
             Navigator.pop(context);
           }
@@ -660,7 +663,8 @@ class CustomMenu extends StatelessWidget {
         Provider.of<CustomEditPortal>(context, listen: false);
     final hackathonDetailsProvider =
         Provider.of<HackathonDetailsProvider>(context, listen: false);
-     hackathonDetailsProvider.setLoadingPostHackathon(true);
+    final loginProvider = Provider.of<LoginProvider>(context, listen: false);
+    hackathonDetailsProvider.setLoadingPostHackathon(true);
     Timer? timer;
     timer = Timer(const Duration(seconds: 20), () {
       debugPrint(" hola from timer");
@@ -684,20 +688,37 @@ class CustomMenu extends StatelessWidget {
         },
       );
     }
+
+     int teamSizeMin;
+    int teamSizeMax; // Default value for max
+
+    List<String> teamSizeParts =
+        customEditPortalProvider.requiredHackathonDetails["Team Size"].split(RegExp(r'[-,]'));
+
+    if (teamSizeParts.length > 1) {
+      teamSizeMin = int.parse(teamSizeParts[0].trim());
+      teamSizeMax = int.parse(teamSizeParts[1].trim());
+    } else {
+      // Single value provided
+      teamSizeMin = int.parse(teamSizeParts[0].trim());
+      teamSizeMax = 0;
+    }
+
+
     final hackathonId = await CreateHackathon().postCustomSingleHackathon(
       {
         "hackathon": {
-          "created_by": "notebox101@gmail.com",
+          "created_by": loginProvider.emailId,
           "logo": "it is a logo",
-          "name": "name",
-          "organisation_name": "poll presents",
-          "deadline": "2023-10-10",
-          "team_size_min": 1,
-          "team_size_max": 7,
-          "start_date_time": "2023-10-10T00:00:00Z",
-          "brief": "hackathonDetailsProvider.brief",
-          "fee": "200",
-          "total_number_rounds": 3
+          "name": customEditPortalProvider.requiredHackathonDetails["Hackathon Name"],
+          "organisation_name": customEditPortalProvider.requiredHackathonDetails["Organization Name"],
+          "deadline": customEditPortalProvider.requiredHackathonDetails["Deadline"],
+          "team_size_min": teamSizeMin,
+          "team_size_max": teamSizeMax,
+          "start_date_time": "${customEditPortalProvider.requiredHackathonDetails["Start Date"]}T00:00:00Z",
+          "brief": customEditPortalProvider.requiredHackathonDetails["Brief"],
+          "fee": customEditPortalProvider.requiredHackathonDetails["Fee"],
+          "total_number_rounds": int.tryParse(customEditPortalProvider.requiredHackathonDetails["Total Rounds"])
         },
         "custom": {
           "widget": {
@@ -707,8 +728,6 @@ class CustomMenu extends StatelessWidget {
           }
         }
       },
-
-
     );
 
     hackathonDetailsProvider.setLoadingPostHackathon(false);
@@ -761,50 +780,69 @@ class CustomMenu extends StatelessWidget {
       );
     }
   }
-  
 }
 
 Widget buildWidgetContainer(
     BuildContext context, String widgetType, String label, String icon) {
   final customEditProvider = Provider.of<CustomEditPortal>(context);
+  final isRequiredData =
+          customEditProvider.requiredHackathonDetails.containsKey(widgetType);
+      bool isRequireDataAdded=false;
+      if (isRequiredData) {
+        isRequireDataAdded =
+            customEditProvider.checkIsRequireDataAdded(widgetType);
+      }
   return InkWell(
     onTap: () {
-      log('containerlength before: ${customWidgetsGlobalKeysMap.length}');
-      addCustomGlobalKeys(customWidgetsGlobalKeysMap.length);
+      
 
-      log(" global key  ${customWidgetsGlobalKeysMap[customWidgetsGlobalKeysMap.length - 1]!}");
+      if (!isRequiredData || (isRequiredData && !isRequireDataAdded)) {
 
-      log(" customEditProvider.selectedWidgetKey.toString() ${customEditProvider.selectedWidgetKey.toString()}");
+if(isRequiredData && !isRequireDataAdded){
+customEditProvider.setRequiredHackathonDetailsAdded(widgetType, true);
+}
 
-      customEditProvider.addOrCheckChildByKey(
-          customWidgetsGlobalKeysMap[customWidgetsGlobalKeysMap.length - 1]!
-              .toString(),
-          customWidgetsGlobalKeysMap.length - 1,
-          customEditProvider.selectedWidgetKey == null
-              ? customColumnKey.toString()
-              : customEditProvider.selectedWidgetKey.toString(),
-          widgetType);
+        log('containerlength before: ${customWidgetsGlobalKeysMap.length}');
+        addCustomGlobalKeys(customWidgetsGlobalKeysMap.length);
 
-      print('json opbject : ${customEditProvider.jsonObject}');
-      log('containerlength after : ${customWidgetsGlobalKeysMap.length}');
-      log(" customWidgetsGlobalKeysMap length ${customWidgetsGlobalKeysMap.length}");
+        log(" global key  ${customWidgetsGlobalKeysMap[customWidgetsGlobalKeysMap.length - 1]!}");
 
-      log("customWidgetsGlobalKeysMap $customWidgetsGlobalKeysMap");
+        log(" customEditProvider.selectedWidgetKey.toString() ${customEditProvider.selectedWidgetKey.toString()}");
 
-      customEditProvider.dynamicWidgets = customEditProvider
-          .buildWidgetsFromJson(customEditProvider.jsonObject);
+        customEditProvider.addOrCheckChildByKey(
+            customWidgetsGlobalKeysMap[customWidgetsGlobalKeysMap.length - 1]!
+                .toString(),
+            customWidgetsGlobalKeysMap.length - 1,
+            customEditProvider.selectedWidgetKey == null
+                ? customColumnKey.toString()
+                : customEditProvider.selectedWidgetKey.toString(),
+            widgetType);
+
+        print('json opbject : ${customEditProvider.jsonObject}');
+        log('containerlength after : ${customWidgetsGlobalKeysMap.length}');
+        log(" customWidgetsGlobalKeysMap length ${customWidgetsGlobalKeysMap.length}");
+
+        log("customWidgetsGlobalKeysMap $customWidgetsGlobalKeysMap");
+
+        customEditProvider.dynamicWidgets = customEditProvider
+            .buildWidgetsFromJson(customEditProvider.jsonObject);
+      }
     },
     child: Container(
       height: scaleHeight(context, 111),
       width: scaleWidth(context, 120),
+      alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: const Color(0xff373636),
+        color:!isRequiredData || (isRequiredData && !isRequireDataAdded)? const Color(0xff373636): Color(0xff373636).withOpacity(0.4),
         borderRadius: BorderRadius.circular(15),
       ),
       child: Center(
         child: Text(
           label,
-          style: TextStyle(color: Colors.white),
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            
+            color:!isRequiredData || (isRequiredData && !isRequireDataAdded)? Colors.white: Colors.white.withOpacity(0.4)),
         ),
       ),
     ),

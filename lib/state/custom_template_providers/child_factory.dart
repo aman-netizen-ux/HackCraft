@@ -39,6 +39,7 @@ class ChildFactory {
         // Add specific properties for Text if necessary
         baseChild[key]!['properties'] = {
           "text": "Dynamic Text",
+          "hint":"Add your text",
           "fontSize": 20,
           "color": "Color(0xff1a202c)",
           "font": 'Fira Sans',
@@ -150,7 +151,8 @@ class ChildFactory {
       case "Hackathon Name":
         // Add specific properties for Text if necessary
         baseChild[key]!['properties'] = {
-          "text": "Add your Hackathon Name",
+          "text":"",
+          "hint": "Add your Hackathon Name",
           "fontSize": 20,
           "color": "Color(0xff1a202c)",
           "font": 'Fira Sans',
@@ -168,7 +170,8 @@ class ChildFactory {
       case "Start Date":
         // Add specific properties for Text if necessary
         baseChild[key]!['properties'] = {
-          "text": "Add hackathon start date",
+           "text":"",
+          "hint": "Add hackathon start date",
           "fontSize": 20,
           "color": "Color(0xff1a202c)",
           "font": 'Fira Sans',
@@ -186,7 +189,8 @@ class ChildFactory {
       case "Organization Name":
         // Add specific properties for Text if necessary
         baseChild[key]!['properties'] = {
-          "text": "Add your oranization name",
+           "text":"",
+          "hint": "Add your oranization name",
           "fontSize": 20,
           "color": "Color(0xff1a202c)",
           "font": 'Fira Sans',
@@ -204,7 +208,8 @@ class ChildFactory {
       case "Deadline":
         // Add specific properties for Text if necessary
         baseChild[key]!['properties'] = {
-          "text": "Add hackathon venue",
+           "text":"",
+          "hint": "Add hackathon deadline",
           "fontSize": 20,
           "color": "Color(0xff1a202c)",
           "font": 'Fira Sans',
@@ -222,7 +227,8 @@ class ChildFactory {
       case "Team Size":
         // Add specific properties for Text if necessary
         baseChild[key]!['properties'] = {
-          "text": "Add hackathon venue",
+           "text":"",
+          "hint": "Add hackathon team Size",
           "fontSize": 20,
           "color": "Color(0xff1a202c)",
           "font": 'Fira Sans',
@@ -240,7 +246,8 @@ class ChildFactory {
       case "Brief":
         // Add specific properties for Text if necessary
         baseChild[key]!['properties'] = {
-          "text": "Add hackathon venue",
+           "text":"",
+          "hint": "Add hackathon brief",
           "fontSize": 20,
           "color": "Color(0xff1a202c)",
           "font": 'Fira Sans',
@@ -258,7 +265,8 @@ class ChildFactory {
       case "Fee":
         // Add specific properties for Text if necessary
         baseChild[key]!['properties'] = {
-          "text": "Add hackathon venue",
+           "text":"",
+          "hint": "Add hackathon fee",
           "fontSize": 20,
           "color": "Color(0xff1a202c)",
           "font": 'Fira Sans',
@@ -276,7 +284,8 @@ class ChildFactory {
       case "Total Rounds":
         // Add specific properties for Text if necessary
         baseChild[key]!['properties'] = {
-          "text": "Add hackathon venue",
+           "text":"",
+          "hint": "Add hackathon total rounds",
           "fontSize": 20,
           "color": "Color(0xff1a202c)",
           "font": 'Fira Sans',

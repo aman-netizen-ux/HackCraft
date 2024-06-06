@@ -37,16 +37,57 @@ class CustomEditPortal extends ChangeNotifier {
     "Hackathon Name": "",
     "Organization Name": "",
     "Start Date": "",
-    "Venue": ""
+    "Deadline": "",
+    "Team Size": "",    
+    "Brief": "",
+    "Fee": "",
+    "Total Rounds": ""
   };
+
+   Map<String, bool> _requiredHackathonDetailsAdded = {
+    "Hackathon Name": false,
+    "Organization Name": false,
+    "Start Date": false,
+    "Deadline": false,
+    "Team Size": false,    
+    "Brief": false,
+    "Fee": false,
+    "Total Rounds": false
+  };
+
+  
+  
 
   Map<String, dynamic> get requiredHackathonDetails =>
       _requiredHackathonDetails;
+
+        Map<String, dynamic> get requiredHackathonDetailsAdded =>
+      _requiredHackathonDetailsAdded;
+void setRequiredHackathonDetailsAdded(String key, dynamic value) {
+    _requiredHackathonDetailsAdded[key] = value;
+    print("_requiredHackathonDetailsAdded $_requiredHackathonDetailsAdded");
+    notifyListeners();
+  }
+
   void setRequiredHackathonDetails(String key, dynamic value) {
     _requiredHackathonDetails[key] = value;
     print("_requiredHackathonDetails $_requiredHackathonDetails");
     notifyListeners();
   }
+
+  bool checkIsRequireDataAdded(String key){
+return  _requiredHackathonDetailsAdded[key]??false;
+  }
+
+  List<String> checkForEmptyFields() {
+  List<String> emptyKeys = [];
+  _requiredHackathonDetails.forEach((key, value) {
+    if (value.toString().isEmpty) {
+      emptyKeys.add(key);
+    }
+  });
+  return emptyKeys;
+}
 
   final int _maxCapacity = 16;
 
@@ -993,6 +1034,16 @@ bool found = false; // Flag to check if the key has been found
       for (var element in node) {
           var result = _searchAndDelete(element, key, depth + 1);
           if (result &&!found) {
+            if(element[key]["type"] == "Deadline" ||
+                element[key]["type"] ==
+                    "Hackathon Name" ||
+                element[key]["type"] ==
+                    "Organization Name" ||
+                element[key]["type"] == "Start Date" || element[key]["type"] == "Team Size"||
+                element[key]["type"] == "Fee" ||
+                element[key]["type"] == "Brief" || element[key]["type"] == "Total Rounds"){
+              setRequiredHackathonDetailsAdded(element[key]["type"], false);
+            }
             node.remove(element);
             deleteCustomGlobalKey(element[key]["id"]);
             selectedWidgetKey=null;
