@@ -25,11 +25,11 @@ class ChildFactory {
           "height": isMargin ? 100 : 300,
           "color": generateRandomColor().toString(),
           "width": isMargin ? 100 : 300,
-          "margin":  [0,0,0,0],
-          "padding": [0,0,0,0],
-          "alignment": [0,0],
+          "margin": [0, 0, 0, 0],
+          "padding": [0, 0, 0, 0],
+          "alignment": [0, 0],
           "shape": "square",
-          "borderWidth":0,
+          "borderWidth": 0,
           "borderRadius": 0,
           "borderColor": generateRandomColor().toString(),
           "shadowColor": generateRandomColor().toString(),
@@ -52,7 +52,7 @@ class ChildFactory {
           "align": "left"
         };
         break;
-    
+
       case "Row":
         baseChild[key]!['properties'] = {
           "mainAxisAlignment": 'Start',
@@ -73,17 +73,17 @@ class ChildFactory {
           //"color": generateRandomColor().toString(),
           "dividerHeight": 10,
           "indent": 0,
-          "endIndent":  0
+          "endIndent": 0
         };
         break;
 
       case "VerticalDivider":
-      baseChild[key]!['properties'] = {
+        baseChild[key]!['properties'] = {
           "thickness": 10,
           //"color": generateRandomColor().toString(),
           "verticalDividerWidth": 5,
           "indent": 0,
-          "endIndent":  0
+          "endIndent": 0
         };
         break;
 
@@ -147,9 +147,7 @@ class ChildFactory {
       case "Tabbar":
         break;
 
-
-
-        case "Hackathon Name":
+      case "Hackathon Name":
         // Add specific properties for Text if necessary
         baseChild[key]!['properties'] = {
           "text": "Add your Hackathon Name",
@@ -167,7 +165,7 @@ class ChildFactory {
         };
         break;
 
-        case "Start Date":
+      case "Start Date":
         // Add specific properties for Text if necessary
         baseChild[key]!['properties'] = {
           "text": "Add hackathon start date",
@@ -185,8 +183,7 @@ class ChildFactory {
         };
         break;
 
-
-        case "Organization Name":
+      case "Organization Name":
         // Add specific properties for Text if necessary
         baseChild[key]!['properties'] = {
           "text": "Add your oranization name",
@@ -204,8 +201,79 @@ class ChildFactory {
         };
         break;
 
+      case "Deadline":
+        // Add specific properties for Text if necessary
+        baseChild[key]!['properties'] = {
+          "text": "Add hackathon venue",
+          "fontSize": 20,
+          "color": "Color(0xff1a202c)",
+          "font": 'Fira Sans',
+          "letterSpacing": 0,
+          "lineHeight": 19,
+          "strikethrough": false,
+          "italics": false,
+          "underline": false,
+          "fontWeight": 200,
+          "uppercase": false,
+          "align": "left"
+        };
+        break;
 
-        case "Venue":
+      case "Team Size":
+        // Add specific properties for Text if necessary
+        baseChild[key]!['properties'] = {
+          "text": "Add hackathon venue",
+          "fontSize": 20,
+          "color": "Color(0xff1a202c)",
+          "font": 'Fira Sans',
+          "letterSpacing": 0,
+          "lineHeight": 19,
+          "strikethrough": false,
+          "italics": false,
+          "underline": false,
+          "fontWeight": 200,
+          "uppercase": false,
+          "align": "left"
+        };
+        break;
+
+      case "Brief":
+        // Add specific properties for Text if necessary
+        baseChild[key]!['properties'] = {
+          "text": "Add hackathon venue",
+          "fontSize": 20,
+          "color": "Color(0xff1a202c)",
+          "font": 'Fira Sans',
+          "letterSpacing": 0,
+          "lineHeight": 19,
+          "strikethrough": false,
+          "italics": false,
+          "underline": false,
+          "fontWeight": 200,
+          "uppercase": false,
+          "align": "left"
+        };
+        break;
+
+      case "Fee":
+        // Add specific properties for Text if necessary
+        baseChild[key]!['properties'] = {
+          "text": "Add hackathon venue",
+          "fontSize": 20,
+          "color": "Color(0xff1a202c)",
+          "font": 'Fira Sans',
+          "letterSpacing": 0,
+          "lineHeight": 19,
+          "strikethrough": false,
+          "italics": false,
+          "underline": false,
+          "fontWeight": 200,
+          "uppercase": false,
+          "align": "left"
+        };
+        break;
+
+      case "Total Rounds":
         // Add specific properties for Text if necessary
         baseChild[key]!['properties'] = {
           "text": "Add hackathon venue",
