@@ -28,6 +28,7 @@ import 'package:timeline_tile/timeline_tile.dart';
 class CustomEditPortal extends ChangeNotifier {
   bool _isColorSelected = false;
     bool _isPaddingSelected = false;
+    bool _isMarginSelected=false;
   bool _isColorPickerSelected = false;
   int _selectedColorTool = 2;
   final List<Color> _colors = [];
@@ -832,6 +833,14 @@ class CustomEditPortal extends ChangeNotifier {
 
   void setPaddingSelected() {
     _isPaddingSelected = !_isPaddingSelected;
+    notifyListeners();
+  }
+
+
+bool get isMarginSelected => _isMarginSelected;
+
+  void setMarginSelected() {
+    _isMarginSelected = !_isMarginSelected;
     notifyListeners();
   }
 

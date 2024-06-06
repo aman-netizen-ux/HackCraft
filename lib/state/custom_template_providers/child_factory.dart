@@ -25,7 +25,9 @@ class ChildFactory {
           "height": isMargin ? 100 : 300,
           "color": generateRandomColor().toString(),
           "width": isMargin ? 100 : 300,
-          "margin": isMargin ? 20 : 0
+          "margin":  [0,0,0,0],
+          "padding": [0,0,0,0],
+          "alignment": "center"
         };
         break;
       case "Text":

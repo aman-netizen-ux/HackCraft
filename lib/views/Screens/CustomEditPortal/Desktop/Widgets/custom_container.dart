@@ -14,16 +14,64 @@ class CustomContainer extends StatefulWidget {
 }
 
 class _CustomContainerState extends State<CustomContainer> {
+late EdgeInsets padding;
+late EdgeInsets margin;
+@override
+  void initState() {
+    super.initState();
+ List<dynamic> paddingValues = widget.node['properties']['padding'];
+     padding = EdgeInsets.fromLTRB(
+      paddingValues[0].toDouble(),
+      paddingValues[1].toDouble(),
+      paddingValues[2].toDouble(),
+      paddingValues[3].toDouble(),
+    );
+
+    List<dynamic> marginValues = widget.node['properties']['margin'];
+     margin = EdgeInsets.fromLTRB(
+      marginValues[0].toDouble(),
+      marginValues[1].toDouble(),
+      marginValues[2].toDouble(),
+      marginValues[3].toDouble(),
+    );
+    
+  }
+
+  @override
+  void didUpdateWidget(covariant CustomContainer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+       List<dynamic> paddingValues = widget.node['properties']['padding'];
+     padding = EdgeInsets.fromLTRB(
+      paddingValues[0].toDouble(),
+      paddingValues[1].toDouble(),
+      paddingValues[2].toDouble(),
+      paddingValues[3].toDouble(),
+    );
+      
+  List<dynamic> marginValues = widget.node['properties']['margin'];
+     margin = EdgeInsets.fromLTRB(
+      marginValues[0].toDouble(),
+      marginValues[1].toDouble(),
+      marginValues[2].toDouble(),
+      marginValues[3].toDouble(),
+    );
+    
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     final customEditPortalProvider = Provider.of<CustomEditPortal>(context);
+    
     return InkWell(
       onTap: widget.onTap,
       child: Container(
         height: widget.node['properties']['height'],
         width: widget.node['properties']['width'],
-        margin: EdgeInsets.all(widget.node['properties']['margin']),
-       // alignment: Alignment.topLeft, TODO: GIVE ALIGNMENT TO THE CONTAINER
+        margin: margin,
+        padding: padding,
+       alignment: Alignment.center,// TODO: GIVE ALIGNMENT TO THE CONTAINER
         color: customEditPortalProvider.stringToColor(widget.node['properties']
             ['color']), 
         child: widget.childWidgets.isEmpty

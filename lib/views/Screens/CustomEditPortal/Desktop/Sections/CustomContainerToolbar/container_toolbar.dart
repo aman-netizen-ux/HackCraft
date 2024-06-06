@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:major_project__widget_testing/constants/enums.dart';
 // import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonContainerPropertiesProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CommonTools/marginTool.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CommonTools/padding_tool.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CustomContainerToolbar/custom_container_bg_color.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CustomContainerToolbar/custom_container_height_widget.dart'; import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CustomContainerToolbar/custom_container_width.dart';
@@ -29,7 +30,9 @@ class CustomContainerPropertiesPanelWidget extends StatelessWidget {
          SizedBox(width: scaleWidth(context, 20)),
          const CustomContainerBgColorWidget(),
          SizedBox(width: scaleWidth(context, 20)),
-         const PaddingTool()
+         const PaddingTool(),
+          SizedBox(width: scaleWidth(context, 20)),
+         const MarginTool()
       ],
     );
     // int colorNumber = hackathonContainerProvider.countElements(
