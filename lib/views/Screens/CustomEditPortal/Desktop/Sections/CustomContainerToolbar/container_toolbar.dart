@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:major_project__widget_testing/state/custom_template_providers/custom_edit_template_provider.dart';
 // import 'package:major_project__widget_testing/constants/enums.dart';
 // import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonContainerPropertiesProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CommonTools/alignmnettool.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CommonTools/marginTool.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CommonTools/padding_tool.dart';
+import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CustomContainerToolbar/container_border_width.dart';
+import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CustomContainerToolbar/continer_shape.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CustomContainerToolbar/custom_container_bg_color.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CustomContainerToolbar/custom_container_height_widget.dart'; import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CustomContainerToolbar/custom_container_width.dart';
+import 'package:provider/provider.dart';
 // import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/ContainerToolbar/container_bg_color.dart';
 // import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/ContainerToolbar/container_blur_radius.dart';
 // import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/ContainerToolbar/container_border_radius.dart';
@@ -23,19 +27,37 @@ class CustomContainerPropertiesPanelWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final customEditPortalProvider = Provider.of<CustomEditPortal>(context);
+    String shape= customEditPortalProvider.getPropertyValue(
+              customEditPortalProvider.jsonObject,
+              customEditPortalProvider.selectedWidgetKey.toString(),
+             "shape");
+
+             print("shapeeeeeee$shape");
     return Row(
       children: [
-        const CustomContainerHeightWidget(),
+        const   ContainerShapeTool(),
          SizedBox(width: scaleWidth(context, 20)),
-         const CustomContainerWidthWidget(),
+       
+         CustomContainerHeightWidget(title: shape=="circle"?"Diameter": "Container Height"),
          SizedBox(width: scaleWidth(context, 20)),
+        shape=="circle"?  Container():const CustomContainerWidthWidget(property: "width",title: "Container Width",),
+          shape=="circle"? Container():SizedBox(width: scaleWidth(context, 20)),
          const CustomContainerBgColorWidget(),
          SizedBox(width: scaleWidth(context, 20)),
          const PaddingTool(),
           SizedBox(width: scaleWidth(context, 20)),
          const MarginTool(),
             SizedBox(width: scaleWidth(context, 20)),
-         const AlignmentTool()
+         const AlignmentTool(),
+        //  SizedBox(width: scaleWidth(context, 20)),
+        //  const ContainerBorderWidthWidget(),
+         SizedBox(width: scaleWidth(context, 20)),
+         const CustomContainerWidthWidget(property: "borderWidth",title: "Border Width" ,),
+       
+
+
+         
       ],
     );
     // int colorNumber = hackathonContainerProvider.countElements(

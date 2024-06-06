@@ -845,6 +845,58 @@ class CustomEditPortal extends ChangeNotifier {
   }
 
 
+ void toggleContainerShapeAlignment() {
+    if (_selectedWidgetKey != null ) {
+      var currentShape =getPropertyValue(
+              jsonObject,
+              _selectedWidgetKey.toString(),
+              "shape");
+         
+
+      switch (currentShape) {
+        case 'circle':
+         addPropertyByKey(              
+              _selectedWidgetKey == null
+                  ? customColumnKey.toString()
+                  : _selectedWidgetKey.toString(),
+              "shape",
+              "square");
+          break;
+       
+        default:
+          addPropertyByKey(              
+              _selectedWidgetKey == null
+                  ? customColumnKey.toString()
+                  : _selectedWidgetKey.toString(),
+              "shape",
+              "circle");
+          break;
+      }
+      notifyListeners();
+    }
+  }
+
+
+   IconData getContainerShapeIcon() {
+    if (_selectedWidgetKey != null 
+        ) {
+      var currentShape =
+          getPropertyValue(
+              jsonObject,
+              _selectedWidgetKey.toString(),
+              "shape");
+
+      switch (currentShape) {
+        case 'circle':
+          return Icons.circle;
+        
+        case 'square':
+          return Icons.square;
+      }
+    }
+    return Icons.square;
+  }
+
 bool get isMarginSelected => _isMarginSelected;
 
   void setMarginSelected() {

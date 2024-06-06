@@ -27,7 +27,9 @@ class ChildFactory {
           "width": isMargin ? 100 : 300,
           "margin":  [0,0,0,0],
           "padding": [0,0,0,0],
-          "alignment": [0,0]
+          "alignment": [0,0],
+          "shape": "square",
+          "borderWidth":0
         };
         break;
       case "Text":

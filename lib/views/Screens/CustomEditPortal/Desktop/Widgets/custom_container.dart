@@ -72,8 +72,15 @@ late EdgeInsets margin;
         margin: margin,
         padding: padding,
        alignment: Alignment(widget.node['properties']['alignment'][0],widget.node['properties']['alignment'][1] ),// TODO: GIVE ALIGNMENT TO THE CONTAINER
-        color: customEditPortalProvider.stringToColor(widget.node['properties']
+       decoration: BoxDecoration(
+         color: customEditPortalProvider.stringToColor(widget.node['properties']
             ['color']), 
+            shape: widget.node['properties']['shape']=="circle"? BoxShape.circle: BoxShape.rectangle,
+            border: Border.all(
+              color: Colors.pink.shade100,
+              width:  widget.node['properties']['borderWidth']
+            )
+       ),
         child: widget.childWidgets.isEmpty
             ? null
             : (widget.childWidgets.length == 1
