@@ -4,6 +4,7 @@ import 'package:major_project__widget_testing/state/custom_template_providers/cu
 // import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonContainerPropertiesProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CommonTools/alignmnettool.dart';
+import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CommonTools/deleteWidget.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CommonTools/marginTool.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CommonTools/padding_tool.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CustomContainerToolbar/container_border_width.dart';
@@ -77,7 +78,8 @@ class CustomContainerPropertiesPanelWidget extends StatelessWidget {
           property: "shadowColor",
           title: "Shadow Color",
          ),
-
+         SizedBox(width: scaleWidth(context, 20)),
+const DeleteWidget()
 
          
       ],

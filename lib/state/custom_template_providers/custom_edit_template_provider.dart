@@ -897,6 +897,93 @@ class CustomEditPortal extends ChangeNotifier {
     );
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  bool deleteChildByKey(String globalKey) {
+  // Log entry point
+bool found = false; // Flag to check if the key has been found
+  // Auxiliary recursive function to search and delete a node
+  bool _searchAndDelete(dynamic node, String key, int depth) {
+    if (node is Map) {
+      
+      if (node.containsKey(key)) {
+        return true;
+      }else {
+          for (var value in node.values) {
+            var result = _searchAndDelete(value, key, depth + 1);
+            if (result ) {
+              return result;
+            }
+          }
+        }
+          
+    } else if (node is List) {
+      // If the node is a List, iterate over elements
+      for (var element in node) {
+          var result = _searchAndDelete(element, key, depth + 1);
+          if (result &&!found) {
+            node.remove(element);
+            deleteCustomGlobalKey(element[key]["id"]);
+            selectedWidgetKey=null;
+            found=true;
+
+            return result;
+          }
+        }
+    }
+    return false;
+  }
+
+  // Start the deletion from the top-level 'children' node
+  return _searchAndDelete(_jsonObject['children'], globalKey, 0);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   void triggerUIUpdate() {
     notifyListeners();
   }
