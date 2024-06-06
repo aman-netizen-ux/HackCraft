@@ -27,22 +27,23 @@ import 'package:timeline_tile/timeline_tile.dart';
 
 class CustomEditPortal extends ChangeNotifier {
   bool _isColorSelected = false;
-    bool _isPaddingSelected = false;
-    bool _isMarginSelected=false;
+  bool _isPaddingSelected = false;
+  bool _isMarginSelected = false;
   bool _isColorPickerSelected = false;
-   bool _isAlignmentSelected = false;
+  bool _isAlignmentSelected = false;
   int _selectedColorTool = 2;
   final List<Color> _colors = [];
-  Map<String, dynamic> _requiredHackathonDetails={
-     "Hackathon Name":"",    
-    "Organization Name":"",
-    "Start Date":"",
-    "Venue":""
+  Map<String, dynamic> _requiredHackathonDetails = {
+    "Hackathon Name": "",
+    "Organization Name": "",
+    "Start Date": "",
+    "Venue": ""
   };
 
-  Map<String, dynamic> get requiredHackathonDetails=> _requiredHackathonDetails;
-  void setRequiredHackathonDetails(String key, dynamic value){
-    _requiredHackathonDetails[key]=value;
+  Map<String, dynamic> get requiredHackathonDetails =>
+      _requiredHackathonDetails;
+  void setRequiredHackathonDetails(String key, dynamic value) {
+    _requiredHackathonDetails[key] = value;
     print("_requiredHackathonDetails $_requiredHackathonDetails");
     notifyListeners();
   }
@@ -475,14 +476,16 @@ class CustomEditPortal extends ChangeNotifier {
           break;
 //TODO: vertical divider is not visible when it is the direct child of default column
         case "VerticalDivider":
-          currentWidget = CustomVerticalDivider(node: node, onTap: () {
-            int? index = node['id'];
+          currentWidget = CustomVerticalDivider(
+              node: node,
+              onTap: () {
+                int? index = node['id'];
                 final type = node['type'];
                 _selectedWidgetType = type;
                 final currentKey = customWidgetsGlobalKeysMap[index];
                 _selectedWidgetKey = currentKey;
                 notifyListeners();
-          });
+              });
 
           break;
 
@@ -687,11 +690,7 @@ class CustomEditPortal extends ChangeNotifier {
               onTap: () {}); // Example: Set a default text, customize as needed
           break;
 
-
-
-
-           case 'Hackathon Name':
-           print("Im in switch hackathon name");
+        case 'Hackathon Name':
           currentWidget = CustomText(
               node: node,
               onTap: () {
@@ -706,7 +705,7 @@ class CustomEditPortal extends ChangeNotifier {
               }); // Example: Set a default text, customize as needed
           break;
 
-           case 'Organization Name':
+        case 'Organization Name':
           currentWidget = CustomText(
               node: node,
               onTap: () {
@@ -721,8 +720,7 @@ class CustomEditPortal extends ChangeNotifier {
               }); // Example: Set a default text, customize as needed
           break;
 
-
-           case 'Start Date':
+        case 'Start Date':
           currentWidget = CustomText(
               node: node,
               onTap: () {
@@ -737,8 +735,67 @@ class CustomEditPortal extends ChangeNotifier {
               }); // Example: Set a default text, customize as needed
           break;
 
+        case 'Deadline':
+          currentWidget = CustomText(
+              node: node,
+              onTap: () {
+                int? index = node['id'];
+                final currentKey = customWidgetsGlobalKeysMap[index];
+                final type = node['type'];
+                _selectedWidgetType = type;
+                _selectedWidgetKey = currentKey;
+                notifyListeners();
 
-           case 'Venue':
+                debugPrint("${_selectedWidgetType} ${_isColorSelected}");
+              }); // Example: Set a default text, customize as needed
+          break;
+
+        case 'Team Size':
+          currentWidget = CustomText(
+              node: node,
+              onTap: () {
+                int? index = node['id'];
+                final currentKey = customWidgetsGlobalKeysMap[index];
+                final type = node['type'];
+                _selectedWidgetType = type;
+                _selectedWidgetKey = currentKey;
+                notifyListeners();
+
+                debugPrint("${_selectedWidgetType} ${_isColorSelected}");
+              }); // Example: Set a default text, customize as needed
+          break;
+
+        case 'Brief':
+          currentWidget = CustomText(
+              node: node,
+              onTap: () {
+                int? index = node['id'];
+                final currentKey = customWidgetsGlobalKeysMap[index];
+                final type = node['type'];
+                _selectedWidgetType = type;
+                _selectedWidgetKey = currentKey;
+                notifyListeners();
+
+                debugPrint("${_selectedWidgetType} ${_isColorSelected}");
+              }); // Example: Set a default text, customize as needed
+          break;
+
+        case 'Fee':
+          currentWidget = CustomText(
+              node: node,
+              onTap: () {
+                int? index = node['id'];
+                final currentKey = customWidgetsGlobalKeysMap[index];
+                final type = node['type'];
+                _selectedWidgetType = type;
+                _selectedWidgetKey = currentKey;
+                notifyListeners();
+
+                debugPrint("${_selectedWidgetType} ${_isColorSelected}");
+              }); // Example: Set a default text, customize as needed
+          break;
+
+        case 'Total Rounds':
           currentWidget = CustomText(
               node: node,
               onTap: () {
@@ -996,41 +1053,37 @@ bool found = false; // Flag to check if the key has been found
     notifyListeners();
   }
 
-   bool get isPaddingSelected => _isPaddingSelected;
+  bool get isPaddingSelected => _isPaddingSelected;
 
   void setPaddingSelected() {
     _isPaddingSelected = !_isPaddingSelected;
     notifyListeners();
   }
 
-   bool get isAlignemntSelected => _isAlignmentSelected;
+  bool get isAlignemntSelected => _isAlignmentSelected;
 
   void setIsAlignmentSelected() {
     _isAlignmentSelected = !_isAlignmentSelected;
     notifyListeners();
   }
 
-
- void toggleContainerShapeAlignment() {
-    if (_selectedWidgetKey != null ) {
-      var currentShape =getPropertyValue(
-              jsonObject,
-              _selectedWidgetKey.toString(),
-              "shape");
-         
+  void toggleContainerShapeAlignment() {
+    if (_selectedWidgetKey != null) {
+      var currentShape =
+          getPropertyValue(jsonObject, _selectedWidgetKey.toString(), "shape");
 
       switch (currentShape) {
         case 'circle':
-         addPropertyByKey(              
+          addPropertyByKey(
               _selectedWidgetKey == null
                   ? customColumnKey.toString()
                   : _selectedWidgetKey.toString(),
               "shape",
               "square");
           break;
-       
+
         default:
-          addPropertyByKey(              
+          addPropertyByKey(
               _selectedWidgetKey == null
                   ? customColumnKey.toString()
                   : _selectedWidgetKey.toString(),
@@ -1042,20 +1095,15 @@ bool found = false; // Flag to check if the key has been found
     }
   }
 
-
-   IconData getContainerShapeIcon() {
-    if (_selectedWidgetKey != null 
-        ) {
+  IconData getContainerShapeIcon() {
+    if (_selectedWidgetKey != null) {
       var currentShape =
-          getPropertyValue(
-              jsonObject,
-              _selectedWidgetKey.toString(),
-              "shape");
+          getPropertyValue(jsonObject, _selectedWidgetKey.toString(), "shape");
 
       switch (currentShape) {
         case 'circle':
           return Icons.circle;
-        
+
         case 'square':
           return Icons.square;
       }
@@ -1063,7 +1111,7 @@ bool found = false; // Flag to check if the key has been found
     return Icons.square;
   }
 
-bool get isMarginSelected => _isMarginSelected;
+  bool get isMarginSelected => _isMarginSelected;
 
   void setMarginSelected() {
     _isMarginSelected = !_isMarginSelected;
@@ -1300,23 +1348,19 @@ bool get isMarginSelected => _isMarginSelected;
 
   int _activeIndex = -1;
 
+  get activeIndex => _activeIndex;
 
-get activeIndex => _activeIndex;
-
-  void setActiveIndex(int index){
+  void setActiveIndex(int index) {
     _activeIndex = index;
     notifyListeners();
   }
-
 
   String _propertyType = "";
 
   String get propertyType => _propertyType;
 
-  void setPropertyType(String value){
+  void setPropertyType(String value) {
     _propertyType = value;
     notifyListeners();
   }
-
 }
- 
