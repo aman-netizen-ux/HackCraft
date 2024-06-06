@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/state/custom_template_providers/custom_edit_template_provider.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
+import 'package:major_project__widget_testing/utils/customTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/views/Components/circleCornerInputBorder.dart';
@@ -78,6 +79,19 @@ class _CustomTextState extends State<CustomText> {
             decoration: const InputDecoration(
               border: InputBorder.none, 
             ),
+             onChanged: (value){
+               final customEditPortalProvider = Provider.of<CustomEditPortal>(context, listen: false);
+              customEditPortalProvider.addPropertyByKey(
+              customEditPortalProvider.selectedWidgetKey == null
+                  ? customColumnKey.toString()
+                  : customEditPortalProvider.selectedWidgetKey.toString(),
+              "text",
+              value);
+          customEditPortalProvider.dynamicWidgets = customEditPortalProvider
+              .buildWidgetsFromJson(customEditPortalProvider.jsonObject);
+          customEditPortalProvider.triggerUIUpdate();
+            },
+           
           ),
         ),
       ),

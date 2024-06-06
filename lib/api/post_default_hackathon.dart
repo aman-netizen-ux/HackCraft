@@ -52,4 +52,46 @@ class CreateHackathon {
       return null;
     }
   }
+
+
+
+   postCustomSingleHackathon(Map<String, dynamic> params) async {
+    print(params);
+    try {
+      final String baseUrl = dotenv.get('postCustomHackathon');
+      final String id;
+      final response = await http.post(
+        Uri.parse(baseUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode(params),
+      );
+
+debugPrint("postCustomHackathon: ${response.statusCode}");
+
+      if (response.statusCode == 201) {
+        final jsonResponse = json.decode(response.body);
+
+        debugPrint('response : $jsonResponse');
+
+        id = jsonResponse['hackathon created']['_id'];
+        debugPrint('id postCustomHackathon: $id');
+        logger.i('Hackathon created successfully');
+
+        return id;
+      } else {
+        
+
+        debugPrint('error at postCustomHackathon 43 : ${response.body}');
+
+        return '';
+      }
+    } catch (e) {
+      logger.e("Error message : $e");
+      debugPrint('error : $e');
+      return null;
+    }
+  }
 }
