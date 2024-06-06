@@ -14,6 +14,7 @@ import 'package:major_project__widget_testing/utils/customTemplate_widget_keys.d
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/snackBar.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
+import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/createRegistrationform.dart';
 import 'package:provider/provider.dart';
 
 class CustomSidePanel extends StatefulWidget {
@@ -619,21 +620,10 @@ class CustomMenu extends StatelessWidget {
           } else if (result == 'Save') {
             //TODO
           } else if (result == 'Host') {
-            // if (widget.formKey.currentState!.validate() &&
-            //     galleryProvider.logoFile.isNotEmpty) {
-            //   widget.formKey.currentState!.save();
+           final customEditPortalProvider =
+        Provider.of<CustomEditPortal>(context, listen: false);
 
-            //   hostHackathon(
-            //       rulesProvider,
-            //       hackathonDetailsProvider,
-            //       hackathonTextPropertiesProvider,
-            //       hackathonContainerPropertiesProvider);
-            // } else if (galleryProvider.logoFile.isEmpty) {
-            //   print("logo fill kro");
-            //   galleryProvider.logoError = true;
-            // }
-
-            debugPrint(" clicked on hackathon hosting");
+           
 
             hostHackathon(context);
           } else {
@@ -670,6 +660,7 @@ class CustomMenu extends StatelessWidget {
         Provider.of<CustomEditPortal>(context, listen: false);
     final hackathonDetailsProvider =
         Provider.of<HackathonDetailsProvider>(context, listen: false);
+     hackathonDetailsProvider.setLoadingPostHackathon(true);
     Timer? timer;
     timer = Timer(const Duration(seconds: 20), () {
       debugPrint(" hola from timer");
@@ -716,8 +707,61 @@ class CustomMenu extends StatelessWidget {
           }
         }
       },
+
+
     );
+
+    hackathonDetailsProvider.setLoadingPostHackathon(false);
+    timer.cancel();
+
+    Navigator.pop(context);
+    print("hackathon custom id here $hackathonId");
+    if (hackathonId.isNotEmpty) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Success'),
+            content: const Text('Hackathon created successfully!'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RegistrationForm(
+                                hackathonId: hackathonId,
+                              )));
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Uhh-Ohh!'),
+            content: const Text('Something went wrong'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Cancel'),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
+  
 }
 
 Widget buildWidgetContainer(
