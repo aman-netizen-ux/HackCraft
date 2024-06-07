@@ -76,10 +76,17 @@ class _CustomTextState extends State<CustomText> {
             ),
             textAlign: hackathonTextPropertiesProvider
                 .getTextAlign(widget.node['properties']['align']),
-            decoration: const InputDecoration(
+            decoration:  InputDecoration(
               border: InputBorder.none, 
+              hintText: widget.node['properties']['hint']
             ),
              onChanged: (value){
+              if(widget.node['type']=="Text" && value.isEmpty){
+                setState(() {
+                  textController.text="Dynamic Text";
+                value="Dynamic Text";
+                });
+              }
                final customEditPortalProvider = Provider.of<CustomEditPortal>(context, listen: false);
               customEditPortalProvider.addPropertyByKey(
               customEditPortalProvider.selectedWidgetKey == null
@@ -94,6 +101,34 @@ class _CustomTextState extends State<CustomText> {
           if(widget.node['type']=="Hackathon Name"){
             customEditPortalProvider.setRequiredHackathonDetails("Hackathon Name", value);
           }
+           if(widget.node['type']=="Organization Name"){
+            customEditPortalProvider.setRequiredHackathonDetails("Organization Name", value);
+          }
+           if(widget.node['type']=="Start Date"){
+            customEditPortalProvider.setRequiredHackathonDetails("Start Date", value);
+          }
+          if(widget.node['type']=="Deadline"){
+            customEditPortalProvider.setRequiredHackathonDetails("Deadline", value);
+          }
+          if(widget.node['type']=="Brief"){
+            customEditPortalProvider.setRequiredHackathonDetails("Brief", value);
+          }
+          if(widget.node['type']=="Team Size"){
+            customEditPortalProvider.setRequiredHackathonDetails("Team Size", value);
+          }
+          if(widget.node['type']=="Fee"){
+            customEditPortalProvider.setRequiredHackathonDetails("Fee", value);
+          }
+          if(widget.node['type']=="Total Rounds"){
+            customEditPortalProvider.setRequiredHackathonDetails("Total Rounds", value);
+          }
+          if(widget.node['type']=="Venue"){
+            customEditPortalProvider.setRequiredHackathonDetails("Venue", value);
+          }
+          if(widget.node['type']=="Mode of Conduct"){
+            customEditPortalProvider.setRequiredHackathonDetails("Mode of Conduct", value);
+          }
+          
             },
            
           ),

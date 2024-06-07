@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CommonTools/deleteWidget.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CustomTextToolbar/custom_font_size_widget.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CustomTextToolbar/custom_font_widget.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CustomTextToolbar/custom_text_formatting.dart';
@@ -38,6 +39,8 @@ class CustomTextPropertiesPanelWidget extends StatelessWidget {
         // ),
 
          const CustomTextFormattingWidget(),
+         SizedBox(width: scaleWidth(context, 20)),
+const DeleteWidget()
       ],
     );
   }

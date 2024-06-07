@@ -37,16 +37,63 @@ class CustomEditPortal extends ChangeNotifier {
     "Hackathon Name": "",
     "Organization Name": "",
     "Start Date": "",
-    "Venue": ""
+    "Deadline": "",
+    "Team Size": "",    
+    "Brief": "",
+    "Fee": "",
+    "Total Rounds": "",
+    "Venue": "",
+    "Mode of Conduct":"",
+    "Get Registered":"Get Registered"
   };
+
+   Map<String, bool> _requiredHackathonDetailsAdded = {
+    "Hackathon Name": false,
+    "Organization Name": false,
+    "Start Date": false,
+    "Deadline": false,
+    "Team Size": false,    
+    "Brief": false,
+    "Fee": false,
+    "Total Rounds": false,
+    "Venue": false,
+    "Mode of Conduct": false,
+    "Get Registered": false
+  };
+
+  
+  
 
   Map<String, dynamic> get requiredHackathonDetails =>
       _requiredHackathonDetails;
+
+        Map<String, dynamic> get requiredHackathonDetailsAdded =>
+      _requiredHackathonDetailsAdded;
+void setRequiredHackathonDetailsAdded(String key, dynamic value) {
+    _requiredHackathonDetailsAdded[key] = value;
+    print("_requiredHackathonDetailsAdded $_requiredHackathonDetailsAdded");
+    notifyListeners();
+  }
+
   void setRequiredHackathonDetails(String key, dynamic value) {
     _requiredHackathonDetails[key] = value;
     print("_requiredHackathonDetails $_requiredHackathonDetails");
     notifyListeners();
   }
+
+  bool checkIsRequireDataAdded(String key){
+return  _requiredHackathonDetailsAdded[key]??false;
+  }
+
+  List<String> checkForEmptyFields() {
+  List<String> emptyKeys = [];
+  _requiredHackathonDetails.forEach((key, value) {
+    if (value.toString().isEmpty|| !checkIsRequireDataAdded(key)) {
+      emptyKeys.add(key);
+    }
+  });
+  return emptyKeys;
+}
 
   final int _maxCapacity = 16;
 
@@ -336,7 +383,7 @@ class CustomEditPortal extends ChangeNotifier {
     // Extracting the hex color code from the string
   }
 
-  List<Widget> buildWidgetsFromJson(dynamic node) {
+  List<Widget> buildWidgetsFromJson(dynamic node, {bool isEdit=true}) {
     List<Widget> widgets = [];
 
     // Function to recursively build widgets
@@ -362,6 +409,7 @@ class CustomEditPortal extends ChangeNotifier {
           }
           currentWidget = CustomContainer(
               node: node,
+              isEdit: isEdit,
               onTap: () {
                 int? index = node['id'];
                 final currentKey = customWidgetsGlobalKeysMap[index];
@@ -810,6 +858,64 @@ class CustomEditPortal extends ChangeNotifier {
               }); // Example: Set a default text, customize as needed
           break;
 
+
+           case 'Venue':
+          currentWidget = CustomText(
+              node: node,
+              onTap: () {
+                int? index = node['id'];
+                final currentKey = customWidgetsGlobalKeysMap[index];
+                final type = node['type'];
+                _selectedWidgetType = type;
+                _selectedWidgetKey = currentKey;
+                notifyListeners();
+
+                debugPrint("${_selectedWidgetType} ${_isColorSelected}");
+              }); // Example: Set a default text, customize as needed
+          break;
+
+
+           case 'Mode of Conduct':
+          currentWidget = CustomText(
+              node: node,
+              onTap: () {
+                int? index = node['id'];
+                final currentKey = customWidgetsGlobalKeysMap[index];
+                final type = node['type'];
+                _selectedWidgetType = type;
+                _selectedWidgetKey = currentKey;
+                notifyListeners();
+                
+
+                debugPrint("${_selectedWidgetType} ${_isColorSelected}");
+              }); // Example: Set a default text, customize as needed
+          break;
+
+           case 'Get Registered':
+          List<Widget> childWidgets = [];
+          if (node.containsKey('child') && node['child'] is List) {
+            node['child'].forEach((childNode) {
+              for (var entry in childNode.entries) {
+                childWidgets.add(buildWidget(
+                  entry.value,
+                ));
+              }
+            });
+          }
+          currentWidget = CustomContainer(
+              node: node,
+              isEdit: isEdit,
+              onTap: () {
+                int? index = node['id'];
+                final currentKey = customWidgetsGlobalKeysMap[index];
+                final type = node['type'];
+                _selectedWidgetType = type;
+                _selectedWidgetKey = currentKey;
+                notifyListeners();
+              },
+              childWidgets: childWidgets);
+          break;
+
         default:
           currentWidget = const SizedBox(); // Fallback for unrecognized types
       }
@@ -818,7 +924,9 @@ class CustomEditPortal extends ChangeNotifier {
     }
 
     // Start building widgets from the root 'children'
+    print("line 862");
     if (node.containsKey('children') && node['children'] is List) {
+       print("line 864");
       for (var child in node['children']) {
         for (var entry in child.entries) {
           widgets.add(buildWidget(
@@ -953,6 +1061,104 @@ class CustomEditPortal extends ChangeNotifier {
       0,
     );
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  bool deleteChildByKey(String globalKey) {
+  // Log entry point
+bool found = false; // Flag to check if the key has been found
+  // Auxiliary recursive function to search and delete a node
+  bool _searchAndDelete(dynamic node, String key, int depth) {
+    if (node is Map) {
+      
+      if (node.containsKey(key)) {
+        return true;
+      }else {
+          for (var value in node.values) {
+            var result = _searchAndDelete(value, key, depth + 1);
+            if (result ) {
+              return result;
+            }
+          }
+        }
+          
+    } else if (node is List) {
+      // If the node is a List, iterate over elements
+      for (var element in node) {
+          var result = _searchAndDelete(element, key, depth + 1);
+          if (result &&!found) {
+            if(element[key]["type"] == "Deadline" ||
+                element[key]["type"] ==
+                    "Hackathon Name" ||
+                element[key]["type"] ==
+                    "Organization Name" ||
+                element[key]["type"] == "Start Date" || element[key]["type"] == "Team Size"||
+                element[key]["type"] == "Fee" ||
+                element[key]["type"] == "Brief" || element[key]["type"] == "Total Rounds"
+                || element[key]["type"] == "Venue" || element[key]["type"] == "Mode of Conduct"|| element[key]["type"] == "Get Registered" ){
+              setRequiredHackathonDetailsAdded(element[key]["type"], false);
+            }
+            node.remove(element);
+            deleteCustomGlobalKey(element[key]["id"]);
+            selectedWidgetKey=null;
+            found=true;
+
+            return result;
+          }
+        }
+    }
+    return false;
+  }
+
+  // Start the deletion from the top-level 'children' node
+  return _searchAndDelete(_jsonObject['children'], globalKey, 0);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   void triggerUIUpdate() {
     notifyListeners();

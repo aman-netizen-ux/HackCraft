@@ -71,12 +71,12 @@ class CreateHackathon {
 
 debugPrint("postCustomHackathon: ${response.statusCode}");
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
 
         debugPrint('response : $jsonResponse');
 
-        id = jsonResponse['hackathon created']['_id'];
+        id = jsonResponse['hackathon'];
         debugPrint('id postCustomHackathon: $id');
         logger.i('Hackathon created successfully');
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CommonTools/deleteWidget.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CustomDivider/custom_divider_endIndent.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CustomDivider/custom_divider_height.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CustomDivider/custom_divider_indent.dart';
@@ -20,7 +21,9 @@ class CustomDividerPropertiesPanelWidget extends StatelessWidget {
         SizedBox(width: scaleWidth(context, 20)),
         const CustomDividerIndentWidget(),
         SizedBox(width: scaleWidth(context, 20)),
-        const CustomDividerEndIndentWidget()
+        const CustomDividerEndIndentWidget(),
+        SizedBox(width: scaleWidth(context, 20)),
+const DeleteWidget()
         
         
       ],
