@@ -3,11 +3,14 @@ import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonContainerPropertiesProvider.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:major_project__widget_testing/utils/snackBar.dart';
 import 'package:major_project__widget_testing/views/Components/separator.dart';
+import 'package:major_project__widget_testing/views/Components/toolTip_custom_decoration.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Canvas/canvas.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/StackedToolBar/stackedToolBar.dart';
 import 'package:major_project__widget_testing/views/Screens/DefaultEditPortal/Desktop/Sections/Toolbar/toolbar.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RightPanel extends StatefulWidget {
   RightPanel({super.key, required this.formKey, this.textinput});
@@ -55,8 +58,7 @@ class _RightPanelState extends State<RightPanel> {
             visible: ((hackathonTextProvider.isBoldSelected ||
                         hackathonTextProvider.isTextColorSelected) &&
                     hackathonTextProvider.selectedTextFieldKey != null) ||
-                (hackathonContainerPropertiesProvider
-                        .activeIndex > -1 &&
+                (hackathonContainerPropertiesProvider.activeIndex > -1 &&
                     hackathonContainerPropertiesProvider.selectedContainerKey !=
                         null),
             child: Align(
@@ -75,7 +77,45 @@ class _RightPanelState extends State<RightPanel> {
               width: double.infinity, // Set the width to double.infinity
               child: const Separator(),
             ),
-          )
+          ),
+          Padding(
+              padding: EdgeInsets.only(
+                  bottom: scaleHeight(context, 30),
+                  right: scaleWidth(context, 20)),
+              child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: Tooltip(
+                    message: "Problem Statement Recommender",
+                    verticalOffset: 5,
+                    decoration: const ShapeDecoration(
+                      shape: ToolTipCustomDecoration(
+                          side: TooltipSide.bottom,
+                          borderColor: greyish3,
+                          borderWidth: 0),
+                      color: greyish7,
+                    ),
+                    child: FloatingActionButton(
+                      onPressed: () async {
+                        final Uri url = Uri.parse("http://127.0.0.1:5173/");
+                        if (await canLaunchUrl(url)) {
+                          launchUrl(url);
+                        } else {
+                          // ignore: use_build_context_synchronously
+                          showSnackBar(
+                              "Error occured!",
+                              red2,
+                              const Icon(
+                                Icons.report_gmailerrorred_outlined,
+                                color: white,
+                              ),
+                              context);
+                        }
+                      },
+                      backgroundColor: Colors.black,
+                      shape: const CircleBorder(),
+                      child: const Icon(Icons.open_in_new, color: Colors.white),
+                    ),
+                  )))
         ],
       ),
     );

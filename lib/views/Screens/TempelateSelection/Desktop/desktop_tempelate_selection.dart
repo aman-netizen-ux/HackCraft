@@ -197,17 +197,17 @@ class _TemplateSelectionBodyState extends State<TemplateSelectionBody> {
                               } else if (templateSelectionProvider
                                       .selectedTemplate ==
                                   2) {
-                                // Navigator.pushNamed(
-                                //     context, '/customEditPortal');
-                                final Uri url = Uri.parse(
-                                    "http://127.0.0.1:5173/?${loginProvider.emailId}");
+                                Navigator.pushNamed(
+                                    context, '/customEditPortal');
+                                // final Uri url = Uri.parse(
+                                //     "http://127.0.0.1:5173/?${loginProvider.emailId}");
 
-                                if (await canLaunchUrl(url)) {
-                                  await launchUrl(url);
-                                } else {
-                                  // Can't launch the URL, handle the error
-                                  debugPrint('Could not launch $url');
-                                }
+                                // if (await canLaunchUrl(url)) {
+                                //   await launchUrl(url);
+                                // } else {
+                                //   // Can't launch the URL, handle the error
+                                //   debugPrint('Could not launch $url');
+                                // }
                               } else {
                                 // TODO Create something to tell user to select card and check terms and conditions
                                 showSnackBar(

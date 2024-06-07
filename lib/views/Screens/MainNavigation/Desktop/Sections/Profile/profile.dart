@@ -1,11 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:major_project__widget_testing/api/Dashboard/getDashboardHackathon.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/state/getAllHackathons/getAllHackathonsProvider.dart';
+import 'package:major_project__widget_testing/state/loginProvider.dart';
 import 'package:major_project__widget_testing/state/profile-provider/profile_provider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
@@ -21,6 +24,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   // bool _isHovering = false;
   // late int _index;
+  bool isEmpty = true;
 
   @override
   void initState() {
@@ -29,8 +33,23 @@ class _ProfileState extends State<Profile> {
     final hackathonsProvider =
         Provider.of<AllHackathonProvider>(context, listen: false);
     hackathonsProvider.getAllHackathonsList();
+    final loginProvider = Provider.of<LoginProvider>(context, listen: false);
+    GetDashboardHackathon()
+        .fetchHackathons(loginProvider.emailId)
+        .then((hackathons) {
+      setState(() {
+        isEmpty = (hackathons['live']!.isEmpty) &&
+            (hackathons['open']!.isEmpty) &&
+            (hackathons['close']!.isEmpty);
+        print(hackathons['live']!.length);
+        print(" check hack $isEmpty");
+      });
+    }).catchError((error) {
+      debugPrint('Error fetching hackathons: $error');
+    });
   }
 
+  checkHackathon() {}
   // final List<Color> pastelColors = [
   //   const Color(0xFFD4A5A5),
   //   const Color(0xFFA5D3D3),
@@ -102,61 +121,65 @@ class _ProfileState extends State<Profile> {
                         'User Details', 0, profileProvider),
                     singleRow('assets/icons/defaultEditPortal/add.svg',
                         'Registrations', 1, profileProvider),
-                    singleRow('assets/icons/defaultEditPortal/add.svg',
-                        'Referral', 2, profileProvider),
+                    // singleRow('assets/icons/defaultEditPortal/add.svg',
+                    //     'Referral', 2, profileProvider),
                     singleRow('assets/icons/defaultEditPortal/add.svg',
                         'Settings', 3, profileProvider),
                     SizedBox(height: scaleHeight(context, 27)),
-                    Container(
-                        height: scaleHeight(context, 269),
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [Color(0xff71bec9), Color(0xff1c9daf)],
+                    Visibility(
+                      visible: !isEmpty,
+                      child: Container(
+                          height: scaleHeight(context, 269),
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [Color(0xff71bec9), Color(0xff1c9daf)],
+                            ),
                           ),
-                        ),
-                        child: Column(
-                          children: [
-                            SvgPicture.asset(
-                                'assets/images/profile/Dashboard.svg'),
-                            InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(context, '/dashboard');
-                              },
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: scaleWidth(context, 20),
-                                    vertical: scaleHeight(context, 12)),
-                                margin: EdgeInsets.symmetric(
-                                    horizontal: scaleWidth(context, 8),
-                                    vertical: scaleHeight(context, 12)),
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15)),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    SvgPicture.asset(
-                                        'assets/icons/defaultEditPortal/add.svg',
-                                        height: scaleHeight(context, 24),
-                                        width: scaleWidth(context, 24)),
-                                    SizedBox(width: scaleWidth(context, 8)),
-                                    Text('Dashboard',
-                                        style: GoogleFonts.getFont(fontFamily2,
-                                            fontSize: scaleWidth(context, 14),
-                                            color: black1,
-                                            height: lineHeight(19.2, 14),
-                                            fontWeight: FontWeight.w400))
-                                  ],
+                          child: Column(
+                            children: [
+                              SvgPicture.asset(
+                                  'assets/images/profile/Dashboard.svg'),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(context, '/dashboard');
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: scaleWidth(context, 20),
+                                      vertical: scaleHeight(context, 12)),
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: scaleWidth(context, 8),
+                                      vertical: scaleHeight(context, 12)),
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      SvgPicture.asset(
+                                          'assets/icons/defaultEditPortal/add.svg',
+                                          height: scaleHeight(context, 24),
+                                          width: scaleWidth(context, 24)),
+                                      SizedBox(width: scaleWidth(context, 8)),
+                                      Text('Dashboard',
+                                          style: GoogleFonts.getFont(
+                                              fontFamily2,
+                                              fontSize: scaleWidth(context, 14),
+                                              color: black1,
+                                              height: lineHeight(19.2, 14),
+                                              fontWeight: FontWeight.w400))
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        )),
+                            ],
+                          )),
+                    ),
                     SizedBox(height: scaleHeight(context, 40)),
                     Padding(
                       padding: EdgeInsets.only(left: scaleWidth(context, 12)),

@@ -14,10 +14,13 @@ class _CustomDividerState extends State<CustomDivider> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: widget.onTap,
-      child: const Divider(
-                  color: Colors.grey,
-                  thickness: 1,
-                ),
+      child: Divider(
+        color: Colors.grey,
+        thickness: widget.node['properties']['thickness'],
+        indent: widget.node['properties']['indent'],
+        endIndent: widget.node['properties']['endIndent'],
+        height: widget.node['properties']['dividerHeight'],
+      ),
     );
   }
 }

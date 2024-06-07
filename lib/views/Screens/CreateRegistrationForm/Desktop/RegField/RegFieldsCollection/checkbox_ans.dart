@@ -4,31 +4,65 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
+import 'package:major_project__widget_testing/state/Registration.dart/getRegistrationProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Screens/CreateRegistrationForm/Desktop/RegField/RegFieldsCollection/customCheck.dart';
+import 'package:provider/provider.dart';
 
 class CheckBoxField extends StatefulWidget {
   final String question;
   final String error;
   final List<String> options;
   final bool create, required;
+  final bool isDisabled;
+  final int? serialNumber;
+  final String? modelType;
+  final String? isRequiredData;
+  final String? requiredType;
+  final String initialAnswer;
 
-  const CheckBoxField(
-      {super.key,
-      required this.question,
-      required this.error,
-      required this.create,
-      required this.options,
-      required this.required});
+  const CheckBoxField({
+    super.key,
+    required this.question,
+    required this.error,
+    required this.create,
+    required this.options,
+    required this.required,
+    this.serialNumber,
+    this.modelType,
+    this.isRequiredData,
+    this.initialAnswer = "",
+    this.requiredType,
+    this.isDisabled = false,
+  });
 
   @override
   State<CheckBoxField> createState() => _CheckBoxFieldState();
 }
 
 class _CheckBoxFieldState extends State<CheckBoxField> {
-  late TextEditingController hintController;
-  final _formKey = GlobalKey<FormBuilderState>();
   List<String> selectedOptions = [];
+ String errorText = "";
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.initialAnswer.isNotEmpty) {
+      setState(() {
+        selectedOptions = widget.initialAnswer.split(',');
+      });
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant CheckBoxField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialAnswer != oldWidget.initialAnswer) {
+      setState(() {
+        selectedOptions = widget.initialAnswer.split(',');
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +85,24 @@ class _CheckBoxFieldState extends State<CheckBoxField> {
                   style: GoogleFonts.firaSans(
                     fontSize: heightScaler(context, 14),
                     fontWeight: FontWeight.w500,
-                    color: black1,
+                    color:  !widget.create && !widget.isDisabled && errorText.isNotEmpty? red: black1,
                   ),
                 ),
               ),
               _buildSelectOptions(),
+
+               !widget.create && !widget.isDisabled && errorText.isNotEmpty
+                  ? Padding(
+                      padding: EdgeInsets.only(top: scaleHeight(context, 8)),
+                      child: Text(
+                        errorText,
+                        style: GoogleFonts.firaSans(
+                          fontSize: scaleHeight(context, 12),
+                          fontWeight: FontWeight.w400,
+                          color: red,
+                        ),
+                      ))
+                  : Container(),
             ],
           ),
         ),
@@ -122,7 +169,7 @@ class _CheckBoxFieldState extends State<CheckBoxField> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CustomCheck(
-                    enable: !widget.create,
+                    enable: !widget.create && !widget.isDisabled,
                     value: selectedOptions.contains(option),
                     onChanged: (value) {
                       setState(() {
@@ -132,13 +179,30 @@ class _CheckBoxFieldState extends State<CheckBoxField> {
                           selectedOptions.remove(option);
                         }
                       });
+
+                      if (widget.required && selectedOptions.isEmpty) {
+                        setState(() {
+                          
+                          errorText=widget.error;
+                        });
+                      } else {
+                        final getFormProvider =
+                            Provider.of<GetRegistrationFormProvider>(context,
+                                listen: false);
+
+                        getFormProvider.updateDetails(selectedOptions.join(','),
+                            isRequiredData: widget.isRequiredData,
+                            requiredType: widget.requiredType,
+                            serialNumber: widget.serialNumber,
+                            modelType: widget.modelType);
+                      }
                     },
                   ),
                   SizedBox(width: scaleWidth(context, 8)),
                   Text(
                     option,
                     style: GoogleFonts.getFont(fontFamily2,
-                        fontSize: 14, color: indicatorblue),
+                        fontSize: 14, color:  !widget.create && !widget.isDisabled && errorText.isNotEmpty? red:indicatorblue),
                   ),
                   SizedBox(width: scaleWidth(context, 20)),
                 ],

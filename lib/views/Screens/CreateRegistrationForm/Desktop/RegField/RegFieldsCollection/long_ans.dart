@@ -3,7 +3,9 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
+import 'package:major_project__widget_testing/state/Registration.dart/getRegistrationProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:provider/provider.dart';
 
 class LongAnsField extends StatefulWidget {
   const LongAnsField(
@@ -13,35 +15,60 @@ class LongAnsField extends StatefulWidget {
       required this.hint,
       required this.required,
       required this.error,
-      required this.limit});
+      required this.limit,
+       this.initialAnswer = "",
+    this.isDisabled = false,
+    this.serialNumber,
+    this.modelType,
+    this.isRequiredData,
+    this.requiredType, this.validation,
+      });
   final String question;
   final String hint , error;
   final bool required;
   final bool create;
   final int limit;
+    final String initialAnswer;
+  final bool isDisabled;
+  final int? serialNumber;
+  final String? modelType;
+  final String? isRequiredData;
+  final String? requiredType;
+  final String? validation;
+ 
   @override
   State<LongAnsField> createState() => _LongAnsFieldState();
 }
 
 class _LongAnsFieldState extends State<LongAnsField> {
-  late TextEditingController hintController;
-  late TextEditingController answerController;
+ late TextEditingController textController;
+  String errorText = "";
   @override
   void initState() {
     super.initState();
-    answerController = TextEditingController();
-    hintController = TextEditingController(text: widget.hint);
+
+    textController = TextEditingController();
+    // Set initial text for the controller
+
+    if (widget.initialAnswer.isNotEmpty) {
+      textController.text = widget.initialAnswer;
+    }
   }
 
   @override
-  void dispose() {
-    hintController.dispose();
-    answerController.dispose();
-    super.dispose();
+  void didUpdateWidget(covariant LongAnsField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialAnswer != oldWidget.initialAnswer) {
+      setState(() {
+        textController.text = widget.initialAnswer;
+      });
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
+     print('long answer ${widget.initialAnswer} ');
     return Expanded(
       child: SizedBox(
         width: double.infinity,
@@ -61,7 +88,7 @@ class _LongAnsFieldState extends State<LongAnsField> {
                   style: GoogleFonts.firaSans(
                     fontSize: scaleHeight(context, 14),
                     fontWeight: FontWeight.w500,
-                    color: black1,
+                    color: !widget.create && !widget.isDisabled && errorText.isNotEmpty?red: black1,
                   ),
                 ),
               ),
@@ -78,12 +105,10 @@ class _LongAnsFieldState extends State<LongAnsField> {
                             fontWeight: FontWeight.w400,
                             color: black1,
                           ),
-                          controller: answerController,
+                          controller: textController,
                           maxLength: widget.limit,
                           maxLines: 7,
-                          onChanged: (value) {
-                            setState(() {});
-                          },
+                          
                            cursorColor: darkCharcoal,
                           decoration: InputDecoration(
                             counter: const Text(""),
@@ -103,15 +128,15 @@ class _LongAnsFieldState extends State<LongAnsField> {
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(2),
-                              borderSide: const BorderSide(
-                                color: black1,
+                              borderSide:  BorderSide(
+                                color:  !widget.create && !widget.isDisabled && errorText.isNotEmpty? red:black1,
                                 width: 0.5,
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(2),
-                              borderSide: const BorderSide(
-                                color: black1,
+                              borderSide:  BorderSide(
+                                color:  !widget.create && !widget.isDisabled && errorText.isNotEmpty?red:black1,
                                 width: 1,
                               ),
                             ),
@@ -132,21 +157,71 @@ class _LongAnsFieldState extends State<LongAnsField> {
                               ),
                             ),
                           ),
-                          enabled: !widget.create,
+                          enabled: !widget.create &&!widget.isDisabled,
+                           onTapOutside: !widget.create
+                            ? (PointerDownEvent e) {
+                               if (widget.required &&
+                                    textController.text.isEmpty) {
+                                  setState(() {
+                                    errorText = widget.error;
+                                  });
+                                }else if(textController.text.length> widget.limit){
+
+                                   setState(() {
+                                    errorText = "Limit is exceeded";
+                                  });
+
+                                }else {
+                                  setState(() {
+                                    errorText = "";
+                                  });
+                                  final getFormProvider =
+                                      Provider.of<GetRegistrationFormProvider>(
+                                          context,
+                                          listen: false);
+
+                                  getFormProvider.updateDetails(
+                                      textController.text,
+                                      isRequiredData: widget.isRequiredData,
+                                      requiredType: widget.requiredType,
+                                      serialNumber: widget.serialNumber,
+                                      modelType:
+                                          widget.modelType);
+                                  
+                                }
+                                FocusScope.of(context).unfocus();
+                            }:null
                         ),
                         Positioned(
-                            bottom: scaleHeight(context, 35),
+                            bottom: scaleHeight(context, 0),
                             right: scaleWidth(context, 9),
-                            child: Text(
-                              widget.create || answerController.text.isEmpty
-                                  ? "Limit ${widget.limit} characters"
-                                  : "${answerController.text.length}/${widget.limit}",
-                              style: GoogleFonts.getFont(
-                                fontFamily2,
-                                fontSize: scaleHeight(context, 11),
-                                color: const Color(0xff646262),
-                                fontWeight: FontWeight.w300,
-                              ),
+                            child: Column(
+                              children: [
+                                Text(
+                                  widget.create || textController.text.isEmpty
+                                      ? "Limit ${widget.limit} characters"
+                                      : "${textController.text.length}/${widget.limit}",
+                                  style: GoogleFonts.getFont(
+                                    fontFamily2,
+                                    fontSize: scaleHeight(context, 11),
+                                    color: !widget.create && !widget.isDisabled && errorText.isNotEmpty?red: const Color(0xff646262),
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                ),
+
+                                 !widget.create && !widget.isDisabled && errorText.isNotEmpty
+                  ? Padding(
+                      padding: EdgeInsets.only(top: scaleHeight(context, 22)),
+                      child: Text(
+                        errorText,
+                        style: GoogleFonts.firaSans(
+                          fontSize: scaleHeight(context, 12),
+                          fontWeight: FontWeight.w400,
+                          color: red,
+                        ),
+                      ))
+                  : SizedBox(height: scaleHeight(context, 37)),
+                              ],
                             ))
                       ],
                     ),
@@ -167,6 +242,8 @@ class _LongAnsFieldState extends State<LongAnsField> {
                   )
                 ],
               ),
+
+              
             ],
           ),
         ),

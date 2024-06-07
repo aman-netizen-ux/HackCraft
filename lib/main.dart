@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:major_project__widget_testing/constants/app_routes.dart';
 import 'package:major_project__widget_testing/state/DashboardProvider/dashboardProvider.dart';
-import 'package:major_project__widget_testing/state/Registration.dart/getRegistrationProvider.dart';
 import 'package:major_project__widget_testing/state/custom_template_providers/custom_edit_template_provider.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonContainerPropertiesProvider.dart';
 import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathontextProperties_provider.dart';
@@ -38,6 +37,7 @@ void main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? storedUid = prefs.getString('user_uid');
   String? storedEmailId = prefs.getString('user_email');
+  debugPrint('stored email : $storedEmailId');
   final loginProvider = LoginProvider();
   if (storedUid != null && storedUid.isNotEmpty && storedEmailId != null && storedEmailId.isNotEmpty) {
     loginProvider.setUuid(storedUid, storedEmailId);

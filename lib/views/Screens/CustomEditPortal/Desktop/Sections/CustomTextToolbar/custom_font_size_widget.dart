@@ -6,25 +6,23 @@ import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:major_project__widget_testing/state/custom_template_providers/custom_edit_template_provider.dart';
-import 'package:major_project__widget_testing/state/default_template_providers.dart/hackathonContainerPropertiesProvider.dart';
 import 'package:major_project__widget_testing/utils/customTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/views/Components/toolTip_custom_decoration.dart';
 import 'package:provider/provider.dart';
 
-class CustomContainerSizeWidget extends StatefulWidget {
-  const CustomContainerSizeWidget({
+class CustomFontSizeWidget extends StatefulWidget {
+  const CustomFontSizeWidget({
     super.key,
   });
 
   @override
-  State<CustomContainerSizeWidget> createState() =>
-      _CustomContainerSizeWidgetState();
+  State<CustomFontSizeWidget> createState() => _CustomFontSizeWidgetState();
 }
 
-class _CustomContainerSizeWidgetState extends State<CustomContainerSizeWidget> {
-  late TextEditingController containerHeightController;
+class _CustomFontSizeWidgetState extends State<CustomFontSizeWidget> {
+  late TextEditingController fontSizeController;
 
   bool subtractHover = false;
   bool addHover = false;
@@ -33,39 +31,52 @@ class _CustomContainerSizeWidgetState extends State<CustomContainerSizeWidget> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    containerHeightController = TextEditingController();
+    fontSizeController = TextEditingController();
   }
 
   @override
   void dispose() {
-    containerHeightController.dispose();
+    fontSizeController.dispose();
     // TODO: implement dispose
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final customEditPortalProvider = Provider.of<CustomEditPortal>(context);
-    // final hackathonContainerPropertiesProvider =
-    //     Provider.of<HackathonContainerPropertiesProvider>(context);
-    // if (hackathonContainerPropertiesProvider.selectedContainerKey != null) {
-    //   if (hackathonContainerPropertiesProvider
-    //           .containerPropertiesMap[
-    //               hackathonContainerPropertiesProvider.selectedContainerKey]!.height > 0) {
-    //     containerHeightController.text = hackathonContainerPropertiesProvider
-    //         .containerPropertiesMap[hackathonContainerPropertiesProvider.selectedContainerKey]!
-    //         .height
+    // final hackathonTextProvider =
+    //     Provider.of<HackathonTextPropertiesProvider>(context);
+    // if (hackathonTextProvider.selectedTextFieldKey != null) {
+    //   if (hackathonTextProvider
+    //           .textFieldPropertiesMap[
+    //               hackathonTextProvider.selectedTextFieldKey]!.size > 0) {
+    //     fontSizeController.text = hackathonTextProvider
+    //         .textFieldPropertiesMap[hackathonTextProvider.selectedTextFieldKey]!
+    //         .size
     //         .toString();
     //   }
     // }
+
+    final customEditPortalProvider = Provider.of<CustomEditPortal>(context);
+
+
+     if (customEditPortalProvider.selectedWidgetKey != null) {
+      final currSize = customEditPortalProvider.getPropertyValue(
+          customEditPortalProvider.jsonObject,
+          customEditPortalProvider.selectedWidgetKey.toString(),
+          "fontSize");
+      if (currSize > 0) {
+        fontSizeController.text = currSize.toString();
+      }
+    }
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(rad5_1),
           border: Border.all(color: greyish3, width: 1)),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Tooltip(
-            message: "Decrease Container Height",
+            message: "Decrease Font Size",
             verticalOffset: 5,
             decoration: const ShapeDecoration(
               shape: ToolTipCustomDecoration(
@@ -77,26 +88,21 @@ class _CustomContainerSizeWidgetState extends State<CustomContainerSizeWidget> {
               onExit: (_) => setState(() => subtractHover = false),
               child: InkWell(
                 onTap: () {
-                  final currHeight = customEditPortalProvider.getPropertyValue(
-                              customEditPortalProvider.jsonObject,
-                              customEditPortalProvider.selectedWidgetKey
-                                  .toString(),
-                              "height") ;
+                  final currSize = customEditPortalProvider.getPropertyValue(
+                      customEditPortalProvider.jsonObject,
+                      customEditPortalProvider.selectedWidgetKey.toString(),
+                      "fontSize");
                   customEditPortalProvider.addPropertyByKey(
                       customEditPortalProvider.selectedWidgetKey == null
                           ? customColumnKey.toString()
                           : customEditPortalProvider.selectedWidgetKey
                               .toString(),
-                      'height',
-                      currHeight -
-                          30);
-                          
+                      'fontSize',
+                      currSize - 1);
+
                   customEditPortalProvider.dynamicWidgets =
                       customEditPortalProvider.buildWidgetsFromJson(
                           customEditPortalProvider.jsonObject);
-                          customEditPortalProvider.triggerUIUpdate();
-
-                          
                 },
                 child: Container(
                     height: scaleHeight(context, 37),
@@ -115,7 +121,7 @@ class _CustomContainerSizeWidgetState extends State<CustomContainerSizeWidget> {
             thickness: 1,
           ),
           Tooltip(
-            message: "Container Height",
+            message: "Font Size",
             verticalOffset: 5,
             decoration: const ShapeDecoration(
               shape: ToolTipCustomDecoration(
@@ -126,10 +132,13 @@ class _CustomContainerSizeWidgetState extends State<CustomContainerSizeWidget> {
               height: scaleHeight(context, 37),
               width: scaleHeight(context, 56),
               child: TextField(
-                controller: containerHeightController,
+                controller: fontSizeController,
                 cursorColor: Colors.white,
                 textAlign: TextAlign.center,
+                textAlignVertical: TextAlignVertical.center,
+                
                 decoration: InputDecoration(
+                  contentPadding: EdgeInsets.only(bottom: scaleHeight(context, 22)),
                   hintText: "",
                   hintStyle: GoogleFonts.getFont(fontFamily1,
                       fontSize: scaleHeight(context, 20),
@@ -151,7 +160,14 @@ class _CustomContainerSizeWidgetState extends State<CustomContainerSizeWidget> {
                     fontWeight: FontWeight.w400,
                     height: lineHeight(23, 20)),
                 onSubmitted: (value) {
-                  //  hackathonContainerPropertiesProvider.setContainerHeight(value);
+                   double? size = double.tryParse(value);
+                  customEditPortalProvider.addPropertyByKey(
+                      customEditPortalProvider.selectedWidgetKey == null
+                          ? customColumnKey.toString()
+                          : customEditPortalProvider.selectedWidgetKey
+                              .toString(),
+                      'fontSize',
+                      size);
                 },
               ),
             ),
@@ -162,7 +178,7 @@ class _CustomContainerSizeWidgetState extends State<CustomContainerSizeWidget> {
             thickness: 1,
           ),
           Tooltip(
-            message: "Increase Container Height",
+            message: "Increase Font Size",
             verticalOffset: 5,
             decoration: const ShapeDecoration(
               shape: ToolTipCustomDecoration(
@@ -174,7 +190,21 @@ class _CustomContainerSizeWidgetState extends State<CustomContainerSizeWidget> {
               onExit: (_) => setState(() => addHover = false),
               child: InkWell(
                 onTap: () {
-                  // hackathonContainerPropertiesProvider.increaseContainerHeight();
+                 final currSize = customEditPortalProvider.getPropertyValue(
+                      customEditPortalProvider.jsonObject,
+                      customEditPortalProvider.selectedWidgetKey.toString(),
+                      "fontSize");
+                  customEditPortalProvider.addPropertyByKey(
+                      customEditPortalProvider.selectedWidgetKey == null
+                          ? customColumnKey.toString()
+                          : customEditPortalProvider.selectedWidgetKey
+                              .toString(),
+                      'fontSize',
+                      currSize + 1);
+
+                  customEditPortalProvider.dynamicWidgets =
+                      customEditPortalProvider.buildWidgetsFromJson(
+                          customEditPortalProvider.jsonObject);
                 },
                 child: Container(
                     height: scaleHeight(context, 37),

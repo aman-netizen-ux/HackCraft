@@ -19,7 +19,7 @@ class GeneralInfo extends StatefulWidget {
 
 class _GeneralInfoState extends State<GeneralInfo> {
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     final profileProvider = Provider.of<ProfileProvider>(context);
     return Container(
       margin: EdgeInsets.only(top: scaleHeight(context, 24)),
@@ -36,171 +36,173 @@ class _GeneralInfoState extends State<GeneralInfo> {
               widget.user.dateOfBirth ?? "Add your date of birth",
               context,
               widget.user.dateOfBirth == null),
-              
-        widget.user.phone==" " ?  InkWell(
-          onTap: () {
-            profileProvider.setSelectedIndex(3);
-          },
-          child: Container(
-                height: scaleHeight(context, 44),
-                width: scaleWidth(context, 311),
-                padding: EdgeInsets.symmetric(
-                    horizontal: scaleWidth(context, 12),
-                    vertical: scaleHeight(context, 7)),
-                decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    border: Border.all(color: const Color(0xffc0dde3)),
-                    borderRadius: const BorderRadius.all(Radius.circular(15))),
-                child: Row(
+          widget.user.phone == " "
+              ? InkWell(
+                  onTap: () {
+                    profileProvider.setSelectedIndex(3);
+                  },
+                  child: Container(
+                      height: scaleHeight(context, 44),
+                      width: scaleWidth(context, 311),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: scaleWidth(context, 12),
+                          vertical: scaleHeight(context, 7)),
+                      decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          border: Border.all(color: const Color(0xffc0dde3)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(15))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                              height: scaleHeight(context, 30),
+                              width: scaleWidth(context, 30),
+                              decoration: const BoxDecoration(
+                                color: Color(0xff44a6bb),
+                                shape: BoxShape.circle,
+                              ),
+                              child: SvgPicture.asset(
+                                  'assets/icons/defaultEditPortal/add.svg')),
+                          SizedBox(width: scaleWidth(context, 12)),
+                          Text('Add Your Mobile Number',
+                              style: GoogleFonts.getFont(fontFamily2,
+                                  fontSize: scaleWidth(context, 12),
+                                  color: const Color(0xff1a202c),
+                                  height: lineHeight(16.8, 12),
+                                  fontWeight: FontWeight.w400)),
+                        ],
+                      )),
+                )
+              : buildContainer('Mobile No.', widget.user.phone.toString(),
+                  context, widget.user.phone!.isEmpty),
+          widget.user.socialLinks.behance == " " &&
+                  widget.user.socialLinks.codepen == " " &&
+                  widget.user.socialLinks.dribble == " " &&
+                  widget.user.socialLinks.X == " " &&
+                  widget.user.socialLinks.facebook == " " &&
+                  widget.user.socialLinks.figma == " " &&
+                  widget.user.socialLinks.github == " " &&
+                  widget.user.socialLinks.instagram == " " &&
+                  widget.user.socialLinks.linkedin == " " &&
+                  widget.user.socialLinks.medium == " " &&
+                  widget.user.socialLinks.reddit == " " &&
+                  widget.user.socialLinks.slack == " "
+              ? InkWell(
+                  onTap: () {
+                    profileProvider.setSelectedIndex(3);
+                  },
+                  child: Container(
+                      height: scaleHeight(context, 44),
+                      width: scaleWidth(context, 311),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: scaleWidth(context, 12),
+                          vertical: scaleHeight(context, 7)),
+                      decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          border: Border.all(color: const Color(0xffc0dde3)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(15))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                              height: scaleHeight(context, 30),
+                              width: scaleWidth(context, 30),
+                              decoration: const BoxDecoration(
+                                color: Color(0xff44a6bb),
+                                shape: BoxShape.circle,
+                              ),
+                              child: SvgPicture.asset(
+                                  'assets/icons/defaultEditPortal/add.svg')),
+                          SizedBox(width: scaleWidth(context, 12)),
+                          Text('Add Your Social Links',
+                              style: GoogleFonts.getFont(fontFamily2,
+                                  fontSize: scaleWidth(context, 12),
+                                  color: const Color(0xff1a202c),
+                                  height: lineHeight(16.8, 12),
+                                  fontWeight: FontWeight.w400)),
+                        ],
+                      )),
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                        height: scaleHeight(context, 30),
-                        width: scaleWidth(context, 30),
-                        decoration: const BoxDecoration(
-                          color: Color(0xff44a6bb),
-                          shape: BoxShape.circle,
-                        ),
-                        child: SvgPicture.asset(
-                            'assets/icons/defaultEditPortal/add.svg')),
-                    SizedBox(width: scaleWidth(context, 12)),
-                    Text('Add Your Mobile Number',
+                    Text('Social Links',
                         style: GoogleFonts.getFont(fontFamily2,
-                            fontSize: scaleWidth(context, 12),
+                            fontSize: scaleWidth(context, 14),
                             color: const Color(0xff1a202c),
-                            height: lineHeight(16.8, 12),
-                            fontWeight: FontWeight.w400)),
-                  ],
-                )),
-        ) : buildContainer('Mobile No.', widget.user.phone.toString(), context, widget.user.phone!.isEmpty),
-         widget.user.socialLinks.behance == " " &&
-         widget.user.socialLinks.codepen == " "&&
-          widget.user.socialLinks.dribble == " "&&
-           widget.user.socialLinks.X == " "&&
-            widget.user.socialLinks.facebook == " "&&
-             widget.user.socialLinks.figma == " "&&
-              widget.user.socialLinks.github == " "&&
-               widget.user.socialLinks.instagram == " "&&
-                widget.user.socialLinks.linkedin == " "&&
-             widget.user.socialLinks.medium == " "&&
-              widget.user.socialLinks.reddit == " "&&
-               widget.user.socialLinks.slack == " "
-
-               ? InkWell(
-          onTap: () {
-            profileProvider.setSelectedIndex(3);
-          },
-          child: Container(
-                height: scaleHeight(context, 44),
-                width: scaleWidth(context, 311),
-                padding: EdgeInsets.symmetric(
-                    horizontal: scaleWidth(context, 12),
-                    vertical: scaleHeight(context, 7)),
-                decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    border: Border.all(color: const Color(0xffc0dde3)),
-                    borderRadius: const BorderRadius.all(Radius.circular(15))),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                        height: scaleHeight(context, 30),
-                        width: scaleWidth(context, 30),
-                        decoration: const BoxDecoration(
-                          color: Color(0xff44a6bb),
-                          shape: BoxShape.circle,
+                            height: lineHeight(19.2, 14),
+                            fontWeight: FontWeight.w300)),
+                    SizedBox(height: scaleHeight(context, 8)),
+                    SizedBox(
+                      width: scaleWidth(context, 311),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            widget.user.socialLinks.behance != " "
+                                ? socialLinks(
+                                    'assets/icons/defaultEditPortal/add.svg',
+                                    widget.user.socialLinks.behance)
+                                : const SizedBox.shrink(),
+                            widget.user.socialLinks.codepen != " "
+                                ? socialLinks(
+                                    'assets/icons/defaultEditPortal/add.svg',
+                                    widget.user.socialLinks.codepen)
+                                : const SizedBox.shrink(),
+                            widget.user.socialLinks.dribble != " "
+                                ? socialLinks(
+                                    'assets/icons/defaultEditPortal/add.svg',
+                                    widget.user.socialLinks.dribble)
+                                : const SizedBox.shrink(),
+                            widget.user.socialLinks.facebook != " "
+                                ? socialLinks(
+                                    'assets/icons/defaultEditPortal/add.svg',
+                                    widget.user.socialLinks.facebook)
+                                : const SizedBox.shrink(),
+                            widget.user.socialLinks.figma != " "
+                                ? socialLinks(
+                                    'assets/icons/defaultEditPortal/add.svg',
+                                    widget.user.socialLinks.figma)
+                                : const SizedBox.shrink(),
+                            widget.user.socialLinks.github != " "
+                                ? socialLinks(
+                                    'assets/icons/defaultEditPortal/add.svg',
+                                    widget.user.socialLinks.github)
+                                : const SizedBox.shrink(),
+                            widget.user.socialLinks.instagram != " "
+                                ? socialLinks(
+                                    'assets/icons/defaultEditPortal/add.svg',
+                                    widget.user.socialLinks.instagram)
+                                : const SizedBox.shrink(),
+                            widget.user.socialLinks.linkedin != " "
+                                ? socialLinks(
+                                    'assets/icons/defaultEditPortal/add.svg',
+                                    widget.user.socialLinks.linkedin)
+                                : const SizedBox.shrink(),
+                            widget.user.socialLinks.medium != " "
+                                ? socialLinks(
+                                    'assets/icons/defaultEditPortal/add.svg',
+                                    widget.user.socialLinks.medium)
+                                : const SizedBox.shrink(),
+                            widget.user.socialLinks.reddit != " "
+                                ? socialLinks(
+                                    'assets/icons/defaultEditPortal/add.svg',
+                                    widget.user.socialLinks.reddit)
+                                : const SizedBox.shrink(),
+                            widget.user.socialLinks.slack != " "
+                                ? socialLinks(
+                                    'assets/icons/defaultEditPortal/add.svg',
+                                    widget.user.socialLinks.slack)
+                                : const SizedBox.shrink(),
+                          ],
                         ),
-                        child: SvgPicture.asset(
-                            'assets/icons/defaultEditPortal/add.svg')),
-                    SizedBox(width: scaleWidth(context, 12)),
-                    Text('Add Your Social Links',
-                        style: GoogleFonts.getFont(fontFamily2,
-                            fontSize: scaleWidth(context, 12),
-                            color: const Color(0xff1a202c),
-                            height: lineHeight(16.8, 12),
-                            fontWeight: FontWeight.w400)),
+                      ),
+                    )
                   ],
-                )),
-        ):
-         
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text('Social Links',
-                  style: GoogleFonts.getFont(fontFamily2,
-                      fontSize: scaleWidth(context, 14),
-                      color: const Color(0xff1a202c),
-                      height: lineHeight(19.2, 14),
-                      fontWeight: FontWeight.w300)),
-              SizedBox(height: scaleHeight(context, 8)),
-              SizedBox(
-                width: scaleWidth(context, 311),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      widget.user.socialLinks.behance != " "
-                          ? socialLinks(
-                              'assets/icons/defaultEditPortal/add.svg',
-                              widget.user.socialLinks.behance)
-                          : const SizedBox.shrink(),
-                      widget.user.socialLinks.codepen != " "
-                          ? socialLinks(
-                              'assets/icons/defaultEditPortal/add.svg',
-                              widget.user.socialLinks.codepen)
-                          : const SizedBox.shrink(),
-                      widget.user.socialLinks.dribble != " "
-                          ? socialLinks(
-                              'assets/icons/defaultEditPortal/add.svg',
-                              widget.user.socialLinks.dribble)
-                          : const SizedBox.shrink(),
-                      widget.user.socialLinks.facebook != " "
-                          ? socialLinks(
-                              'assets/icons/defaultEditPortal/add.svg',
-                              widget.user.socialLinks.facebook)
-                          : const SizedBox.shrink(),
-                      widget.user.socialLinks.figma != " "
-                          ? socialLinks(
-                              'assets/icons/defaultEditPortal/add.svg',
-                              widget.user.socialLinks.figma)
-                          : const SizedBox.shrink(),
-                      widget.user.socialLinks.github != " "
-                          ? socialLinks(
-                              'assets/icons/defaultEditPortal/add.svg',
-                              widget.user.socialLinks.github)
-                          : const SizedBox.shrink(),
-                      widget.user.socialLinks.instagram != " "
-                          ? socialLinks(
-                              'assets/icons/defaultEditPortal/add.svg',
-                              widget.user.socialLinks.instagram)
-                          : const SizedBox.shrink(),
-                      widget.user.socialLinks.linkedin != " "
-                          ? socialLinks(
-                              'assets/icons/defaultEditPortal/add.svg',
-                              widget.user.socialLinks.linkedin)
-                          : const SizedBox.shrink(),
-                      widget.user.socialLinks.medium != " "
-                          ? socialLinks(
-                              'assets/icons/defaultEditPortal/add.svg',
-                              widget.user.socialLinks.medium)
-                          : const SizedBox.shrink(),
-                      widget.user.socialLinks.reddit != " "
-                          ? socialLinks(
-                              'assets/icons/defaultEditPortal/add.svg',
-                              widget.user.socialLinks.reddit)
-                          : const SizedBox.shrink(),
-                      widget.user.socialLinks.slack != " "
-                          ? socialLinks(
-                              'assets/icons/defaultEditPortal/add.svg',
-                              widget.user.socialLinks.slack)
-                          : const SizedBox.shrink(),
-                    ],
-                  ),
                 ),
-              )
-            ],
-          ),
           SizedBox(height: scaleHeight(context, 8))
         ],
       ),
@@ -229,45 +231,45 @@ class _GeneralInfoState extends State<GeneralInfo> {
   }
 
   Widget buildContainer(
-      String key, String value, BuildContext context, bool empty) {      
+      String key, String value, BuildContext context, bool empty) {
     final profileProvider = Provider.of<ProfileProvider>(context);
     return empty
         ? InkWell(
-          onTap: () {
-            profileProvider.setSelectedIndex(3);
-          },
-          child: Container(
-              height: scaleHeight(context, 44),
-              width: scaleWidth(context, 311),
-              padding: EdgeInsets.symmetric(
-                  horizontal: scaleWidth(context, 12),
-                  vertical: scaleHeight(context, 7)),
-              decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  border: Border.all(color: const Color(0xffc0dde3)),
-                  borderRadius: const BorderRadius.all(Radius.circular(15))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                      height: scaleHeight(context, 30),
-                      width: scaleWidth(context, 30),
-                      decoration: const BoxDecoration(
-                        color: Color(0xff44a6bb),
-                        shape: BoxShape.circle,
-                      ),
-                      child: SvgPicture.asset(
-                          'assets/icons/defaultEditPortal/add.svg')),
-                  SizedBox(width: scaleWidth(context, 12)),
-                  Text(value,
-                      style: GoogleFonts.getFont(fontFamily2,
-                          fontSize: scaleWidth(context, 12),
-                          color: const Color(0xff1a202c),
-                          height: lineHeight(16.8, 12),
-                          fontWeight: FontWeight.w400)),
-                ],
-              )),
-        )
+            onTap: () {
+              profileProvider.setSelectedIndex(3);
+            },
+            child: Container(
+                height: scaleHeight(context, 44),
+                width: scaleWidth(context, 311),
+                padding: EdgeInsets.symmetric(
+                    horizontal: scaleWidth(context, 12),
+                    vertical: scaleHeight(context, 7)),
+                decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    border: Border.all(color: const Color(0xffc0dde3)),
+                    borderRadius: const BorderRadius.all(Radius.circular(15))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                        height: scaleHeight(context, 30),
+                        width: scaleWidth(context, 30),
+                        decoration: const BoxDecoration(
+                          color: Color(0xff44a6bb),
+                          shape: BoxShape.circle,
+                        ),
+                        child: SvgPicture.asset(
+                            'assets/icons/defaultEditPortal/add.svg')),
+                    SizedBox(width: scaleWidth(context, 12)),
+                    Text(value,
+                        style: GoogleFonts.getFont(fontFamily2,
+                            fontSize: scaleWidth(context, 12),
+                            color: const Color(0xff1a202c),
+                            height: lineHeight(16.8, 12),
+                            fontWeight: FontWeight.w400)),
+                  ],
+                )),
+          )
         : Container(
             height: scaleHeight(context, 44),
             width: scaleWidth(context, 311),

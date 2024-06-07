@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
+import 'package:major_project__widget_testing/state/Registration.dart/getRegistrationProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:provider/provider.dart';
 
 class PhoneField extends StatefulWidget {
   const PhoneField({
@@ -10,18 +12,54 @@ class PhoneField extends StatefulWidget {
     required this.question,
     required this.create,
     required this.required,
+    this.initialAnswer = "",
+    this.isDisabled = false,
+    this.serialNumber,
+    this.modelType,
+    this.isRequiredData,
+    this.requiredType,
   }) : super(key: key);
 
   final String question;
   final bool create;
   final bool required;
+  final String initialAnswer;
+  final bool isDisabled;
+  final int? serialNumber;
+  final String? modelType;
+  final String? isRequiredData;
+  final String? requiredType;
 
   @override
   State<PhoneField> createState() => _PhoneFieldState();
 }
 
 class _PhoneFieldState extends State<PhoneField> {
-  final TextEditingController _phoneController = TextEditingController();
+  late TextEditingController _phoneController;
+  String errorText = "";
+  @override
+  void initState() {
+    super.initState();
+
+    _phoneController = TextEditingController();
+    // Set initial text for the controller
+
+    if (widget.initialAnswer.trim().isNotEmpty) {
+      _phoneController.text = widget.initialAnswer;
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant PhoneField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialAnswer != oldWidget.initialAnswer) {
+      setState(() {
+        if (widget.initialAnswer.trim().isNotEmpty) {
+          _phoneController.text = widget.initialAnswer;
+        }
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -31,6 +69,7 @@ class _PhoneFieldState extends State<PhoneField> {
 
   @override
   Widget build(BuildContext context) {
+    print('initial phone value ${widget.initialAnswer}');
     return Expanded(
       child: SizedBox(
         width: double.infinity,
@@ -52,7 +91,7 @@ class _PhoneFieldState extends State<PhoneField> {
                     fontFamily2,
                     fontSize: heightScaler(context, 14),
                     fontWeight: FontWeight.w500,
-                    color: black1,
+                    color: !widget.create && !widget.isDisabled && errorText.isNotEmpty?red:black1,
                   ),
                 ),
               ),
@@ -62,7 +101,9 @@ class _PhoneFieldState extends State<PhoneField> {
                   Container(
                     width: scaleWidth(context, 300),
                     decoration: BoxDecoration(
-                        border: Border.all(),
+                        border: Border.all(
+                          color: !widget.create && !widget.isDisabled && errorText.isNotEmpty?red:black1
+                        ),
                         borderRadius: BorderRadius.circular(10)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -109,7 +150,50 @@ class _PhoneFieldState extends State<PhoneField> {
                                 ),
                                 border: InputBorder.none,
                               ),
-                              enabled: !widget.create,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'This field is required';
+                                } else if (!RegExp(r'^[6-9][0-9]{9}$')
+                                    .hasMatch(value)) {
+                                  return 'Enter a valid phone number';
+                                }
+                                return null; // Return null if the input is valid
+                              },
+                              enabled: !widget.create && !widget.isDisabled,
+                              onTapOutside: !widget.create
+                                  ? (PointerDownEvent e) {
+                                      if (_phoneController.text.isEmpty) {
+                                        setState(() {
+                                          errorText = 'This field is required';
+                                        });
+                                      } else if (!RegExp(r'^[6-9][0-9]{9}$')
+                                          .hasMatch(_phoneController.text)) {
+                                        setState(() {
+                                          errorText =
+                                              'Enter a valid phone number';
+                                        });
+                                      } else {
+                                        setState(() {
+                                          errorText="";
+                                        });
+                                        final getFormProvider = Provider.of<
+                                                GetRegistrationFormProvider>(
+                                            context,
+                                            listen: false);
+
+                                        getFormProvider.updateDetails(
+                                            _phoneController.text,
+                                            isRequiredData:
+                                                widget.isRequiredData,
+                                            requiredType: widget.requiredType,
+                                            serialNumber: widget.serialNumber,
+                                            modelType:
+                                                widget.modelType);
+                                        
+                                      }
+                                      FocusScope.of(context).unfocus();
+                                    }
+                                  : null,
                             ),
                           ),
                         ),
@@ -117,7 +201,7 @@ class _PhoneFieldState extends State<PhoneField> {
                     ),
                   ),
                   const Spacer(),
-                 Text(
+                  Text(
                     "REQUIRED",
                     style: GoogleFonts.getFont(fontFamily2,
                         fontSize: scaleHeight(context, 16),
@@ -130,6 +214,18 @@ class _PhoneFieldState extends State<PhoneField> {
                   )
                 ],
               ),
+              !widget.create && !widget.isDisabled && errorText.isNotEmpty
+                  ? Padding(
+                      padding: EdgeInsets.only(top: scaleHeight(context, 8)),
+                      child: Text(
+                        errorText,
+                        style: GoogleFonts.firaSans(
+                          fontSize: scaleHeight(context, 12),
+                          fontWeight: FontWeight.w400,
+                          color: red,
+                        ),
+                      ))
+                  : Container(),
             ],
           ),
         ),

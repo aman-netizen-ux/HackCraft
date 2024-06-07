@@ -3,21 +3,33 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
+import 'package:major_project__widget_testing/state/Registration.dart/getRegistrationProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:provider/provider.dart';
 
 // TODO:if possible improve the properties of Toggle
 class ToogleYNField extends StatefulWidget {
-  final bool binary;
+ final String initialAnswer;
+  final bool isDisabled;
+  final int? serialNumber;
+  final String? modelType;
+  final String? isRequiredData;
+  final String? requiredType;
   final bool create;
   final String question, error;
   final bool required;
 
   const ToogleYNField(
       {Key? key,
-      this.binary = true,
       required this.create,
       required this.required,
       required this.error,
+      this.initialAnswer = "",
+    this.isDisabled = false,
+    this.serialNumber,
+    this.modelType,
+    this.isRequiredData,
+    this.requiredType,
       required this.question})
       : super(key: key);
 
@@ -27,6 +39,28 @@ class ToogleYNField extends StatefulWidget {
 
 class _ToogleYNFieldState extends State<ToogleYNField> {
   bool _value = false;
+
+   String errorText = "";
+  @override
+  void initState() {
+    super.initState();
+
+   
+
+    if (widget.initialAnswer.isNotEmpty) {
+      _value = widget.initialAnswer=="true";
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant ToogleYNField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialAnswer != oldWidget.initialAnswer) {
+      setState(() {
+       _value = widget.initialAnswer=="true";
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,22 +95,28 @@ class _ToogleYNFieldState extends State<ToogleYNField> {
                           child: FormBuilderSwitch(
                               name: 'toggle_switch',
                               activeTrackColor: indicatorblue,
-                              enabled: !widget.create,
+                              enabled: !widget.create&& !widget.isDisabled,
                               activeColor: Colors.transparent,
                               initialValue: _value,
-                              onChanged: widget.binary
-                                  ? (bool? value) {
+                              onChanged:  (bool? value) {
                                       setState(() {
-                                        _value = value ?? false;
+                                        _value = !_value;
                                       });
-                                    }
-                                  : (bool? value) {
-                                      if (value != null) {
-                                        setState(() {
-                                          _value = value;
-                                        });
-                                      }
+
+                                      final getFormProvider =
+                                      Provider.of<GetRegistrationFormProvider>(
+                                          context,
+                                          listen: false);
+
+                                  getFormProvider.updateDetails(
+                                      _value.toString(),
+                                      isRequiredData: widget.isRequiredData,
+                                      requiredType: widget.requiredType,
+                                      serialNumber: widget.serialNumber,
+                                      modelType:
+                                          widget.modelType);
                                     },
+                                  
                               title: const Text("")),
                         ),
                       )

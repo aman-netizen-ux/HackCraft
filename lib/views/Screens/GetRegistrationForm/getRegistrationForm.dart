@@ -23,12 +23,10 @@ class _GetRegistrationFormState extends State<GetRegistrationForm>with TickerPro
           return SafeArea(
           child: Scaffold(
             backgroundColor: Color(0xFFEDECF2),
-            body: SingleChildScrollView(
-              child: ResponsiveLayout(
-                mobileBody: const DesktopGetRegisterationForm(), //TODO: Add mobile body
-                desktopBody: const DesktopGetRegisterationForm(),
-                tabletBody: const DesktopGetRegisterationForm(), //TODO: Add tablet body
-              ),
+            body: ResponsiveLayout(
+              mobileBody: const DesktopGetRegisterationForm(), //TODO: Add mobile body
+              desktopBody: const DesktopGetRegisterationForm(),
+              tabletBody: const DesktopGetRegisterationForm(), //TODO: Add tablet body
             ),
           ),
         );

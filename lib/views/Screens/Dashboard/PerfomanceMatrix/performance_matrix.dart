@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/api/Dashboard/getDashboardStatistics.dart';
 import 'package:major_project__widget_testing/models/DashboardModel/statisticModel.dart';
+import 'package:major_project__widget_testing/state/DashboardProvider/dashboardProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Screens/Dashboard/PerfomanceMatrix/communication_share.dart';
 import 'package:major_project__widget_testing/views/Screens/Dashboard/PerfomanceMatrix/statistics.dart';
+import 'package:provider/provider.dart';
 
 class PerformanceMatrix extends StatefulWidget {
   const PerformanceMatrix({super.key});
@@ -24,8 +26,12 @@ class _PerformanceMatrixState extends State<PerformanceMatrix> {
   }
 
   Future<void> fetchStatistic() async {
+    final dashboardProvider =
+        Provider.of<DashboardProvider>(context, listen: false);
     try {
-      final model = await GetDashboardStatistic().fetchHackathonStatistic("f1f31ea2-b09d-497c-8b9f-894d9433b09e");
+    //  print(dashboardProvider.hackathonId);
+      final model = await GetDashboardStatistic()
+          .fetchHackathonStatistic(dashboardProvider.hackathonId);
       setState(() {
         statistic = model;
         isLoading = false;
@@ -43,9 +49,27 @@ class _PerformanceMatrixState extends State<PerformanceMatrix> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return Center(child: CircularProgressIndicator());
+      return Container(
+          height: scaleHeight(context, 820),
+          decoration: const BoxDecoration(
+            color: Color(0xfff5f5f5),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(50),
+              bottomLeft: Radius.circular(50),
+            ),
+          ),
+          child: const Center(child: CircularProgressIndicator()));
     } else if (hasError) {
-      return Center(child: Text('Error fetching data'));
+      return Container(
+          height: scaleHeight(context, 820),
+          decoration: const BoxDecoration(
+            color: Color(0xfff5f5f5),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(50),
+              bottomLeft: Radius.circular(50),
+            ),
+          ),
+          child: const Center(child: Text('Error fetching data')));
     } else {
       return Container(
         height: scaleHeight(context, 820),
