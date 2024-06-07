@@ -300,7 +300,7 @@ class _HomeHackathonState extends State<HomeHackathon> {
                                                   
 
                                                   final hackathonType =
-                                                      "Custom";
+                                                      hackathon.template;
 
                                                   if (hackathonType ==
                                                       "Custom") {
