@@ -122,6 +122,12 @@ class _CustomTextState extends State<CustomText> {
           if(widget.node['type']=="Total Rounds"){
             customEditPortalProvider.setRequiredHackathonDetails("Total Rounds", value);
           }
+          if(widget.node['type']=="Venue"){
+            customEditPortalProvider.setRequiredHackathonDetails("Venue", value);
+          }
+          if(widget.node['type']=="Mode of Conduct"){
+            customEditPortalProvider.setRequiredHackathonDetails("Mode of Conduct", value);
+          }
           
             },
            

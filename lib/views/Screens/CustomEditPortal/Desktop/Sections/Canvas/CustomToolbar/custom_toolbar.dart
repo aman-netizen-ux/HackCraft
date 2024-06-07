@@ -42,10 +42,11 @@ class _CustomToolBarState extends State<CustomToolBar> {
                     "Organization Name" ||
                 customEditPortalProvider.selectedWidgetType == "Start Date" || customEditPortalProvider.selectedWidgetType == "Team Size"||
                 customEditPortalProvider.selectedWidgetType == "Fee" ||
-                customEditPortalProvider.selectedWidgetType == "Brief" || customEditPortalProvider.selectedWidgetType == "Total Rounds"
+                customEditPortalProvider.selectedWidgetType == "Brief" || customEditPortalProvider.selectedWidgetType == "Total Rounds"||
+                customEditPortalProvider.selectedWidgetType == "Venue" || customEditPortalProvider.selectedWidgetType == "Mode of Conduct"
             ? const CustomTextPropertiesPanelWidget()
             : customEditPortalProvider.selectedWidgetKey != null &&
-                    customEditPortalProvider.selectedWidgetType == "Container"
+                    customEditPortalProvider.selectedWidgetType == "Container"||customEditPortalProvider.selectedWidgetType == "Get Registered"
                 ? const CustomContainerPropertiesPanelWidget()
                 : customEditPortalProvider.selectedWidgetKey != null &&
                         customEditPortalProvider.selectedWidgetType == "Row"

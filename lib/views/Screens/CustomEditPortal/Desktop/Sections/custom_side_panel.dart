@@ -37,7 +37,10 @@ class _CustomSidePanelState extends State<CustomSidePanel>
     "Team Size",
     "Brief",
     "Fee",
-    "Total Rounds"
+    "Total Rounds",
+    "Venue",
+    "Mode of Conduct",
+    "Get Registered"
   ];
 
   final List<String> widgets = [
@@ -738,7 +741,9 @@ class CustomMenu extends StatelessWidget {
             "id": 78,
             "key": customColumnKey.toString(),
             "children": customEditPortalProvider.jsonObject["children"],
-          }
+          },
+          "venue":customEditPortalProvider.requiredHackathonDetails["Venue"],
+          "mode_of_conduct":customEditPortalProvider.requiredHackathonDetails["Mode of Conduct"],
         }
       },
     );

@@ -41,7 +41,10 @@ class CustomEditPortal extends ChangeNotifier {
     "Team Size": "",    
     "Brief": "",
     "Fee": "",
-    "Total Rounds": ""
+    "Total Rounds": "",
+    "Venue": "",
+    "Mode of Conduct":"",
+    "Get Registered":"Get Registered"
   };
 
    Map<String, bool> _requiredHackathonDetailsAdded = {
@@ -52,7 +55,10 @@ class CustomEditPortal extends ChangeNotifier {
     "Team Size": false,    
     "Brief": false,
     "Fee": false,
-    "Total Rounds": false
+    "Total Rounds": false,
+    "Venue": false,
+    "Mode of Conduct": false,
+    "Get Registered": false
   };
 
   
@@ -82,7 +88,7 @@ return  _requiredHackathonDetailsAdded[key]??false;
   List<String> checkForEmptyFields() {
   List<String> emptyKeys = [];
   _requiredHackathonDetails.forEach((key, value) {
-    if (value.toString().isEmpty) {
+    if (value.toString().isEmpty|| !checkIsRequireDataAdded(key)) {
       emptyKeys.add(key);
     }
   });
@@ -377,7 +383,7 @@ return  _requiredHackathonDetailsAdded[key]??false;
     // Extracting the hex color code from the string
   }
 
-  List<Widget> buildWidgetsFromJson(dynamic node) {
+  List<Widget> buildWidgetsFromJson(dynamic node, {bool isEdit=true}) {
     List<Widget> widgets = [];
 
     // Function to recursively build widgets
@@ -403,6 +409,7 @@ return  _requiredHackathonDetailsAdded[key]??false;
           }
           currentWidget = CustomContainer(
               node: node,
+              isEdit: isEdit,
               onTap: () {
                 int? index = node['id'];
                 final currentKey = customWidgetsGlobalKeysMap[index];
@@ -851,6 +858,64 @@ return  _requiredHackathonDetailsAdded[key]??false;
               }); // Example: Set a default text, customize as needed
           break;
 
+
+           case 'Venue':
+          currentWidget = CustomText(
+              node: node,
+              onTap: () {
+                int? index = node['id'];
+                final currentKey = customWidgetsGlobalKeysMap[index];
+                final type = node['type'];
+                _selectedWidgetType = type;
+                _selectedWidgetKey = currentKey;
+                notifyListeners();
+
+                debugPrint("${_selectedWidgetType} ${_isColorSelected}");
+              }); // Example: Set a default text, customize as needed
+          break;
+
+
+           case 'Mode of Conduct':
+          currentWidget = CustomText(
+              node: node,
+              onTap: () {
+                int? index = node['id'];
+                final currentKey = customWidgetsGlobalKeysMap[index];
+                final type = node['type'];
+                _selectedWidgetType = type;
+                _selectedWidgetKey = currentKey;
+                notifyListeners();
+                
+
+                debugPrint("${_selectedWidgetType} ${_isColorSelected}");
+              }); // Example: Set a default text, customize as needed
+          break;
+
+           case 'Get Registered':
+          List<Widget> childWidgets = [];
+          if (node.containsKey('child') && node['child'] is List) {
+            node['child'].forEach((childNode) {
+              for (var entry in childNode.entries) {
+                childWidgets.add(buildWidget(
+                  entry.value,
+                ));
+              }
+            });
+          }
+          currentWidget = CustomContainer(
+              node: node,
+              isEdit: isEdit,
+              onTap: () {
+                int? index = node['id'];
+                final currentKey = customWidgetsGlobalKeysMap[index];
+                final type = node['type'];
+                _selectedWidgetType = type;
+                _selectedWidgetKey = currentKey;
+                notifyListeners();
+              },
+              childWidgets: childWidgets);
+          break;
+
         default:
           currentWidget = const SizedBox(); // Fallback for unrecognized types
       }
@@ -1043,7 +1108,8 @@ bool found = false; // Flag to check if the key has been found
                     "Organization Name" ||
                 element[key]["type"] == "Start Date" || element[key]["type"] == "Team Size"||
                 element[key]["type"] == "Fee" ||
-                element[key]["type"] == "Brief" || element[key]["type"] == "Total Rounds"){
+                element[key]["type"] == "Brief" || element[key]["type"] == "Total Rounds"
+                || element[key]["type"] == "Venue" || element[key]["type"] == "Mode of Conduct"|| element[key]["type"] == "Get Registered" ){
               setRequiredHackathonDetailsAdded(element[key]["type"], false);
             }
             node.remove(element);

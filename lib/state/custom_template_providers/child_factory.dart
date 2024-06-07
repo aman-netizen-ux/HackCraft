@@ -299,6 +299,72 @@ class ChildFactory {
           "align": "left"
         };
         break;
+
+         case "Venue":
+        // Add specific properties for Text if necessary
+        baseChild[key]!['properties'] = {
+           "text":"",
+          "hint": "Add hackathon venue",
+          "fontSize": 20,
+          "color": "Color(0xff1a202c)",
+          "font": 'Fira Sans',
+          "letterSpacing": 0,
+          "lineHeight": 19,
+          "strikethrough": false,
+          "italics": false,
+          "underline": false,
+          "fontWeight": 200,
+          "uppercase": false,
+          "align": "left"
+        };
+        break;
+
+         case "Mode of Conduct":
+        // Add specific properties for Text if necessary
+        baseChild[key]!['properties'] = {
+           "text":"",
+          "hint": "Add hackathon mode of conduct",
+          "fontSize": 20,
+          "color": "Color(0xff1a202c)",
+          "font": 'Fira Sans',
+          "letterSpacing": 0,
+          "lineHeight": 19,
+          "strikethrough": false,
+          "italics": false,
+          "underline": false,
+          "fontWeight": 200,
+          "uppercase": false,
+          "align": "left"
+        };
+        break;
+
+
+
+        case "Get Registered":
+        addCustomGlobalKeys(customWidgetsGlobalKeysMap.length);
+         var defaultChild = createChild(
+            'Text',
+            customWidgetsGlobalKeysMap[customWidgetsGlobalKeysMap.length - 2]!
+                .toString(),
+            id + 1,
+            false);
+        baseChild[key]!['child']!.add(defaultChild);
+        baseChild[key]!['properties'] = {
+          "height": isMargin ? 100 : 48,
+          "color": generateRandomColor().toString(),
+          "width": isMargin ? 100 : 300,
+          "margin": [0, 0, 0, 0],
+          "padding": [0, 0, 0, 0],
+          "alignment": [0, 0],
+          "shape": "square",
+          "borderWidth": 0,
+          "borderRadius": 50,
+          "borderColor": generateRandomColor().toString(),
+          "shadowColor": generateRandomColor().toString(),
+        };
+         
+       
+        break;
       // Add other cases for each type
     }
     return baseChild;

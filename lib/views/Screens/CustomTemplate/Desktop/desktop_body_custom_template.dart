@@ -46,10 +46,10 @@ dynamicWidgets=customEditPortalProvider.dynamicWidgets;
 
     try {
 
-      dynamicWidgets=customEditPortalProvider.buildWidgetsFromJson(singleHackathonProvider.customSingleHackathon.customData.widget);
+      dynamicWidgets=customEditPortalProvider.buildWidgetsFromJson(singleHackathonProvider.customSingleHackathon.customData.widget, isEdit: false);
       //api call to  get the usertype of this user for this hackathon
-      //  await singleHackathonProvider.getUserType(
-      //   singleHackathonProvider.customSingleHackathon.hackathons.id, loginProvider.emailId);
+       await singleHackathonProvider.getUserType(
+        singleHackathonProvider.customSingleHackathon.hackathons.id, loginProvider.emailId);
 
       //   print("in screen ${singleHackathonProvider.userType}");
     } catch (error) {
