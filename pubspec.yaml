@@ -63,7 +63,7 @@ dependencies:
   # drag_and_drop_lists: ^0.3.3
   shared_preferences: ^2.2.3
   barcode_widget: ^2.0.4
-  syncfusion_flutter_charts: ^25.2.3
+  syncfusion_flutter_charts: ^23.2.4
   url_launcher: ^6.2.6
 
 dev_dependencies:
