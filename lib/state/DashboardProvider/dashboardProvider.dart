@@ -33,7 +33,7 @@ class DashboardProvider extends ChangeNotifier {
 
   List<Widget> pages = const [
     DashboardScreen(),
-    PerformanceMatrix(),
+   // PerformanceMatrix(),
     RegistrationDetails(),
     Text("data"),
   ];
