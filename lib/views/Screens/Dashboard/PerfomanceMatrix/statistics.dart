@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
-import 'package:major_project__widget_testing/models/DashboardModel/statisticModel.dart';
+import 'package:major_project__widget_testing/models/DashboardModel/statistic_model.dart';
 import 'package:major_project__widget_testing/state/DashboardProvider/dashboardProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
-import 'package:major_project__widget_testing/views/Screens/Dashboard/PerfomanceMatrix/barChart.dart';
+import 'package:major_project__widget_testing/views/Screens/Dashboard/PerfomanceMatrix/bar_chart.dart';
 import 'package:major_project__widget_testing/views/Screens/Dashboard/PerfomanceMatrix/doughnutChart.dart';
 import 'package:provider/provider.dart';
 
@@ -45,7 +45,9 @@ class _StatisticState extends State<Statistic> {
                   decoration: BoxDecoration(
                       color: pastelBlueGray,
                       borderRadius: BorderRadius.circular(15)),
-                  child: const BarChart(),
+                  child: BarChartSample(
+                    data: widget.statistic.courseChartData,
+                  ),
                 ),
               ),
               Expanded(
@@ -263,7 +265,9 @@ class _StatisticState extends State<Statistic> {
                             topLeft: Radius.circular(2),
                             bottomRight: Radius.circular(15),
                             topRight: Radius.circular(15))),
-                    child: const DoughnutChart(),
+                    child: DoughnutChart(
+                      data: widget.statistic.genderChartData,
+                    ),
                   )),
             ],
           ),

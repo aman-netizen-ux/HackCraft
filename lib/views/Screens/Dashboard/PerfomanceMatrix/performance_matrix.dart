@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/api/Dashboard/getDashboardStatistics.dart';
-import 'package:major_project__widget_testing/models/DashboardModel/statisticModel.dart';
+import 'package:major_project__widget_testing/models/DashboardModel/statistic_model.dart';
 import 'package:major_project__widget_testing/state/DashboardProvider/dashboardProvider.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
 import 'package:major_project__widget_testing/views/Screens/Dashboard/PerfomanceMatrix/communication_share.dart';

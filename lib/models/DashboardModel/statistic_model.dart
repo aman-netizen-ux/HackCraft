@@ -1,3 +1,6 @@
+import 'package:major_project__widget_testing/views/Screens/Dashboard/PerfomanceMatrix/bar_chart.dart';
+import 'package:major_project__widget_testing/views/Screens/Dashboard/PerfomanceMatrix/doughnutChart.dart';
+
 class StatisticModel {
   final int numberOfRegistrations;
   final int numberOfImpressions;
@@ -21,5 +24,20 @@ class StatisticModel {
       hackathonUrl: json['hackathon_url'],
       courseCounts: Map<String, int>.from(json['course_counts']),
     );
+  }
+
+  List<DoughnutChartData> get genderChartData {
+    return genderCounts.entries
+        .map((entry) => DoughnutChartData(entry.key, entry.value.toDouble()))
+        .toList();
+  }
+
+  List<ChartData> get courseChartData {
+    return courseCounts.entries
+        .map((entry) => ChartData(
+              course: entry.key,
+              count: entry.value,
+            ))
+        .toList();
   }
 }
