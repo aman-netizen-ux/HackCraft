@@ -124,7 +124,6 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                       lastName.substring(1).toLowerCase();
                                   loginProvider.getFirstName(firstName);
                                   loginProvider.getLastName(lastName);
-
                                   String firebaseUUID = user.user!.uid;
                                   storeUserUid(firebaseUUID, user.user!.email!);
                                   loginProvider.setUuid(firebaseUUID,

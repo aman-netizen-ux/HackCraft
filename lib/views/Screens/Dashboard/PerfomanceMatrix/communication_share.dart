@@ -217,7 +217,7 @@ class _CommunicateShareState extends State<CommunicateShare> {
                         color: lightSilverGrey,
                         borderRadius: BorderRadius.circular(15)),
                     width: double.infinity,
-                    height: scaleHeight(context, 50),
+                    height: scaleHeight(context, 45),
                     child: Center(
                       child: Text(
                         "Enable",

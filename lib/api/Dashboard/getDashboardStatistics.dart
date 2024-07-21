@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
-import 'package:major_project__widget_testing/models/DashboardModel/statisticModel.dart';
+import 'package:major_project__widget_testing/models/DashboardModel/statistic_model.dart';
 
 class GetDashboardStatistic {
   Future<StatisticModel?> fetchHackathonStatistic(String id) async {
