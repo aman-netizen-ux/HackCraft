@@ -1,12 +1,14 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
 import 'package:major_project__widget_testing/constants/fontfamily.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class DoughnutChart extends StatefulWidget {
-  const DoughnutChart({super.key});
+  final List<DoughnutChartData> data;
+
+  const DoughnutChart({super.key, required this.data});
 
   @override
   _DoughnutChartState createState() => _DoughnutChartState();
@@ -20,9 +22,11 @@ class _DoughnutChartState extends State<DoughnutChart> {
       children: [
         Padding(
           padding: EdgeInsets.only(
-              top: scaleHeight(context, 10), left: scaleWidth(context, 14)),
+              top: scaleHeight(context, 10),
+              left: scaleWidth(context, 14),
+              bottom: scaleHeight(context, 40)),
           child: Text(
-            "Lorem ipsum",
+            "Gender Distribution",
             style: GoogleFonts.getFont(fontFamily2,
                 fontSize: scaleHeight(context, 18),
                 fontWeight: FontWeight.w500,
@@ -30,21 +34,27 @@ class _DoughnutChartState extends State<DoughnutChart> {
           ),
         ),
         SizedBox(
-          height: scaleHeight(context, 180),
+          height: scaleHeight(context, 100),
           child: Center(
-            child: SfCircularChart(
-              legend: const Legend(isVisible: true),
-              series: <CircularSeries>[
-                DoughnutSeries<DoughnutChartData, String>(
-                  dataSource: <DoughnutChartData>[
-                    DoughnutChartData('Male', 1),
-                    DoughnutChartData('Female', 0),
-                    DoughnutChartData('others', 0),
-                  ],
-                  xValueMapper: (DoughnutChartData data, _) => data.category,
-                  yValueMapper: (DoughnutChartData data, _) => data.value,
-                ),
-              ],
+            child: PieChart(
+              PieChartData(
+                sections: widget.data.map((data) {
+                  return PieChartSectionData(
+                    color: data.category == 'Male' ? Colors.blue : (data.category == 'Female' ? Colors.pink : Colors.grey),
+                    value: data.value,
+                    title: '${data.category}: ${data.value}',
+                    radius: 40,
+                    titleStyle: GoogleFonts.getFont(
+                      fontFamily1,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  );
+                }).toList(),
+                centerSpaceRadius: 45,
+                sectionsSpace: 2,
+              ),
             ),
           ),
         ),
