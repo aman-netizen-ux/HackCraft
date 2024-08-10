@@ -856,7 +856,7 @@ class MiddleFormPart extends StatelessWidget {
         selectedTab == provider.initialmemberIndex &&
         sectionIndex == provider.singleForm.sections.length) {
       // _postMemberDetails(); or another submission logic//TODO
-      postMemberDetails(provider,context);
+      postMemberDetails(provider, context);
     }
   }
 
@@ -946,6 +946,7 @@ class MiddleFormPart extends StatelessWidget {
   void postTeamData(
       GetRegistrationFormProvider provider, BuildContext context) async {
     // check all needed data filled of leader and team details filled or not
+    bool isLoading = false;
     final allDetailsFilled = provider.isMemberDataComplete(0) &&
         provider.teamData.team.teamName.isNotEmpty &&
         provider.teamData.team.teamSize > 0;
@@ -957,8 +958,17 @@ class MiddleFormPart extends StatelessWidget {
         "Are you sure you want to submit",
         "This action can't be undone",
       );
-
+      if (isLoading == true) {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return const Center(child: CircularProgressIndicator());
+          },
+        );
+      }
       if (result) {
+        
         final memberId = await provider.createTeam(hackathonId);
         debugPrint("isTeamCreated $memberId");
         if (memberId.isNotEmpty) {

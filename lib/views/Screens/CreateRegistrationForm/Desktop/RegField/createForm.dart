@@ -287,6 +287,17 @@ class _CreateFormState extends State<CreateForm> with TickerProviderStateMixin {
                                 Provider.of<CreateRegistrationProvider>(context,
                                     listen: false);
 
+                            if (isLoading == true) {
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                },
+                              );
+                            }
+
                             // await singleHackathonProvider
                             //     .getSingleHackathonsLisHt(
                             //         "d3ae95c1-0eee-4745-8b56-259ae9404867");
