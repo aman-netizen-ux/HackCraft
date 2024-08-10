@@ -70,14 +70,21 @@ class _StepperFieldState extends State<StepperField> {
 
   void onValueChange() {
     int currentInt = int.tryParse(textController.text) ?? 0;
+    print("currentInt $currentInt");
     if (widget.required && textController.text.isEmpty) {
+      print("im error");
       setState(() {
         errorText = widget.error;
       });
     } else {
-      if (widget.min > currentInt || widget.max < currentInt) {
+      if ( widget.max < currentInt) {
         setState(() {
-          errorText = "Enter a value between ${widget.min} and ${widget.max}";
+          errorText = "Enter a value between ${widget.min} to ${widget.max}";
+          textController.text = widget.max.toString();
+        });
+      }else if (widget.min > currentInt ) {
+        setState(() {
+          errorText = "Enter a value between ${widget.min} to ${widget.max}";
           textController.text = widget.min.toString();
         });
       } else {
@@ -87,7 +94,7 @@ class _StepperFieldState extends State<StepperField> {
       }
       final getFormProvider =
           Provider.of<GetRegistrationFormProvider>(context, listen: false);
-
+print("textController.text ${textController.text}");
       getFormProvider.updateDetails(textController.text,
           isRequiredData: widget.isRequiredData,
           requiredType: widget.requiredType,
