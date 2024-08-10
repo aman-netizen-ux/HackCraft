@@ -76,7 +76,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
 
   final List<dynamic> _gereralSectionFieldsList = [
     ShortAnswerFieldModel(
-      id: "",
+        id: "",
         errorText: "Please fill the name",
         hint: "Enter your name",
         label: "Full name",
@@ -85,7 +85,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
         validation: "String",
         type: FieldTypes.shortAnswer),
     ShortAnswerFieldModel(
-      id: "",
+        id: "",
         errorText: "Plrase enter your email",
         hint: "Enter your valid email id",
         label: "Email id ",
@@ -94,7 +94,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
         validation: "Email",
         type: FieldTypes.shortAnswer),
     ShortAnswerFieldModel(
-      id: "",
+        id: "",
         errorText: "Please enter your college",
         hint: "Enter your College/ Organization Name",
         label: "College Name",
@@ -116,7 +116,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
       ],
     ),
     PhoneNumberModel(
-      id: "",
+        id: "",
         serialNumber: 5,
         label: "Phone Number",
         errorText: "Please enter your Phone Number",
@@ -128,7 +128,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
 
   final List<dynamic> _teamDetailsSectionFieldsList = [
     ShortAnswerFieldModel(
-      id: "",
+        id: "",
         serialNumber: 1,
         label: "Team Name",
         errorText: "This field is required",
@@ -149,7 +149,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
   void addTeamFields(int index) {
     _teamEmailList.add(
       ShortAnswerFieldModel(
-        id: "",
+          id: "",
           serialNumber: 1,
           label: "Participant ${index + 1} email",
           errorText: "This field is required",
@@ -234,7 +234,6 @@ class GetRegistrationFormProvider with ChangeNotifier {
     if (value is List<MemberDataModel>) {
       // It's a list of MemberDataModel
 
-     
       for (MemberDataModel dataModel in value) {
         // Check required data fields
         if (dataModel.requiredData.participantName.isEmpty ||
@@ -389,19 +388,40 @@ class GetRegistrationFormProvider with ChangeNotifier {
         } else if (requiredType == "teamsize") {
           _teamData.team.teamSize = int.tryParse(input) ?? 0;
           print(
-              "***************** teamm size ${_teamData.team.teamSize}***********************888");
+              "***************** teamm size ${_teamData.team.teamSize}, ${teamEmailList.length}***********************888");
 
           if (teamEmailList.isEmpty) {
+            print("adding all");
             for (int i = 1; i < _teamData.team.teamSize; i++) {
               addTeamFields(i);
               addMember("Member ${i + 1}", false);
             }
-          } else if (_teamData.team.teamSize > teamEmailList.length) {
-            addTeamFields(_teamData.team.teamSize - 1);
-            addMember("Member ${_teamData.team.teamSize}", false);
-          } else if (_teamData.team.teamSize < teamEmailList.length) {
-            teamEmailList.removeLast();
-            _teamData.members.removeLast();
+          } else if (_teamData.team.teamSize - 1 > teamEmailList.length) {
+            //team size= 7 old size= 4 (members= 3)
+            //6
+            //6>3
+            //7-1-3=6-3=3
+            int count = _teamData.team.teamSize - 1 - teamEmailList.length;
+            print("  count $count");
+            for (int i = 0; i < count; i++) {
+             
+                print("adding one");
+                addTeamFields(teamEmailList.length + 1);
+                addMember("Member ${teamEmailList.length + 1}", false);
+             
+            }
+          } else if (_teamData.team.teamSize - 1 < teamEmailList.length) {
+            print("let's remove");
+            int count = teamEmailList.length - (_teamData.team.teamSize - 1);
+            for (int i = 0;
+                i <count;
+                i++) {
+              print("removing last");
+              teamEmailList.removeLast();
+              _teamData.members.removeLast();
+            }
+          } else {
+            print("what the fuck is going on");
           }
         }
       } else if (isRequiredData == "MemberEmails") {
@@ -434,17 +454,12 @@ class GetRegistrationFormProvider with ChangeNotifier {
       if (modelType == "StringAnswerModel" ||
           modelType == "OneIntAnswerModel" ||
           modelType == "BoolAnswerModel") {
-        print("Im in string model");
-        print(" before updation: ${model.additionalData[serialNumber].input}");
         model.additionalData[serialNumber].input = input;
-        print(" after updation: ${model.additionalData[serialNumber].input}");
       } else if (modelType == "MapAnswerModel") {
-        print("Im in map model");
         //  if(input.contains(','))
         // {
 
         List<String> options = input.split(',');
-        print("options $options");
 
         Map<String, String> optionList = {};
 
@@ -461,14 +476,36 @@ class GetRegistrationFormProvider with ChangeNotifier {
         //   'Option 1': input,
         // };
         // }
-      }if( modelType == "TwoIntAnswerModel"){
-         List<String> values = input.split(',');
-          model.additionalData[serialNumber].input1 = values[0];
-          model.additionalData[serialNumber].input2 = values[1];
+      }
+      if (modelType == "TwoIntAnswerModel") {
+        List<String> values = input.split(',');
+        model.additionalData[serialNumber].input1 = values[0];
+        model.additionalData[serialNumber].input2 = values[1];
       }
     }
 
     notifyListeners();
+    
+     WidgetsBinding.instance.addPostFrameCallback((_) {
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        duration: Duration(seconds: 1),
+        curve: Curves.easeInOut,
+      );
+    });
+  }
+
+  
+
+   final ScrollController scrollController = ScrollController();
+
+  void scrollToEnd() {
+    print("scrolling");
+    scrollController.animateTo(
+      scrollController.position.maxScrollExtent,
+      duration: Duration(seconds: 1),
+      curve: Curves.easeInOut,
+    );
   }
 
   dynamic getField(
@@ -559,7 +596,7 @@ class GetRegistrationFormProvider with ChangeNotifier {
           min: field.labels.values.first,
           question: field.label,
           error: field.errorText,
-           isRequiredData: isRequiredData,
+          isRequiredData: isRequiredData,
           requiredType: requiredType,
           serialNumber: serialNumber,
           modelType: modelType,
@@ -775,68 +812,60 @@ class GetRegistrationFormProvider with ChangeNotifier {
     return result.leader;
   }
 
+  Future<String> createMember(String teamId, int index) async {
+    String participantEmail = _teamData.members[index].details.values
+        .toList()[0][0]
+        .requiredData
+        .participantEmail;
 
-  Future<String> createMember(String teamId, int index)async{
-    String participantEmail =
-        _teamData.members[index].details.values.toList()[0][0].requiredData.participantEmail;
-
-     Map<String, dynamic> params = {
-      "user": participantEmail,
-      "team": teamId
-     };
+    Map<String, dynamic> params = {"user": participantEmail, "team": teamId};
 
     print("params of member $params");
 
     final result = await CreateTeam().postMember(params);
 
     return result.memberId;
-
   }
 
   Future<bool> createParticipant(int index, String memberId) async {
+    String getType(FieldTypes type) {
+      switch (type) {
+        case FieldTypes.checkbox:
+          return "multiple_field";
+        case FieldTypes.shortAnswer:
+          return "short_field";
+        case FieldTypes.dropdown:
+          return "dropdown_field";
 
+        case FieldTypes.date:
+          return "date_field";
+        case FieldTypes.file:
+          return "file_field";
+        case FieldTypes.longAnswer:
+          return "long_field";
 
-String getType(FieldTypes type){
-switch(type){
-  case FieldTypes.checkbox:
-  return "multiple_field";
-  case FieldTypes.shortAnswer:
-  return "short_field";
-  case FieldTypes.dropdown:
-  return "dropdown_field";
+        case FieldTypes.radio:
+          return "multiple_field";
+        case FieldTypes.linear:
+          return "slider";
+        case FieldTypes.range:
+          return "slider";
 
+        case FieldTypes.stepper:
+          return "stepper_field";
+        case FieldTypes.tag:
+          return "tags_field";
+        case FieldTypes.toggle:
+          return "toggle";
 
-  case FieldTypes.date:
-  return "date_field";
-  case FieldTypes.file:
-  return "file_field";
-  case FieldTypes.longAnswer:
-  return "long_field";
-
-  case FieldTypes.radio:
-  return "multiple_field";
-  case FieldTypes.linear:
-  return "slider";
-  case FieldTypes.range:
-  return "slider";
-
-  case FieldTypes.stepper:
-  return "stepper_field";
-  case FieldTypes.tag:
-  return "tags_field";
-  case FieldTypes.toggle:
-  return "toggle";
-
-  case FieldTypes.slider:
-  return "slider";
-  case FieldTypes.phoneNumber:
-  return "phone";
-  default:
-  return "";
-  
-
-}
-}
+        case FieldTypes.slider:
+          return "slider";
+        case FieldTypes.phoneNumber:
+          return "phone";
+        default:
+          return "";
+      }
+    }
 
     RequiredDataModel requiredData =
         _teamData.members[index].details.values.toList()[0][0].requiredData;
@@ -851,9 +880,10 @@ switch(type){
         "participant_gender": requiredData.participantGender
       },
       "additional": List.generate(additionalData.length, (index) {
-        Map<String, dynamic> additionalDataJson = additionalData[index].toJson();
-        
-        String newKey= getType(_singleForm.fields[index].type);
+        Map<String, dynamic> additionalDataJson =
+            additionalData[index].toJson();
+
+        String newKey = getType(_singleForm.fields[index].type);
 
         additionalDataJson[newKey] = _singleForm.fields[index].id;
         return additionalDataJson;
@@ -865,40 +895,41 @@ switch(type){
     return result;
   }
 
-  Future<void> getTeamDetails(String teamId,)async {
-    final response= await GetTeamDetails().getTeamDetails(teamId);
+  Future<void> getTeamDetails(
+    String teamId,
+  ) async {
+    final response = await GetTeamDetails().getTeamDetails(teamId);
     debugPrint("Im in get team details function");
 
-    if(response!=null){
-       debugPrint("Im in get team details function response not null ");
-    _teamData=response;
-    print("api executed");
-    }else{
-      
-    }
+    if (response != null) {
+      debugPrint("Im in get team details function response not null ");
+      _teamData = response;
+      print("api executed");
+    } else {}
     notifyListeners();
   }
 
-  void initializeMemberDataListToMembers(){
-    List<MemberModel> membersList= _teamData.members;
-    for(MemberModel member in membersList){
-      String emailKey= member.details.keys.toList()[0];
-      if(member.details[emailKey] is! List){
-        String value= member.details[emailKey];
-        member.details[emailKey]= [
-        MemberDataModel(
-            requiredData: RequiredDataModel(
-                participantEmail:value=="pendin"? member.details[emailKey]: "",
-                participantName: "",
-                participantPhone: "",
-                participantGender: "",
-                participantCollege: ""),
-            isLeader: false,
-            additionalData: List.generate(_singleForm.fields.length, (index) {
-              return getAnswerModel(_singleForm.fields[index].type,
-                  _singleForm.fields[index], index);
-            }))
-      ];
+  void initializeMemberDataListToMembers() {
+    List<MemberModel> membersList = _teamData.members;
+    for (MemberModel member in membersList) {
+      String emailKey = member.details.keys.toList()[0];
+      if (member.details[emailKey] is! List) {
+        String value = member.details[emailKey];
+        member.details[emailKey] = [
+          MemberDataModel(
+              requiredData: RequiredDataModel(
+                  participantEmail:
+                      value == "pendin" ? member.details[emailKey] : "",
+                  participantName: "",
+                  participantPhone: "",
+                  participantGender: "",
+                  participantCollege: ""),
+              isLeader: false,
+              additionalData: List.generate(_singleForm.fields.length, (index) {
+                return getAnswerModel(_singleForm.fields[index].type,
+                    _singleForm.fields[index], index);
+              }))
+        ];
       }
     }
     debugPrint("initialized members also");
@@ -906,14 +937,14 @@ switch(type){
   }
 
   int findMemberIndex(String emailId) {
-  List<MemberModel> members= _teamData.members;
-  for (int i = 0; i < members.length; i++) {
-    if (members[i].details.containsKey(emailId)) {
-      return i; // Return the index where 'group' key is found
+    List<MemberModel> members = _teamData.members;
+    for (int i = 0; i < members.length; i++) {
+      if (members[i].details.containsKey(emailId)) {
+        return i; // Return the index where 'group' key is found
+      }
     }
+    return -1; // Return -1 if 'group' key is not found
   }
-  return -1; // Return -1 if 'group' key is not found
-}
 }
 
 

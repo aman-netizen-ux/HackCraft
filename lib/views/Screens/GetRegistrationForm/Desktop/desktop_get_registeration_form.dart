@@ -300,12 +300,23 @@ class _DesktopGetRegisterationFormState
   }
 }
 
-class MiddleFormPart extends StatelessWidget {
+
+class MiddleFormPart extends StatefulWidget {
   const MiddleFormPart(
       {super.key, required this.hackathonId, required this.teamId});
 
   final String hackathonId;
   final String teamId;
+
+  @override
+  State<MiddleFormPart> createState() => _MiddleFormPartState();
+}
+
+class _MiddleFormPartState extends State<MiddleFormPart> {
+
+  
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -379,6 +390,7 @@ class MiddleFormPart extends StatelessWidget {
                       left: scaleWidth(context, 159),
                       right: scaleWidth(context, 5)),
                   child: SingleChildScrollView(
+                    controller: getRegistrationFormProvider.scrollController,
                     padding: EdgeInsets.only(right: scaleWidth(context, 108)),
                     child: Column(children: [
                       SizedBox(
@@ -513,6 +525,12 @@ class MiddleFormPart extends StatelessWidget {
                             ],
                           );
                         } else {
+
+
+
+
+
+                          
                           int sumOfFieldsTillPrevSection = sectionIndex - 1 == 0
                               ? 0
                               : getRegistrationFormProvider.singleForm.sections
@@ -959,7 +977,7 @@ class MiddleFormPart extends StatelessWidget {
       );
 
       if (result) {
-        final memberId = await provider.createTeam(hackathonId);
+        final memberId = await provider.createTeam(widget.hackathonId);
         debugPrint("isTeamCreated $memberId");
         if (memberId.isNotEmpty) {
           // call api participant
@@ -1006,7 +1024,7 @@ class MiddleFormPart extends StatelessWidget {
 
       if (result) {
         final memberId =
-            await provider.createMember(teamId, provider.initialmemberIndex);
+            await provider.createMember(widget.teamId, provider.initialmemberIndex);
         debugPrint("isMemberCreated in desktop $memberId");
         if (memberId.isNotEmpty) {
           // call api participant
