@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CommonTools/deleteWidget.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CustomColumnToolbar/custom_column_cross_axis_alignment.dart';
 import 'package:major_project__widget_testing/views/Screens/CustomEditPortal/Desktop/Sections/CustomColumnToolbar/custom_column_main_axis_alignment.dart';
 
@@ -14,7 +15,9 @@ class CustomColumnPropertiesPanelWidget extends StatelessWidget {
       children: [
         const CustomColumnMainAxisAlignmentWidget(),
         SizedBox(width: scaleWidth(context, 20)),
-        const CustomColumnCrossAxisAlignmentWidget()
+        const CustomColumnCrossAxisAlignmentWidget(),
+        SizedBox(width: scaleWidth(context, 20)),
+const DeleteWidget()
         
         
       ],

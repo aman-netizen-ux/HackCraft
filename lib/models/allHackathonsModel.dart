@@ -7,6 +7,7 @@ class HackathonModel {
   final List<int> teamSize;
   final String venue;
   final String price;
+  final String template;
 
   HackathonModel({
     required this.id,
@@ -17,6 +18,7 @@ class HackathonModel {
     required this.teamSize,
     required this.venue,
     required this.price,
+    required this.template
   });
 
   factory HackathonModel.fromJson(Map<String, dynamic> json) {
@@ -28,6 +30,7 @@ class HackathonModel {
         startDate: json['start_date_time'],
         teamSize: List<int>.from(json['team_size']),
         venue: json['venue'],
-        price: json['price']);
+        price: json['price'],
+        template: json['template']);
   }
 }

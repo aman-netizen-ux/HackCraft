@@ -1,66 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:major_project__widget_testing/constants/colors.dart';
-import 'package:major_project__widget_testing/constants/enums.dart';
+import 'package:major_project__widget_testing/constants/fontfamily.dart';
+// import 'package:major_project__widget_testing/constants/enums.dart';
 import 'package:major_project__widget_testing/constants/radius.dart';
 import 'package:major_project__widget_testing/state/custom_template_providers/custom_edit_template_provider.dart';
+import 'package:major_project__widget_testing/utils/customTemplate_widget_keys.dart';
 import 'package:major_project__widget_testing/utils/scaling.dart';
+import 'package:major_project__widget_testing/utils/text_lineheight.dart';
 import 'package:major_project__widget_testing/views/Components/toolTip_custom_decoration.dart';
 import 'package:provider/provider.dart';
 
-class CustomContainerBgColorWidget extends StatefulWidget {
-  const CustomContainerBgColorWidget({
-    super.key, required this.index, required this.title, required this.property,
+class MarginTool extends StatefulWidget {
+  const MarginTool({
+    super.key,
   });
- final int index;
-  final String title;
-  final String property;
+  
+
  
 
   @override
-  State<CustomContainerBgColorWidget> createState() => _CustomContainerBgColorWidgetState();
+  State<MarginTool> createState() => _MarginToolState();
 }
 
-class _CustomContainerBgColorWidgetState extends State<CustomContainerBgColorWidget> {
+class _MarginToolState extends State<MarginTool> {
   bool isHover = false;
    void _handleTap() {
     final customEditTemplateProvider =
         Provider.of<CustomEditPortal>(context, listen: false);
-    // customEditTemplateProvider.setIsColorSelected();
-    // if(customEditTemplateProvider.isColorPickerSelected){
-    //   customEditTemplateProvider.setIsColorPickerSelected();
-    // }  
+    customEditTemplateProvider.setMarginSelected();
+    debugPrint(" Margin set to ${customEditTemplateProvider.isMarginSelected}");
+       
     
-    
-    if (customEditTemplateProvider.activeIndex == widget.index) {
-      if (customEditTemplateProvider.isColorPickerSelected) {
-
-        customEditTemplateProvider
-            .setIsColorPickerSelected();
-      }
-      customEditTemplateProvider.setActiveIndex(-1);
-    }  else{
-      customEditTemplateProvider.setActiveIndex(widget.index);
-   
-    customEditTemplateProvider.setPropertyType(widget.property);
-   
-    }
-
-
-
-
-
-
-
-
-    // if(customEditTemplateProvider.isBoldSelected){
-    //   customEditTemplateProvider.setBoldSelection();
-    // }
   }
 
   Color? _determineColor() {
     final customEditTemplateProvider =
         Provider.of<CustomEditPortal>(context, listen: false);
-    if (customEditTemplateProvider.activeIndex == widget.index) {
+    if (customEditTemplateProvider.isMarginSelected) {
       return grey5.withOpacity(0.2); // Color when clicked
     } else if (isHover) {
       return grey5.withOpacity(0.1); // Color when hovered
@@ -69,13 +47,13 @@ class _CustomContainerBgColorWidgetState extends State<CustomContainerBgColorWid
     }
   }
 
-  
+ 
 
   @override
   Widget build(BuildContext context) {
     final customEditPortalProvider = Provider.of<CustomEditPortal>(context);
     return Tooltip(
-      message: widget.title,
+      message: "Margin",
       verticalOffset: 5,
       decoration: const ShapeDecoration(
         shape: ToolTipCustomDecoration(
@@ -100,17 +78,7 @@ class _CustomContainerBgColorWidgetState extends State<CustomContainerBgColorWid
             child: Container(
               height: scaleHeight(context, 30),
               width: scaleHeight(context, 30),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(2),
-                  color: customEditPortalProvider
-                              .selectedWidgetKey ==
-                          null
-                      ? darkBlue
-                      : customEditPortalProvider.stringToColor(
-                          customEditPortalProvider.getPropertyValue(
-                      customEditPortalProvider.jsonObject,
-                      customEditPortalProvider.selectedWidgetKey.toString(),
-                      widget.property))),
+              child: const Icon(Icons.margin, color: Colors.white)
             ),
           ),
         ),

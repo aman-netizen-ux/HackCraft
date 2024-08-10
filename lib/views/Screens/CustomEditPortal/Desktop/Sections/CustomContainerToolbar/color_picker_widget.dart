@@ -105,7 +105,7 @@ class _CustomColorPickerWidgetState extends State<CustomColorPickerWidget> {
                                                 customEditPortalProvider
                                                     .selectedWidgetKey
                                                     .toString(),
-                                                "color")),
+                                                customEditPortalProvider.propertyType)),
                                 onChanged: (value) {
                                   Color primaryColor = hackathonTextProvider
                                       .getPrimaryColor(value);
@@ -119,7 +119,7 @@ class _CustomColorPickerWidgetState extends State<CustomColorPickerWidget> {
                                           : customEditPortalProvider
                                               .selectedWidgetKey
                                               .toString(),
-                                      'color',
+                                       customEditPortalProvider.propertyType,
                                       primaryColor.toString());
                                 })
                             : CustomSwatchesPicker(
@@ -138,7 +138,7 @@ class _CustomColorPickerWidgetState extends State<CustomColorPickerWidget> {
                                                 customEditPortalProvider
                                                     .selectedWidgetKey
                                                     .toString(),
-                                                "color")),
+                                                 customEditPortalProvider.propertyType)),
                                 onChanged: (value) {
                                   Color primaryColor = hackathonTextProvider
                                       .getPrimaryColor(value);
@@ -152,7 +152,7 @@ class _CustomColorPickerWidgetState extends State<CustomColorPickerWidget> {
                                           : customEditPortalProvider
                                               .selectedWidgetKey
                                               .toString(),
-                                      'color',
+                                       customEditPortalProvider.propertyType,
                                       primaryColor.toString());
                                 })),
 
@@ -201,7 +201,7 @@ class _CustomColorPickerWidgetState extends State<CustomColorPickerWidget> {
                                                 customEditPortalProvider
                                                     .selectedWidgetKey
                                                     .toString(),
-                                                "color")),)
+                                                 customEditPortalProvider.propertyType)),)
                                         ? SvgPicture.asset(
                                             "assets/icons/defaultEditPortal/color_picker.svg")
                                         : Container(
@@ -217,7 +217,7 @@ class _CustomColorPickerWidgetState extends State<CustomColorPickerWidget> {
                                                 customEditPortalProvider
                                                     .selectedWidgetKey
                                                     .toString(),
-                                                "color")),),
+                                                 customEditPortalProvider.propertyType)),),
                                           )),
                           )
                         ],
@@ -259,7 +259,7 @@ class _CustomColoPickerCardState extends State<CustomColoPickerCard> {
                                                 customEditPortalProvider
                                                     .selectedWidgetKey
                                                     .toString(),
-                                                "color")));
+                                                 customEditPortalProvider.propertyType)));
     return Container(
         height: scaleHeight(context, 290),
         width: scaleWidth(context, 150),
@@ -301,7 +301,7 @@ class _CustomColoPickerCardState extends State<CustomColoPickerCard> {
                                           : customEditPortalProvider
                                               .selectedWidgetKey
                                               .toString(),
-                                      'color',
+                                       customEditPortalProvider.propertyType,
                                       primaryColor.toString());
                   });
             }));

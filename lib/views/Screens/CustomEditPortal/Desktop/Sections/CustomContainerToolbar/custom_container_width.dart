@@ -14,8 +14,11 @@ import 'package:provider/provider.dart';
 
 class CustomContainerWidthWidget extends StatefulWidget {
   const CustomContainerWidthWidget({
-    super.key,
+    super.key, required this.property, required this.title,
   });
+
+  final String property;
+  final String title;
 
   @override
   State<CustomContainerWidthWidget> createState() =>
@@ -50,8 +53,8 @@ class _CustomContainerWidthWidgetState extends State<CustomContainerWidthWidget>
       final currWidth = customEditPortalProvider.getPropertyValue(
           customEditPortalProvider.jsonObject,
           customEditPortalProvider.selectedWidgetKey.toString(),
-          "width");
-      if (currWidth > 0) {
+          widget.property);
+      if (currWidth >= 0) {
         customContainerWidthController.text = currWidth.toString();
       }
     }
@@ -60,9 +63,10 @@ class _CustomContainerWidthWidgetState extends State<CustomContainerWidthWidget>
           borderRadius: BorderRadius.circular(rad5_1),
           border: Border.all(color: greyish3, width: 1)),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Tooltip(
-            message: "Decrease Container Width",
+            message: "Decrease ${widget.title}",
             verticalOffset: 5,
             decoration: const ShapeDecoration(
               shape: ToolTipCustomDecoration(
@@ -77,19 +81,23 @@ class _CustomContainerWidthWidgetState extends State<CustomContainerWidthWidget>
                   final currWidth = customEditPortalProvider.getPropertyValue(
                       customEditPortalProvider.jsonObject,
                       customEditPortalProvider.selectedWidgetKey.toString(),
-                      "width");
-                  customEditPortalProvider.addPropertyByKey(
+                       widget.property);
+                  if(widget.property=="width"? currWidth - 30>=0: currWidth-2>=0  ){
+                    customEditPortalProvider.addPropertyByKey(
                       customEditPortalProvider.selectedWidgetKey == null
                           ? customColumnKey.toString()
                           : customEditPortalProvider.selectedWidgetKey
                               .toString(),
-                      'width',
-                      currWidth - 30);
+                       widget.property,
+                       widget.property=="width"? currWidth - 30: currWidth-2);
 
-                  customEditPortalProvider.dynamicWidgets =
+                         customEditPortalProvider.dynamicWidgets =
                       customEditPortalProvider.buildWidgetsFromJson(
                           customEditPortalProvider.jsonObject);
                   customEditPortalProvider.triggerUIUpdate();
+                  }
+
+                
                 },
                 child: Container(
                     height: scaleHeight(context, 37),
@@ -108,7 +116,7 @@ class _CustomContainerWidthWidgetState extends State<CustomContainerWidthWidget>
             thickness: 1,
           ),
           Tooltip(
-            message: "Container Width",
+            message:  widget.title,
             verticalOffset: 5,
             decoration: const ShapeDecoration(
               shape: ToolTipCustomDecoration(
@@ -156,7 +164,7 @@ class _CustomContainerWidthWidgetState extends State<CustomContainerWidthWidget>
                           ? customColumnKey.toString()
                           : customEditPortalProvider.selectedWidgetKey
                               .toString(),
-                      'width',
+                      widget.property,
                      width);
                 },
               ),
@@ -168,7 +176,7 @@ class _CustomContainerWidthWidgetState extends State<CustomContainerWidthWidget>
             thickness: 1,
           ),
           Tooltip(
-            message: "Increase Container Width",
+            message: "Increase ${ widget.title}",
             verticalOffset: 5,
             decoration: const ShapeDecoration(
               shape: ToolTipCustomDecoration(
@@ -183,14 +191,14 @@ class _CustomContainerWidthWidgetState extends State<CustomContainerWidthWidget>
                   final currWidth = customEditPortalProvider.getPropertyValue(
                       customEditPortalProvider.jsonObject,
                       customEditPortalProvider.selectedWidgetKey.toString(),
-                      "width");
+                       widget.property);
                   customEditPortalProvider.addPropertyByKey(
                       customEditPortalProvider.selectedWidgetKey == null
                           ? customColumnKey.toString()
                           : customEditPortalProvider.selectedWidgetKey
                               .toString(),
-                      'width',
-                      currWidth + 30);
+                       widget.property,
+                      widget.property=="width"? currWidth + 30: currWidth +2);
                 },
                 child: Container(
                     height: scaleHeight(context, 37),

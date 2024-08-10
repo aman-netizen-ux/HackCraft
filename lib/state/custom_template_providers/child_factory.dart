@@ -25,13 +25,21 @@ class ChildFactory {
           "height": isMargin ? 100 : 300,
           "color": generateRandomColor().toString(),
           "width": isMargin ? 100 : 300,
-          "margin": isMargin ? 20 : 0
+          "margin": [0, 0, 0, 0],
+          "padding": [0, 0, 0, 0],
+          "alignment": [0, 0],
+          "shape": "square",
+          "borderWidth": 0,
+          "borderRadius": 0,
+          "borderColor": generateRandomColor().toString(),
+          "shadowColor": generateRandomColor().toString(),
         };
         break;
       case "Text":
         // Add specific properties for Text if necessary
         baseChild[key]!['properties'] = {
           "text": "Dynamic Text",
+          "hint":"Add your text",
           "fontSize": 20,
           "color": "Color(0xff1a202c)",
           "font": 'Fira Sans',
@@ -45,6 +53,7 @@ class ChildFactory {
           "align": "left"
         };
         break;
+
       case "Row":
         baseChild[key]!['properties'] = {
           "mainAxisAlignment": 'Start',
@@ -65,17 +74,17 @@ class ChildFactory {
           //"color": generateRandomColor().toString(),
           "dividerHeight": 10,
           "indent": 0,
-          "endIndent":  0
+          "endIndent": 0
         };
         break;
 
       case "VerticalDivider":
-      baseChild[key]!['properties'] = {
+        baseChild[key]!['properties'] = {
           "thickness": 10,
           //"color": generateRandomColor().toString(),
           "verticalDividerWidth": 5,
           "indent": 0,
-          "endIndent":  0
+          "endIndent": 0
         };
         break;
 
@@ -137,6 +146,224 @@ class ChildFactory {
         break;
 
       case "Tabbar":
+        break;
+
+      case "Hackathon Name":
+        // Add specific properties for Text if necessary
+        baseChild[key]!['properties'] = {
+          "text":"",
+          "hint": "Add your Hackathon Name",
+          "fontSize": 20,
+          "color": "Color(0xff1a202c)",
+          "font": 'Fira Sans',
+          "letterSpacing": 0,
+          "lineHeight": 19,
+          "strikethrough": false,
+          "italics": false,
+          "underline": false,
+          "fontWeight": 200,
+          "uppercase": false,
+          "align": "left"
+        };
+        break;
+
+      case "Start Date":
+        // Add specific properties for Text if necessary
+        baseChild[key]!['properties'] = {
+           "text":"",
+          "hint": "Add hackathon start date",
+          "fontSize": 20,
+          "color": "Color(0xff1a202c)",
+          "font": 'Fira Sans',
+          "letterSpacing": 0,
+          "lineHeight": 19,
+          "strikethrough": false,
+          "italics": false,
+          "underline": false,
+          "fontWeight": 200,
+          "uppercase": false,
+          "align": "left"
+        };
+        break;
+
+      case "Organization Name":
+        // Add specific properties for Text if necessary
+        baseChild[key]!['properties'] = {
+           "text":"",
+          "hint": "Add your oranization name",
+          "fontSize": 20,
+          "color": "Color(0xff1a202c)",
+          "font": 'Fira Sans',
+          "letterSpacing": 0,
+          "lineHeight": 19,
+          "strikethrough": false,
+          "italics": false,
+          "underline": false,
+          "fontWeight": 200,
+          "uppercase": false,
+          "align": "left"
+        };
+        break;
+
+      case "Deadline":
+        // Add specific properties for Text if necessary
+        baseChild[key]!['properties'] = {
+           "text":"",
+          "hint": "Add hackathon deadline",
+          "fontSize": 20,
+          "color": "Color(0xff1a202c)",
+          "font": 'Fira Sans',
+          "letterSpacing": 0,
+          "lineHeight": 19,
+          "strikethrough": false,
+          "italics": false,
+          "underline": false,
+          "fontWeight": 200,
+          "uppercase": false,
+          "align": "left"
+        };
+        break;
+
+      case "Team Size":
+        // Add specific properties for Text if necessary
+        baseChild[key]!['properties'] = {
+           "text":"",
+          "hint": "Add hackathon team Size",
+          "fontSize": 20,
+          "color": "Color(0xff1a202c)",
+          "font": 'Fira Sans',
+          "letterSpacing": 0,
+          "lineHeight": 19,
+          "strikethrough": false,
+          "italics": false,
+          "underline": false,
+          "fontWeight": 200,
+          "uppercase": false,
+          "align": "left"
+        };
+        break;
+
+      case "Brief":
+        // Add specific properties for Text if necessary
+        baseChild[key]!['properties'] = {
+           "text":"",
+          "hint": "Add hackathon brief",
+          "fontSize": 20,
+          "color": "Color(0xff1a202c)",
+          "font": 'Fira Sans',
+          "letterSpacing": 0,
+          "lineHeight": 19,
+          "strikethrough": false,
+          "italics": false,
+          "underline": false,
+          "fontWeight": 200,
+          "uppercase": false,
+          "align": "left"
+        };
+        break;
+
+      case "Fee":
+        // Add specific properties for Text if necessary
+        baseChild[key]!['properties'] = {
+           "text":"",
+          "hint": "Add hackathon fee",
+          "fontSize": 20,
+          "color": "Color(0xff1a202c)",
+          "font": 'Fira Sans',
+          "letterSpacing": 0,
+          "lineHeight": 19,
+          "strikethrough": false,
+          "italics": false,
+          "underline": false,
+          "fontWeight": 200,
+          "uppercase": false,
+          "align": "left"
+        };
+        break;
+
+      case "Total Rounds":
+        // Add specific properties for Text if necessary
+        baseChild[key]!['properties'] = {
+           "text":"",
+          "hint": "Add hackathon total rounds",
+          "fontSize": 20,
+          "color": "Color(0xff1a202c)",
+          "font": 'Fira Sans',
+          "letterSpacing": 0,
+          "lineHeight": 19,
+          "strikethrough": false,
+          "italics": false,
+          "underline": false,
+          "fontWeight": 200,
+          "uppercase": false,
+          "align": "left"
+        };
+        break;
+
+         case "Venue":
+        // Add specific properties for Text if necessary
+        baseChild[key]!['properties'] = {
+           "text":"",
+          "hint": "Add hackathon venue",
+          "fontSize": 20,
+          "color": "Color(0xff1a202c)",
+          "font": 'Fira Sans',
+          "letterSpacing": 0,
+          "lineHeight": 19,
+          "strikethrough": false,
+          "italics": false,
+          "underline": false,
+          "fontWeight": 200,
+          "uppercase": false,
+          "align": "left"
+        };
+        break;
+
+         case "Mode of Conduct":
+        // Add specific properties for Text if necessary
+        baseChild[key]!['properties'] = {
+           "text":"",
+          "hint": "Add hackathon mode of conduct",
+          "fontSize": 20,
+          "color": "Color(0xff1a202c)",
+          "font": 'Fira Sans',
+          "letterSpacing": 0,
+          "lineHeight": 19,
+          "strikethrough": false,
+          "italics": false,
+          "underline": false,
+          "fontWeight": 200,
+          "uppercase": false,
+          "align": "left"
+        };
+        break;
+
+
+
+        case "Get Registered":
+        addCustomGlobalKeys(customWidgetsGlobalKeysMap.length);
+         var defaultChild = createChild(
+            'Text',
+            customWidgetsGlobalKeysMap[customWidgetsGlobalKeysMap.length - 2]!
+                .toString(),
+            id + 1,
+            false);
+        baseChild[key]!['child']!.add(defaultChild);
+        baseChild[key]!['properties'] = {
+          "height": isMargin ? 100 : 48,
+          "color": generateRandomColor().toString(),
+          "width": isMargin ? 100 : 300,
+          "margin": [0, 0, 0, 0],
+          "padding": [0, 0, 0, 0],
+          "alignment": [0, 0],
+          "shape": "square",
+          "borderWidth": 0,
+          "borderRadius": 50,
+          "borderColor": generateRandomColor().toString(),
+          "shadowColor": generateRandomColor().toString(),
+        };
+         
+       
         break;
       // Add other cases for each type
     }

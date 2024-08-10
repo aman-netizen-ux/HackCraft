@@ -22,7 +22,7 @@ class _CustomToolBarState extends State<CustomToolBar> {
   @override
   Widget build(BuildContext context) {
     final customEditPortalProvider = Provider.of<CustomEditPortal>(context);
-    
+
     return Container(
         //height: scaleHeight(context, 60),
         width: double.infinity,
@@ -34,22 +34,33 @@ class _CustomToolBarState extends State<CustomToolBar> {
             borderRadius: BorderRadius.circular(rad5_2),
             border: Border.all(color: greyish3)),
         child: customEditPortalProvider.selectedWidgetKey != null &&
-                customEditPortalProvider.selectedWidgetType == "Text"
+                    customEditPortalProvider.selectedWidgetType == "Text" ||
+                customEditPortalProvider.selectedWidgetType == "Deadline" ||
+                customEditPortalProvider.selectedWidgetType ==
+                    "Hackathon Name" ||
+                customEditPortalProvider.selectedWidgetType ==
+                    "Organization Name" ||
+                customEditPortalProvider.selectedWidgetType == "Start Date" || customEditPortalProvider.selectedWidgetType == "Team Size"||
+                customEditPortalProvider.selectedWidgetType == "Fee" ||
+                customEditPortalProvider.selectedWidgetType == "Brief" || customEditPortalProvider.selectedWidgetType == "Total Rounds"||
+                customEditPortalProvider.selectedWidgetType == "Venue" || customEditPortalProvider.selectedWidgetType == "Mode of Conduct"
             ? const CustomTextPropertiesPanelWidget()
             : customEditPortalProvider.selectedWidgetKey != null &&
-                    customEditPortalProvider.selectedWidgetType == "Container"
+                    customEditPortalProvider.selectedWidgetType == "Container"||customEditPortalProvider.selectedWidgetType == "Get Registered"
                 ? const CustomContainerPropertiesPanelWidget()
                 : customEditPortalProvider.selectedWidgetKey != null &&
                         customEditPortalProvider.selectedWidgetType == "Row"
                     ? const CustomRowPropertiesPanelWidget()
                     : customEditPortalProvider.selectedWidgetType == "Column"
                         ? const CustomColumnPropertiesPanelWidget()
-                        : customEditPortalProvider.selectedWidgetType == "Divider"
-                        ? const CustomDividerPropertiesPanelWidget() 
-                        : customEditPortalProvider.selectedWidgetType == "VerticalDivider"
-                        ? const CustomVerticalDividerPropertiesPanelWidget() 
-                        : Container(
-                            height: scaleHeight(context, 30),
-                          ));
+                        : customEditPortalProvider.selectedWidgetType ==
+                                "Divider"
+                            ? const CustomDividerPropertiesPanelWidget()
+                            : customEditPortalProvider.selectedWidgetType ==
+                                    "VerticalDivider"
+                                ? const CustomVerticalDividerPropertiesPanelWidget()
+                                : Container(
+                                    height: scaleHeight(context, 30),
+                                  ));
   }
 }

@@ -14,8 +14,10 @@ import 'package:provider/provider.dart';
 
 class CustomContainerHeightWidget extends StatefulWidget {
   const CustomContainerHeightWidget({
-    super.key,
+    super.key, required this.title,
   });
+
+  final String title;
 
   @override
   State<CustomContainerHeightWidget> createState() =>
@@ -72,9 +74,10 @@ class _CustomContainerHeightWidgetState extends State<CustomContainerHeightWidge
           borderRadius: BorderRadius.circular(rad5_1),
           border: Border.all(color: greyish3, width: 1)),
       child: Row(
+         mainAxisSize: MainAxisSize.min,
         children: [
           Tooltip(
-            message: "Decrease Container Height",
+            message: "Decrease ${widget.title}",
             verticalOffset: 5,
             decoration: const ShapeDecoration(
               shape: ToolTipCustomDecoration(
@@ -90,6 +93,8 @@ class _CustomContainerHeightWidgetState extends State<CustomContainerHeightWidge
                       customEditPortalProvider.jsonObject,
                       customEditPortalProvider.selectedWidgetKey.toString(),
                       "height");
+                  
+                  if( currHeight - 30>=0){
                   customEditPortalProvider.addPropertyByKey(
                       customEditPortalProvider.selectedWidgetKey == null
                           ? customColumnKey.toString()
@@ -98,10 +103,23 @@ class _CustomContainerHeightWidgetState extends State<CustomContainerHeightWidge
                       'height',
                       currHeight - 30);
 
-                  customEditPortalProvider.dynamicWidgets =
+                      if(widget.title=="Diameter"){
+                         customEditPortalProvider.addPropertyByKey(
+                      customEditPortalProvider.selectedWidgetKey == null
+                          ? customColumnKey.toString()
+                          : customEditPortalProvider.selectedWidgetKey
+                              .toString(),
+                      'width',
+                      currHeight-30);
+                      }
+                      
+                      customEditPortalProvider.dynamicWidgets =
                       customEditPortalProvider.buildWidgetsFromJson(
                           customEditPortalProvider.jsonObject);
                   customEditPortalProvider.triggerUIUpdate();
+                      }
+
+                  
                 },
                 child: Container(
                     height: scaleHeight(context, 37),
@@ -120,7 +138,7 @@ class _CustomContainerHeightWidgetState extends State<CustomContainerHeightWidge
             thickness: 1,
           ),
           Tooltip(
-            message: "Container Height",
+            message: widget.title,
             verticalOffset: 5,
             decoration: const ShapeDecoration(
               shape: ToolTipCustomDecoration(
@@ -170,6 +188,16 @@ class _CustomContainerHeightWidgetState extends State<CustomContainerHeightWidge
                               .toString(),
                       'height',
                       height);
+
+                      if(widget.title=="Diameter"){
+                         customEditPortalProvider.addPropertyByKey(
+                      customEditPortalProvider.selectedWidgetKey == null
+                          ? customColumnKey.toString()
+                          : customEditPortalProvider.selectedWidgetKey
+                              .toString(),
+                      'width',
+                      height);
+                      }
                       customEditPortalProvider.dynamicWidgets =
                       customEditPortalProvider.buildWidgetsFromJson(
                           customEditPortalProvider.jsonObject);
@@ -184,7 +212,7 @@ class _CustomContainerHeightWidgetState extends State<CustomContainerHeightWidge
             thickness: 1,
           ),
           Tooltip(
-            message: "Increase Container Height",
+            message: "Increase ${widget.title}",
             verticalOffset: 5,
             decoration: const ShapeDecoration(
               shape: ToolTipCustomDecoration(
@@ -207,6 +235,15 @@ class _CustomContainerHeightWidgetState extends State<CustomContainerHeightWidge
                               .toString(),
                       'height',
                       currHeight + 30);
+                      if(widget.title=="Diameter"){
+                         customEditPortalProvider.addPropertyByKey(
+                      customEditPortalProvider.selectedWidgetKey == null
+                          ? customColumnKey.toString()
+                          : customEditPortalProvider.selectedWidgetKey
+                              .toString(),
+                      'width',
+                      currHeight+30);
+                      }
                       customEditPortalProvider.dynamicWidgets =
                       customEditPortalProvider.buildWidgetsFromJson(
                           customEditPortalProvider.jsonObject);

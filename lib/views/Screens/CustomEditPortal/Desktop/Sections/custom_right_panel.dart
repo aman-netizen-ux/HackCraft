@@ -49,7 +49,10 @@ class _CustomRightPanelState extends State<CustomRightPanel> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const CustomToolBar(),
-                    Visibility(visible: customEditPortalProvider.isColorSelected &&
+                    Visibility(visible: (customEditPortalProvider.isColorSelected ||customEditPortalProvider.isPaddingSelected
+                    || customEditPortalProvider.isMarginSelected|| customEditPortalProvider.isAlignemntSelected
+                    || customEditPortalProvider.activeIndex > -1
+                    ) &&
                     customEditPortalProvider.selectedWidgetKey != null, child: const CustomStackedToolBar()),
                   ],
                 )),
