@@ -206,23 +206,41 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                               setState(() {
                                 isLoading = true;
                               });
-                              UserCredential user = await signInWithGitHub();
+
+                              UserCredential? user = await signInWithGitHub();
+                              if (user == null) {
+                                // Handle error or sign-in failure
+                                showSnackBar(
+                                  "GitHub sign-in failed.",
+                                  Colors.red,
+                                  const Icon(
+                                    Icons.error,
+                                    color: Colors.white,
+                                  ),
+                                  context,
+                                );
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                return;
+                              }
+
                               if (user.additionalUserInfo!.isNewUser == false) {
                                 debugPrint(
-                                  'An account exits with the given email address.',
-                                );
-                                // ignore: use_build_context_synchronously
+                                    'An account exists with the given email address.');
                                 showSnackBar(
-                                    "An account exits with the given email address.",
-                                    red2,
-                                    const Icon(
-                                      Icons.report_gmailerrorred_outlined,
-                                      color: white,
-                                    ),
-                                    context);
+                                  "An account exists with the given email address.",
+                                  Colors.red,
+                                  const Icon(
+                                    Icons.report_gmailerrorred_outlined,
+                                    color: Colors.white,
+                                  ),
+                                  context,
+                                );
                                 FirebaseAuth.instance.signOut();
                               } else {
                                 String? displayName = user.user!.displayName;
+
                                 loginProvider.setEmail(user.user!.email!);
                                 if (displayName != null &&
                                     displayName.isNotEmpty) {
@@ -237,45 +255,53 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                   lastName = lastName.substring(0, 1) +
                                       lastName.substring(1).toLowerCase();
                                   String firebaseUUID = user.user!.uid;
+                                  print("fireid $firebaseUUID");
                                   storeUserUid(firebaseUUID, user.user!.email!);
                                   loginProvider.setUuid(
                                       firebaseUUID, user.user!.email!);
                                   loginProvider.getFirstName(firstName);
                                   loginProvider.getLastName(lastName);
                                 } else {
-                                  // If display name is not available, use GitHub username
                                   String? userName =
                                       user.additionalUserInfo!.username;
-
+                                  String firebaseUUID = user.user!.uid;
+                                  print("fireid $firebaseUUID");
+                                  storeUserUid(firebaseUUID, user.user!.email!);
+                                  loginProvider.setUuid(
+                                      firebaseUUID, user.user!.email!);
                                   if (userName != null && userName.isNotEmpty) {
                                     loginProvider.getFirstName(userName);
-                                    debugPrint('github username: $userName');
+                                    debugPrint('GitHub username: $userName');
                                   } else {
                                     debugPrint(
-                                        'Github User name is not available');
+                                        'GitHub Username is not available');
                                     loginProvider.getFirstName("Netizens");
                                   }
                                 }
 
-                                sendUserPost({
+                                bool isUserProfileCreated = await sendUserPost({
                                   "first_name": loginProvider.firstName,
-                                  "last_name": loginProvider.lastName,
+                                  "last_name":
+                                      loginProvider.lastName.isNotEmpty == true
+                                          ? loginProvider.lastName
+                                          : " hu",
                                   "email": loginProvider.emailId,
                                   "user_type": ""
-                                }).then((value) {
-                                  if (value) {
-                                    loginProvider.setCurrentIndex(2);
-                                  } else {
-                                    showSnackBar(
-                                        'User Profile not created',
-                                        red2,
-                                        const Icon(
-                                          Icons.warning,
-                                          color: white,
-                                        ),
-                                        context);
-                                  }
                                 });
+
+                                if (isUserProfileCreated) {
+                                  loginProvider.setCurrentIndex(2);
+                                } else {
+                                  showSnackBar(
+                                    'User Profile not created',
+                                    Colors.red,
+                                    const Icon(
+                                      Icons.warning,
+                                      color: Colors.white,
+                                    ),
+                                    context,
+                                  );
+                                }
                               }
                               setState(() {
                                 isLoading = false;
@@ -285,10 +311,11 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   Colors.white),
                               side: MaterialStateProperty.all<BorderSide>(
-                                  const BorderSide(
-                                color: Colors.black,
-                                width: 1,
-                              )),
+                                const BorderSide(
+                                  color: Colors.black,
+                                  width: 1,
+                                ),
+                              ),
                               shape: MaterialStateProperty.all<
                                   RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
@@ -309,11 +336,12 @@ class _SignUpDetailsState extends State<SignUpDetails> {
                                   child: Text(
                                     "GitHub",
                                     style: GoogleFonts.firaSans(
-                                        fontSize: heightScaler(context, 16),
-                                        color: darkCharcoal,
-                                        fontWeight: FontWeight.w500),
+                                      fontSize: heightScaler(context, 16),
+                                      color: darkCharcoal,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ),

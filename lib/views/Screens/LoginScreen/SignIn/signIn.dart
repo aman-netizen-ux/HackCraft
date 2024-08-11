@@ -235,9 +235,25 @@ class _SignInState extends State<SignIn> {
                               setState(() {
                                 isLoading = true;
                               });
-                              UserCredential userCredential =
+                              UserCredential? user =
                                   await signInWithGitHub();
-                              if (userCredential
+                                    if (user == null) {
+                                // Handle error or sign-in failure
+                                showSnackBar(
+                                  "GitHub sign-in failed.",
+                                  Colors.red,
+                                  const Icon(
+                                    Icons.error,
+                                    color: Colors.white,
+                                  ),
+                                  context,
+                                );
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                return;
+                              }
+                              if (user
                                       .additionalUserInfo!.isNewUser ==
                                   true) {
                                 showSnackBar(
@@ -249,10 +265,10 @@ class _SignInState extends State<SignIn> {
                                     ),
                                     context);
                                 FirebaseAuth.instance.signOut();
-                                userCredential.user!.delete();
+                                user.user!.delete();
                               } else {
-                                String firebaseUUID = userCredential.user!.uid;
-                                String email = userCredential.user!.email!;
+                                String firebaseUUID = user.user!.uid;
+                                String email = user.user!.email!;
                                 storeUserUid(firebaseUUID, email);
                                 loginProvider.setUuid(firebaseUUID, email);
                                 final status = await registerCheck(email);
